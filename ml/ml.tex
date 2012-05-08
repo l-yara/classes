@@ -1,0 +1,212 @@
+%\documentclass{ncc}
+%\documentclass{article}
+\documentclass{scrartcl}
+
+\usepackage{amsmath,amssymb,amsfonts} % Typical maths resource packages
+\usepackage{graphics}                 % Packages to allow inclusion of graphics
+\usepackage{color}                    % For creating coloured text and background
+\usepackage{hyperref}                 % For creating hyperlinks in
+                                % cross references 
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+
+\begin{document}
+\section {Вводная}
+\subsection* {Supervised Learnig} - where the ``right (correct) answers'' for
+  each example of data is given. \\
+Usually we have one of two:\\
+{\bf Regression:} predict continuous valued output \\
+{\bf Classification:} assign discrete valued output (0, 1 etc) \\
+
+\subsection* {Unsupervied Learning} - finding structure in ``blind'' set of
+  data. \\
+{\bf Clustering} algorithms  \\
+Example: {\bf Coctail Party Problem} (разделение записей на двух микрофонах
+от двух источниках и восстановление сигналов от каждого источника
+индивидуально). \\
+
+% Chapter 2
+\section {Linear Regression with One Variable}
+
+\subsection {Model Representation}
+Notation: \\
+{\bf m} =  Number of training examples \\
+{\bf x}'s = ``input'' values / features \\
+{\bf y}'s = ``output''variable / ``target'' variable \\
+{\bf (x, y)} = one single training example \\
+{\bf $(x^{(i)}, y^{(i)})$} = $i^{th}$ training example \\
+
+Обычный алгоритм: берем Training Set, скармливаем его Learning
+Algorithm. Оный строит ф-ю h (иначе hypothesis), которая по входному
+значению $x$ строит Estimation. Иначе говоря, \\
+h maps from x's to y's: \\
+$h_\theta(x)=\theta_0 + \theta_1x$; shorthnd: h(x) \\
+- т.е. полагаем что ф-я линейная \\
+Другие названия:
+\begin{itemize}
+\item Linear regression with one variable (x)
+\item Univariate linear regression
+\end{itemize}
+\subsection {Cost Function}
+\label{2-2}
+Идея - минимизировать \[
+J(\theta_0, \theta_1) = \frac{1}{2m} \sum_{i=1}^m\left( h_\theta (x^{(i)}) - y^{(i)} \right)^2
+\]
+Оная $J(\theta_0, \theta_1)$ и называется Cost Funcion, она же Squared
+Error Function
+
+\subsection {Gradient Descent}
+\label {2-5}
+Задача: имея функцию $J(\theta_0, \theta_1)$, заполучить ее
+${\min \atop \theta_0, \theta_1} J(\theta_0, \theta_1)$ \\
+ Outline:
+\begin {itemize}
+\item Start with some $\theta_0, \theta_1$
+\item Keep changing $\theta_0, \theta_1$ to reduce J($\theta_0,
+  \theta_1$) until we hopefully end up at a minimum
+\end{itemize}
+Работает также для бОльшего количества параметров ( $\theta_0,
+\theta_1,..., \theta_n$)
+\subsubsection {Gradient descent algorithm}
+repeat until convergence \{ \\
+$\theta_j := \theta_j - {\alpha} \underbrace{ \frac {\delta}{\delta \theta_j} J(\theta_0,
+  \theta_1)}_{derivative}$ (for j=0 and j=1) \\
+\}, where: \\
+$\alpha$ - learning rate \\
+$\frac {\delta}{\delta \theta_j} J(\theta_0, \theta_1)$ - derivative
+(производная, точнее, частная производная)
+
+\subparagraph {Correct: Simultaneous upgrade}
+
+temp0 := $\theta_0 - \alpha \frac {\delta}{\delta \theta_0} J(\theta_0,
+  \theta_1)$ \\
+temp1 := $\theta_1 - \alpha \frac {\delta}{\delta \theta_1} J(\theta_0,
+  \theta_1)$ \\
+$\theta_0$ := temp0 \\
+$\theta_1$ := temp1 \\
+
+\subsection {Gradient Descent Algorithm For Linear Regression }
+\label {2-7}
+После подстановок - получаем частные производные:
+\[ \frac {\delta}{\delta \theta_j} J(\theta_0,
+  \theta_1) =  \frac {\delta}{\delta \theta_j}  \frac{1}{2m}
+  \sum\limits_{i=1}^m\left( h_\theta (x^{(i)}) - y^{(i)} \right)^2 = \frac
+  {\delta}{\delta \theta_j}  \frac{1}{2m} \sum\limits_{i=1}^m\left(\theta_0 +
+    \theta_1 x^{(i)} - y^{(i)} \right)^2
+\] \\
+Тогда:
+\[
+\theta_0 : \frac {\delta}{\delta \theta_0} J(\theta_0,
+  \theta_1) =  \frac{1}{m} \sum\limits_{i=1}^m\left(h_\theta (x^{(i)})
+    - y^{(i)} \right) \]
+\[
+\theta_1 : \frac {\delta}{\delta \theta_1} J(\theta_0,
+  \theta_1) = \frac{1}{m} \sum\limits_{i=1}^m\left(h_\theta (x^{(i)})
+    - y^{(i)} \right) * x^{(i)}
+\]
+Тогда алгоритм будет: \\
+repeat until convergence \{ \\
+\
+\[\theta_0 := \theta_0 - {\alpha} \frac{1}{m} \sum\limits_{i=1}^m\left(h_\theta (x^{(i)})
+    - y^{(i)} \right) \]
+\[\theta_1 := \theta_1 - {\alpha} \frac{1}{m} \sum\limits_{i=1}^m\left(h_\theta (x^{(i)})
+    - y^{(i)} \right) * x^{(i)} \]
+\}
+Утверждает, что Cost Function для Linear Regression всегда является
+``bow shaped'', или ``Convex function'' - т.е. не имеет локальных
+минимумов; единственный минимум - глобальный.
+
+Дальше, он называет сей процесс ``Batch'' Gradient Descent - т.к. Each
+step of gradient descent uses all the training examples.
+
+\subsection {Extensions}
+\label {2-8}
+1. Существует прямой (не - итерационный) метод обсчета $\theta_0,
+\theta_1$ \\
+2. БОльшее количество параметров (features): $y = F(x_1, x_2, ..., x_n)$
+
+% Chapter 3
+\section {Linear Algebra Review}
+Ничего интересного, обозначения:
+\[
+\left( \begin{array}{cc} 
+1402 & 191 \\
+1371 & 821 \\ 949 & 1437 \\ 147 & 1448 \\
+\end{array} \right) = \mathbb{R}^{4\times2}
+\]
+Identity Matrix - единичная матрица вроде $\left( I = \begin{array}{cc}
+1 & 0 \\ 0 & 1 \\
+  \end{array}
+\right)$
+
+Свойства: $A I = I A = A$
+Обычно умножение матриц некомутативно, но ассоциативно: $A B \neq B
+A$, но $(A B) C = A (B C)$
+
+Inverse matrix - обратная матрица
+Transpose matrix - транспонированная матрица
+
+%Chapter 4
+\section {Linear Regression with Multiple Variables}
+Notation: \\
+\begin{itemize}
+\item {m} = number of examples (size of training set)
+\item {n} = number of features
+\item{$x^{(i)}$} = input (features) of $i^{th}$ training example
+  (vecotr of size n)
+\item {$x_j^{(i)}$} = value of feature j in $i^{th}$ training example
+\end{itemize}
+Hypothesis: \\
+\[
+h_\theta(x) = \theta_0 + \theta_1x_1 + \theta_2x_2 + \theta_3x_3 + ... \theta_nx_n
+\]
+For convenience in notatiojn , define $x_0=1$. $(x_0^{(i)}=1)$:
+Feature vector (values for a single feature) is of dimention n+1:
+\[
+x = \left[ \begin{array}{c} x_0 \\ x_1 \\ x_2 \\ \vdots \\ x_n
+  \end{array} \right] \in \mathbf{R^{n+1}}
+\]
+The same story (n+1 dimentional vector) - for parameters:
+\[
+\theta = \left[ \begin{array}{c} \theta_0 \\ \theta_1 \\ \theta_2 \\ \vdots \\ \theta_n
+  \end{array} \right] \in \mathbf{R^{n+1}}
+\]
+(another n+1 dimentional vector)
+Then hypotesis can be written as: 
+\[
+h_\theta(x) = \theta_0x_0 + \theta_1x_1 + \theta_2x_2 + \theta_3x_3 +
+... \theta_nx_n = \\ \theta^TX
+\]
+where: $\theta^T = [\theta_0 \theta_1 ... \theta_n]$ - so-called {\bf
+  raw vector}. \\
+
+This form is also called {\bf Multivariate linear regression }.
+
+\subsection {Gradient Descent for Multiple Variables}
+Cost function:
+\[
+J(\theta_0, \theta_1, ..., \theta_n) = \frac{1}{2m} \sum\limits_{i=1}^m\left(h_\theta(x^{(i)}) - y^{(i)} \right)^2
+\]
+Gradient descent: \\
+Repeat \{
+ \[ \theta_j := \theta_j - \alpha \frac
+ {\delta}{\delta\theta_j}J(\theta) \\
+= \theta_j - \alpha \frac{1}{m}  \sum\limits_{i=1}^m\left(h_\theta(x^{(i)}) - y^{(i)} \right)x_j^{(i)} \]
+\} - simultaneously update for every j = 0,1,...n \\
+for j = 0, the formula is the same as of Single-Variable Descent (as
+$x_0 = 1$)
+\label {4-3} - Gradient Descent in practice
+
+
+%Chapter 5
+\section {Octave Tutorial}
+
+
+
+\section {Logistic Regression}
+
+%\end {description}
+\end{document}
+
+% \section {} \subsection{} \subsubsection []{} \paragraph{} \subparagraph{}
