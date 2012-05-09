@@ -196,10 +196,98 @@ Repeat \{
 \} - simultaneously update for every j = 0,1,...n \\
 for j = 0, the formula is the same as of Single-Variable Descent (as
 $x_0 = 1$)
-\label {4-3} - Gradient Descent in practice
+\label {4-3} 
+\subsection {Gradient Descent in practice}
+Предлагается масштабировать features так, чтобы избегать ``вытянутых''
+контуров на $\theta_1(\theta_2)$ диаграммах, т.к. на оных вытянутых
+диаграммах процесс сходится плохо. Сие называется 
 
+\subsubsection{ Fature Scaling} 
+- get every feature into approximately a $-1 \leq x_i \leq 1$ range.
+\subsubsection {Mean normalization}
+- replace $x_i$ with $\frac{x_i - \mu_i}{S_i}$ to make features have approximately
+zero mean (do not apply to $x_0 = 1$):
+\begin{itemize}
+\item{$\mu_i$} - mean value
+\item{$S_i$} - the range (max - min) or standard deviation (would be fine too)
+\end{itemize}
+Example:
+\begin{equation*}
+\begin{split}
+x_1 = \frac{size-1000}{2000} \\
+x_2 = \frac{\#bedrooms-2}{5} \\
+-0.5 \leq x_1 \leq 0.5, -0.5 \leq x_2 \leq 0.5
+\end{split}
+\end{equation*}
 
-%Chapter 5
+\subsection {Gradient Descent in Practice - Learning Rate}
+\label {4-4}
+Gradient descent works correctly if $J(\theta)$ decrease after every
+iteration. Usually convergence is declared if $J(\theta)$ decreases by
+less then some constant (i.e. $10^-{3}$) in one iteration.
+
+If  $J(\theta)$ increases (or scillates up and down) - this usuallymeans that learning rate
+$\alpha$ is too big (but convergence becomes slower).
+
+So it is recommended to try \[
+..., 0.001,0.003, 0.01, 0.03, 0.1, 0.3, 1, ...
+\]
+ 
+\subsection{Features and Polynomial Regression}
+\label{4-5}
+\subsubsection{Polynomil Regression}
+In polynomial regression formulas like $h_\theta(x)=\theta_0 +
+\theta_qx + \theta_2x^2 + \theta^3x_3$ we can re-write the expression
+as $h_\theta(x) = \theta_0 + \theta_qx_1 + \theta_2x_2 + \theta_3x_3$
+where \begin{itemize}
+\item{$x_1=x$}
+\item{$x_2=x^2$}
+\item{$x_1=x^3$}
+\end{itemize}
+and use the mechanics of the ``normal''linear regression. In addition,
+it is usually a better idea to use some sort of ``inside''
+information - in order to choose the ``right'' set of feature. Such
+selection process can also be automated.
+
+\subsection {Normal Equation}
+\label{4-6}
+To solve the $\theta$ analytically. For 1-D features we can use
+derivatives: $\frac{d}{d\theta}J(\theta) = 0$, solve it for $\theta$.
+But if $\theta \in \mathbb{R}^{n+1}$, we need to solve \[
+\frac{\delta}{\delta \theta_j}J(\theta) = 
+\frac{\delta}{\delta \theta_j} \left( \frac{1}{2m} \sum\limits_{i=1}^m\big(h_\theta(x^{(i)}) - y^{(i)}\big)^2\right) = 0
+\] for every j
+
+The idea is: pack the training set into matrix $X^{m \times (n + 1)}$
+(so-called design matrix) for features (n features + ones for $x_0$)
+and m - dimentional vector y for results. Then:
+\[ \theta = \mathbf{\left( X^TX \right)^{-1}X^T}y  \]
+values in $\theta$ will minimize the cost function. Feature scaling in
+this case is NOT actual.
+
+Octave: \emph{ pinv(X'*X)*X'*y }
+
+\paragraph {Pro (versus Gradient Descent)} No need to choose $\alpha$, don't need to iterate.
+
+\paragraph {Contra} Gradient Descent works well with large $n$, while calcualtion
+$n \times n$ matrix for large n could be painful.
+
+\subsection {Normal Equasion Noninvertability}
+Idea: what if $\mathbf{X^TX}$ is non-invertible (singular)?
+Causes:\begin{itemize}
+\item Redundant features (linearly dependent). \\
+E.g. $x_1$ = size in $feet^2$,  $x_2$ = size in $m^2$
+\item Too many features ($e.g. m \leq n$). \\
+Delete some features or use regularization.
+
+\end{itemize}
+
+In Octave, \emph{pinv(X'*X)*X'*y} will end with some meaningful result (see
+docs) - this is different from ``just'' \emph{inv} function (see
+Octave doc for difference between the ``normal'' inversion inv and
+``pseudo'' - inversion pinv functions).
+
+% Chapter 5
 \section {Octave Tutorial}
 
 
