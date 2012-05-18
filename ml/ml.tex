@@ -10,22 +10,24 @@
 \usepackage[T2A]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[russian,english]{babel}
+\usepackage{listings}
+\lstloadlanguages {[LaTeX]TeX, Octave}
 
 \begin{document}
 \label{Chapter 1}
 \section {Вводная}
-\subsection* {Supervised Learnig} - where the ``right (correct)
+\subsection* {Supervised Learning} - where the ``right (correct)
 answers'' for
 each example of data is given. \\
 Usually we have one of two:\\
 {\bf Regression:} predict continuous valued output \\
 {\bf Classification:} assign discrete valued output (0, 1 etc) \\
 
-\subsection* {Unsupervied Learning} - finding structure in ``blind''
+\subsection* {Unsupervised Learning} - finding structure in ``blind''
 set of
 data. \\
 {\bf Clustering} algorithms  \\
-Example: {\bf Coctail Party Problem} (разделение записей на двух
+Example: {\bf Cocktail Party Problem} (разделение записей на двух
 микрофонах от двух источниках и восстановление сигналов от каждого
 источника
 индивидуально). \\
@@ -45,20 +47,20 @@ Notation: \\
 Algorithm. Оный строит ф-ю h (иначе hypothesis), которая по входному
 значению $x$ строит Estimation. Иначе говоря, \\
 h maps from x's to y's: \\
-$h_\theta(x)=\theta_0 + \theta_1x$; shorthnd: h(x) \\
+$h_\theta(x)=\theta_0 + \theta_1x$; shorthand: h(x) \\
 - т.е. полагаем что ф-я линейная \\
 Другие названия:
 \begin{itemize}
 \item Linear regression with one variable (x)
-\item Univariate linear regression
+\item Univariate(single variable) linear regression
 \end{itemize}
 \subsection {Cost Function}
 \label{2-2}
 Идея - минимизировать \[ J(\theta_0, \theta_1) = \frac{1}{2m}
 \sum_{i=1}^m\left( h_\theta (x^{(i)}) - y^{(i)} \right)^2
 \]
-Оная $J(\theta_0, \theta_1)$ и называется Cost Funcion, она же Squared
-Error Function
+Оная $J(\theta_0, \theta_1)$ и называется Cost Function, она же
+Squared Error Function
 
 \subsection {Gradient Descent}
 \label {2-5}
@@ -161,7 +163,7 @@ Notation: \\
 \item {m} = number of examples (size of training set)
 \item {n} = number of features
 \item{$x^{(i)}$} = input (features) of $i^{th}$ training example
-  (vecotr of size n)
+  (vector of size n)
 \item {$x_j^{(i)}$} = value of feature j in $i^{th}$ training example
 \end{itemize}
 Hypothesis: \\
@@ -169,8 +171,8 @@ Hypothesis: \\
 h_\theta(x) = \theta_0 + \theta_1x_1 + \theta_2x_2 + \theta_3x_3 + ...
 \theta_nx_n
 \]
-For convenience in notatiojn , define $x_0=1$. $(x_0^{(i)}=1)$:
-Feature vector (values for a single feature) is of dimention n+1:
+For convenience in notation , define $x_0=1$. $(x_0^{(i)}=1)$: Feature
+vector (values for a single feature) is of dimention n+1:
 \[
 x = \left[ \begin{array}{c} x_0 \\ x_1 \\ x_2 \\ \vdots \\ x_n
   \end{array} \right] \in \mathbf{R^{n+1}}
@@ -181,7 +183,7 @@ The same story (n+1 dimentional vector) - for parameters:
     \vdots \\ \theta_n
   \end{array} \right] \in \mathbf{R^{n+1}}
 \]
-(another n+1 dimentional vector) Then hypotesis can be written as:
+(another n+1 dimentional vector) Then hypothesis can be written as:
 \[
 h_\theta(x) = \theta_0x_0 + \theta_1x_1 + \theta_2x_2 + \theta_3x_3 +
 ... \theta_nx_n = \\ \theta^TX
@@ -213,9 +215,9 @@ $x_0 = 1$)
 контуров на $\theta_1(\theta_2)$ диаграммах, т.к. на оных вытянутых
 диаграммах процесс сходится плохо. Сие называется
 
-\subsubsection{ Fature Scaling} 
+\subsubsection{ Feature Scaling} 
 - get every feature into approximately a $-1 \leq x_i \leq 1$ range.
-\subsubsection {Mean normalization}
+\subsubsection {Mean normalisation}
 - replace $x_i$ with $\frac{x_i - \mu_i}{S_i}$ to make features have
 approximately zero mean (do not apply to $x_0 = 1$):
 \begin{itemize}
@@ -238,9 +240,9 @@ Gradient descent works correctly if $J(\theta)$ decrease after every
 iteration. Usually convergence is declared if $J(\theta)$ decreases by
 less then some constant (i.e. $10^-{3}$) in one iteration.
 
-If $J(\theta)$ increases (or scillates up and down) - this
-usuallymeans that learning rate $\alpha$ is too big (but convergence
-becomes slower).
+If $J(\theta)$ increases (oscillates up and down) - this usually means
+that learning rate $\alpha$ is too big (but convergence becomes
+slower).
 
 So it is recommended to try \[ ..., 0.001,0.003, 0.01, 0.03, 0.1, 0.3,
 1, ...
@@ -248,7 +250,7 @@ So it is recommended to try \[ ..., 0.001,0.003, 0.01, 0.03, 0.1, 0.3,
  
 \subsection{Features and Polynomial Regression}
 \label{4-5}
-\subsubsection{Polynomil Regression}
+\subsubsection{Polynomial Regression}
 In polynomial regression formulas like $h_\theta(x)=\theta_0 +
 \theta_qx + \theta_2x^2 + \theta^3x_3$ we can re-write the expression
 as $h_\theta(x) = \theta_0 + \theta_qx_1 + \theta_2x_2 + \theta_3x_3$
@@ -277,24 +279,25 @@ The idea is: pack the training set into matrix $X^{m \times (n + 1)}$
 (so-called design matrix) for features (n features + ones for $x_0$)
 and m - dimentional vector y for results. Then:
 \[ \theta = \mathbf{\left( X^TX \right)^{-1}X^T}y \] values in
-$\theta$ will minimize the cost function. Feature scaling in this case
+$\theta$ will minimise the cost function. Feature scaling in this case
 is NOT actual.
 
 Octave: \emph{ pinv(X'*X)*X'*y }
 
-\paragraph {Pro (versus Gradient Descent)} No need to choose $\alpha$,
-don't need to iterate.
+\paragraph {Normal Equation Gradient Descent)} No need to choose
+$\alpha$, don't need to iterate.
 
-\paragraph {Contra} Gradient Descent works well with large $n$, while
-calcualtion $n \times n$ matrix for large n could be painful.
+\paragraph {Gradient Descent vs Normal Equation} Gradient Descent
+works well with large $n$, while calculation $n \times n$ matrix for
+large n could be painful.
 
-\subsection {Normal Equasion Noninvertability}
-Idea: what if $\mathbf{X^TX}$ is non-invertible (singular)?
+\subsection {Normal Equation Non-invertibility}
+Idea: what if $\mathbf{X^TX}$ is non- invertible (singular)?
 Causes:\begin{itemize}
 \item Redundant features (linearly dependent). \\
   E.g. $x_1$ = size in $feet^2$, $x_2$ = size in $m^2$
 \item Too many features ($e.g. m \leq n$). \\
-  Delete some features or use regularization.
+  Delete some features or use regularisation.
 
 \end{itemize}
 
@@ -329,7 +332,7 @@ Automated init:
 >> w = zeros(1,3) % generates vector of "o"
 >> rand(3,3) % generates matrix, inits with random (normal
 distribution values in 0..1 range)
->> randn(1, 3) % generates matrix, inits with random (Gaussian
+>> rand(1, 3) % generates matrix, inits with random (Gaussian
 distribution with mean = 0 and sigma = 1)
 >> eye(6) % identity matrix 6 * 6
 \end{verbatim}
@@ -338,11 +341,11 @@ distribution with mean = 0 and sigma = 1)
 \subsection {Moving data around}
 \label{5-2}
 \begin{verbatim}
->> size (A) % returns dimentions of matrix A
->> size (A, 1) % returns the value for first dimention of A (rows)
->> size (A, 2) % returns the value for second dimention of A (columns)
->> lingth(v) % returns lenght of vector. For matrix - returns the
-% longer dimention of matrix
+>> size (A) % returns dimensions of matrix A
+>> size (A, 1) % returns the value for first dimension of A (rows)
+>> size (A, 2) % returns the value for second dimension of A (columns)
+>> length(v) % returns length of vector. For matrix - returns the
+% longer dimension of matrix
 >> pwd, cd, ls,   % CO
 >> load filename.ext / load('filename.ext') % loads text files with
 % data into relevant variable
@@ -361,7 +364,7 @@ distribution with mean = 0 and sigma = 1)
 >> A = [A , [100; 101; 102]]; % appends the column vector to the
 % matrix (notice ';' as delimiter for elements in column)
 >> A(:) % put all elements of A into a single vector
->> C = [A B] % concatenate matrices into a new one (horisontally).
+>> C = [A B] % concatenate matrices into a new one (horizontally).
 % Same is [A, B] (comma instead of space)
 >> C = [A;B] % concatenate matrices vertically 
 \end{verbatim}
@@ -394,7 +397,7 @@ distribution with mean = 0 and sigma = 1)
 >>sum(sum(A.*eye(9))) % trick to calculate the sum of all elements on
 % the matrix diagonal. For other diagonal: sum(sum(A.*flipud(eye(9))))
 >> floor(A), ceil(A) % rounding all elements
->> rand(3) % create rundom matrix 3x3
+>> rand(3) % create random matrix 3x3
 >> max(a, b) % generate matrix with values = element-wise max of both.
 % Also exist "per-row" and "per-column" form
 >> pinv(A) %"pseudo-inverse matrix 
@@ -415,8 +418,8 @@ distribution with mean = 0 and sigma = 1)
 \item{axis([0.5 1 -1 1])} - set x- and y- ranges
 \item{clf;} - clear
 \item{imagesc(A)} - draw image based on goven matrix A
-\item{imagesc(A), colorbar, colormap gray} - as before, add colorbar
-  legend, make legend grayscale
+\item{imagesc(A), colorbar, colormap grey} - as before, add colorbar
+  legend, make legend grey-scale
 \end{itemize}
 
 \subsection{Control Statement}
@@ -485,12 +488,12 @@ use matrix(vector) multiplication operations.
 \section {Logistic Regression}
 \subsection{Classification}
 Idea is to separate the input into cathegories like Spam/Ham,
-Malignant / Benign Tumor etc. Sepatation: \begin{itemize}
+Malignant / Benign tumor etc. Separation: \begin{itemize}
 \item {Two-class} (``binary class'') classification $y \in \{0, 1\}$
 \item {Multi-class} classification $y \in \{0, 1, ... n\}$
 \end{itemize}
 Idea: to use Linear Regression with $h_\theta(x) = \theta^T x$ and
-threachold which checks: \begin{itemize}
+threshold which checks: \begin{itemize}
 \item{if $h_\theta(x) \geq 0.5$} predict 1
 \item{if $h_\theta(x) < 0.5$} predict 0
 \end{itemize}
@@ -506,7 +509,7 @@ a classification algorithm.
 We use Linear Regression Model ($h_\theta(x) = \theta^Tx$ ) with
 so-called {\bf Sigmoid function} or {\bf Logistic function} : \[
 h_\theta(x) = g(\theta^Tx), where \]
-\[g(z) = frac{1}{1 + e^{-z}}\] so
+\[g(z) = \frac{1}{1 + e^{-z}}\] so
 \begin{equation*}
   h_\theta(x) = \frac{1}{1 + e^{-\theta^Tx}}
 \end{equation*}
@@ -569,15 +572,219 @@ Cost = 0 for $h_\theta(x) = 0$, penalty for $h_\theta(x) = 1$
 
 Together it gives convex function suitable for iterative processing.
 
-\label{6-5}
+\subsection{Gradient Descent}
+\label{sec:6-5}
+\[\textrm{minimising } J(\theta) = \frac{1}{m} \sum\limits_{i=1}^m
+Cost (h_\theta(x^{(i)}, y^{(i)}) \] Initial Cost function is being
+re-written as \[ Cost(h_\theta(x), y) = -ylog(h_\theta(x)) -
+(1-y)log(1-h_\theta(x))
+\]
+
+Then J can be expressed as \[ J(\theta) = -\frac{1}{m} \left[
+  \sum\limits_{i=1}^m y^{(i)} \log (h_\theta(x^{(i)})) + (1-y^{(i)})
+  \log (1 - h_\theta(x^{(i)})) \right] \]
+
+To make a prediction given new x: \[ \textrm{Output } h_\theta(x) =
+\frac{1}{1 + e^{-\theta^Tx}} \quad \textrm{which means probability :}
+p(y=1|x; \theta)
+\]
+
+\paragraph{Gradient Descent}
+Calculating $\min_\theta J (\theta)$: \\
+\[ \begin{array}{l}
+  \textrm{Repeat }  \{ \\
+  \theta_j := \theta_j - \alpha \frac {\delta}{\delta \theta} J
+  (\theta) \\
+  \textrm{where } \frac {\delta}{\delta \theta} J(\theta) =
+  \frac{1}{m} \sum\limits_{i=1}^m (h_\theta(x^{(i)}) -
+  y^{(i)})x_j^{(i)} \textrm{ -
+    partial derivative} \\
+  \textrm{so } \theta_j := \theta_j - \alpha \sum\limits_{i=1}^m
+  (h_\theta(x^{(i)}) - y^{(i)})x_j^{(i)} \\
+  \}
+\end{array} \]
+{\bf simultaneously update all $\theta_j$} - looks exactly like the Linear
+Regression algorithm (just hypothesis $h_\theta(x)$ is different), so
+implementation can use both loop from 0 to m or vector form as well as
+feature scaling idea.
+
+\subsection{Optimisation}
+\label{sec:6-6}
+The idea is to play with different control algorithms (Gradient
+Descent, Conjugate Descent, BFGS, L-BFGS) supplying them ways to
+compute $J(\theta)$ and $\frac{\delta}{\delta \theta_j}J(\theta)$
+(through some sort of plug-ins - ?).
+
+The last three algorithms are more complex then the ``normal''
+Gradient descent but:
+\begin{itemize}
+\item No need to manually pick $\alpha$ (learning rate)
+\item Often faster then ``normal'' gradient descent
+\end{itemize}
+
+In Octave, this is implemented through generalised function and
+function reference (delegate ?):
+
+Example: \[\theta = \left[ \begin{array}{c} \theta_1 \\ \theta_2
+  \end{array} \right]; J(\theta) = (\theta_1 - 5)^2 + (\theta_2- 5)^2 \]
+\[\textrm{then } \frac{\delta}{\delta \theta_1}J(\theta) = 2(\theta_1
+-5) ;\frac{\delta}{\delta \theta_2}J(\theta) = 2(\theta_2 - 5)
+\]
+in Octave:
+\begin{lstlisting}[language=Octave, caption=={Plugin function }]
+  function [jVal, gradient] = costFunction(theta) jVal = (theta(1) -
+  5)^2 + (theta(2)-5)^2; gradient = zeros(2,1); gradient(1) = 2 *
+  (theta(1) - 5); gradient(2) = 2 * (theta(2) - 5);
+\end{lstlisting}
+then
+\begin{lstlisting} [language=Octave, caption=={Algorithm Call }]
+  % set up process options
+  options = optimset('GradObj', 'on', 'MaxIter', '100'); initialTheta
+  = zeros(2, 1); [optTheta, functionVal, exitFlag] =
+  fminunc(@costFunction, initialTheta, options);
+\end{lstlisting}
+This returns optTheta (value of $\theta$ for optimal point),
+fuctionVal - cost value in optimal point, and exitFlag (1 for normally
+converged operation).
+
+Works for $\theta \in \mathbf{R^d}; d \geq 2$
+
+\subsection{Mutliclass Classification}
+\label{sec:6-7}
+When you need to classify by more then 2 categories (as in Binary
+Classification).
+
+Idea is called ``One-vs-All'' or ``One-vs-Rest''. Build classifiers
+[$h^{(1)}(x), h^{(2)}(x), h^{(3)}(x)... $] for each class: \[
+h^{(i)}(x) = P(y = i|x;\theta) \ (i = 1, 2, 3)
+\]
+On a new input x, to make a prediction, pick the class i that
+maximises $\max_i h^{(i)}(x)$
+
+\section{Regularisation}
+\label{sec:7}
+
+\subsection{The Problem of Overfitting}
+\label{sec:7-1}
+The ``underfitting' (or ``high bias'') problem takes place when we try
+to fit, say, linear model to the task which is rather quadratic - so
+we have too strong pre-conception to the idea of the linear model.
+
+Over-fitting (``high variance'') is a vise-verse state: for instance,
+we apply the model of power 4 to the problem which would be fine
+described by quadratic model. The graph fits to the training data
+really well, but the curve itself becomes too ``windy''.
+
+So, if we have too many features, the learned hypothesis may fit the
+training set very well ($J(\theta) = \frac{1}{2m} \sum
+\limits{i=1}{m}(h_\theta(c^{(i)}) - y^{(i)})^2 \approx 0$) but fail to
+generalise to new examples (predict output on new examples). Similar
+story - with Logistic Regression.
+
+Addressing over-fitting:
+\begin{enumerate}
+\item Reduce number of features
+  \begin{itemize}
+  \item Manually select which features to keep
+  \item Model selection algorithm
+  \end{itemize}
+\item Regularisation
+  \begin{itemize}
+  \item Keep all the features, but reduce magnitude/values of
+    parameters $\theta_j$
+  \item Works well when we have a lot of features, each of which
+    contributes a bit to predicting y.
+  \end{itemize}
+\end{enumerate}
+
+\subsection{Cost Function}
+\label{sec:7-2}
+The idea is to have small values high-order parameters. This will make
+our hypothesis simpler and less prone to over-fitting. This is done
+through ``penalising'' values in our cost function (keep in mind that
+for our case $x^n$ is equivalent to $\theta_n$ so we can use the same
+idea for both multi-feature training set and for high-order polynom:
+
+\[J(\theta) = \frac{1}{2m} \left[ \sum \limits{i=1}{m}
+  (h_\theta(x^{(i)}) - y^{(i)})^2 + \underbrace{ \lambda \sum
+  \limits{i=1}{n}\theta_j^2}_{penalty} \right] \]
+Notice the regularisation term (a ``penalty'') does not include
+$\theta_0$ - this is a sort of convention. $\lambda$ is called
+``regularisation parameter''; it provides balance between two tasks:
+\begin{itemize}
+\item fitting the training set well
+\item to keep the parameter values small
+\end{itemize}
+
+If $\lambda$ is too high, all $\theta_i$ end up near 0, so the
+hypothesis becomes too flat - i.e. ``under-fit'': $h_\theta(x) =
+\theta_0$. 
+
+\subsection{Regularised Linear Regression}
+\label{sec:7-3}
+For ``updated'' Linear Regression (with regularisation parameter), the
+Gradient Descent looks a bit different:
+\[ \begin{array}{l}
+  \textrm{Repeat }  \{ \\
+  \theta_0 := \theta_0 - \alpha \frac {1}{m} \sum
+  \limits_{i=1}^m(h_\theta(x^{(i)}) - y^{(i)}) x_0^{(i)} \\
+  \theta_j := \theta_j - \alpha \frac {1}{m} \sum
+  \limits_{i=1}^m(h_\theta(x^{(i)}) - y^{(i)}) x_j^{(i)} \underbrace{+
+  \frac{\lambda}{m}\theta_j } _{penalty} \\
+  (j= 1, 2, 3, \dots , n) \textrm{ - no zero here!} \\
+  \}
+\end{array}
+ \]
+
+- actually, the good old partial derivative on regularised hypothesis.
+After some transformations: \[
+\theta_j := \theta_j(1 - \alpha\frac{\lambda}{m}) - \alpha \frac{1}{m}
+\sum \limits_{i=1}^{m}(h_\theta(x^{(i)}) - y^{(i)})x_j^{(i)}
+\] 
+and $1 - \alpha \frac{\lambda}{m} < 1$, usually about 0.99 (roughly).
+Then first part looks like $\theta_j * 0.99$. While second part is a
+``normal'' regression update, each step of the algorithm reduces
+$\theta_j$. 
+
+\subsubsection{Normal Equation}
+\label{sec:7-2-2}
+\begin{equation*}
+  \begin{array}{ll}
+    \mathbf{X} = \left[ \begin{array}{c} (x^{(1)})^T \\ (x^{(2)})^T \\
+        \vdots \\ (x^{(m)})^T \end{array} \right] & y =
+    \left[ \begin{array}{c} y^{(1)}  \\ y^{(2)}  \\  \vdots \\ y^{(m)} \end{array} \right]
+  \end{array}
+\end{equation*}
+where X is $M \times (n+1)$ matrix, y is vector of length m. To
+minimise cost function $J(\theta)$: \[
+\frac{\delta}{\delta \theta_j}J(\theta) \Rightarrow 0 \]
+\[
+\theta = \Big(X^T X + \lambda \left[ \begin{array}{ccccc} 0 & 0 & 0 &
+    \dots & 0 \\ 0 & 1 & 0 & \dots & 0 \\ 0 & 0 & 1 & \dots & 0 \\
+    \vdots & \vdots & \vdots & \ddots & 0 \\ 0 & 0 & 0 & \dots &
+    1 \end{array} \right] \Big)^{-1} X^Ty
+\]
+This terrible matrix is of $(n+1) \times (n+1)$ size.
+
+\paragraph{Non-invertibility}
+Suppose $m \leq n$, for our $\theta = (X^T X)^{-1}X^Ty$, if $\lambda >
+0$:
+
+Then $(X^T X)$ is non-invertible (singular). ``pinv'' function could
+still give some sane result, but, if working with different language
+(or using regular inverse - inv),this would not work.
+
+It is possible to prove that sum of $(X^T X)$ and this ugly matrix is
+invertible (non-singular) for $\lambda > 0$
+
+E.g. Regularisation helps in this pathetic case.
+
+\subsection{Regularised Logistic Regression}
+\label{sec:7-4}
 
 
-\label {Chapter 7}
-\section {Regularization}
-
-\label {Chapter 8}
-\section {Neural Networks: Representation}
+\section{Neural Networks: Representation}
+\label{sec:8}
 
 
-% \end {description}
 \end{document}
