@@ -12,6 +12,8 @@
 \usepackage[russian,english]{babel}
 \usepackage{listings}
 \lstloadlanguages {[LaTeX]TeX, Octave}
+\lstset {language=[LaTeX]TeX,
+  extendedchars=true ,escapechar=|}
 
 \begin{document}
 \label{Chapter 1}
@@ -707,10 +709,10 @@ idea for both multi-feature training set and for high-order polynom:
 
 \[J(\theta) = \frac{1}{2m} \left[ \sum \limits{i=1}{m}
   (h_\theta(x^{(i)}) - y^{(i)})^2 + \underbrace{ \lambda \sum
-  \limits{i=1}{n}\theta_j^2}_{penalty} \right] \]
-Notice the regularisation term (a ``penalty'') does not include
-$\theta_0$ - this is a sort of convention. $\lambda$ is called
-``regularisation parameter''; it provides balance between two tasks:
+    \limits_{i=1}^{n}\theta_j^2}_{penalty} \right] \] Notice the
+regularisation term (a ``penalty'') does not include $\theta_0$ - this
+is a sort of convention. $\lambda$ is called ``regularisation
+parameter''; it provides balance between two tasks:
 \begin{itemize}
 \item fitting the training set well
 \item to keep the parameter values small
@@ -718,7 +720,7 @@ $\theta_0$ - this is a sort of convention. $\lambda$ is called
 
 If $\lambda$ is too high, all $\theta_i$ end up near 0, so the
 hypothesis becomes too flat - i.e. ``under-fit'': $h_\theta(x) =
-\theta_0$. 
+\theta_0$.
 
 \subsection{Regularised Linear Regression}
 \label{sec:7-3}
@@ -728,23 +730,24 @@ Gradient Descent looks a bit different:
   \textrm{Repeat }  \{ \\
   \theta_0 := \theta_0 - \alpha \frac {1}{m} \sum
   \limits_{i=1}^m(h_\theta(x^{(i)}) - y^{(i)}) x_0^{(i)} \\
-  \theta_j := \theta_j - \alpha \frac {1}{m} \sum
-  \limits_{i=1}^m(h_\theta(x^{(i)}) - y^{(i)}) x_j^{(i)} \underbrace{+
-  \frac{\lambda}{m}\theta_j } _{penalty} \\
+  \theta_j := \theta_j - \alpha \left[ \frac {1}{m} \sum
+    \limits_{i=1}^m(h_\theta(x^{(i)}) - y^{(i)}) x_j^{(i)}
+    \underbrace{+
+      \frac{\lambda}{m}\theta_j} _{penalty} \right] \\
   (j= 1, 2, 3, \dots , n) \textrm{ - no zero here!} \\
   \}
 \end{array}
- \]
+\]
 
 - actually, the good old partial derivative on regularised hypothesis.
-After some transformations: \[
-\theta_j := \theta_j(1 - \alpha\frac{\lambda}{m}) - \alpha \frac{1}{m}
-\sum \limits_{i=1}^{m}(h_\theta(x^{(i)}) - y^{(i)})x_j^{(i)}
-\] 
+After some transformations: \[ \theta_j := \theta_j(1 -
+\alpha\frac{\lambda}{m}) - \alpha \frac{1}{m} \sum
+\limits_{i=1}^{m}(h_\theta(x^{(i)}) - y^{(i)})x_j^{(i)}
+\]
 and $1 - \alpha \frac{\lambda}{m} < 1$, usually about 0.99 (roughly).
 Then first part looks like $\theta_j * 0.99$. While second part is a
 ``normal'' regression update, each step of the algorithm reduces
-$\theta_j$. 
+$\theta_j$.
 
 \subsubsection{Normal Equation}
 \label{sec:7-2-2}
@@ -756,8 +759,8 @@ $\theta_j$.
   \end{array}
 \end{equation*}
 where X is $M \times (n+1)$ matrix, y is vector of length m. To
-minimise cost function $J(\theta)$: \[
-\frac{\delta}{\delta \theta_j}J(\theta) \Rightarrow 0 \]
+minimise cost function $J(\theta)$: \[ \frac{\delta}{\delta
+  \theta_j}J(\theta) \Rightarrow 0 \]
 \[
 \theta = \Big(X^T X + \lambda \left[ \begin{array}{ccccc} 0 & 0 & 0 &
     \dots & 0 \\ 0 & 1 & 0 & \dots & 0 \\ 0 & 0 & 1 & \dots & 0 \\
@@ -781,10 +784,89 @@ E.g. Regularisation helps in this pathetic case.
 
 \subsection{Regularised Logistic Regression}
 \label{sec:7-4}
+Regularised cost function; \[ J(\theta) = -\left[ \frac{1}{m} \sum
+  \limits_{i=1}^{m} y^{(i)} \log h_\theta(x^{(i)}) + (1 - y^{(i)})
+  \log (1 - h_\theta(x^{(i)})) \right] \underbrace{+
+  \frac{\lambda}{2m} \sum \limits_{j=1}^{n} \theta_j^2} _{penalty}
+\]
 
+Cosmetically, the algorithm looks the same:
+\[ \begin{array}{l}
+  \textrm{Repeat }  \{ \\
+  \theta_0 := \theta_0 - \alpha \frac {1}{m} \sum
+  \limits_{i=1}^m(h_\theta(x^{(i)}) - y^{(i)}) x_0^{(i)} \\
+  \theta_j := \theta_j - \alpha \underbrace{ \left[ \frac {1}{m} \sum
+      \limits_{i=1}^m(h_\theta(x^{(i)}) - y^{(i)}) x_j^{(i)}
+      \underbrace{+ \frac{\lambda}{m}\theta_j } _{penalty}
+    \right]}_{\frac{\delta}{\delta \theta_j}J(\theta)} \\
+  (j= 1, 2, 3, \dots , n) \textrm{ - no zero here!} \\
+  \}
+\end{array}
+\]
+where hypothesis is a bit different: $h_\theta(x) = \frac{1}{1 +
+  e^{-\theta^Tx}}$
+
+\subsubsection{Advanced Optimisation}
+\label{sec:7-4-2}
+In Octave:
+\begin{lstlisting}[language=Octave, caption=={Plugin function }]
+  function [jVal, gradient] = costFunction(theta) jVal = [code to
+  compute |$J(\theta)$|]; |\[\textrm{becomes } J(\theta) = \left[
+    -\frac{1}{m} \sum \limits_{i=1}^{m} y^{(i)} \log h_\theta(x^{(i)})
+    + (1 - y^{(i)}) \log (1 - h_\theta(x^{(i)})) \right] +
+  \frac{\lambda}{2m} \sum \limits_{j=1}^{n} \theta_j^2 \]| gradient(1)
+  = [code to compute |$\frac{\delta}{\delta \theta_0} J(\theta)$|];
+  |\[\frac {1}{m} \sum \limits_{i=1}^m(h_\theta(x^{(i)}) - y^{(i)})
+  x_0^{(i)} \]| gradient(2) = [code to compute |$\frac{\delta}{\delta
+    \theta_1} J(\theta)$|]; |\[ \frac {1}{m} \sum
+  \limits_{i=1}^m(h_\theta(x^{(i)}) - y^{(i)}) x_1^{(i)} +
+  \frac{\lambda}{m}\theta_1 \]| gradient(3) = [code to compute
+  |$\frac{\delta}{\delta \theta_2} J(\theta)$|]; |\[ \frac {1}{m} \sum
+  \limits_{i=1}^m(h_\theta(x^{(i)}) - y^{(i)}) x_2^{(i)} +
+  \frac{\lambda}{m}\theta_2 \]| ..... gradient(n+1) = [code to compute
+  |$\frac{\delta}{\delta \theta_n} J(\theta)$|]; |\[ \frac {1}{m} \sum
+  \limits_{i=1}^m(h_\theta(x^{(i)}) - y^{(i)}) x_n^{(i)} +
+  \frac{\lambda}{m}\theta_n \]|
+\end{lstlisting}
 
 \section{Neural Networks: Representation}
 \label{sec:8}
+- to cope with the problems of too large feature sets. - to give ``one
+more'' approach to the learning problem
+
+\subsection{Neurons and Brain}
+\label{sec:8-2}
+The ``one learning algorithm'' hypothesis was quite popular 80-90s.
+The idea was to re-use the ``almost universal'' algorithms to ``almost
+any'' sensors.
+
+\subsection{Model Representation}
+\label{sec:8-3}
+Simulating neurons in the brain:
+\begin{itemize}
+\item ``Input'' wires - dendrites
+\item ``Output'' wire - axon
+\item dendrite on one neuron is connected to the axon on another. The
+  neuron itself makes some ``computations'' when passing signal.
+\end{itemize}
+
+Neuron model represents a neuron as a logistic unit with a number of
+inputs and single output function (hypothesis) like $ h_\theta(x) $
+like: \[  
+x = \left[ \begin{array}{c}  x_0 \\ x_1 \\ x_2 \\ x_3 \end{array}
+\right];
+\theta = \left[ \begin{array}{c}  \theta_0 \\ \theta_1 \\ \theta_2 \\
+    \theta_3 \end{array} \right] \textrm{(sometimaes called "weights")} \]
+and $h_\theta(x)=\frac{1}{1 + e^{-\theta^Tx}}$ is called ``Sigmoid
+(logistic) activation function''.
+Sometimes $x_0$ is referred as ``bias unit'' (``bias neuron'' on the
+diagram). It is always equal to 1.
+
+\subsubsection{Neural Network}
+The Neural Network is a group of neurons like the one on a picture.
+
+Layer 1 neurons are ``input neurons'' 
+\label{06:00}
 
 
 \end{document}
