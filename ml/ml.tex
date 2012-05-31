@@ -852,21 +852,373 @@ Simulating neurons in the brain:
 
 Neuron model represents a neuron as a logistic unit with a number of
 inputs and single output function (hypothesis) like $ h_\theta(x) $
-like: \[  
-x = \left[ \begin{array}{c}  x_0 \\ x_1 \\ x_2 \\ x_3 \end{array}
-\right];
+like: \[ x = \left[ \begin{array}{c} x_0 \\ x_1 \\ x_2 \\
+    x_3 \end{array} \right];
 \theta = \left[ \begin{array}{c}  \theta_0 \\ \theta_1 \\ \theta_2 \\
-    \theta_3 \end{array} \right] \textrm{(sometimaes called "weights")} \]
-and $h_\theta(x)=\frac{1}{1 + e^{-\theta^Tx}}$ is called ``Sigmoid
-(logistic) activation function''.
-Sometimes $x_0$ is referred as ``bias unit'' (``bias neuron'' on the
-diagram). It is always equal to 1.
+    \theta_3 \end{array} \right] \textrm{(sometimaes called
+  "weights")} \] and $h_\theta(x)=\frac{1}{1 + e^{-\theta^Tx}}$ is
+called ``Sigmoid (logistic) activation function''. Sometimes $x_0$ is
+referred as ``bias unit'' (``bias neuron'' on the diagram). It is
+always equal to 1.
 
 \subsubsection{Neural Network}
 The Neural Network is a group of neurons like the one on a picture.
 
-Layer 1 neurons are ``input neurons'' 
-\label{06:00}
+Layer 1 neurons are ``input neurons''; intermediate (Layer 2) is also
+called ``the hidden layer'' (contains $a_0$ - the ``bias unit'' ; the
+final one (Layer 3) - ``output layer''. Notations:
+\begin{itemize}
+\item {$a_j^{(j)}$} = ``activation'' of unit i in layer j
+\item {$\theta^{(j)}$} = matrix of weights controlling function
+  mapping from layer j to layer j + 1.
+\end{itemize}
+Example: for network with three input units and three hidden ones
+(assuming g(z) is the sigmoid function):
+\begin{equation}
+  \label{eq:8-4}
+  \begin{array}[c]{c}
+    a_1^{(2)} = g(\theta_{10}^{(1)}x_0 + \theta_{11}^{(1)}x_1 +
+    \theta_{12}^{(1)}x_2 + \theta_{13}^{(1)}x_3)  \\
+    a_2^{(2)} = g(\theta_{20}^{(1)}x_0 + \theta_{21}^{(1)}x_1 +
+    \theta_{22}^{(1)}x_2 + \theta_{23}^{(1)}x_3)  \\
+    a_3^{(2)} = g(\underbrace{\theta_{30}^{(1)}x_0 + \theta_{31}^{(1)}x_1 +
+      \theta_{32}^{(1)}x_2 + \theta_{33}^{(1)}x_3}_{z_3^{(2)}})
+  \end{array}
+\end{equation}
+Finally,
+\[ h_\theta(x) = a_1^{(3)} = g(\theta_{10}^{(2)}a_0^{(2)} +
+\theta_{11}^{(2)}a_1^{(2)} + \theta_{12}^{(2)}a_2^{(2)} +
+\theta_{13}^{(2)}a_3^{(2)} )\]
+Dimensions: \\
+If network has $s_j$ units in layer j, $s_{j+1}$ units in layer j+1,
+then $\theta^{(j)}$ will be of dimension $s_{j+1} \times (s_j + 1)$.
+\\
+The whole hypothesis looks like $h_\theta (X)$ (in vectors!) -
+``parametrized'' by $\theta$
+\label{8-4}
+ 
+\subsubsection{Calcualtion and Optimisation}
+Terminology: The $\theta_{10}^{(1)}x_0 + \theta_{11}^{(1)}x_1 +
+\theta_{12}^{(1)}x_2 + \theta_{13}^{(1)}x_3$ part is represented as
+$z_1^{(2)}$ so that $a_1^{(2)} = g(z_1^{(2)})$.
+% \label {8-4: 02:01}
+The whole set of $z_1^{(i)}$ from \ref{eq:8-4} can be written as
+$\theta^{(1)} \times x$
+
+Further vectorization (with $z_0^{(2)} = 1$ always):
+\begin{equation*}
+  \label{eq:8-4:02:25}
+  \begin{array}[c]{l}
+    x = \left[  \begin{array}[c]{c}   x_0 \\ x_1 \\ x_2 \\ x_3 \end{array} \right]
+    z^{(2)} = \left[\begin{array}[c]{c} z_1^{(2)} \\ z_2^{(2)}
+        \\ z_3^{(2)} \end{array} \right] 
+    \\ \\    z^{(2)} = \theta^{(1)}x 
+    \\    a^{(2)} = g(z^{(2)})
+  \end{array}
+\end{equation*}
+- both $a^{(2)}$ and $z^{(2)}$ are $\mathbf{R}^3$
+
+Then , as $x = a^{(1)}$ (activation for the first layer), we can
+generalise: \[ z^{(2)} = \theta^{(1)} a^{(1)}\]
+
+With bias unit: $a_0^{(2)} = 1 \Rightarrow a^{(2)} \in
+\mathbf{R}^4$: \[ z^{(3)} = \theta^{(2)}a^{(2)} \]
+\[ h_\theta(x) = a^{(3)} = g(z^{(3)})\]
+
+The whole story is called {\bf Forward Propagation}. At each level,
+the process is our good old Logistic Regression, ``learning its own
+features'', ergo, we can play with different architectures instead of
+playing with high - order features as in Logistic Regression.
+
+\subsection{Examples and Intuition}
+\label{sec:8-5}
+Exotic example 1: hypothesis like $y = x_1 \textrm{ XOR } x_2$ or $y =
+x_1 \textrm{ NXOR } x_2$
+
+Simple example: AND:
+\[ x_1, x_2 \in \{0, 1\}\] \[ y = x_1 \textrm{ AND } x_2 \] The whole
+network consists of 3 input parameters ($x_1, x_2$ and bias unit
+``+1'') and single hidden unit (single-neuron network). We could solve
+the task by assigning: $ \theta = [-30, +20, +20]$ - that is,
+$h_\theta(x0) = g(-30 + 20 x_1 + 20 x_2)$
+
+OR function is built similarly: $ \theta = [-10, +20, +20]$
+
+Negation (NOT): $ \theta = [+10, -20]$ (2 input parameters in total)
+
+Returning to $x_1 \textrm{ XNOR } x_2 = (x_1 \textrm{ AND } x_2)
+\textrm{ OR } ((\textrm{NOT } x_1) \textrm{ AND } (\textrm{NOT }
+x_2))$:
+\[
+\begin{array}{l}
+  a_1^{(2)} = (-30 + 20 x_1 + 20 x_2) \\  
+  a_2^{(2)} = (+10 - 20 x_1 - 20 x_2)  \\
+  \textrm{ level 3: } a_1^{(3)} = (-10 + 20 a_1^{(2)} + 20 a_2^{(2)})
+  \Rightarrow h_\theta(x)
+\end{array}
+\]
+\label{8-6}
+
+\subsection{Multiclass Classification}
+\label{sec:8-7}
+Output layer consists of more then one unit: n units each representing
+probability of relevant output. As such, training examples will
+be \[(x^{(1)}, y^{(1)}), (x^{(2)}, y^{(2)}), (x^{(3)}, y^{(3)}), \dots
+(x^{(m)}, y^{(m)}) \], where $x^{(i)}$ are images, and each $y^{(i)}$
+is one of \[ \begin{array}{cccc} \left[ \begin{array}{c} 1 \\ 0 \\ 0
+      \\ 0 \end{array} \right], & \left[ \begin{array}{c} 0 \\ 1 \\ 0
+      \\ 0 \end{array} \right], & \left[ \begin{array}{c} 0 \\ 0 \\ 1
+      \\ 0 \end{array} \right], & \left[ \begin{array}{c} 0 \\ 0 \\ 0
+      \\ 1 \end{array} \right]
+\end{array}\]
+and use ``one-vs-all'' approach to training
+
+
+\section{Neural Networks: Learning}
+\label {sec:9}
+
+\subsection{Cost Function}
+\label{sec:9-1}
+Notation:
+\[ \{ (x^{(1)}, y^{(1)}), (x^{(2)}, y^{(2)}) \dots (x^{(m)}, y^{(m)})
+\} \textrm{ - samples} \]
+\[ \mathbf{L} \textrm{ = total no of layers in network} \]
+\[ s_l \textrm{ = no of units (not counting bias unit in layer l}\]
+
+We have 2 variants of the classification problem:
+
+\subsubsection{Binary Classification}
+y = 0 or 1; 1 output unit; heuristic will be: the single real number`;
+$h_\theta(x) \in \mathbf{R}$, number of output units $S_L = 1$
+
+\subsubsection{Multi-class Classification (K classification)}
+\label{sec:9-1}
+K output units
+\[y \in \mathbf{R^K} \textrm{ e.g.} \begin{array}{cccc}
+  \left[ \begin{array}{c} 1 \\ 0 \\ 0 \\ 0 \end{array} \right], &
+  \left[ \begin{array}{c} 0 \\ 1 \\ 0 \\ 0 \end{array} \right], &
+  \left[ \begin{array}{c} 0 \\ 0 \\ 1 \\ 0 \end{array} \right], &
+  \left[ \begin{array}{c} 0 \\ 0 \\ 0
+      \\ 1 \end{array} \right] \\
+  pedesterian & car & motorcycle & truck
+\end{array} \]
+$h_\theta(x) \in \mathbf{R^K}$ and $S_L = K, K \geq 3$.  
+
+The concrete cost function is generalisation of logistic regression:
+
+\[ J(\theta) = -\frac{1}{m} \left[\sum \limits_{i=1}^{m} y^{(i)} \log
+  h_\theta(x^{(i)}) + (1 - y^{(i)}) \log (1 - h_\theta(x^{(i)}))
+\right] + \frac{\lambda}{2m} \sum \limits_{j=1}^{n} \theta_j^2 \]
+
+instead of single $y^{(i)}$ we now have a vector of K such elements,
+so, for $h_\theta(x) \in \mathbf{R^K} \textrm{ and output }
+(h_\theta(x))_i = i^{th}$ :
+
+\[ J(\theta) = - \frac{1}{m} \left[ \sum \limits_{i=1}^{m} \sum
+  \limits_{k=1}^{K} y_k^{(i)} \log (h_\theta(x^{(i)})_k) + (1 -
+  y_k^{(i)}) \log (1 - (h_\theta(x^{(i)}))_k) \right] +
+\frac{\lambda}{2m} \sum \limits_{l=1}^{L-1} \sum \limits_{i=1}^{s_l}
+\sum \limits_{j=1}^{s_{l+1}} (\theta_{ji}^{(l)})^2 \]
+ 
+For binary classification (binary output) K = 1. Regularisation term
+does NOT include the bias terms $\theta_{i0}x_0$
+
+\subsection{Backpropagation Algorithm}
+\label{sec:9-2}
+To minimise Cost function we need a code to compute $J(\theta)$ and
+$-\frac{\delta}{\delta \theta^{(l)}_{ij}} J(\theta)$
+
+Intuition: $\delta_j^{(l)}$ = ``error'' of node $j$ in layer $l$.
+
+For each output layer (layer L = 4) $ \delta_j^{(4)} =
+\underbrace{a_j^{(4)}}_{(h_\theta(x))_j} - y_j$, in vector form: $\vec
+\delta^{(4)} = \vec a^{(4)} - \vec y$
+
+Further:
+\[\delta^{(3)} = (\theta^{(3)})^T \delta^{(4)} .*
+\underbrace{g'(Z^{(3)})}_{a^{(3)} .* (1-a^{(3)})} \] where .* -
+element-wise multiplication; $a^{(3)}$ is activation vector at level
+3.
+
+Similarly:
+\[\delta^{(2)} = (\theta^{(2)})^T \delta^{(3)} .* g'(Z^{(2)}) \]
+no $\delta^{(1)}$ term, because the first layer corresponds to
+features observed in training set.
+
+The term {\bf back Propagation} comes from the fact that initially we
+calculate $\delta^{(4)}$, then use it for calculating $\delta^{(3)}$ -
+so we ``back-propagating'' the error from high level to level 1.
+
+After quite complex derivation: \[\frac{\delta}{\delta
+  \theta_{ij}^{(l)}} J(\theta) = a_j^{(l)}\delta_i^{(l+1)} \]
+(ignoring $\lambda$ - regularisation!)
+
+So, the algorithm itself:
+
+Get training set $\{(x^{(1)}, y^{(1)}), \dots, (x^{(m)}, y^{(m)})\}$
+
+Set $\Delta_{ij}^{(l)} = 0$ (for all $l, i, j$). This will be used to
+compute the partial derivatives.
+\begin{tabbing}
+  For\quad \=$i$ = 1 to $m$  \\
+  \>Set $a^{(1)} = x{(i)}$ \\
+  \>Perform forward propagation to compute $a^{(l)}$ for $l = 2, 3,
+  \dots, L $ \\
+  \>Using $y^{(i)}$, compute $\delta^{(L)} = a^{(L)} - y^{(i)}$ \\
+  \>Compute $\delta^{(L-1)}, \delta^{(L-2)}, \dots, \delta^{(2)}$ \\
+  \>$\Delta_{ij}^{(l)} := \Delta_{ij}^{(l)} + a_j^{(l)}
+  \delta_i^{(l+1)}$ - possible to vectorise as $\Delta^{(l)} :=
+  \Delta^{(l)} + \delta^{(l+1)}(a^{(l)})^T$ \\
+\end{tabbing}   
+After the loop:  \\
+$[\mathbf{D}_{ij}^{(l)} := \frac{1}{m}\Delta_{ij}^{(l)} + \lambda
+\theta_{ij}^{(l)} \textrm{ if }j \ne 0$ \\
+$\mathbf{D}_{ij}^{(l)} := \frac{1}{m}\Delta_{ij}^{(l)} \textrm{ if }j
+= 0$ \\
+
+finally: $\frac{\delta}{\delta \theta_{ij}^{(l)}} J(\theta) =
+\mathbf{D}_{ij}^{(l)}$
+
+\subsection{Backpropagation Intuition}
+\label{sec:9-3}
+
+The idea is that $\delta_j^{(l)}$ is an ``error'' of cost for
+$a_j^{(l)}$ (unit $j$ in layer $l$). Formally, $\delta_j^{(l)} =
+\frac{\delta}{\delta z_j^{(l)}} \, cost(i)$ where $cost(i) = y^{(i)}
+\log h_\theta(x^{(i)}) + (1 - y^{(i)}) \log h_\theta(x^{(i)})$
+
+\section{Implementation: Unrolling Parameters}
+\label{sec:9-4}
+Traditional ``Advanced optimisation'' way s built using vectors for
+weight values and gradients. In the neural networks we use{\bf
+  matrices} for $\theta^{(l)}$ and $D^{(l)}$ - so need to ``unroll''
+these into vectors.
+
+Example: 10 parameters, 1 hidden layer (10 units), 1 output unit:
+\[ s_1 = 10, s_2 = 10, s_3 = 1\]
+\[ \Theta^{(1)} \in \mathbf{R}^{10\times11}, \Theta^{(2)} \in
+\mathbf{R}^{10\times11}, \Theta^{(2)} \in \mathbf{R}^{1\times 11} \]
+\[ D^{(1)} \in \mathbf{R}^{10\times11}, D^{(2)} \in
+\mathbf{R}^{10\times11}, D^{(2)} \in \mathbf{R}^{1\times 11} \] In
+Octave:
+\begin{lstlisting}[language=Octave, caption=={Plugin function }]
+  thetaVec = [ Theta1(:); Theta2 (:); Theta3(:)]; DVec = [D1(:);
+  D2(:); D3(:) ];
+
+  Theta1 = reshape(thetaVec(1:110), 10, 11); Theta2 =
+  reshape(thetaVec(111:220), 10, 11); Theta3 =
+  reshape(thetaVec(221:231), 1, 11);
+\end{lstlisting}
+
+\subsubsection{Learning Algorithm}
+Have initial parameters $\Theta^{(1)}, \Theta^{(2)}, \Theta^{(3)}$. \\
+Unroll to get {\it initialTheta} to pass to
+\begin{lstlisting}[language=Octave, caption=={Plugin function }]
+  fminunc(@costFunction,initialTheta,options)
+\end{lstlisting}
+
+Now for {\it costFunction}:
+\begin{lstlisting}[language=Octave, caption=={Plugin function }]
+  function [jval, gradientVec] = costFunction(thetaVec)
+\end{lstlisting}
+\begin{tabbing}
+  \quad \quad \= From {\it thetaVec}, get $\Theta^{(1)}, \Theta^{(2)},
+  \Theta^{(3)}$ (use {\it reshape}). \\
+  \>Use forward prop/back prop to compute $D^{(1)}, D^{(2)}, D^{(3)}$
+  and $J(\Theta)$. \\
+  \>Unroll  $D^{(1)}, D^{(2)}, D^{(3)}$ to get {\it gradientVec}\\
+\end{tabbing}
+
+\section{Gradient Checking}
+\label{sec:9-5}
+This is an idea to eliminate possible bugs in back prop
+implementation. We calculate some sort of ``derivative approximation''
+in $\Theta$ using small value $\epsilon$ to calculate approximation:
+\[ \frac{\delta}{\delta \Theta} J(\Theta) \approx \frac{J(\Theta +
+  \epsilon) - J(\Theta - \epsilon)} { 2 \epsilon} \]
+
+Usually value for $\epsilon$ is quite small: $\epsilon \approx
+10^{-4}$ (but beware of too small value - this can case the numerical
+problem).
+
+Implementation:
+\begin{lstlisting}[language=Octave]
+  gradApprox = (J(theta + EPSILON) - J(theta - EPSILON)) / (2*EPSILON)
+\end{lstlisting}
+% 9-5 05:00
+For general case (parameter vector $\theta$ can even be unrolled
+version of $\Theta^{(1)}, \Theta^{(2)}, \Theta^{(3)}$, so that $\Theta
+\in \mathbf{R}^n$ and $\theta = \left[\theta_1, \theta_2, \theta_3,
+  \dots, \theta_n \right]$. Then:
+\[ \frac{\delta}{\delta \theta_1} J(\theta) \approx \frac{J(\theta_1 +
+  \epsilon, \theta_2, \theta_3, \dots, \theta_n) - J(\theta_1 -
+  \epsilon, \theta_2, \theta_3, \dots, \theta_n)}{2 \epsilon} \]
+\[ \frac{\delta}{\delta \theta_1} J(\theta) \approx \frac{J(\theta_1,
+  \theta_2 + \epsilon, \theta_3, \dots, \theta_n) - J(\theta_1,
+  \theta_2 - \epsilon, \theta_3, \dots, \theta_n)}{2 \epsilon} \]
+\[ \frac{\delta}{\delta \theta_1} J(\theta) \approx \frac{J(\theta_1,
+  \theta_2, \theta_3 + \epsilon, \dots, \theta_n) - J(\theta_1,
+  \theta_2, \theta_3 - \epsilon, \dots, \theta_n)}{2 \epsilon} \]
+\[ \vdots \]
+\[ \frac{\delta}{\delta \theta_n} J(\theta) \approx \frac{J(\theta_1,
+  \theta_2, \theta_3, \dots, \theta_n + \epsilon) - J(\theta_1,
+  \theta_2, \theta_3, \dots, \theta_n - \epsilon)}{2 \epsilon} \]
+in Octave:
+\begin{lstlisting}[language=Octave]
+for i = 1 : n,
+  thetaPlus = theta;
+  thetaPlus(i) = thetaPlus(i) + EPSILON;
+  thetaMinus = theta;
+  thetaMinus(i) = thetaMinus(i) - EPSILON;
+  gradApprox(i) = (J(thetaPlus) - J(thetaMinus)) / (2*EPSILON);
+end;
+\end{lstlisting}
+
+The criteria: check that $gradApprox \approx \underbrace{
+  DVec}_{\textrm{derivatives from back prop}}$. The idea is to compare
+the numerically obtained value for derivatives with formulated ones.
+
+\subsubsection{Implementation Node}
+\begin{itemize}
+\item Implement backprop to compute {\it DVec} (unrolled $D^{(1)},
+  D^{(2)}, D^{(3)}$).
+\item Implement numerical gradient check to compute {\it gradApprox}.
+\item Make sure they give similar values.
+\item Turn off gradient checking. Use backprop code for learning.
+\end{itemize}
+
+\paragraph{Important.}
+Be sure to disable the gradient checking code before training classifier!
+
+\subsection{Random Initialisation}
+\label{sec:9-6}
+For gradient descent and advanced optimisation method, need initial
+value for $\Theta$:
+\begin{lstlisting}[language=Octave]
+otpTheta = fminunc(@costFunciton, initialTheta, options)
+\end{lstlisting}
+Consider gradient descent: 
+Set {\it initialTheta = zeros(n, 1)}?
+This does not work for neural network as $\Theta_{ij}^{(l)} = 0$ for
+all $i, j, l$ and $a_1^{(2)} = a_2^{(2)}$, also $\delta_1^{(2)} =
+\delta_2^{(2)}$ and partial derivatives are equal to each other. After
+each update, parameters corresponding to inputs going into each of two
+hidden units are identical. As a result, all hidden units are
+computing the same feature (the same function from the input).
+
+\subsubsection{Random Initialisation: Symmetry breaking}
+\label{sec:9-6-1}
+Initialise each $\Theta_{ij}^{(l)}$ to a random value in $[ -\epsilon,
+\epsilon ]$ so that $-\epsilon \leq \Theta_{ij}^{(l)} \leq \epsilon$.
+\\
+E.g.
+\begin{lstlisting}[language=Octave]
+Theta1 = rand(10, 11) * (2*INIT_EPSILON) - INIT_EPSILON;
+Theta2 = rand(1, 11) * (2*INIT_EPSILON) - INIT_EPSILON;
+\end{lstlisting}
+
+\section{Putting it  Together}
+\label{sec:9-7}
 
 
 \end{document}
