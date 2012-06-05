@@ -1087,7 +1087,7 @@ $a_j^{(l)}$ (unit $j$ in layer $l$). Formally, $\delta_j^{(l)} =
 \frac{\delta}{\delta z_j^{(l)}} \, cost(i)$ where $cost(i) = y^{(i)}
 \log h_\theta(x^{(i)}) + (1 - y^{(i)}) \log h_\theta(x^{(i)})$
 
-\section{Implementation: Unrolling Parameters}
+\subsection{Implementation: Unrolling Parameters}
 \label{sec:9-4}
 Traditional ``Advanced optimisation'' way s built using vectors for
 weight values and gradients. In the neural networks we use{\bf
@@ -1129,7 +1129,7 @@ Now for {\it costFunction}:
   \>Unroll  $D^{(1)}, D^{(2)}, D^{(3)}$ to get {\it gradientVec}\\
 \end{tabbing}
 
-\section{Gradient Checking}
+\subsection{Gradient Checking}
 \label{sec:9-5}
 This is an idea to eliminate possible bugs in back prop
 implementation. We calculate some sort of ``derivative approximation''
@@ -1162,16 +1162,13 @@ version of $\Theta^{(1)}, \Theta^{(2)}, \Theta^{(3)}$, so that $\Theta
 \[ \vdots \]
 \[ \frac{\delta}{\delta \theta_n} J(\theta) \approx \frac{J(\theta_1,
   \theta_2, \theta_3, \dots, \theta_n + \epsilon) - J(\theta_1,
-  \theta_2, \theta_3, \dots, \theta_n - \epsilon)}{2 \epsilon} \]
-in Octave:
+  \theta_2, \theta_3, \dots, \theta_n - \epsilon)}{2 \epsilon} \] in
+Octave:
 \begin{lstlisting}[language=Octave]
-for i = 1 : n,
-  thetaPlus = theta;
-  thetaPlus(i) = thetaPlus(i) + EPSILON;
-  thetaMinus = theta;
-  thetaMinus(i) = thetaMinus(i) - EPSILON;
-  gradApprox(i) = (J(thetaPlus) - J(thetaMinus)) / (2*EPSILON);
-end;
+  for i = 1 : n, thetaPlus = theta; thetaPlus(i) = thetaPlus(i) +
+  EPSILON; thetaMinus = theta; thetaMinus(i) = thetaMinus(i) -
+  EPSILON; gradApprox(i) = (J(thetaPlus) - J(thetaMinus)) /
+  (2*EPSILON); end;
 \end{lstlisting}
 
 The criteria: check that $gradApprox \approx \underbrace{
@@ -1188,19 +1185,19 @@ the numerically obtained value for derivatives with formulated ones.
 \end{itemize}
 
 \paragraph{Important.}
-Be sure to disable the gradient checking code before training classifier!
+Be sure to disable the gradient checking code before training
+classifier!
 
 \subsection{Random Initialisation}
 \label{sec:9-6}
 For gradient descent and advanced optimisation method, need initial
 value for $\Theta$:
 \begin{lstlisting}[language=Octave]
-otpTheta = fminunc(@costFunciton, initialTheta, options)
+  otpTheta = fminunc(@costFunciton, initialTheta, options)
 \end{lstlisting}
-Consider gradient descent: 
-Set {\it initialTheta = zeros(n, 1)}?
-This does not work for neural network as $\Theta_{ij}^{(l)} = 0$ for
-all $i, j, l$ and $a_1^{(2)} = a_2^{(2)}$, also $\delta_1^{(2)} =
+Consider gradient descent: Set {\it initialTheta = zeros(n, 1)}? This
+does not work for neural network as $\Theta_{ij}^{(l)} = 0$ for all
+$i, j, l$ and $a_1^{(2)} = a_2^{(2)}$, also $\delta_1^{(2)} =
 \delta_2^{(2)}$ and partial derivatives are equal to each other. After
 each update, parameters corresponding to inputs going into each of two
 hidden units are identical. As a result, all hidden units are
@@ -1213,12 +1210,291 @@ Initialise each $\Theta_{ij}^{(l)}$ to a random value in $[ -\epsilon,
 \\
 E.g.
 \begin{lstlisting}[language=Octave]
-Theta1 = rand(10, 11) * (2*INIT_EPSILON) - INIT_EPSILON;
-Theta2 = rand(1, 11) * (2*INIT_EPSILON) - INIT_EPSILON;
+  Theta1 = rand(10, 11) * (2*INIT_EPSILON) - INIT_EPSILON; Theta2 =
+  rand(1, 11) * (2*INIT_EPSILON) - INIT_EPSILON;
 \end{lstlisting}
 
-\section{Putting it  Together}
+\subsection{Putting it Together}
 \label{sec:9-7}
+\begin{itemize}
+\item Pick a network architecture:\\
+  No of input units: Dimension of features $x^{(i)}$ \\
+  No of output units: Number of classes \\
+  Reasonable default: 1 hidden layer, or if >1 hidden layer, have same
+  no. of hidden units in every layer (usually the more the better, but
+  this will be computation expensive).
+\item Train a neural network
+  \begin{enumerate}
+  \item Randomly initialise weights
+  \item Implement forward propagation to get $h_\Theta(x^{(i)})$ for
+    any $x^{(i)}$
+  \item Implement code to compute cost function $J(\Theta)$
+  \item Implement back prop to compute partial derivatives
+    $\frac{\delta}{\delta\Theta_{jk}^{(l)}} J(\Theta)$
+  \end{enumerate}
+  \begin{lstlisting}[language=Octave]
+    for i = 1:m
+  \end{lstlisting}
+  \begin{tabbing}
+    \quad \quad \quad \quad \= Perform forward propagation and back propagation using
+    example ($x^{(i)}, y^{(i)}$)  \\
+    \>Get activations $a^{(l)}$ and delta terms $\delta^{(l)}$ for $l=2,
+    \dots, L$)\\
+    \>Compute accumulation terms $\Delta^{(l)} := \Delta^{(l)} +
+    \delta^{(li)}(a^{(l)})^T$
+  \end{tabbing} 
+  Compute $\frac{\delta}{\delta \Theta_{jk}^{(l)}} J(\Theta)$ (outside
+  loop on 1:m)
+\item Training a neural network
+  \begin{enumerate}
+  \item Use gradient checking to compare $\frac{\delta}{\delta
+      \Theta_{jk}^{(l)}} J(\Theta)$ computed using back propagation
+    vs. using numerical estimate of gradient of $J(\Theta)$. \\
+    Then disable gradient checking code.
+  \item Use gradient descent or advanced optimisation method with back
+    propagation to try to minimise $J(\Theta)$ as a function of
+    parameters $\Theta$
+  \end{enumerate}
+\end{itemize}
+
+BTW, for neural networks, the function $J(\Theta)$ is non-convex so it
+is possible it will have the local minimum (at least in theory). In
+practice, it usually diverges quite OK.
+
+\subsection{Automonous Driving}
+\label{sec:9-8}
+Баловство одно. But the idea of using more then one training set and
+selecting the most ``confident'' output worth noting.
+
+
+\section{Advice for Applying ML}
+\label{sec:10}
+Imagine we're debugging a regularised linear regression which predicts
+the house prices:
+\[J(\Theta) = \frac{1}{2m} \left[ \sum\limits_{i=1}^{m}
+  (h_\theta(x^{(i)}) - y^{(i)})^2 + \lambda \sum
+  \limits_{i=1}^{n}\theta_j^2 \right] \] But, on new set of houses, we
+get unacceptable large errors in predictions. Oops.
+Possible variants;
+\begin{itemize}
+\item get more training examples - works sometimes (we'll see when)
+\item try smaller set of features (to avoid over- fitting)
+\item try getting additional features
+\item adding polynomial features
+\item try decreasing / increasing $\lambda$;
+\end{itemize}
+The idea is to filter out the approaches which are not going to work:
+
+\subsubsection{ML diagnostic}
+Diagnostic: A test that you can run to gain insight what is/isn't
+working with a learning algorithm, and gain guidance as to how best to
+improve its performance.
+
+Sometimes takes time to implement, but usually it is a good spent time.
+
+\subsection{Evaluating a Hypothesis}
+\label{sec:10-2}
+Idea is to check how  hypothesis adapts the new data. We split the
+data into two portions; first (near 70\%) used as the training set;
+the second is the test set ($m_{test}$). 
+
+It is better to select testing set randomly (to avoid any ordering
+data effects).
+
+\paragraph{Training / test procedures for linear regression}
+\label{sec:10-2-1}
+\begin{itemize}
+\item Learn parameter $\theta$ from training data (minimising training
+  error $J(\theta)$).
+\item Compute test set error:
+\[J_{test}(\theta) = \frac{1}{2m_{test}}\sum \limits_{i=1}^{m_{test}}
+  \left(h_\theta(x_{test}^{(i)}) - y_{test}^{(i)} \right)^2  \]
+\end{itemize}
+
+\paragraph{Training / test procedures for logistic regression}
+\label{sec:10-2-2}
+\begin{itemize}
+\item Learn parameter $\theta$ from training data.
+\item Compute test set error:
+\[J_{test}(\theta) = \frac{1}{2m_{test}}\sum \limits_{i=1}^{m_{test}}
+  y_{test}^{(i)} \log h_\theta(x_{test}^{(i)}) + (1 - y_{test}^{(i)})
+  \log (1 - h_\theta (x_{test}^{(i)}))  \]
+\item Miss- classification error (0/1 misclassification error): often
+  used fr evaluation: \[
+err(h_\theta^{(c)}, y) = \left\{ \begin{array}
+    {lll} 1 & \textrm{ if } h_\theta(x) \leq 0.5, & y = 0  \\
+& \textrm{ or } h_\theta(x) < 0.5, & y = 1  \\
+0   & \textrm{ otherwise } & 
+  \end{array} \right.\]
+Test error = $\frac{1}{m_{test}} \sum \limits_{i=1}^{m_{test}}
+err(h_\theta(x_{test}^{(i)}), y_{test}^{(i)})$.
+\end{itemize}
+
+\subsection{Model Selection and Train Validation Test Sets}
+\label{sec:10-3}
+
+\subsubsection{Model Selection}
+Introduce a parameter d (a ``degree of polynomial'') which is, well,
+the max power of x in hypothesis. We can compute the relevant
+$\Theta^{(i)}$ and corresponding test errors:
+\[ d = 1 \rightarrow h_\theta(x) = \theta_0 + \theta_1x \rightarrow
+\Theta^{(1)} \rightarrow J_{test}(\Theta^{(1)}) \] 
+\[ d = 1 \rightarrow h_\theta(x) = \theta_0 + \theta_1x + \theta_2x^2 \rightarrow
+\Theta^{(2)} \rightarrow J_{test}(\Theta^{(2)}) \] 
+\[ \vdots\]
+
+\[ d = 1 \rightarrow h_\theta(x) = \theta_0 + \theta_1x \rightarrow +
+\theta_2x^2 + \dots + \theta_{10}x^{10} \rightarrow \Theta^{(10)}  \rightarrow J_{test}(\Theta^{(10)}) \] 
+
+Now we can take the bets performing (i.e. returning minimal
+$J_{test}$). Assume for our example we have the 5th order polynomial.
+We could report $J_{test}$ as estimated but this is likely to be an
+optimistic estimate of generalization error, i.e. our extra parameter
+(d = degree of polynomial) is fit to test set (in other words, we
+optimised the d value as a model parameter on the test set). 
+
+So we divide the data on {\bf three} parts:
+\begin{itemize}
+\item training set (about 60\%)
+\item cross validation set (about 20\%) values are $(x_{cv}^{(i)},y_{cv}^{(i)})$
+\item test set (20\%)
+\end{itemize}
+The we calculate:
+Training error:
+\[ J_{training}(\theta) = \frac{1}{2m} \sum
+\limits_{i=1}^{m}(h_\theta(x^{(i)}) - y^{(i)})^2 \]
+Cross Validation error:
+\[ J_{cv}(\theta) = \frac{1}{2m_{cv}} \sum
+\limits_{i=1}^{m_{cv}}(h_\theta(x_{cv}^{(i)}) - y_{cv}^{(i)})^2 \]
+Test error:
+\[ J_{test}(\theta) = \frac{1}{2m_{test}} \sum
+\limits_{i=1}^{m_{test}}(h_\theta(x_{test}^{(i)}) - y_{test}^{(i)})^2 \]
+Returning to Model Selection task, we:
+\begin{itemize}
+\item calculate $\Theta^{(d)}$ for each reasonable d using the
+  training data set;
+\item calculate $J_{cv}(\Theta^{(d)})$ for each $\Theta^{(d)}$; select
+ d with minimal $J_{cv}$ - assume this is for d=4
+\item estimate generalisation error for test set $J_{test}(\theta^{(4)})$.
+\end{itemize}
+Sometimes CV set us used to report generalisation error (i.e. CV set
+is used as the test set too. It is only acceptable is the test set is
+sufficiently large, but usually it is a bad practice.
+
+\subsection{Diagnosing Bias vs Variance}
+\label{sec:10-4}
+
+Usual reason for poor performance is either Bias (underfitting) or
+high variance (over-fitting). To check this, compare values of Cross
+Validation vs Training errors.
+%see 10-4, Diagnosing bias vs. variance diagram
+High values for $J_{cv}$ correspond to either Bias or High Variance
+situation. Plus:
+\begin{itemize}
+\item Bias (underfit):
+$J_{train}(\theta)$ will be high; \\
+$J_{cv}(\theta) \approx J_{train}(\theta) $ - also high
+\item Variance (overfit)
+$J_{train}(\theta)$ will be low; \\
+$J_{cv}(\theta) >> J_{train}(\theta) $ 
+\end{itemize}
+
+\subsection{Regularisation and Bias / Variance}
+\label{sec:10-5}
+
+Large $\lambda$ values lead to High bias (underfit) training results;
+small $\lambda$ - lead to high variance (overfit). The idea is to
+select $\lambda$ automatically.
+
+Despite the ``normal'' cost function $J(\theta)$ now contains
+$\lambda$:
+\[J(\theta) = \frac{1}{2m} \sum \limits_{i=1}^{m}(h_\theta(x^{(i)}) -
+y^{(i)})^2 + \frac{\lambda}{2m} \sum \limits_{j=1}^{m} \theta_j^2  \]
+
+our error values are calculated without one - ``as usual''
+Training error:
+\[ J_{train}(\theta) = \frac{1}{2m} \sum
+\limits_{i=1}^{m}(h_\theta(x^{(i)}) - y^{(i)})^2 \]
+Cross Validation error:
+\[ J_{cv}(\theta) = \frac{1}{2m_{cv}} \sum
+\limits_{i=1}^{m_{cv}}(h_\theta(x_{cv}^{(i)}) - y_{cv}^{(i)})^2 \]
+Test error:
+\[ J_{test}(\theta) = \frac{1}{2m_{test}} \sum
+\limits_{i=1}^{m_{test}}(h_\theta(x_{test}^{(i)}) - y_{test}^{(i)})^2 \]
+
+So, to chose the value for regularisation parameter $\lambda$, we step
+with powers of 2:
+\begin{enumerate}
+\item 0.01
+\item 0.02
+\item 0.04
+\item 0.08
+
+$\vdots$
+\item[12] 10 (almost 10.24)
+\end{enumerate}
+
+On each step minimise $J(\Theta)$, getting $\Theta^{(i)}$. Determine
+cross validation error $J_{cv}(\theta^{d})$. Then check the test
+error.
+
+For $\lambda$, the picture differs a bit from the Model Selection: we
+have high variance (high $J_{cv}(\theta)$ / low $J_{test}(\theta)$)
+for low value of $\lambda$ and high Bias (high values for both
+$J_{cv}(\theta)$ and $J_{test}(\theta)$) for high values of $\lambda$.
+
+\subsection{Learning Curves}
+\label{sec:10-6}
+
+Used for sanity check or performance proves. Usually the plots of
+$J_{training}(\theta)$ and $J_{cv}(\theta)$ are plotted as the
+functions of m (training set size).
+
+With increasing m, the training error increases. The Cross Validation
+(CV) error decreases with increase in training set size.
+
+In High Bias case, the training error slightly increases but
+stabilises at some plato; CV error decreases to the similar value. The
+resulting error is quite high, and this {\bg error does not decreases
+  with increasing training set size }.
+
+In High Variance case, the training error increases slightly with
+increasing m, while CV error decreases to quite high error value (well
+above the training error). This gap (between training error and Cross
+Validation error) works as indicative diagnostic for the case of High
+Variance (too low $\lambda$). Adding more data is likely to help in
+this case.
+%see pictures from PDF!
+
+\subsection{Deciding What to Do Next Revisited}
+\label{sec:10-7}
+
+So, if the ML algorithm does not provide sufficient performance, what
+should you try next?
+\begin{itemize}
+\item get more training examples - to fix high variance
+\item try smaller set of features - foxes high variance
+\item try getting additional features - fixes high bias problem
+\item adding polynomial features - for fixing the high bias problem
+\item try decreasing - fixes high bias
+\item try decreasing - fixes high variance
+\end{itemize}
+
+\subsubsection{Neural Networks and Overfitting}
+\label{sec:10-7-1}
+\begin{itemize}
+\item ``Small'' neural networks (fewer parameters; more prone to
+  under-fitting) are computationally cheaper 
+\item ``large'' network (more hidden unit, more hidden layers) - more
+  prone to overfitting. Computationally more expensive; use $\lambda$
+  to address over-fitting.
+\end{itemize}
+In any case, use $L_{cv}$ to find out the best network config (namely,
+the amount of hidden layers and amount of hidden element).
+
+\section{ML System Design}
+\label{sec:11}
+
 
 
 \end{document}
