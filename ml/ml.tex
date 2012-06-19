@@ -1274,8 +1274,7 @@ the house prices:
 \[J(\Theta) = \frac{1}{2m} \left[ \sum\limits_{i=1}^{m}
   (h_\theta(x^{(i)}) - y^{(i)})^2 + \lambda \sum
   \limits_{i=1}^{n}\theta_j^2 \right] \] But, on new set of houses, we
-get unacceptable large errors in predictions. Oops.
-Possible variants;
+get unacceptable large errors in predictions. Oops. Possible variants;
 \begin{itemize}
 \item get more training examples - works sometimes (we'll see when)
 \item try smaller set of features (to avoid over- fitting)
@@ -1290,13 +1289,14 @@ Diagnostic: A test that you can run to gain insight what is/isn't
 working with a learning algorithm, and gain guidance as to how best to
 improve its performance.
 
-Sometimes takes time to implement, but usually it is a good spent time.
+Sometimes takes time to implement, but usually it is a good spent
+time.
 
 \subsection{Evaluating a Hypothesis}
 \label{sec:10-2}
-Idea is to check how  hypothesis adapts the new data. We split the
-data into two portions; first (near 70\%) used as the training set;
-the second is the test set ($m_{test}$). 
+Idea is to check how hypothesis adapts the new data. We split the data
+into two portions; first (near 70\%) used as the training set; the
+second is the test set ($m_{test}$).
 
 It is better to select testing set randomly (to avoid any ordering
 data effects).
@@ -1307,8 +1307,9 @@ data effects).
 \item Learn parameter $\theta$ from training data (minimising training
   error $J(\theta)$).
 \item Compute test set error:
-\[J_{test}(\theta) = \frac{1}{2m_{test}}\sum \limits_{i=1}^{m_{test}}
-  \left(h_\theta(x_{test}^{(i)}) - y_{test}^{(i)} \right)^2  \]
+  \[J_{test}(\theta) = \frac{1}{2m_{test}}\sum
+  \limits_{i=1}^{m_{test}} \left(h_\theta(x_{test}^{(i)}) -
+    y_{test}^{(i)} \right)^2 \]
 \end{itemize}
 
 \paragraph{Training / test procedures for logistic regression}
@@ -1316,18 +1317,19 @@ data effects).
 \begin{itemize}
 \item Learn parameter $\theta$ from training data.
 \item Compute test set error:
-\[J_{test}(\theta) = \frac{1}{2m_{test}}\sum \limits_{i=1}^{m_{test}}
-  y_{test}^{(i)} \log h_\theta(x_{test}^{(i)}) + (1 - y_{test}^{(i)})
-  \log (1 - h_\theta (x_{test}^{(i)}))  \]
+  \[J_{test}(\theta) = \frac{1}{2m_{test}}\sum
+  \limits_{i=1}^{m_{test}} y_{test}^{(i)} \log
+  h_\theta(x_{test}^{(i)}) + (1 - y_{test}^{(i)}) \log (1 - h_\theta
+  (x_{test}^{(i)})) \]
 \item Miss- classification error (0/1 misclassification error): often
-  used fr evaluation: \[
-err(h_\theta^{(c)}, y) = \left\{ \begin{array}
-    {lll} 1 & \textrm{ if } h_\theta(x) \leq 0.5, & y = 0  \\
-& \textrm{ or } h_\theta(x) < 0.5, & y = 1  \\
-0   & \textrm{ otherwise } & 
-  \end{array} \right.\]
-Test error = $\frac{1}{m_{test}} \sum \limits_{i=1}^{m_{test}}
-err(h_\theta(x_{test}^{(i)}), y_{test}^{(i)})$.
+  used fr evaluation: \[ err(h_\theta^{(c)}, y) =
+  \left\{ \begin{array}
+      {lll} 1 & \textrm{ if } h_\theta(x) \leq 0.5, & y = 0  \\
+      & \textrm{ or } h_\theta(x) < 0.5, & y = 1  \\
+      0 & \textrm{ otherwise } &
+    \end{array} \right.\]
+  Test error = $\frac{1}{m_{test}} \sum \limits_{i=1}^{m_{test}}
+  err(h_\theta(x_{test}^{(i)}), y_{test}^{(i)})$.
 \end{itemize}
 
 \subsection{Model Selection and Train Validation Test Sets}
@@ -1338,44 +1340,46 @@ Introduce a parameter d (a ``degree of polynomial'') which is, well,
 the max power of x in hypothesis. We can compute the relevant
 $\Theta^{(i)}$ and corresponding test errors:
 \[ d = 1 \rightarrow h_\theta(x) = \theta_0 + \theta_1x \rightarrow
-\Theta^{(1)} \rightarrow J_{test}(\Theta^{(1)}) \] 
-\[ d = 1 \rightarrow h_\theta(x) = \theta_0 + \theta_1x + \theta_2x^2 \rightarrow
-\Theta^{(2)} \rightarrow J_{test}(\Theta^{(2)}) \] 
+\Theta^{(1)} \rightarrow J_{test}(\Theta^{(1)}) \]
+\[ d = 1 \rightarrow h_\theta(x) = \theta_0 + \theta_1x + \theta_2x^2
+\rightarrow \Theta^{(2)} \rightarrow J_{test}(\Theta^{(2)}) \]
 \[ \vdots\]
 
 \[ d = 1 \rightarrow h_\theta(x) = \theta_0 + \theta_1x \rightarrow +
-\theta_2x^2 + \dots + \theta_{10}x^{10} \rightarrow \Theta^{(10)}  \rightarrow J_{test}(\Theta^{(10)}) \] 
+\theta_2x^2 + \dots + \theta_{10}x^{10} \rightarrow \Theta^{(10)}
+\rightarrow J_{test}(\Theta^{(10)}) \]
 
 Now we can take the bets performing (i.e. returning minimal
 $J_{test}$). Assume for our example we have the 5th order polynomial.
 We could report $J_{test}$ as estimated but this is likely to be an
 optimistic estimate of generalization error, i.e. our extra parameter
 (d = degree of polynomial) is fit to test set (in other words, we
-optimised the d value as a model parameter on the test set). 
+optimised the d value as a model parameter on the test set).
 
 So we divide the data on {\bf three} parts:
 \begin{itemize}
 \item training set (about 60\%)
-\item cross validation set (about 20\%) values are $(x_{cv}^{(i)},y_{cv}^{(i)})$
+\item cross validation set (about 20\%) values are
+  $(x_{cv}^{(i)},y_{cv}^{(i)})$
 \item test set (20\%)
 \end{itemize}
-The we calculate:
-Training error:
+The we calculate: Training error:
 \[ J_{training}(\theta) = \frac{1}{2m} \sum
-\limits_{i=1}^{m}(h_\theta(x^{(i)}) - y^{(i)})^2 \]
-Cross Validation error:
+\limits_{i=1}^{m}(h_\theta(x^{(i)}) - y^{(i)})^2 \] Cross Validation
+error:
 \[ J_{cv}(\theta) = \frac{1}{2m_{cv}} \sum
 \limits_{i=1}^{m_{cv}}(h_\theta(x_{cv}^{(i)}) - y_{cv}^{(i)})^2 \]
 Test error:
 \[ J_{test}(\theta) = \frac{1}{2m_{test}} \sum
-\limits_{i=1}^{m_{test}}(h_\theta(x_{test}^{(i)}) - y_{test}^{(i)})^2 \]
-Returning to Model Selection task, we:
+\limits_{i=1}^{m_{test}}(h_\theta(x_{test}^{(i)}) -
+y_{test}^{(i)})^2 \] Returning to Model Selection task, we:
 \begin{itemize}
 \item calculate $\Theta^{(d)}$ for each reasonable d using the
   training data set;
 \item calculate $J_{cv}(\Theta^{(d)})$ for each $\Theta^{(d)}$; select
- d with minimal $J_{cv}$ - assume this is for d=4
-\item estimate generalisation error for test set $J_{test}(\theta^{(4)})$.
+  d with minimal $J_{cv}$ - assume this is for d=4
+\item estimate generalisation error for test set
+  $J_{test}(\theta^{(4)})$.
 \end{itemize}
 Sometimes CV set us used to report generalisation error (i.e. CV set
 is used as the test set too. It is only acceptable is the test set is
@@ -1387,16 +1391,16 @@ sufficiently large, but usually it is a bad practice.
 Usual reason for poor performance is either Bias (underfitting) or
 high variance (over-fitting). To check this, compare values of Cross
 Validation vs Training errors.
-%see 10-4, Diagnosing bias vs. variance diagram
+% see 10-4, Diagnosing bias vs. variance diagram
 High values for $J_{cv}$ correspond to either Bias or High Variance
 situation. Plus:
 \begin{itemize}
 \item Bias (underfit):
-$J_{train}(\theta)$ will be high; \\
-$J_{cv}(\theta) \approx J_{train}(\theta) $ - also high
+  $J_{train}(\theta)$ will be high; \\
+  $J_{cv}(\theta) \approx J_{train}(\theta) $ - also high
 \item Variance (overfit)
-$J_{train}(\theta)$ will be low; \\
-$J_{cv}(\theta) >> J_{train}(\theta) $ 
+  $J_{train}(\theta)$ will be low; \\
+  $J_{cv}(\theta) >> J_{train}(\theta) $
 \end{itemize}
 
 \subsection{Regularisation and Bias / Variance}
@@ -1409,18 +1413,19 @@ select $\lambda$ automatically.
 Despite the ``normal'' cost function $J(\theta)$ now contains
 $\lambda$:
 \[J(\theta) = \frac{1}{2m} \sum \limits_{i=1}^{m}(h_\theta(x^{(i)}) -
-y^{(i)})^2 + \frac{\lambda}{2m} \sum \limits_{j=1}^{m} \theta_j^2  \]
+y^{(i)})^2 + \frac{\lambda}{2m} \sum \limits_{j=1}^{m} \theta_j^2 \]
 
-our error values are calculated without one - ``as usual''
-Training error:
+our error values are calculated without one - ``as usual'' Training
+error:
 \[ J_{train}(\theta) = \frac{1}{2m} \sum
-\limits_{i=1}^{m}(h_\theta(x^{(i)}) - y^{(i)})^2 \]
-Cross Validation error:
+\limits_{i=1}^{m}(h_\theta(x^{(i)}) - y^{(i)})^2 \] Cross Validation
+error:
 \[ J_{cv}(\theta) = \frac{1}{2m_{cv}} \sum
 \limits_{i=1}^{m_{cv}}(h_\theta(x_{cv}^{(i)}) - y_{cv}^{(i)})^2 \]
 Test error:
 \[ J_{test}(\theta) = \frac{1}{2m_{test}} \sum
-\limits_{i=1}^{m_{test}}(h_\theta(x_{test}^{(i)}) - y_{test}^{(i)})^2 \]
+\limits_{i=1}^{m_{test}}(h_\theta(x_{test}^{(i)}) -
+y_{test}^{(i)})^2 \]
 
 So, to chose the value for regularisation parameter $\lambda$, we step
 with powers of 2:
@@ -1430,7 +1435,7 @@ with powers of 2:
 \item 0.04
 \item 0.08
 
-$\vdots$
+  $\vdots$
 \item[12] 10 (almost 10.24)
 \end{enumerate}
 
@@ -1455,7 +1460,7 @@ With increasing m, the training error increases. The Cross Validation
 
 In High Bias case, the training error slightly increases but
 stabilises at some plato; CV error decreases to the similar value. The
-resulting error is quite high, and this {\bg error does not decreases
+resulting error is quite high, and this {\bf error does not decreases
   with increasing training set size }.
 
 In High Variance case, the training error increases slightly with
@@ -1464,7 +1469,7 @@ above the training error). This gap (between training error and Cross
 Validation error) works as indicative diagnostic for the case of High
 Variance (too low $\lambda$). Adding more data is likely to help in
 this case.
-%see pictures from PDF!
+% see pictures from PDF!
 
 \subsection{Deciding What to Do Next Revisited}
 \label{sec:10-7}
@@ -1484,7 +1489,7 @@ should you try next?
 \label{sec:10-7-1}
 \begin{itemize}
 \item ``Small'' neural networks (fewer parameters; more prone to
-  under-fitting) are computationally cheaper 
+  under-fitting) are computationally cheaper
 \item ``large'' network (more hidden unit, more hidden layers) - more
   prone to overfitting. Computationally more expensive; use $\lambda$
   to address over-fitting.
@@ -1494,6 +1499,601 @@ the amount of hidden layers and amount of hidden element).
 
 \section{ML System Design}
 \label{sec:11}
+
+\subsubsection{Prioritising}
+\label{sec:11-1}
+Example: building a spam filter.
+
+Naive approach: choose 100 words indicative of spam/not spam, like
+deal, buy, discount, andrew (name of addressee), now...
+
+then build a training set $\mathbf{x} \in \mathbf{R}^{100}$ such as \[
+x_j = \left\{
+  \begin{array}{ll}
+    1 & \textrm{ if word j appears in email } \\
+    0 & \textrm{ otherwise}
+  \end{array} \right. \]
+
+In practice, take most frequently occurring n words (10,000 to 50,000)
+in training set, rather then manually pick 100 words.
+
+Variants to spend time working here:
+\begin{itemize}
+\item Collect lots of data (like in ``honeypot'' project): not always
+  work as we see previously;
+\item Develop sophisticated features based on email routing
+  information (from email header).
+\item Develop sophisticated features for message body, e.g. should
+  ``discount'' and ``discounts'' be treated as the same word? How
+  about ``deal'' and ``Dealer''? Features about punctuation?
+\item Develop algorithm to detect misspellings like m0rtgage,
+  med1cine, w4tches
+\end{itemize}
+The selection is often made based on the ``gut feeling'' - not a best
+way to make decisions.
+
+\subsubsection{Error Analysis}
+\label{sec:11-2}
+Recommended approach:
+\begin{itemize}
+\item Start with a simple algorithm that you can implement quickly (in
+  24 hours). Implement it and test on the cross - validation data.
+\item Plot learning curves to decide if more data, more features, etc.
+  are likely to help.
+\item Error analysis: Manually examine the examples (in cross
+  validation set) that your algorithm made errors on. See if you spot
+  any systematic trend in what type of examples it is making errors
+  on.
+\end{itemize}
+
+\paragraph{Example}
+Let $m_{CV} = 500$ examples in cross validation set. \\
+Algorithm miss-classified 100 emails. \\
+Manually examine 100 errors and categorise them based on:
+\begin{enumerate}
+\item What type of email it is
+\item What cues (features) you thing would have helped the algorithm
+  classify them correctly
+\end{enumerate}
+For instance, imagine out of 100 emails, the ones which where
+miss-classified as ``normal'' are:
+\begin{itemize}
+\item contains word ``Pharma'': 12
+\item contains word ``Replica/fake'': 4
+\item tries to steal password : 53
+\item Other: 31
+\end{itemize}
+It become obvious that we need to look more carefully at password -
+stealing emails and find out how we can add features like ``tries to
+steal password''.
+
+Other possible features:
+\begin{itemize}
+\item Deliberate misspelling (m0rgage, med1cine, etc.)
+\item Unusual email routing
+\item Unusual (spamming) punctuation
+\end{itemize}
+
+\paragraph{The importance of numerical evaluation}
+
+E.g. should discount/discounts/discounted/disccounting be treated as
+the same word?
+
+For NLP projects it is often good idea to use ``stemming'' software -
+like ``Porter stemming''. The problem is that it can hurt (like in
+case universe/university). We need the numerical evaluation (e.g.
+cross validation error) of algorithms performance with and without
+stemming. Similar story - for distinguishing upper vs. lower case
+(Mom/mom - should it be treated as the same or different words?)
+
+\subsection{Error Metrics for Skewed Classes}
+\label{sec:11-3}
+
+\paragraph{Cancel classification example}
+Train logistic regression model $h_\theta(x)$: y=1 if cancer, y = 0
+otherwise.
+
+Find that you got 1\% error on your test set (99\% correct diagnoses).
+Looks good, but:
+
+If only 0.50\% of patients actually do have cancer, our 1\% error does
+not look that good: function which always return 0 will be even better
+(it will fail in 0.5\% of cases - better then our 1\%).
+
+Skewed classes - classification when the number of examples is too
+close to one of extremes (so that returning constant will give
+reasonably good result)..
+
+In this case we need a different evaluation metric, like:
+
+\subparagraph{Precision/Recall} if y = 1 in presence of rare class
+that we want to detect (which is pure convention versus y = 0 for rare
+case):
+
+\begin{tabular}{cc}
+  \quad & Actual class \\
+  Predicted class &
+  \begin{tabular}{c|c|c}
+    \quad & 1 & 0 \\
+    \hline
+    1 & True positive & False positive \\
+    0 & False negative & True negative 
+  \end{tabular}
+\end{tabular}
+
+We calculate two parameters:
+\begin{itemize}
+\item Precision \\
+  of all cases when we predicted y = 1, what fraction actually should
+  be classified 1? $\frac{\textrm{True positives}}{\textrm{\#predicted
+      pos}} = \frac{\textrm{True pos}}{\textrm{True pos + False pos}}$
+  Shows how accurate our prediction is.
+\item Recall \\
+  Of all cases actually having 1, what fraction did we correctly
+  detect as y = 1? $\frac{\textrm{True pos}}{\textrm{\#actual pos}} =
+  \frac{\textrm{True pos}}{\textrm{True pos + False pos}}$ Gives a
+  rough sense of how well is our classifier.
+\end{itemize}
+The idea is that good classified gives high both Precision and Recall,
+while ``cheating'' one (e.g. the one which always returns 0) will have
+one of these parameters quite low.
+
+\subsection{Trading Off Precision and Recall}
+\label{sec:11-4}
+
+Let's say we work on logistic regression: $0 \leq h_\theta(x) \leq 1$ \\
+Predict 1 if $h_\theta(x) \geq 0.5$ \\ Predict 0 if $h_\theta(x) <
+0.5$ \\
+
+Suppose we want to predict y = 1 (e.g. cancer) only when confident. In
+this case we could set a threshold to 0.7. We'll end up with {\bf high
+  precision } but {\bf lower recall}.
+
+If we want to avoid missing too many cases of cancer (avoid false
+negatives - conservative approach), we set threshold to 0.3. We'll get
+a {\bf high recall} (correctly flagging a higher fraction of patients
+actually having cancer) but {\bf lower precision} (higher fraction of
+patients we've diagnosed with cancer actually do not have one).
+
+More generally: see lecture at 06:50 for dependency between Precision
+and Recall.
+
+Next step - to find way to choose this threshold automatically -
+particularly with different learning algorithms (or the same algorithm
+with different parameters). We introduce some single - value metric
+named:
+
+\subsubsection{F Score ($F_1$ Score)}
+\label{sec:11-4-1}
+% 08:30
+\begin{tabular}{c|cc|c|c}
+  \quad & Precision (P) & Recall (R) & Average & $F_1$ Score\\
+  \hline
+  Algorithm 1 & 0.5 & 0.4 & 0.45 & 0.444 \\
+  Algorithm 2 & 0.7 & 0.1 & 0.4 & 0.175\\
+  Algorithm 3 & 0.02 & 1.0 & 0.51 & 0.0392
+\end{tabular} \\
+
+Variants:
+\begin{itemize}
+\item Average: $\frac{P + R}{2}$ - is not a good idea, because the
+  variants with R = 1 (predict 1 all times) will get high level - like
+  for Algorithm 3.
+\item $F_1$ Score: $2\frac{PR}{P + R}$ - works much better. P = 0 or R
+  = 0 $ \rightarrow F_1$ Score = 0; P = 1 and R = 1 $\rightarrow F_1$
+  Score = 1;
+\end{itemize}
+
+\subsection{Data for Machine Learning}
+\label{sec:11-5}
+
+... It is not who has the best algorithm that wins, it's who has the
+most data.
+
+\subsubsection{Large data rationale}
+\label{sec:11-5-1}
+
+Assume feature $x \in \mathbf{R}^{n+1}$ has sufficient information to
+predict y accurately
+
+Example: For breakfast I ate (to?/too?/two?) eggs.
+
+Counterexample: predict housing price from only size (feet) and no
+other features.
+
+Useful test: Given the input x, can a human expert confidently predict
+y?
+
+Better to use a learning algorithm with many parameters (e.g. logistic
+regression/linear regression) neural network with many hidden units).
+Use a very large training set (unlikely yo overfit):
+$J_{train}(\Theta) \approx J_{test}(\Theta)$ and $J_{test}(\Theta)$
+will be small.
+
+Or: in good algorithm we do not want either high bias or high
+variance. The bias problem is solved by selecting algorithm with many
+parameters; the variance problem is solved by using the large training
+set.
+
+
+\section{Support Vector Machines (SVM)}
+\label{sec:SVM}
+The last supervised learning algorithms in this course.
+\subsection{Optimisation Objective}
+\label{sec:12-1}
+Alternative view to logistic regression. We use $h_\theta = \frac{1}{1
+  + e ^{-\theta^Tx}}$ to express: if $y=1$, we want $h_\theta(x)
+\approx 1, \theta^{T} >> 0$ and $h_\theta(x) \approx 0, \theta^{T} <<
+0$. Cost of example (for single example):
+\[-(y \log h_\theta(x) + (1-y) \log(1-h_\theta(x))) = -y \log
+\frac{1}{1 + e^{-\theta ^T x}} - (1-y) \log (1 - \frac{1}{1 +
+  e^{-\theta^Tx}}) \]
+
+This is, really, the generalisation of idea that when $y=1$ we use [y
+* ]$-\log \frac{1}{1 + e^{-z}}, z = \theta^Tx; \theta^T >> 0$ part
+while for $y=0$ we use (1-y) * $-\log (1 - \frac{1}{1 + e^{-z}}), z =
+\theta^Tx; \theta^T << 0 $ part. For SVM we change the cost function:
+\begin{itemize}
+\item for $y = 1$: $cost_1(z)$ equals 0 for $z \geq 1$ and linearly
+  decreases from ``somewhere'' to 0 for $z < 1$.
+\item for $y = 0$: $cost_0(z)$ equals 0 for $z \leq 1$ and linearly
+  increases to ``somewhere'' form 0 for $z > -1$.
+\end{itemize}
+
+Now re-write the cost function, replacing as shown in Logistic
+regression:
+\[\min \limits _\theta \frac{1}{m} \left[\sum \limits_{i=1}^{m}
+  y^{(i)} \underbrace{\left(- \log h_\theta
+      (x^{(i)})\right)}_{cost_1(\Theta^Tx^{(i)})} + (1-y^{(i)})
+  \underbrace{\left(-\log(1 - h\theta(x^{(i)})
+    \right)}_{cost_0(\Theta^Tx^{(i)})} \right] + \frac{\lambda}{2m}
+\sum \limits_{j=1}^{n}\theta_j^2 \]
+
+so in Support Vector Machine:
+\[\min \limits _\theta \frac{1}{m} \left[\sum \limits_{i=1}^{m}
+  y^{(i)}cost_1(\Theta^Tx^{(i)}) + (1-y^{(i)}) cost_0(\Theta^Tx^{(i)})
+\right] + \frac{\lambda}{2m} \sum \limits_{j=1}^{n}\theta_j^2 \]
+
+By convection, the regularisation parameter is written slightly
+differently: we remove $\frac{1}{m}$ (as gradient descent will find
+the minimum of cost function regardless of concrete values). Then,
+instead of (roughly) using cost function as $A + \lambda B$ (where A
+is the ``main'' part of formula, B - regularisation member; we play
+with $\lambda$ to tune our process), the SVM cost is written as $C A +
+B$, where we play with C to tune. (Set C to be large to simulate small
+$\lambda$ , think of C as $C = \frac{1}{\lambda}$). Finally, SVM
+process:
+\[\min \limits _\theta C \sum \limits_{i=1}^{m} \left[
+  y^{(i)}cost_1(\theta^Tx^{(i)}) + (1-y^{(i)}) cost_0(\theta^Tx^{(i)})
+\right] + \frac{1}{2} \sum \limits_{j=1}^{n}\theta_j^2 \]
+% 12-01; 13:45
+Support Vector Machine (SVM) does not return the probability - it
+outputs the value from hypothesis:
+\[ h_\theta(x) = \left\{
+  \begin{array}{cc}
+    1 & \textrm{ if } \Theta^T \geq 0\\
+    0 & \textrm{otherwise}
+  \end{array}
+\right. \]
+
+\subsection{Large Margin Intuition}
+\label{sec:12-2}
+
+Sometimes SVM is called ``Large Margin Classifier'':
+\begin{itemize}
+\item for $y = 1$ we want $\theta^T x \geq 1$ (not just $\geq 0$)
+\item for $y = 0$ we want $\theta^T x \leq -1$ (not just $< 0$)
+\end{itemize}
+
+Consider high value for C (like 100,000): in this case, the ``main''
+part (the sum of $cost_1$ and $cost_0$) will be $\approx 0$, so the
+cost function to minimise will be min $ C \times 0 + \frac{1}{2} \sum
+\limits_{i=1}^{n} \Theta_j^2$. With condition that
+\[ \begin{array}{cc}
+  \Theta^T x^{(i)} \geq 1 & \textrm{ if } y^{(i)} = 1 \\
+  \Theta^T x^{(i)} \leq -1 & \textrm{ if } y^{(i)} = 0
+\end{array} \]
+after optimisation, we'll get quite natural decision boundary - the
+ones that have the biggest margin  (see slide 9).
+
+\subsection{Mathematics Behind Large Margin Classification}
+\label{sec:12-3}
+
+\paragraph{Vector Operations}
+Inner product of vectors u and v is $u^Tv$. If $u =
+\left[ \begin{array}{c} u_1 \\ u_2 \end{array} \right] $, $v =
+\left[ \begin{array}{c} v_1 \\ v_2 \end{array} \right] $. Length of u:
+$||u|| = \sqrt{u_1^2 + u_2^2}; ||u|| \in \mathbf{R}$
+
+p = length of projection of v onto u. And: $u^Tv = p \times ||u|| =
+u_1 v_1 + u_2 v_2 = v^Tu$. Also $p \in \mathbf{R}$ - signed (can be
+negative)!
+
+\subsubsection{SVM Decision Boundary}
+\label{sec:12-3-1}
+Assume $\theta_0 = 0; n = 2$. Our cost function (to be minimised):
+\[J(\theta) = \frac{1}{2} \sum \limits_{j=1}^{n}\theta_j^2 =
+\frac{1}{2}(\theta_1^2 + \theta_2^2) = \frac{1}{2}(\sqrt{\theta_1^2 +
+  \theta_2^2})^2 = \frac{1}{2}||\theta||^2\]
+where \[ \begin{array}{ll}
+  \theta^Tx^{(i)} \geq 1 & \textrm{ if } y^{(i)} = 1 \\
+  \theta^Tx^{(i)} \leq -1 & \textrm{ if } y^{(i)} = 0
+\end{array} \]
+
+Consider $x^{(i)}$. Our product will be $\theta^Tx^{(i)} = p^{(i)}
+||\theta|| = \theta_1 x_1^{(i)} + \theta_2 x_2^{(i)}$ - see page 13.
+
+Re - writing optimisation objective: $ \min \limits_{\theta}
+\frac{1}{2}\sum \limits_{j=1}^{n} \theta_j^2$,
+where \[\begin{array}{ll}
+  p^{(i)} * ||\theta|| \geq 1 & \textrm{ if } y^{(i)} = 1 \\
+  p^{(i)} * ||\theta|| \leq -1 & \textrm{ if } y^{(i)} = 0
+\end{array}\]
+where $p^{(i)}$ is the projection of $x^{(i)}$ onto the vector
+$\theta$. Simplification: $\theta_0 = 0$ (so the decision boundary
+goes through the (0;0); very large C.
+
+(see page 14 for graphical explanation). If $\theta$ vector (as a
+normal to the boundary) will be sub-optimal (that is, not having
+optimal angle), then:
+\begin{itemize}
+\item for y = 1: $p^{(i)} * ||\theta|| \geq 1$. The projection
+  $p^{(i)}$ is relatively small, so $||\theta||$ should be large;
+\item for y = 0: $p^{(i)} * ||\theta|| \leq -1$. The $p^{(i)}$ is
+  negative, but relatively small in length, so $||\theta||$ should be
+  large;
+\end{itemize}
+The problem is that this breaks our optimisation criteria (minimising
+$||\theta||$). To hold $||\theta||$ small we need to turn the
+$\theta$'s angle to optimal value. As such, the longer projections
+are, the wider is the margin.
+
+\subsection{Kernels}
+\label{sec:12-4}
+Kernels is a technique for developing non-linear classifier. Obvious
+solution is:
+
+Predict y = 1 if $\theta_0 + \theta_1x_1 + \theta_2x_2 +
+\theta_3x_1x_2 + \theta_4x_1^2 + \theta_5x_2^2 + \dots \geq 0$, or
+\[ h_\theta(x) = \left\{
+  \begin{array}{ll}
+    1 & \textrm{ if } \theta_0 + \theta_1x_1 + \dots \geq 0 \\
+    0 & \textrm{ otherwise } 
+  \end{array} \right. \]
+In other format: $\theta_0 + \theta_1f_1 + \theta_2f_2 +
+\theta_3f_3 + \theta_4f_4 + \theta_5f_5 + \dots$ where $f_1 = x_1, f_2
+= x_2, f_3 = x_1x_2, f_4 = x_1^2, f_5 = x_2^2 \dots $ - need to find
+the best choice for $f_i$
+
+\paragraph{Idea}: Given x, compute new feature depending on proximity
+to landmarks $l^{(1)}, l^{(2)}, l^{(3)}$ (see page 17): \[f_1 =
+similarity(x, l^{(1)}) = \exp(- \frac{\overbrace{||x -
+    l^{(1)}||^2}^{\textrm{length of } w = x - l^{(1)}}
+}{2\sigma^2}) \]
+\[f_2 = similarity(x, l^{(2)}) = \exp(- \frac{||x -
+  l^{(2)}||^2}{2\sigma^2}) \]
+
+This ``similarity'' function is called Kernel (or ``Gaussian Kernel'')
+function, also written as $k(x, l^{(i)})$
+
+\subsubsection{Kernels and Similarity}
+\[f_1 = similarity(x, l^{(1)}) = \exp(- \frac{||x -
+  l^{(1)}||^2}{2\sigma^2}) = \exp (- \frac{\sum \limits_{j=1}^{n} (x_j
+  - l_j^{(1)})^2}{2\sigma^2}) \]
+
+if $x\approx l^{(1)} : f_1 \approx \exp(-\frac{0^2}{2\sigma^2})
+\approx 1 $;
+
+if x is far from $l^{(1)}$ : $f_1 \approx \exp(-\frac{(\textrm{ large
+    number })^2}{2\sigma^2}) \approx 0$
+
+Each of these landmarks define a new feature (see page 19). The
+$\sigma$ parameter defines how fast the feature value decreases with
+distance.
+
+Then, using idea to predict y = 1 if $\theta_0 + \theta_1x_1 +
+\theta_2x_2 + \theta_3x_1x_2 + \theta_4x_1^2 + \theta_5x_2^2 + \dots
+\geq 0$, we can write $\theta_0, \theta_1, \dots$ - see page 20 for
+details.
+\label{12-5}
+
+In practice, the landmarks are put into the same location as the
+points of the training set - so we measure how close the feature is to
+the training set points. Then the feature vector is: \[ f = \left[
+  \begin{array}{l} f_0 \\ f_1 \\ f_2 \\ \vdots \\ f_m \end{array}
+\right] \], by convention $f_0 = 1$.
+
+Then, for training example $(x^{(i)}, y^{(i)}$: $f_i^{(i)} =
+sim(x^{(i)}, l^{(i)}) = 1$; $x^{(i)} \in \mathbf{R}^{n+1}$
+
+\subsection{SVM with Kernels}
+\label{sec:12-5-1}
+
+Hypothesis: Given x, compute features $f \in \mathbf{R}^{m+1}$.
+
+Predict ``y=1'' if $\theta^T f \geq 0$
+
+Training:
+\[ \min \limits_{\theta} C \sum \limits_{i=1}^{m} y^{(i)}
+cost_1(\theta^T f^{(i)}) + (1 - y^{(i)})cost_0(\theta^T f^{(i)}) +
+\frac{1}{2}\sum \limits_{j=1}^{n}\theta_j^2 \] but, instead of
+$\theta^Tx^{(i)}$ we use $\theta^Tf^{(i)}$ (and regularisation
+parameters sum is from 1 to m, not n) - and solve ``as normal''.
+
+Another way to write the regularisation sum: $\sum \limits_{j}
+\theta_j^2 = \theta^T \theta$ - ignoring $\theta_0$! So many SVM
+implementations use some sort of simplification: instead of
+calculating $||\theta||^2$ they try to minimise $\theta^T M \theta$ -
+this allows to scale to much bigger training sets (up to m = 10,000).
+
+Concrete implementation - ``use off-the-shelf'' soft 8-(.
+
+\subsubsection{SVM Parameters}
+\label{sec:12-5-2}
+
+$C ( = \frac{1}{\lambda})$.
+\begin{itemize}
+\item Large C: Lower bias, high variance, over fitting (small
+  $\lambda$).
+\item Small C: Higher bias, low variance, under fitting (large
+  $\lambda$).
+\end{itemize}
+
+$\sigma^2$ : recall $\exp (-\frac{||x-l^{(i)}||^2}{2\sigma^2})$
+\begin{itemize}
+\item Large $\sigma^2$: features $f_i$ vary more smoothly. Higher
+  bias, lower variance.
+\item Small $\sigma^2$: features $f_i$ vary less smoothly. Lower bias,
+  higher variance.
+\end{itemize}
+
+\subsection{Using An SVM}
+\label{sec:12-6}
+Ideas:
+\begin{itemize}
+\item use SVM software packages (e.g. liblinear, libsvm) to solve for
+  parameters $\theta$ There you need to specify:
+  \begin{itemize}
+  \item choice of parameter C.
+  \item choice of kernel (similarity function), e.g.
+    \begin{itemize}
+    \item No kernel (``linear kernel'', predict y=1 if $\theta^T \geq
+      0$ where $\theta$ is a ``standard'' linear classifier). Works
+      fine when you have a large number of features (and relatively
+      small no of train samples)
+    \item Gaussian kernel: $f1 = \exp(-\frac{||x-l^{(i)}||^2}{2
+        \sigma^2})$ where $l^{(i)} = x^{(i)}$. Need to choose
+      $\sigma^2$. Works better with smaller n and relatively large
+      training sets. Do perform feature scaling before using the
+      Gaussian kernel!
+    \item Other choices of kernel. Not all similarity functions make a
+      vali kernels (need to satisfy technical condition called
+      ``Mercer's Theorem'' to make sure SVM packages' optimisation
+      runs correctly and do not diverge. These are: polynomial kernel
+      ($k(x, l) = (x^T l)^2$, or $(x^T l)^3$, $(x^T l + 1)^3$ etc. -
+      kind of $(x^T l + constant)^{degree}$. Usually diverges quite
+      slowly, not used too often.
+    \item more esoteric: String kernel, chi-square kernel, histogram
+      intersection kernel, etc.
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Multi-class classification}
+\label{sec:12-6-1}
+When several classes (K): $y \in \{1, 2, 3, \dots \mathbf{K} \}$. Many
+SVM packages do already have the built-in multi-class classification
+functionality. Otherwise, use one-vs-all method: train K SVMs, one to
+distinguish y = i from the rest, for $i = 1, 2, 3, \dots \mathbf{K}$,
+get $\theta^{(1)}, \theta^{(2)}, \dots , \theta^{(K)}$. For concrete
+x, pick class i with the largest $(\theta^{(i)})^T x$
+
+\subsubsection{Logistic Regression vs SVMs}
+n = number of features ($x \in \mathbf{R}^{n+1}$), m = number of
+training examples.
+\begin{itemize}
+\item If n is large (relative to m), like n = 10,000; m = 10 \ldots
+  1000: use logistic regression , or SVM without a kernel (``linear
+  kernel'').
+\item n is small, m is intermediate (n = 1 \ldots 1000, m = 10 \ldots
+  10,000). Use SVM with Gaussian kernel
+\item if n is small, m is large (n = 1 \ldots 1000, m > 50,000) :
+  create/add more features. then use logistic regression or SVM
+  without a kernel (just like a case $n \geq m$ - in both cases we do
+  similar things)
+\end{itemize}
+
+Neural networks likely to work well for most of these settings but may
+be slower to train.
+
+Usually good SVM implementation are quite fast, plus they care about
+the local optima problems (convex problems) which cause headache for
+Neural Networks.
+
+\section{Clustering}
+\label{sec:13}
+
+Training set is given without labels: $\left\{ x^{(1)}, x^{(2)},
+  x^{(3)}, \dots , x^{(m)} \right\}$
+
+\subsection{K-Means Algorithm}
+\label{sec:13-2}
+Steps:
+\begin{itemize}
+\item put two cluster centroids (in random places)
+\item assign each of the data points to the relevant cluster -
+  depending on distance to centroid
+\item move each centroid to the centre of relevant cluster (the mean
+  value for coordinates)
+\item perform the cluster (re)assignment, move centroid {\it quantum sates}  
+\end{itemize}
+
+\paragraph{K-means algorithm} 
+
+\subparagraph{Input:}
+\begin{itemize}
+\item $\mathbf{ K }$ (number of clusters)
+\item Training set $\left\{ x^{(1)}, x^{(2)}, x^{(3)}, \dots , x^{(m)}
+  \right\}$
+\end{itemize}
+$x^{(i)} \in \mathbf{R}^n$ (drop $x_0 = 1$ convention)
+
+\subparagraph{Algorithm:}
+Randomly initialise $\mathbf{K}$ cluster centroids $\mu_1, \mu_2,
+\dots, \mu_K \in \mathbf{R}^n$
+
+\begin{tabbing}
+Repeat \{    \\
+  \quad \quad \= for i = 1 to m \\
+  \quad \quad \> \quad \=  $c^{(i)}$ := index (from 1 to K) of cluster
+  centroid \\
+  \quad \quad \> \quad \> closest to $x^{(i)}$ (usually using
+  $||x^{(i)} - \mu_k||^2$ for minimisation - the k will be the same) \\
+  \quad \quad \> for k = 1 to $\mathbf{K}$ \\
+  \quad \quad \> \quad \> $\mu_k$ := average (mean) of points assigned
+  to cluster k \\
+\}
+\end{tabbing}
+Sometimes, some clusters end up with no points assigned -- in this
+case it is better to remove excessive cluster (so to end up with K-1
+cluster). If you really need K clusters - re-initiate the whole
+process with K random centroids (but better go on with K-1).
+
+\subsection{Optimisation Objective}
+\label{sec:13-3}
+terms:
+\begin{itemize}
+\item $c^{(i)}$ = index of cluster (1, 2, \dots, K) to which example
+  $x^{(i)}$ is currently assigned
+\item $\mu_k$ = cluster centroid k $(\mu_k \in \mathbf{R}^n)$
+\item $\mu_c(i)$ = cluster centroid of cluster to which example
+  $x^{(i)}$ has been assigned
+\end{itemize}
+
+Optimisation objective: \[
+J(c^{(1)}, \dots, c^{(m)}, \mu_1, \dots, \mu_K) = \frac{1}{m} \sum
+\limits_{i=1}^m || x^{(i)} - \mu_c(i) ||^2
+\]
+\[ \min \limits_{  \begin{array}{l}
+c^{(1)}, \dots, c^{(m)}, \\
+ \mu_1, \dots, \mu_K    
+  \end{array}} J(c^{(1)}, \dots, c^{(m)}, \mu_1, \dots, \mu_K) \]
+
+This function J is sometimes called ``Distortion''
+
+As such, our algorithm becomes:
+\begin{tabbing}
+Repeat \{    \\
+Cluster assignment step: minimise J(...) with $c^{(1)}, \dots,
+c^{(m)}$ holding $\mu_1, \dots, \mu_K$  \\
+
+Move centroid step: minimise J(...) with  $\mu_1, \dots, \mu_K$
+holding  $c^{(1)}, \dots, c^{(m)}$ \\
+\}
+\end{tabbing}
+
+\subsection{Random Initialisation}
+\label{sec:13-4}
 
 
 
