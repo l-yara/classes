@@ -7,6 +7,10 @@
 \usepackage{color}                    % For creating coloured text and background
 \usepackage{hyperref}                 % For creating hyperlinks in
                                 % cross references 
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
 \usepackage[T2A]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[russian,english]{babel}
@@ -14,6 +18,7 @@
 \lstloadlanguages {[LaTeX]TeX, Octave}
 \lstset {language=[LaTeX]TeX,
   extendedchars=true ,escapechar=|}
+
 
 \begin{document}
 \label{Chapter 1}
@@ -26,13 +31,11 @@ Usually we have one of two:\\
 {\bf Classification:} assign discrete valued output (0, 1 etc) \\
 
 \subsection* {Unsupervised Learning} - finding structure in ``blind''
-set of
-data. \\
+set of data. \\
 {\bf Clustering} algorithms  \\
 Example: {\bf Cocktail Party Problem} (разделение записей на двух
 микрофонах от двух источниках и восстановление сигналов от каждого
-источника
-индивидуально). \\
+источника индивидуально). \\
 
 \label{Chapter 2}
 \section {Linear Regression with One Variable}
@@ -2025,10 +2028,11 @@ Steps:
   depending on distance to centroid
 \item move each centroid to the centre of relevant cluster (the mean
   value for coordinates)
-\item perform the cluster (re)assignment, move centroid {\it quantum sates}  
+\item perform the cluster (re)assignment, move centroid {\it quantum
+    sates}
 \end{itemize}
 
-\paragraph{K-means algorithm} 
+\paragraph{K-means algorithm}
 
 \subparagraph{Input:}
 \begin{itemize}
@@ -2038,12 +2042,11 @@ Steps:
 \end{itemize}
 $x^{(i)} \in \mathbf{R}^n$ (drop $x_0 = 1$ convention)
 
-\subparagraph{Algorithm:}
-Randomly initialise $\mathbf{K}$ cluster centroids $\mu_1, \mu_2,
-\dots, \mu_K \in \mathbf{R}^n$
+\subparagraph{Algorithm:} Randomly initialise $\mathbf{K}$ cluster
+centroids $\mu_1, \mu_2, \dots, \mu_K \in \mathbf{R}^n$
 
 \begin{tabbing}
-Repeat \{    \\
+  Repeat \{    \\
   \quad \quad \= for i = 1 to m \\
   \quad \quad \> \quad \=  $c^{(i)}$ := index (from 1 to K) of cluster
   centroid \\
@@ -2052,7 +2055,7 @@ Repeat \{    \\
   \quad \quad \> for k = 1 to $\mathbf{K}$ \\
   \quad \quad \> \quad \> $\mu_k$ := average (mean) of points assigned
   to cluster k \\
-\}
+  \}
 \end{tabbing}
 Sometimes, some clusters end up with no points assigned -- in this
 case it is better to remove excessive cluster (so to end up with K-1
@@ -2070,31 +2073,332 @@ terms:
   $x^{(i)}$ has been assigned
 \end{itemize}
 
-Optimisation objective: \[
-J(c^{(1)}, \dots, c^{(m)}, \mu_1, \dots, \mu_K) = \frac{1}{m} \sum
-\limits_{i=1}^m || x^{(i)} - \mu_c(i) ||^2
+Optimisation objective: \[ J(c^{(1)}, \dots, c^{(m)}, \mu_1, \dots,
+\mu_K) = \frac{1}{m} \sum \limits_{i=1}^m || x^{(i)} - \mu_c(i) ||^2
 \]
-\[ \min \limits_{  \begin{array}{l}
-c^{(1)}, \dots, c^{(m)}, \\
- \mu_1, \dots, \mu_K    
+\[ \min \limits_{ \begin{array}{l}
+    c^{(1)}, \dots, c^{(m)}, \\
+    \mu_1, \dots, \mu_K
   \end{array}} J(c^{(1)}, \dots, c^{(m)}, \mu_1, \dots, \mu_K) \]
 
 This function J is sometimes called ``Distortion''
 
 As such, our algorithm becomes:
 \begin{tabbing}
-Repeat \{    \\
-Cluster assignment step: minimise J(...) with $c^{(1)}, \dots,
-c^{(m)}$ holding $\mu_1, \dots, \mu_K$  \\
+  Repeat \{    \\
+  Cluster assignment step: minimise J(...) with $c^{(1)}, \dots,
+  c^{(m)}$ holding $\mu_1, \dots, \mu_K$  \\
 
-Move centroid step: minimise J(...) with  $\mu_1, \dots, \mu_K$
-holding  $c^{(1)}, \dots, c^{(m)}$ \\
-\}
+  Move centroid step: minimise J(...) with  $\mu_1, \dots, \mu_K$
+  holding  $c^{(1)}, \dots, c^{(m)}$ \\
+  \}
 \end{tabbing}
 
 \subsection{Random Initialisation}
 \label{sec:13-4}
+The items are:
+\begin{itemize}
+\item Should have $\mathbf{K} < m$
+\item Randomly pick K training examples
+\item Set $\mu_1, \dots, \mu_K$ equal to these K examples
+\end{itemize}
 
+As K-means result depends on starting positions (in particular, it can
+end up with local optima - i.e. joining two clusters into one etc). To
+avoid this, we should try a number of different initialisation
+variants (lets say, 100):
 
+\begin{tabbing}
+  For i = 1 to 100 \{    \\
+  \quad Randomly initialise K-means \\
+  \quad Run K-means. Get $c^{(1)}, \dots,c^{(m)}, \mu_1, \dots, \mu_K$  \\
+  \quad Compute cost function (distortion)  $J(\mu_1, \dots, \mu_K, c^{(1)}, \dots, c^{(m)})$ \\
+  \}
+\end{tabbing}
+Pick clustering that gave lowest cost $J(\mu_1, \dots, \mu_K, c^{(1)},
+\dots, c^{(m)})$
+
+That works fine for low K (say, from 2 to 10).
+
+\subsection{Choosing the Number of Clusters}
+\label{sec:13-5}
+
+The best way is manually (from visualisation or so). Sometimes
+so-called ``elbow method'' is used: compute distortion for different
+values of K and select the one which provides the ``elbow'' - a point
+where distortion goes down much slower then before.
+
+Another way - if we're using K-means to get clusters to use for some
+later/downstream purpose. In this case - evaluate K-means based on a
+metric for how well it performs for that later purpose.
+
+\section{Dimentionality Reduction}
+\label{sec:14}
+
+\subsection{Motivation I - Data Compression}
+\label{sec:14-1}
+Example:
+\begin{itemize}
+\item Reduce from 1D to 2D (through introduction of new dimension
+  instead of existing x, y:
+  \[
+  \begin{array}[l]{rl}
+    x^{(1)} \in \mathbf{R}^2 & \rightarrow z^{(1)} \in
+    \mathbf{R} \\
+    x^{(2)} \in \mathbf{R}^2 & \rightarrow z^{(2)} \in
+    \mathbf{R} \\
+    \vdots \\
+    x^{(m)} \in \mathbf{R}^2 & \rightarrow z^{(m)} \in
+    \mathbf{R} \\
+  \end{array}
+  \]
+\item Reduce from 3D to 2D ... 1000D to 100D
+
+  Done through projecting this data (x, y, z) on the plane ($z_1,
+  z_2$)
+\end{itemize}
+
+\subsection{Motivation II - Visualisation}
+\label{sec:14-2}
+
+The idea to project the data set of $\mathbf{R}^{50}$ to
+$\mathbf{R}^{2}$ with subsequent drawing it on the plane
+
+\subsection{Principal Component Analysis (PCA) - formulation}
+\label{sec:14-3}
+It is good idea to perform data normalisation first.
+
+To reduce from 2-dimension to 1-dimension:find a direction (a vector
+$u^{(1)} \in \mathbf{R}^2$) onto which to project the data so as to
+minimise the projection error.
+
+To reduce from n-dimension to k-dimension:find k vectors $u^{(1)},
+u^{(2)}, \dots, u^{(k)} \in \mathbf{R}^n$ - so-called ``linear
+subspace of dimension k'' onto which to project the data so as to
+minimise the projection error.
+
+PCA is completely separated from the ``linear regression'': here we
+find the line minimising the projection error while in latter we try
+to predict y-value based on x-value and providing a ``prediction
+line'' based on ``pure'' difference in y values. (see pp. 12, 13). All
+dimensions are ``equal'': we do not have a separate values we know and
+other values we want to predict.
+
+\subsection{Principal Component Analysis (PCA) - algorithm}
+\label{sec:14-4}
+
+\paragraph{Data Prepossessing}
+
+Training set: $x^{(1)}, x^{(2)}, \dots, x^{(m)}$
+
+Prepossessing (feature scaling / mean normalisation):
+\[ \mu_j = \frac{1}{m} \sum \limits_{i=1}^{m} x_j^{(i)} \]
+
+Replace each $x_j^{(i)}$ with $x_j - \mu_j$.
+
+If different features on different scales (e.g, $x_1$ = size of house,
+$x_2$ = number of bedrooms), scale features to have comparable range
+of values: $ x_j^{(i)} \gets \frac{x_j - \mu_j}{S_j}$, where $S_j$ -
+standard deviation for dimension j.
+
+Full math proof is ``beyond the scope of the course''. Result is:
+
+\begin{algorithm}
+  \caption{Principal Component Analysis (PCA) Algorithm - Reduce data
+    from n-dimensions to k-dimensions }
+  \begin{algorithmic}
+    \STATE Compute ``covariance matrix'': \[ \Sigma = \frac{1}{m} \sum
+    \limits_{i=1}^{n} (x^{(i)})(x^{(i)})^T \]
+    \STATE Compute ``eigenvectors'' of matrix $\Sigma$: \\
+    $\left[U, S, V\right] = svd(Sigma);$; Sigma is $n \times n$ matrix
+    Then we'll get the U matrix: \[U = \left[
+      \begin{array}{ccccc}
+        | & | & | & & | \\
+        u^{(1)} & u^{(2)} & u^{(3)} & \vdots & u^{(n)} \\
+        | & | & | & & | \\
+      \end{array}
+    \right], U \in \mathbf{R}^{n \times n}\] \STATE So we take first k
+    columns (vectors): $u^{(1)}, \dots, u^{(k)} - n \times k$ matrix
+    (named $U_{reduce}$). So operation $x \in \mathbf{R}^n \rightarrow
+    z \in \mathbf{R}^k$ becomes:
+
+    \[ z = U_{reduce} x = \left[
+      \begin{array}{ccccc}
+        | & | & | & & | \\
+        u^{(1)} & u^{(2)} & u^{(3)} & \vdots & u^{(k)} \\
+        | & | & | & & | 
+      \end{array}
+    \right]^T x = \left[
+      \begin{array}{ccc}
+        --- & (u^{(1)})^T & --- \\
+        \   & \vdots & \   \\
+        --- & (u^{(k)})^T & --- 
+      \end{array}
+    \right] x
+    \]
+    where $U_{reduce}$ is of dimension $n \times k$, x is of $n \times
+    1$, so $(U_{reduce})^T \times x$ becomes $k \times 1$
+    \STATE in Octave, it will be: \\
+    \quad $\left[U, S, V\right] = svd(Sigma);$ \\
+    \quad $U_{reduce} = U(:, 1: k);$ \\
+    \quad $z = U_{reduce}' * x;$
+  \end{algorithmic}
+\end{algorithm}
+
+% сделать ссылкой внизу страницы!!
+{\bf svd} stays for ``singular value decomposition'' - works like {\bf
+  eig(Sigma)}, but a bit more stable.
+
+\subsection{Reconstruction from Compressed Representation}
+\label{sec:14-6}
+
+The idea is to reconstruct data from reduced dimension data set: $z
+\in \mathbf{R} \rightarrow x \in \mathbf{R}^2$, so if $z =
+U^T_{reduce} x$, then \[ \underbrace{x_{approx}}_{\mathbf{R}^n} =
+\underbrace{U_{reduce}}_{n \times k} \underbrace{z}_{k \times 1} \]
+
+\subsection{Applying PCA}
+\label{sec:14-7}
+
+\subsubsection{Speedup supervised learning}
+\label{sec:14-7-1}
+
+Given $(x^{(1)}, y^{(1)}),(x^{(2)}, y^{(2)}),\dots, (x^{(m)},
+y^{(m})$, and $(x^{(i)} \in \mathbf{R}^{10000}$ (i.e. for image
+analysis of $100 \times 100$ pixels. This going to be quite slow, so:
+\begin{itemize}
+\item Extract input x's to unlabelled dataset $x^{(1)},x^{(2)},\dots,
+  x^{(m)} \in \mathbf{R}^{10000}$
+\item apply PCA so that dataset becomes $z^{(1)},z^{(2)},\dots,
+  z^{(m)} \in \mathbf{R}^{1000}$
+Got a new training set:  $(z^{(1)}, y^{(1)}),(z^{(2)}, y^{(2)}),\dots, (z^{(m)},
+y^{(m})$; train algorithm using $h_\theta(z) = \frac{1}{1 +
+  e^{-\theta^Tz}}$
+\end{itemize}
+
+When given a new sample x:
+\begin{itemize}
+\item calculate $x \rightarrow z$ using $U_{reduce}$
+\item use z for making prediction based on $h_\theta(z)$
+\end{itemize}
+%find out how to separate "Notes":
+
+\subparagraph{Note:}
+Mapping $x^{(i)} \rightarrow z^{(i)}$ should be defined by running PCA
+only on the training set. This mapping can be applied as well to the
+examples $x_{cv}^{(i)}$ and $x_{test}^{(i)}$ in the cross validation
+and test sets.
+
+\paragraph{Application of PCA}
+
+\begin{itemize}
+\item Compression
+  \begin{itemize}
+  \item Reduce memory/disk needed to store data
+  \item Speed up learning algorithm
+  \end{itemize}
+Here choose k by \% of variance retained. Good (typical) result - up
+to 99\%
+\item Visualisation
+k = 2 or k = 3
+\end{itemize}
+
+\paragraph{Bad use of PCA: To prevent outfitting} 
+
+Like use $z^{(i)}$ instead of $x^{(i)}$ to reduce the number of
+features to k < n. Thus, fewer features => less likely to overfit.
+
+Bad idea (despite sometimes works). PCA throws away some information
+without knowing the values of $y^{(i)}$. Use regularisation instead.
+
+Quite often the whole ML system can go without any dimension reducing
+at all. Always need to test on original/raw data before considering
+PCA. 
+
+\section{Anomaly Detection}
+\label{sec:15}
+
+Example: aircraft engine features.
+Formally, we're given example (training) set $\{ x^{(1)}, x^{(2)},
+\dots, x^{(m)} \}$, we need to estimate is $x_{test}$ anomalous? 
+
+We build a model $p(x)$ - probability model and ``small threshold''
+$\epsilon$ such that:
+\begin{itemize}
+\item $p(x_{test} < \epsilon \rightarrow$ flag anomaly
+\item $p(x_{test} \geq \epsilon \to$ OK
+\end{itemize}
+
+Another example - fraud detection:
+\begin{itemize}
+\item $x^{(i)}$ - features of user i' s activities
+\item Model $p(x)$ from data (based on features like typing speed,
+  pages visited etc).
+\item Identify unusual users by checking which have $p(x) , \epsilon$
+\end{itemize}
+Manufacturing
+Monitoring computers in a data centre: $x^(i)$ = features of machine
+i: $x_1$ = memory use; $x_2$ = number of disk access/sec; $x_3$ = CPU
+load; $x_4$ = network traffic etc. Check $p(x_{test} < \epsilon$
+
+\subsubsection{Gaussian Distribution (Normal Distribution)}
+\label{sec:15-2}
+Say $x \in \mathbf{R}$. If x is distributed Gaussian with mean $\mu$,
+variance $\sigma^2$, it is written as $x \sim \aleph(\mu, \sigma^2)$
+(read ``x distributed as Gaussian from mu and sigma''); $\aleph$, or
+``N scripted'' stands for ``normal''; $\sigma$ is called ``the
+standard deviation''; $\sigma^2$ is a variance:
+\[ p(x; \mu, \sigma^2) = \frac{1}{\sqrt{2 \pi} \sigma }
+exp(-\frac{(x-\mu)^2 }{2\sigma^2}) \]
+-p(x) is parametrized by $\mu$ and $\sigma$-squared.
+
+The total square of probability curve integrates to 1; it changes
+shape depending on parameters.
+
+\subsubsection{Parameter estimation}
+Given dataset $\{x^{(1)}, x^{(2)}, \dots, x^{(m)}\}, x^{(i)} \in
+\mathbf{R}$, find out $\mu, \sigma$:
+\[\mu = \frac{1}{m} \sum \limits_{i=1}^m x^{(i)} ; \sigma^2 =
+\frac{1}{m} \sum \limits_{i=1}^m (x^{(i)} - \mu)^2 \]
+
+Sometimes $\frac{1}{m-1}$ variant is used (with slightly different
+mathematical properties), but in practice m is usually quite large so
+no much difference.
+
+\subsubsection{Algorithm}
+\label{sec:15-3}
+Movie rating example - see page 2 of slides 16.
+
+We assume we have NOT all data for given - so use $x^{(i)}$ only for
+available features (so that we do have a value for feature i from
+person j: $r(i, j) = 1$:
+
+Given $\theta^{(1)}, \theta^{(2)}, \dots, \theta^{(n_u)}$, to learn
+$x^{(i)}$: \[ 
+\min \limits_{x^{(i)}} \frac{1}{2} \sum \limits_{j:r(i, j) = 1}
+((\theta^{(i)})^T x^{(i)} - y^{(i,j)})^2 + \frac{\lambda}{2} \sum
+\limits_{k=1}^n (x_k^{(i)})^2 \]
+
+- actually, minimising the square error:
+\begin{itemize}
+\item $(\theta^{(i)})^T x^{(i)}$ - the predicted value (rating)
+\item $y^{(i,j)}$ - actual value given by $j^{th}$ person to $i^{th}$
+  movie
+\item $\frac{\lambda}{2} \sum \limits_{k=1}^n (x_k^{(i)})^2$ -
+  regularisation term
+\end{itemize}
+
+Expanding on the idea of learning the whole dataset (the data for all
+m movies, $x^{(1)},x^{(2)}, \dots,  x^{(n_m)}$):
+
+\[ \min \limits_{x^{(1)},x^{(2)}, \dots,  x^{(n_m)}} \frac{1}{2} \sum
+\limits_{i=1}^{n_m}  \sum \limits_{j:r(i, j) = 1}
+((\theta^{(i)})^T x^{(i)} - y^{(i,j)})^2 + \frac{\lambda}{2} \sum
+\limits_{i=1}^{n_m} \sum \limits_{k=1}^n (x_k^{(i)})^2 \]
+
+% 16-3  06:30
+
+\section{Recommender System}
+\label{sec:16}
 
 \end{document}
