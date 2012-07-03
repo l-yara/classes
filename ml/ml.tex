@@ -19,41 +19,48 @@
 \lstset {language=[LaTeX]TeX,
   extendedchars=true ,escapechar=|}
 
-
 \begin{document}
 \label{Chapter 1}
 \section {Вводная}
 \subsection* {Supervised Learning} - where the ``right (correct)
-answers'' for
-each example of data is given. \\
-Usually we have one of two:\\
-{\bf Regression:} predict continuous valued output \\
-{\bf Classification:} assign discrete valued output (0, 1 etc) \\
+answers'' for each example of data is given. 
+
+Usually we have one of two:
+\begin{itemize}
+\item {\bf Regression:} predict continuous valued output
+\item {\bf Classification:} assign discrete valued output (0, 1 etc)
+\end{itemize}
 
 \subsection* {Unsupervised Learning} - finding structure in ``blind''
-set of data. \\
-{\bf Clustering} algorithms  \\
+set of data. 
+
+{\bf Clustering} algorithms  
+
 Example: {\bf Cocktail Party Problem} (разделение записей на двух
 микрофонах от двух источниках и восстановление сигналов от каждого
-источника индивидуально). \\
+источника индивидуально). 
 
 \label{Chapter 2}
 \section {Linear Regression with One Variable}
 
 \subsection {Model Representation}
-Notation: \\
-{\bf m} =  Number of training examples \\
-{\bf x}'s = ``input'' values / features \\
-{\bf y}'s = ``output''variable / ``target'' variable \\
-{\bf (x, y)} = one single training example \\
-{\bf $(x^{(i)}, y^{(i)})$} = $i^{th}$ training example \\
+Notation:
+\begin{itemize}
+\item {\bf m} =  Number of training examples 
+\item {\bf x}'s = ``input'' values / features 
+\item {\bf y}'s = ``output''variable / ``target'' variable 
+\item {\bf (x, y)} = one single training example 
+\item {\bf $(x^{(i)}, y^{(i)})$} = $i^{th}$ training example 
+\end{itemize}
 
 Обычный алгоритм: берем Training Set, скармливаем его Learning
 Algorithm. Оный строит ф-ю h (иначе hypothesis), которая по входному
-значению $x$ строит Estimation. Иначе говоря, \\
-h maps from x's to y's: \\
-$h_\theta(x)=\theta_0 + \theta_1x$; shorthand: h(x) \\
-- т.е. полагаем что ф-я линейная \\
+значению $x$ строит Estimation. Иначе говоря, 
+
+h maps from x's to y's: $h_\theta(x)=\theta_0 + \theta_1x$; shorthand: h(x) 
+
+- т.е. полагаем что ф-я линейная 
+
 Другие названия:
 \begin{itemize}
 \item Linear regression with one variable (x)
@@ -91,14 +98,13 @@ $\frac {\delta}{\delta \theta_j} J(\theta_0, \theta_1)$ - derivative
 
 \subparagraph {Correct: Simultaneous upgrade}
 
-temp0 := $\theta_0 - \alpha \frac {\delta}{\delta \theta_0}
-J(\theta_0,
-\theta_1)$ \\
-temp1 := $\theta_1 - \alpha \frac {\delta}{\delta \theta_1}
-J(\theta_0,
-\theta_1)$ \\
-$\theta_0$ := temp0 \\
-$\theta_1$ := temp1 \\
+\[temp0 := \theta_0 - \alpha \frac {\delta}{\delta \theta_0}
+J(\theta_0, \theta_1)\]
+
+\[temp1 := \theta_1 - \alpha \frac {\delta}{\delta \theta_1}
+J(\theta_0,\theta_1)\]
+\[\theta_0 := temp0 \]
+\[\theta_1 := temp1 \]
 
 \subsection {Gradient Descent Algorithm For Linear Regression }
 \label {2-7}
@@ -117,11 +123,14 @@ $\theta_1$ := temp1 \\
 \[
 \theta_1 : \frac {\delta}{\delta \theta_1} J(\theta_0, \theta_1) =
 \frac{1}{m} \sum\limits_{i=1}^m\left(h_\theta (x^{(i)}) - y^{(i)}
-\right) * x^{(i)}
-\]
-Тогда алгоритм будет: \\
-repeat until convergence \{ \\
-\
+\right) * x^{(i)} \]
+
+Тогда алгоритм будет: 
+
+
+repeat until convergence \{ 
+
+
 \[\theta_0 := \theta_0 - {\alpha} \frac{1}{m}
 \sum\limits_{i=1}^m\left(h_\theta (x^{(i)}) - y^{(i)} \right) \]
 \[\theta_1 := \theta_1 - {\alpha} \frac{1}{m}
@@ -135,10 +144,12 @@ step of gradient descent uses all the training examples.
 
 \subsection {Extensions}
 \label {2-8}
-1. Существует прямой (не - итерационный) метод обсчета $\theta_0,
-\theta_1$ \\
-2. БОльшее количество параметров (features): $y = F(x_1, x_2, ...,
+\begin{enumerate}
+\item Существует прямой (не - итерационный) метод обсчета $\theta_0,
+  \theta_1$ 
+\item БОльшее количество параметров (features): $y = F(x_1, x_2, ...,
 x_n)$
+\end{enumerate}
 
 \label{Chapter 3}
 \section {Linear Algebra Review}
@@ -155,15 +166,16 @@ Identity Matrix - единичная матрица вроде $\left( I
   \end{array}
 \right)$
 
-Свойства: $A I = I A = A$ Обычно умножение матриц некомутативно, но
-ассоциативно: $A B \neq B A$, но $(A B) C = A (B C)$
+%Свойства: $A I = I A = A$ Обычно умножение матриц некомутативно, но
+%ассоциативно: $A B \neq B A$, но $(A B) C = A (B C)$
 
 Inverse matrix - обратная матрица Transpose matrix - транспонированная
 матрица
 
 \label{Chapter 4}
 \section {Linear Regression with Multiple Variables}
-Notation: \\
+
+Notation: 
 \begin{itemize}
 \item {m} = number of examples (size of training set)
 \item {n} = number of features
@@ -171,17 +183,15 @@ Notation: \\
   (vector of size n)
 \item {$x_j^{(i)}$} = value of feature j in $i^{th}$ training example
 \end{itemize}
-Hypothesis: \\
-\[
-h_\theta(x) = \theta_0 + \theta_1x_1 + \theta_2x_2 + \theta_3x_3 + ...
-\theta_nx_n
-\]
+
+Hypothesis: 
+\[ h_\theta(x) = \theta_0 + \theta_1x_1 + \theta_2x_2 + \theta_3x_3 + ...
+\theta_nx_n \]
+
 For convenience in notation , define $x_0=1$. $(x_0^{(i)}=1)$: Feature
 vector (values for a single feature) is of dimention n+1:
-\[
-x = \left[ \begin{array}{c} x_0 \\ x_1 \\ x_2 \\ \vdots \\ x_n
-  \end{array} \right] \in \mathbf{R^{n+1}}
-\]
+\[ x = \left[ \begin{array}{c} x_0 \\ x_1 \\ x_2 \\ \vdots \\ x_n
+  \end{array} \right] \in \mathbf{R^{n+1}} \]
 The same story (n+1 dimentional vector) - for parameters:
 \[
 \theta = \left[ \begin{array}{c} \theta_0 \\ \theta_1 \\ \theta_2 \\
@@ -191,10 +201,10 @@ The same story (n+1 dimentional vector) - for parameters:
 (another n+1 dimentional vector) Then hypothesis can be written as:
 \[
 h_\theta(x) = \theta_0x_0 + \theta_1x_1 + \theta_2x_2 + \theta_3x_3 +
-... \theta_nx_n = \\ \theta^TX
-\]
+... \theta_nx_n = \theta^TX \]
+
 where: $\theta^T = [\theta_0 \theta_1 ... \theta_n]$ - so-called {\bf
-  raw vector}. \\
+  raw vector}. 
 
 This form is also called {\bf Multivariate linear regression }.
 
@@ -204,7 +214,8 @@ Cost function:
 J(\theta_0, \theta_1, ..., \theta_n) = \frac{1}{2m}
 \sum\limits_{i=1}^m\left(h_\theta(x^{(i)}) - y^{(i)} \right)^2
 \]
-Gradient descent: \\
+Gradient descent: 
+
 Repeat \{
 \[ \theta_j := \theta_j - \alpha \frac
 {\delta}{\delta\theta_j}J(\theta) \\
@@ -535,8 +546,8 @@ As y = 0 or 1, then:
 \[P( y = 0 | x;\theta) = 1 - P(y=1|x;\theta)\]
 
 \subsection{Decision Boundary}
-Suppose predict ``y = 1'' if $h_\theta(x) \geq 0.5$ \\
-and ``y = 0'' if $h_\theta(x) < 0.5$ \\
+Suppose predict ``y = 1'' if $h_\theta(x) \geq 0.5$ 
+and ``y = 0'' if $h_\theta(x) < 0.5$ 
 
 as $g(z) \geq 0.5 \ when \ Z \geq 0 \Rightarrow h_\theta(x) =
 g(\theta^Tx) \geq 0.5 \ whenever \ \theta^Tx \geq 0$
@@ -595,7 +606,7 @@ p(y=1|x; \theta)
 \]
 
 \paragraph{Gradient Descent}
-Calculating $\min_\theta J (\theta)$: \\
+Calculating $\min_\theta J (\theta)$: 
 \[ \begin{array}{l}
   \textrm{Repeat }  \{ \\
   \theta_j := \theta_j - \alpha \frac {\delta}{\delta \theta} J
@@ -637,15 +648,22 @@ Example: \[\theta = \left[ \begin{array}{c} \theta_1 \\ \theta_2
 \]
 in Octave:
 \begin{lstlisting}[language=Octave, caption=={Plugin function }]
-  function [jVal, gradient] = costFunction(theta) jVal = (theta(1) -
-  5)^2 + (theta(2)-5)^2; gradient = zeros(2,1); gradient(1) = 2 *
-  (theta(1) - 5); gradient(2) = 2 * (theta(2) - 5);
+  function [jVal, gradient] = costFunction(theta) 
+
+jVal = (theta(1) -  5)^2 + (theta(2)-5)^2; 
+
+gradient = zeros(2,1); 
+gradient(1) = 2 * (theta(1) - 5); 
+gradient(2) = 2 * (theta(2) - 5);
 \end{lstlisting}
 then
 \begin{lstlisting} [language=Octave, caption=={Algorithm Call }]
   % set up process options
-  options = optimset('GradObj', 'on', 'MaxIter', '100'); initialTheta
-  = zeros(2, 1); [optTheta, functionVal, exitFlag] =
+  options = optimset('GradObj', 'on', 'MaxIter', '100'); 
+
+initialTheta  = zeros(2, 1); 
+
+[optTheta, functionVal, exitFlag] =  
   fminunc(@costFunction, initialTheta, options);
 \end{lstlisting}
 This returns optTheta (value of $\theta$ for optimal point),
@@ -813,15 +831,17 @@ where hypothesis is a bit different: $h_\theta(x) = \frac{1}{1 +
 \label{sec:7-4-2}
 In Octave:
 \begin{lstlisting}[language=Octave, caption=={Plugin function }]
-  function [jVal, gradient] = costFunction(theta) jVal = [code to
-  compute |$J(\theta)$|]; |\[\textrm{becomes } J(\theta) = \left[
+  function [jVal, gradient] = costFunction(theta) 
+jVal = [code to compute |$J(\theta)$|]; 
+|\[\textrm{becomes } J(\theta) = \left[
     -\frac{1}{m} \sum \limits_{i=1}^{m} y^{(i)} \log h_\theta(x^{(i)})
     + (1 - y^{(i)}) \log (1 - h_\theta(x^{(i)})) \right] +
-  \frac{\lambda}{2m} \sum \limits_{j=1}^{n} \theta_j^2 \]| gradient(1)
-  = [code to compute |$\frac{\delta}{\delta \theta_0} J(\theta)$|];
+  \frac{\lambda}{2m} \sum \limits_{j=1}^{n} \theta_j^2 \]
+
+| gradient(1)  = [code to compute |$\frac{\delta}{\delta \theta_0} J(\theta)$|];
   |\[\frac {1}{m} \sum \limits_{i=1}^m(h_\theta(x^{(i)}) - y^{(i)})
   x_0^{(i)} \]| gradient(2) = [code to compute |$\frac{\delta}{\delta
-    \theta_1} J(\theta)$|]; |\[ \frac {1}{m} \sum
+  \theta_1} J(\theta)$|]; |\[ \frac {1}{m} \sum
   \limits_{i=1}^m(h_\theta(x^{(i)}) - y^{(i)}) x_1^{(i)} +
   \frac{\lambda}{m}\theta_1 \]| gradient(3) = [code to compute
   |$\frac{\delta}{\delta \theta_2} J(\theta)$|]; |\[ \frac {1}{m} \sum
@@ -1073,11 +1093,12 @@ compute the partial derivatives.
   \delta_i^{(l+1)}$ - possible to vectorise as $\Delta^{(l)} :=
   \Delta^{(l)} + \delta^{(l+1)}(a^{(l)})^T$ \\
 \end{tabbing}   
-After the loop:  \\
-$[\mathbf{D}_{ij}^{(l)} := \frac{1}{m}\Delta_{ij}^{(l)} + \lambda
-\theta_{ij}^{(l)} \textrm{ if }j \ne 0$ \\
-$\mathbf{D}_{ij}^{(l)} := \frac{1}{m}\Delta_{ij}^{(l)} \textrm{ if }j
-= 0$ \\
+
+After the loop:  
+\[ \mathbf{D}_{ij}^{(l)} := \frac{1}{m}\Delta_{ij}^{(l)} + \lambda
+\theta_{ij}^{(l)} \textrm{ if }j \ne 0 \]
+\[ \mathbf{D}_{ij}^{(l)} := \frac{1}{m}\Delta_{ij}^{(l)} \textrm{ if }j
+= 0\]
 
 finally: $\frac{\delta}{\delta \theta_{ij}^{(l)}} J(\theta) =
 \mathbf{D}_{ij}^{(l)}$
@@ -2270,10 +2291,9 @@ analysis of $100 \times 100$ pixels. This going to be quite slow, so:
 \item Extract input x's to unlabelled dataset $x^{(1)},x^{(2)},\dots,
   x^{(m)} \in \mathbf{R}^{10000}$
 \item apply PCA so that dataset becomes $z^{(1)},z^{(2)},\dots,
-  z^{(m)} \in \mathbf{R}^{1000}$
-Got a new training set:  $(z^{(1)}, y^{(1)}),(z^{(2)}, y^{(2)}),\dots, (z^{(m)},
-y^{(m})$; train algorithm using $h_\theta(z) = \frac{1}{1 +
-  e^{-\theta^Tz}}$
+  z^{(m)} \in \mathbf{R}^{1000}$ Got a new training set: $(z^{(1)},
+  y^{(1)}),(z^{(2)}, y^{(2)}),\dots, (z^{(m)}, y^{(m})$; train
+  algorithm using $h_\theta(z) = \frac{1}{1 + e^{-\theta^Tz}}$
 \end{itemize}
 
 When given a new sample x:
@@ -2281,13 +2301,12 @@ When given a new sample x:
 \item calculate $x \rightarrow z$ using $U_{reduce}$
 \item use z for making prediction based on $h_\theta(z)$
 \end{itemize}
-%find out how to separate "Notes":
+% find out how to separate "Notes":
 
-\subparagraph{Note:}
-Mapping $x^{(i)} \rightarrow z^{(i)}$ should be defined by running PCA
-only on the training set. This mapping can be applied as well to the
-examples $x_{cv}^{(i)}$ and $x_{test}^{(i)}$ in the cross validation
-and test sets.
+\subparagraph{Note:} Mapping $x^{(i)} \rightarrow z^{(i)}$ should be
+defined by running PCA only on the training set. This mapping can be
+applied as well to the examples $x_{cv}^{(i)}$ and $x_{test}^{(i)}$ in
+the cross validation and test sets.
 
 \paragraph{Application of PCA}
 
@@ -2297,13 +2316,12 @@ and test sets.
   \item Reduce memory/disk needed to store data
   \item Speed up learning algorithm
   \end{itemize}
-Here choose k by \% of variance retained. Good (typical) result - up
-to 99\%
-\item Visualisation
-k = 2 or k = 3
+  Here choose k by \% of variance retained. Good (typical) result - up
+  to 99\%
+\item Visualisation k = 2 or k = 3
 \end{itemize}
 
-\paragraph{Bad use of PCA: To prevent outfitting} 
+\paragraph{Bad use of PCA: To prevent outfitting}
 
 Like use $z^{(i)}$ instead of $x^{(i)}$ to reduce the number of
 features to k < n. Thus, fewer features => less likely to overfit.
@@ -2313,14 +2331,14 @@ without knowing the values of $y^{(i)}$. Use regularisation instead.
 
 Quite often the whole ML system can go without any dimension reducing
 at all. Always need to test on original/raw data before considering
-PCA. 
+PCA.
 
 \section{Anomaly Detection}
 \label{sec:15}
 
-Example: aircraft engine features.
-Formally, we're given example (training) set $\{ x^{(1)}, x^{(2)},
-\dots, x^{(m)} \}$, we need to estimate is $x_{test}$ anomalous? 
+Example: aircraft engine features. Formally, we're given example
+(training) set $\{ x^{(1)}, x^{(2)}, \dots, x^{(m)} \}$, we need to
+estimate is $x_{test}$ anomalous?
 
 We build a model $p(x)$ - probability model and ``small threshold''
 $\epsilon$ such that:
@@ -2336,10 +2354,10 @@ Another example - fraud detection:
   pages visited etc).
 \item Identify unusual users by checking which have $p(x) , \epsilon$
 \end{itemize}
-Manufacturing
-Monitoring computers in a data centre: $x^(i)$ = features of machine
-i: $x_1$ = memory use; $x_2$ = number of disk access/sec; $x_3$ = CPU
-load; $x_4$ = network traffic etc. Check $p(x_{test} < \epsilon$
+Manufacturing Monitoring computers in a data centre: $x^(i)$ =
+features of machine i: $x_1$ = memory use; $x_2$ = number of disk
+access/sec; $x_3$ = CPU load; $x_4$ = network traffic etc. Check
+$p(x_{test} < \epsilon$
 
 \subsubsection{Gaussian Distribution (Normal Distribution)}
 \label{sec:15-2}
@@ -2349,8 +2367,8 @@ variance $\sigma^2$, it is written as $x \sim \aleph(\mu, \sigma^2)$
 ``N scripted'' stands for ``normal''; $\sigma$ is called ``the
 standard deviation''; $\sigma^2$ is a variance:
 \[ p(x; \mu, \sigma^2) = \frac{1}{\sqrt{2 \pi} \sigma }
-exp(-\frac{(x-\mu)^2 }{2\sigma^2}) \]
--p(x) is parametrized by $\mu$ and $\sigma$-squared.
+exp(-\frac{(x-\mu)^2 }{2\sigma^2}) \] -p(x) is parametrized by $\mu$
+and $\sigma$-squared.
 
 The total square of probability curve integrates to 1; it changes
 shape depending on parameters.
@@ -2367,17 +2385,309 @@ no much difference.
 
 \subsubsection{Algorithm}
 \label{sec:15-3}
-Movie rating example - see page 2 of slides 16.
 
-We assume we have NOT all data for given - so use $x^{(i)}$ only for
-available features (so that we do have a value for feature i from
-person j: $r(i, j) = 1$:
+Given the training set $\{x^{(1)}, \dots, x^{(m)}\}$, each example is
+$x \in \mathbf{R}^n$. We expect that each feature is distributed
+according to some Gaussian distribution:
+\[ \begin{array}{l}
+  x_1 \sim \aleph(\mu_1, \sigma_1^2) \\
+  x_2 \sim \aleph(\mu_2, \sigma_2^2) \\
+  x_3 \sim \aleph(\mu_3, \sigma_3^2) \\
+\end{array} \]
 
-Given $\theta^{(1)}, \theta^{(2)}, \dots, \theta^{(n_u)}$, to learn
-$x^{(i)}$: \[ 
-\min \limits_{x^{(i)}} \frac{1}{2} \sum \limits_{j:r(i, j) = 1}
-((\theta^{(i)})^T x^{(i)} - y^{(i,j)})^2 + \frac{\lambda}{2} \sum
-\limits_{k=1}^n (x_k^{(i)})^2 \]
+So $p(x) = p(x_1;\mu_1, \sigma_1^2)*p(x_2;\mu_2, \sigma_2^2)* \dots
+*p(x_n;\mu_n, \sigma_n^2) = \prod \limits_{j=1}^n p(x_j;\mu_j,
+\sigma_j^2)$
+
+- AKA ``Density estimation''. So, the algorithm:
+\begin{enumerate}
+\item Choose features $x_i$ that you think might be indicative of
+  anomalous examples
+\item Fit parameters $\mu_1, \dots \mu_n, \sigma_1^2, \dots,
+  \sigma_n^2$:
+  \[ \mu_j = \frac{1}{m} \sum \limits_{i=1}^m x_j^{(i)}, \sigma_j^2 =
+  \frac{1}{m} \sum \limits_{i=1}^m (x_j^{(i)} - /mu_j)^2\]
+
+  In vector form: if $\mu$ is a column vector, then $\mu = \frac{1}{m}
+  \sum \limits_{i=1}^m x^{(i)}$; similar story for $\sigma$.
+\item Given new example x, compute Gaussian probability $p(x)$:
+  \[p(x) = \prod \limits_{j=1}^n p(x_j;\mu_j, \sigma_j^2) = \prod
+  \limits_{j=1}^n \frac{1}{\sqrt{2 \pi} \sigma_j} \exp(-\frac{(x_j -
+    \mu_j)^2}{2\sigma_j^2}) \] of the example being the ``normal''
+  one. Diagnose anomaly if $p(x) < \epsilon$.
+\end{enumerate}
+
+Example was with $\epsilon = 0.02$
+
+\subsubsection{Developing and Evaluating an Anomaly Detection system}
+\label{sec:15-4}
+
+\subparagraph{The importance of real-number evaluation}
+
+Assume we have some data of anomalous and non- anomalous examples. (y
+= 0 if normal, y = 1 is anomalous).
+\begin{itemize}
+\item Training set: $x^{(1)},x^{(2)}, \dots x^{(m)}$ (assume normal
+  examples / not anomalous)
+\item Cross validation set: $(x_{cv}^{(1)}, y_{cv}^{(1)}), \dots,
+  (x_{cv}^{(m_{cv})}, y_{cv}^{(m_{cv})})$
+\item Test set: $(x_{test}^{(1)}, y_{test}^{(1)}), \dots,
+  (x_{test}^{(m_{test})}, y_{test}^{(m_{test})})$
+\end{itemize}
+Example: 10000 good (normal) engines; 20 flawed (anomalous) ones. Even
+if some anomalous ``slipped'' into ``normal'' data, it is still OK.
+
+Then (60-20-20 split):
+\begin{itemize}
+\item Training set: 6000 good engines (y=0)
+\item CV: 2000 good engines (y=0), 10 anomalous (y=1)
+\item Test: 2000 good engines (y=0), 10 anomalous (y=1)
+\end{itemize}
+
+\subparagraph{Algorithm evaluation}
+
+Fit model $p(x)$ on training set, on a cross validation / test example
+$x$, predict y based on $p(x)$ and $\epsilon$. Possible evaluation
+metrics (NOT accuracy as data is quite skewed!):
+\begin{itemize}
+\item True positive, false positive, false negative, true negative
+\item Precision / recall
+\item $F_1$ - score
+\end{itemize}
+
+Can also use cross validation set to choose parameter $\epsilon$
+
+\subsection{Anomaly Detection vs Supervised Learning}
+\label{sec:15-5}
+
+\begin{tabular}{l|c|l}
+  Anomaly Detection & Supervised learning \\  
+  \hline
+  Very small number of positive examples (y=1): 0-20 is common. 
+  Large number of negative (y=0) examples & Large number of positive and
+  negative examples \\
+  Many different ``types'' of anomalies. Hard for any algorithm to learn
+  from positive examples what the anomalies look like; future anomallies
+  may look nothing like any of the anomalous examples we've seen so far.
+  & Enough positive examples for algorithm to get a sense of what
+  positive examples are like, future positive examples likely to be
+  similar to ones in training set. \\
+\end{tabular}
+ 
+Usual tasks:
+\begin{itemize}
+\item Anomaly detection
+  \begin{itemize}
+  \item Fraud detection (sometimes, if you have a lot of y=1 cases,
+    this can become Machine Learning problem)
+  \item Manufacturing (i.e. aircraft engines)
+  \item Monitoring machines in a data centre
+  \end{itemize}
+\item Supervised learning
+  \begin{itemize}
+  \item Email spam classification
+  \item Weather prediction (sunny/rainy/etc).
+  \item Cancer classification
+  \end{itemize}
+\end{itemize}
+
+\subsection{Choosing Features}
+\label{sec:15-6}
+
+\paragraph{Non-gaussian features}
+
+The process depends on the Gaussian distribution of feature: it is
+good idea to draw data histogram and check if this is a case. If
+actual distribution is not actually Gaussian $\to$ play with
+transformations (like apply $log(x)$ or $\log(x_i + c)$) or
+$x^{\frac{1}{3}}$).
+
+\paragraph{Error analysis for anomaly detection}
+
+Want $p(x)$ large for normal examples x and small for anomalous
+examples x. Most common problem is that $p(x)$ is comparable (say,
+both large) for normal and anomalous examples.
+
+In this case, look closely to the anomalous example and try to find
+out the additional feature. In common, choose features that might take
+on unusually large or unusually small values in the event of anomaly.
+Sometimes including features like (for ``Monitoring computers in a
+data centre'' example): $x_5 = \frac{\textrm{CPU
+    load}}{\textrm{Network traffic}}$ or even $x_6 =
+\frac{(\textrm{CPU load})^2}{\textrm{Network traffic}}$
+
+\subsection{Multivariate Gaussian Distribution}
+\label{sec:15-7}
+
+The ``standard'' anomaly detection does not check the form of case
+distribution - it just multiplies probabilities and so can miss the
+anomaly (see p.25 of doc 16). To fix this, use Multivariate Gaussian
+Distribution: 
+
+$x \in \mathbf{R}^n$; model $p(x)$ all in one go ($\mu \in
+\mathbf{R}^n$ - through covariance matrix $\Sigma \in \mathbf{R}^{n
+  \times n} $:
+
+\[ \mu = \frac{1}{m} \sum \limits_{i=1}^{m} x^{(i)}; \Sigma =
+\frac{1}{m}\sum \limits_{i=1}^{m}(x^{(i)}-\mu)(x^{(i)}- \mu)^T \]
+\[p(x; \mu, \Sigma) = \frac{1}{(2 \pi)^{\frac{n}{2}}
+  |\Sigma|^{\frac{1}{2}}} \exp(-\frac{1}{2}(x - \mu)^T
+\Sigma^{-1}(x-\mu))\] 
+
+where $|\Sigma|$ is a determinant of $\Sigma$, calculate in Octave as $det(Sigma)$
+
+See pp. 27-32 of slides for illustrations on covariance matrix
+($\Sigma$) and mean ($\mu$) influence on the probability distribution.
+
+\subsection{Anomaly Detection using the Multivariance Gaussian Distribution}
+\label{sec:15-8}
+
+Usual algorithm:
+\begin{enumerate}
+\item Fit model $p(x)$ by setting $\mu$ and $\Sigma$
+\item Given a new example x, compute \[ p(x) = \frac{1}{(2
+    \pi)^{\frac{n}{2}} |\Sigma|^{\frac{1}{2}}} \exp(-\frac{1}{2}(x -
+  \mu)^T \Sigma^{-1}(x-\mu)) \]
+\item Flag an anomaly if $p(x) < \epsilon$
+\end{enumerate}
+
+Original model: $p(x) = p(x_1; \mu_1, \sigma_1^2) \times p(x_2; \mu_2,
+\sigma_2^2) \times \dots \times p(x_n; \mu_n, \sigma_n^2)$
+
+corresponds to multivariate Gaussian ($p(x; \mu, \Sigma)$ where
+$\Sigma = \left[
+  \begin{array}{cccc}
+    \sigma_1^2 & 0 & \dots & 0 \\
+    0  & \sigma_2^2 & \dots &0 \\
+    \vdots & \vdots & \vdots & \vdots \\
+    0 & \dots & & \sigma_n^2 
+  \end{array}
+\right] $
+
+Uses:
+\begin{itemize}
+\item Original model
+  \begin{itemize}
+  \item Manually create features to capture anomalies where $x_1, x_2$
+    take unusual combinations of values
+  \item Computationally cheaper (scales better to large n: n=10,000,
+    n=100,000)
+  \item OK even if m (training set size) is small
+  \end{itemize}
+\item Multivariate Gaussian
+  \begin{itemize}
+  \item Automatically captures correlations between features
+  \item Computationally more expensive ($\Sigma \in \mathbf{R}^{n
+      \times n}, \Sigma^{-1}$ is calculated)
+  \item Must have $m > n$ or else $\Sigma$ is non-revertible. In
+    practice, makes sense when $m \geq 10n$
+  \end{itemize}
+\end{itemize}
+
+\section{Recommender System}
+\label{sec:16}
+
+Recommender system (some implementations) can learn feature from the
+raw data (without manually picking them up). 
+ 
+\subsection{Problem Formulation}
+\label{sec:16-1}
+Running example: Predicting movie ratings.
+
+User rate movies using one\^ W zero to five stars. We have four users:
+Alice, Bob, Carol, Dave; they rated some of five movies:
+
+\begin{tabular}{c|cccc}
+  \textbf{Movie} & \textbf{Alice(1)} & \textbf{Bob(2)} &
+  \textbf{Carol(3)} & \textbf{ Dave(4)} \\
+\hline
+Love at last & 5 & 5 & 0 & 0 \\
+Romance forever & 5 & ? & ? & 0 \\
+Cute puppies of love & ? & 4 & 0 & ? \\
+Nonstop car chases & 0 & 0 & 3 & 4 \\
+Swords vs karate & 0 & 0 & 5 & ?
+\end{tabular}
+
+Parameters:
+\begin{itemize}
+\item $n_u$ = no. users (4 in our case)
+\item $n_m$ = no. movies (5 in our example)
+\item $r(i, j)$ = 1 if user j has rated movie i
+\item $y(i, j)$ = rating given by user j to movie i (defined only if
+  $r(i, j)$ = 1); values from 0 to 5
+\end{itemize}
+
+The task is to predict the missing ratings.
+
+\subsection{Content Based Recommendations}
+\label{sec:16-2}
+
+First approach to Recommendation Systems.
+Introduce a set of features, e.g $x_1$ (romance) and $x_2$ (action).
+Technically, add $x_0$ = 1 (``interceptor'' feature). Introduce number
+of features n = 2.
+
+Then for each user j, learn a parameter $\theta^{(j)} \in
+\mathbf{R}^3$. Predict user j as rating movie i with $(\theta^{(j)})^T
+x^{(i)}$ stars.
+
+\paragraph{Formulation}
+
+\begin{itemize}
+\item $r(i, j)$ = 1 if user j has rated movie i (0 otherwise)
+\item $y^{i, j)}$ = rating by user j on movie i (if defined)
+\item $\theta^{(i)}$ = parameter vector for user j
+\item $x^{(i)}$ = feature vector for movie i
+\item For user j, movie i, predicted rating:
+  $(\theta^{(j)})^T(x^{i)})$.
+\item $m^{(j)}$ = no of movies rated by user j
+\end{itemize}
+To learn $\theta^{(j)}: 
+ \min \limits_{\theta^{(j)}} \frac{1}{2 m^{(j)}} \sum
+ \limits_{i:r(i,j)=1} \left( (\theta^{(j)})^T (x^{(i)}) - y^{(i, j)}
+ \right)^2 + \frac{\lambda}{2 m^{(j)}} \sum \limits_{k = 1}^n (\theta_k^{(j)})^2 $
+
+Optimisation: remove $\frac{1}{m^{(j)}}$ from both part of the
+formula. Then:
+\begin{itemize}
+\item To learn $\theta^{(j)}$ - parameter for user j): \[ \min
+  \limits_{\theta^{(j)}} \frac{1}{2} \sum \limits_{i:r(i,j)=1} \left(
+    (\theta^{(j)})^T (x^{(i)}) - y^{(i, j)} \right)^2 +
+  \frac{\lambda}{2} \sum \limits_{k = 1}^n (\theta_k^{(j)})^2 \]
+\item To learn $\theta^{(1)}, \theta^{(2)}, \dots \theta^{(n_u)}$: \[
+  \min \limits_{\theta^{(1)}, \dots, \theta^{(n_u)}} \frac{1}{2} \sum
+  \limits_{j=1}^{n_u} \sum \limits_{i:r(i,j)=1} \left(
+    (\theta^{(j)})^T (x^{(i)}) - y^{(i, j)} \right)^2 +
+  \frac{\lambda}{2} \sum \limits_{j=1}^{n_u} \sum \limits_{k = 1}^n
+  (\theta_k^{(j)})^2 \] - becomes good old $J(\theta^{(1)}, \dots,
+  \theta^{(n_u)}$
+\end{itemize}
+
+Then use gradient descent update (based on partial derivatives):
+
+\[ \begin{array}{lll} \theta_k^{(j)} := \theta_k^{(j)} - \alpha
+  \sum\limits_{i:r(i,j)=1}
+  ((\theta^{(j)})^Tx^{(i)} - y^{(i, j)})x_k^{(i)} & \mathrm{ for } & k = 0\\
+  \theta_k^{(j)} := \theta_k^{(j)} - \alpha \left(
+    \sum\limits_{i:r(i,j)=1} ((\theta^{(j)})^Tx^{(i)} - y^{(i,
+      j)})x_k^{(i)} + \lambda \theta_k^{(j)} \right) & \mathrm{ for }
+  & k \neq  0\\ 
+\end{array} \]
+
+Requires manually selecting features $x^{(i)}$ which is not always
+easy to do. 
+
+\subsection{Collaborative Filtering}
+\label{sec:16-3}
+
+This algorithm learns necessary features by itself - without manually
+selecting them.
+
+Imagine each user provided its preferences: $\theta^{(1)},
+\theta^{(2)}, \dots, \theta^{(n_u)}$, to learn $x^{(i)}$: 
+\[ \min \limits_{x^{(i)}} \frac{1}{2} \sum \limits_{j:r(i,
+  j) = 1} ((\theta^{(i)})^T x^{(i)} - y^{(i,j)})^2 + \frac{\lambda}{2}
+\sum \limits_{k=1}^n (x_k^{(i)})^2 \]
 
 - actually, minimising the square error:
 \begin{itemize}
@@ -2389,16 +2699,193 @@ $x^{(i)}$: \[
 \end{itemize}
 
 Expanding on the idea of learning the whole dataset (the data for all
-m movies, $x^{(1)},x^{(2)}, \dots,  x^{(n_m)}$):
+m movies, $x^{(1)},x^{(2)}, \dots, x^{(n_m)}$):
 
-\[ \min \limits_{x^{(1)},x^{(2)}, \dots,  x^{(n_m)}} \frac{1}{2} \sum
-\limits_{i=1}^{n_m}  \sum \limits_{j:r(i, j) = 1}
-((\theta^{(i)})^T x^{(i)} - y^{(i,j)})^2 + \frac{\lambda}{2} \sum
-\limits_{i=1}^{n_m} \sum \limits_{k=1}^n (x_k^{(i)})^2 \]
+\[ \min \limits_{x^{(1)},x^{(2)}, \dots, x^{(n_m)}} \frac{1}{2} \sum
+\limits_{i=1}^{n_m} \sum \limits_{j:r(i, j) = 1} ((\theta^{(i)})^T
+x^{(i)} - y^{(i,j)})^2 + \frac{\lambda}{2} \sum \limits_{i=1}^{n_m}
+\sum \limits_{k=1}^n (x_k^{(i)})^2 \]
 
-% 16-3  06:30
+\paragraph{Collaborative filtering}
+\begin{itemize}
+\item Given  $x^{(1)}, \dots, x^{(n_m)}$ (and movie ratings), can
+estimate $\theta^{(1)}, \dots, \theta^{(n_u)}$.
+\item Given $\theta^{(1)}, \dots, \theta^{(n_u)}$ can estimate $x^{(1)}, \dots, x^{(n_m)}$
+\end{itemize}
 
-\section{Recommender System}
-\label{sec:16}
+So chicken and egg problem. To solve: randomly guess initial $\theta$,
+learn initial features x, then make better estimation for $\theta$,
+get back: $\theta \to x \to \theta \to x \to \dots$
+
+So we simultaneously learn user's preferences and movie
+characteristics. The whole ``collaborative filtering'' term refers to
+collaboration between users to learn better features.
+
+\subsection{Collaborative Filtering Algorithm}
+\label{sec:16-4}
+
+The idea is to minimise $x^{(1)}, \dots, x^{(n_m)}$ and $\theta^{(1)},
+\dots, \theta^{(n_u)}$ simultaneously: \[
+J(x^{(1)}, \dots, x^{(n_m)}, \theta^{(1)},\dots, \theta^{(n_u)} =
+\frac{1}{2} \sum \limits_{(i, j):r(i, j) = 1} ((\theta^{(j)})^Tx^{(i)}
+- y^{(i, j)})^2 + \frac{\lambda}{2} \sum \limits_{i=1}^{n_m} \sum
+\limits_{k=1}^n(x_k^{(i)})^2 + \frac{\lambda}{2} \sum
+\limits_{j=1}^{n_u} \sum \limits_{k=1}^n (\theta_k^{(j)})^2 \]
+
+determining \[\min \limits_{
+  \begin{array}{c}
+    x^{(1)}, \dots, x^{(n_m)} \\    
+  \theta^{(1)},\dots, \theta^{(n_u)}
+  \end{array}} J(x^{(1)}, \dots, x^{(n_m)}, \theta^{(1)},\dots,
+\theta^{(n_u)})\]
+
+where $x \in \mathbf{R}^n$ - not  $x \in
+\mathbf{R}^{n+1}$, and  $\theta \in \mathbf{R}^n$
+
+\paragraph{Collaborative filtering algorithm}
+
+\begin{enumerate}
+\item Initiate $x^{(1)}, \dots, x^{(n_m)}, \theta^{(1)},\dots,
+  \theta^{(n_u)}$  to small random values.
+\item Minimise $J(x^{(1)}, \dots, x^{(n_m)}, \theta^{(1)},\dots,
+\theta^{(n_u)})$ using gradient descent (or an advanced optimisation
+algorithm). E.g. for every $j = 1, \dots, n_u; i = 1, \dots, n_m$:
+\[x_k^{(i)} :=  x_k^{(i)} - \alpha \underbrace{\left(\sum \limits_{j:r(i,j) = 1}
+  ((\theta^{(j)})^T x^{(i)} - y^{(i,j)}) \theta_k^{(j)} + \lambda
+  x_k^{(i)} \right)}_{ }
+\]
+\[\theta_k^{(j)} :=  \theta_k^{(j)} - \alpha \underbrace{\left(\sum \limits_{j:r(i,j) = 1}
+  ((\theta^{(j)})^T x^{(i)} - y^{(i,j)}) x_k^{(i)} + \lambda
+  \theta_k^{(j)} \right)}_{\frac{\delta}{\delta \theta_k^{(j)}}
+J(\dots)} \]
+\item For a user with parameters $\theta$ and a movie with (learned)
+  features x, predict a start rating of $\theta^T x$.
+\end{enumerate}
+
+\subsection{Vectorisation: Low rank matrix factorisation}
+\label{sec:16-5}
+
+Create matrix of ratings with $n_m = 5 \times n_u=4$:
+\[ \mathbf{Y} = \left[ 
+\begin{array}{cccc}
+  5 & 5 & 0 & 0 \\
+  5 & ? & ? & 0 \\
+  ? & 4 & 0 & ? \\
+  0 & 0 & 5 & 4 \\
+  0 & 0 & 5 & 0
+\end{array} \right]\]
+
+Assuming that predicted rating is $(\theta^{(j)})^T(x^{(i)})$: \[ 
+\left[
+  \begin{array}{cccc}
+   (\theta^{(1)})^T(x^{(1)}) &  (\theta^{(2)})^T(x^{(1)}) & \dots &
+   (\theta^{(n_u)})^T(x^{(1)}) \\
+   (\theta^{(1)})^T(x^{(2)}) &  (\theta^{(2)})^T(x^{(2)}) & \dots &
+   (\theta^{(n_u)})^T(x^{(2)}) \\
+\vdots & \vdots & \vdots & \vdots \\
+   (\theta^{(1)})^T(x^{(n_m)}) &  (\theta^{(2)})^T(x^{(n_m)}) & \dots &
+   (\theta^{(n_u)})^T(x^{(n_m)}) \\
+  \end{array}
+\right]
+\]
+
+Define matrices \[\mathbf{X} = \left[
+  \begin{array}{c}
+    - (x^{(1)})^T - \\
+    - (x^{(2)})^T - \\
+    \vdots \\
+    - (x^{(n_m)})^T - \\
+  \end{array}
+\right], \mathbf{\Theta} = \left[
+  \begin{array}{c}
+    - (\theta^{(1)})^T - \\
+    - (\theta^{(2)})^T - \\
+    \vdots \\
+    - (\theta^{(n_m)})^T - \\
+  \end{array}
+\right]\]
+
+Predicted ratings then: $\mathbf{X * \Theta^T}$; the whole process is
+called {\bf Low rank matrix factorisation} (because of mathematical
+property ``low rank matrix'' of the whole $X * |theta^T$ product).
+
+\paragraph{Finding related movies}
+
+For each product i we learn a feature vector $x^{(i)} \in
+\mathbf{R}^n$. To find movies j related to movie i: find movies whose
+distance to i ($||x^{(i)} - x^{(j)}||$) is small. This would mean that
+movies j and i are ``similar''. 
+
+\subsection{Implementation Detail: Mean Normalisation}
+\label{sec:16-6}
+
+Motivation: imagine we have a user (Eve) which did not rate any movie
+yet. In this case only term affecting her cost function value is the
+regularisation term \[\frac{\lambda}{2} \sum \limits_{i=1}^{n_m} \sum
+\limits_{k=1}^n(x_k^{(i)})^2 + \frac{\lambda}{2} \sum
+\limits_{j=1}^{n_u} \sum \limits_{k=1}^n (\theta_k^{(j)})^2\]
+
+Obviously this will be minimal when (for number of features n = 2):
+$\theta^{(5)} = \left[ \begin{array}{c}  0 \\ 0 \end{array} \right]$
+
+Then for any x the $(\theta^{(5)})^T x^{(i)}$ which is not very
+useful. In this case it'd better to recommend a movie with ``overall''
+high rating (do distinguish from movies which got ``0''s from previous
+users). 
+
+The mean normalisation is going to fix this. We compute vector $\mu$
+which grabs the mean rating from all movies:
+\[ \mathbf{Y} = \left[ 
+\begin{array}{ccccc}
+  5 & 5 & 0 & 0 & ?\\
+  5 & ? & ? & 0 & ? \\
+  ? & 4 & 0 & ? & ? \\
+  0 & 0 & 5 & 4 & ? \\
+  0 & 0 & 5 & 0 & ?
+\end{array} \right]; 
+\mu = \left[\begin{array}{c}  2.5 \\ 2.5 \\ 2 \\ 2.25 \\
+    1.25\end{array}\right]  \to
+\mathbf{Y} = \left[ 
+\begin{array}{ccccc}
+  2.5 & 2.5 & -2.5 & -2.5 & ? \\
+  2.5 & ? & ? & -2.5 & ? \\
+  ? & 2 & -2 & ? & ? \\
+  -2.25 & -2.75 & 2.75 & 1.75 & ? \\
+  -1.25 & -1.25 & 3.75 & -1.25  & ?
+\end{array} \right]
+ \]
+
+Now use this derived matrix for learning $\theta^{(j)}, x^{(i)}$: for
+user j on movie i predict $(\theta^{(j)})^T (x^{(i)}) + \mu_i$.
+
+For user 5 (Eve): $\theta^{(5)} = \left[ \begin{array}{c}  0 \\
+    0 \end{array} \right] \to prediction = \mu_i $ which makes some
+sense: we expect ``average'' rating from the user we have no rating at
+all yet.
+
+Similar trick with unrated movies is possible but might be not that
+important.  
+
+\section{Large Scale Machine Learning}
+\label{sec:17}
+
+Learning with large datasets (near $1 * 10^8$ samples) adds a set of
+computational problems - like summation of m entries on the single
+step of gradient descent.
+
+The good idea is to make a ``sanity check'' of the algorithm itself on
+some subset of a data. Sometimes a small part of data gives a good
+idea of algorithm properties (like high bias etc).
+
+\subsection{Stochastic Gradient Descent}
+\label{sec:17-2}
+
+\paragraph{Linear regression with gradient descent}
+
+Suppose we're learning Linear Regression with hypothesis $h_\theta(x)
+= \sum \limits_{j=0}^n \theta_{j} x_{j}$ and cost function
+$J_{train}(\theta) = \frac{1}{2m}\sum
+\limits_{j=1}^m(h_\theta(x^{(i)}) - y^{(i)})^2$ 
+
 
 \end{document}
