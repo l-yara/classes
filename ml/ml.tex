@@ -23,7 +23,7 @@
 \label{Chapter 1}
 \section {Вводная}
 \subsection* {Supervised Learning} - where the ``right (correct)
-answers'' for each example of data is given. 
+answers'' for each example of data is given.
 
 Usually we have one of two:
 \begin{itemize}
@@ -32,13 +32,13 @@ Usually we have one of two:
 \end{itemize}
 
 \subsection* {Unsupervised Learning} - finding structure in ``blind''
-set of data. 
+set of data.
 
-{\bf Clustering} algorithms  
+{\bf Clustering} algorithms
 
 Example: {\bf Cocktail Party Problem} (разделение записей на двух
 микрофонах от двух источниках и восстановление сигналов от каждого
-источника индивидуально). 
+источника индивидуально).
 
 \label{Chapter 2}
 \section {Linear Regression with One Variable}
@@ -46,20 +46,21 @@ Example: {\bf Cocktail Party Problem} (разделение записей на 
 \subsection {Model Representation}
 Notation:
 \begin{itemize}
-\item {\bf m} =  Number of training examples 
-\item {\bf x}'s = ``input'' values / features 
-\item {\bf y}'s = ``output''variable / ``target'' variable 
-\item {\bf (x, y)} = one single training example 
-\item {\bf $(x^{(i)}, y^{(i)})$} = $i^{th}$ training example 
+\item {\bf m} = Number of training examples
+\item {\bf x}'s = ``input'' values / features
+\item {\bf y}'s = ``output''variable / ``target'' variable
+\item {\bf (x, y)} = one single training example
+\item {\bf $(x^{(i)}, y^{(i)})$} = $i^{th}$ training example
 \end{itemize}
 
 Обычный алгоритм: берем Training Set, скармливаем его Learning
 Algorithm. Оный строит ф-ю h (иначе hypothesis), которая по входному
-значению $x$ строит Estimation. Иначе говоря, 
+значению $x$ строит Estimation. Иначе говоря,
 
-h maps from x's to y's: $h_\theta(x)=\theta_0 + \theta_1x$; shorthand: h(x) 
+h maps from x's to y's: $h_\theta(x)=\theta_0 + \theta_1x$; shorthand:
+h(x)
 
-- т.е. полагаем что ф-я линейная 
+- т.е. полагаем что ф-я линейная
 
 Другие названия:
 \begin{itemize}
@@ -125,10 +126,10 @@ J(\theta_0,\theta_1)\]
 \frac{1}{m} \sum\limits_{i=1}^m\left(h_\theta (x^{(i)}) - y^{(i)}
 \right) * x^{(i)} \]
 
-Тогда алгоритм будет: 
+Тогда алгоритм будет:
 
 
-repeat until convergence \{ 
+repeat until convergence \{
 
 
 \[\theta_0 := \theta_0 - {\alpha} \frac{1}{m}
@@ -146,9 +147,9 @@ step of gradient descent uses all the training examples.
 \label {2-8}
 \begin{enumerate}
 \item Существует прямой (не - итерационный) метод обсчета $\theta_0,
-  \theta_1$ 
+  \theta_1$
 \item БОльшее количество параметров (features): $y = F(x_1, x_2, ...,
-x_n)$
+  x_n)$
 \end{enumerate}
 
 \label{Chapter 3}
@@ -166,8 +167,8 @@ Identity Matrix - единичная матрица вроде $\left( I
   \end{array}
 \right)$
 
-%Свойства: $A I = I A = A$ Обычно умножение матриц некомутативно, но
-%ассоциативно: $A B \neq B A$, но $(A B) C = A (B C)$
+% Свойства: $A I = I A = A$ Обычно умножение матриц некомутативно, но
+% ассоциативно: $A B \neq B A$, но $(A B) C = A (B C)$
 
 Inverse matrix - обратная матрица Transpose matrix - транспонированная
 матрица
@@ -175,7 +176,7 @@ Inverse matrix - обратная матрица Transpose matrix - трансп
 \label{Chapter 4}
 \section {Linear Regression with Multiple Variables}
 
-Notation: 
+Notation:
 \begin{itemize}
 \item {m} = number of examples (size of training set)
 \item {n} = number of features
@@ -184,9 +185,9 @@ Notation:
 \item {$x_j^{(i)}$} = value of feature j in $i^{th}$ training example
 \end{itemize}
 
-Hypothesis: 
-\[ h_\theta(x) = \theta_0 + \theta_1x_1 + \theta_2x_2 + \theta_3x_3 + ...
-\theta_nx_n \]
+Hypothesis:
+\[ h_\theta(x) = \theta_0 + \theta_1x_1 + \theta_2x_2 + \theta_3x_3 +
+... \theta_nx_n \]
 
 For convenience in notation , define $x_0=1$. $(x_0^{(i)}=1)$: Feature
 vector (values for a single feature) is of dimention n+1:
@@ -204,7 +205,7 @@ h_\theta(x) = \theta_0x_0 + \theta_1x_1 + \theta_2x_2 + \theta_3x_3 +
 ... \theta_nx_n = \theta^TX \]
 
 where: $\theta^T = [\theta_0 \theta_1 ... \theta_n]$ - so-called {\bf
-  raw vector}. 
+  raw vector}.
 
 This form is also called {\bf Multivariate linear regression }.
 
@@ -214,7 +215,7 @@ Cost function:
 J(\theta_0, \theta_1, ..., \theta_n) = \frac{1}{2m}
 \sum\limits_{i=1}^m\left(h_\theta(x^{(i)}) - y^{(i)} \right)^2
 \]
-Gradient descent: 
+Gradient descent:
 
 Repeat \{
 \[ \theta_j := \theta_j - \alpha \frac
@@ -546,8 +547,8 @@ As y = 0 or 1, then:
 \[P( y = 0 | x;\theta) = 1 - P(y=1|x;\theta)\]
 
 \subsection{Decision Boundary}
-Suppose predict ``y = 1'' if $h_\theta(x) \geq 0.5$ 
-and ``y = 0'' if $h_\theta(x) < 0.5$ 
+Suppose predict ``y = 1'' if $h_\theta(x) \geq 0.5$ and ``y = 0'' if
+$h_\theta(x) < 0.5$
 
 as $g(z) \geq 0.5 \ when \ Z \geq 0 \Rightarrow h_\theta(x) =
 g(\theta^Tx) \geq 0.5 \ whenever \ \theta^Tx \geq 0$
@@ -606,7 +607,7 @@ p(y=1|x; \theta)
 \]
 
 \paragraph{Gradient Descent}
-Calculating $\min_\theta J (\theta)$: 
+Calculating $\min_\theta J (\theta)$:
 \[ \begin{array}{l}
   \textrm{Repeat }  \{ \\
   \theta_j := \theta_j - \alpha \frac {\delta}{\delta \theta} J
@@ -658,7 +659,7 @@ gradient(2) = 2 * (theta(2) - 5);
 \end{lstlisting}
 then
 \begin{lstlisting} [language=Octave, caption=={Algorithm Call }]
-  % set up process options
+% set up process options
   options = optimset('GradObj', 'on', 'MaxIter', '100'); 
 
 initialTheta  = zeros(2, 1); 
@@ -1094,11 +1095,11 @@ compute the partial derivatives.
   \Delta^{(l)} + \delta^{(l+1)}(a^{(l)})^T$ \\
 \end{tabbing}   
 
-After the loop:  
+After the loop:
 \[ \mathbf{D}_{ij}^{(l)} := \frac{1}{m}\Delta_{ij}^{(l)} + \lambda
 \theta_{ij}^{(l)} \textrm{ if }j \ne 0 \]
-\[ \mathbf{D}_{ij}^{(l)} := \frac{1}{m}\Delta_{ij}^{(l)} \textrm{ if }j
-= 0\]
+\[ \mathbf{D}_{ij}^{(l)} := \frac{1}{m}\Delta_{ij}^{(l)} \textrm{ if
+}j = 0\]
 
 finally: $\frac{\delta}{\delta \theta_{ij}^{(l)}} J(\theta) =
 \mathbf{D}_{ij}^{(l)}$
@@ -1256,9 +1257,9 @@ E.g.
   \item Implement back prop to compute partial derivatives
     $\frac{\delta}{\delta\Theta_{jk}^{(l)}} J(\Theta)$
   \end{enumerate}
-  \begin{lstlisting}[language=Octave]
+\begin{lstlisting}[language=Octave]
     for i = 1:m
-  \end{lstlisting}
+\end{lstlisting}
   \begin{tabbing}
     \quad \quad \quad \quad \= Perform forward propagation and back propagation using
     example ($x^{(i)}, y^{(i)}$)  \\
@@ -2522,7 +2523,7 @@ data centre'' example): $x_5 = \frac{\textrm{CPU
 The ``standard'' anomaly detection does not check the form of case
 distribution - it just multiplies probabilities and so can miss the
 anomaly (see p.25 of doc 16). To fix this, use Multivariate Gaussian
-Distribution: 
+Distribution:
 
 $x \in \mathbf{R}^n$; model $p(x)$ all in one go ($\mu \in
 \mathbf{R}^n$ - through covariance matrix $\Sigma \in \mathbf{R}^{n
@@ -2532,14 +2533,16 @@ $x \in \mathbf{R}^n$; model $p(x)$ all in one go ($\mu \in
 \frac{1}{m}\sum \limits_{i=1}^{m}(x^{(i)}-\mu)(x^{(i)}- \mu)^T \]
 \[p(x; \mu, \Sigma) = \frac{1}{(2 \pi)^{\frac{n}{2}}
   |\Sigma|^{\frac{1}{2}}} \exp(-\frac{1}{2}(x - \mu)^T
-\Sigma^{-1}(x-\mu))\] 
+\Sigma^{-1}(x-\mu))\]
 
-where $|\Sigma|$ is a determinant of $\Sigma$, calculate in Octave as $det(Sigma)$
+where $|\Sigma|$ is a determinant of $\Sigma$, calculate in Octave as
+$det(Sigma)$
 
 See pp. 27-32 of slides for illustrations on covariance matrix
 ($\Sigma$) and mean ($\mu$) influence on the probability distribution.
 
-\subsection{Anomaly Detection using the Multivariance Gaussian Distribution}
+\subsection{Anomaly Detection using the Multivariance Gaussian
+  Distribution}
 \label{sec:15-8}
 
 Usual algorithm:
@@ -2588,7 +2591,7 @@ Uses:
 \label{sec:16}
 
 Recommender system (some implementations) can learn feature from the
-raw data (without manually picking them up). 
+raw data (without manually picking them up).
  
 \subsection{Problem Formulation}
 \label{sec:16-1}
@@ -2600,12 +2603,12 @@ Alice, Bob, Carol, Dave; they rated some of five movies:
 \begin{tabular}{c|cccc}
   \textbf{Movie} & \textbf{Alice(1)} & \textbf{Bob(2)} &
   \textbf{Carol(3)} & \textbf{ Dave(4)} \\
-\hline
-Love at last & 5 & 5 & 0 & 0 \\
-Romance forever & 5 & ? & ? & 0 \\
-Cute puppies of love & ? & 4 & 0 & ? \\
-Nonstop car chases & 0 & 0 & 3 & 4 \\
-Swords vs karate & 0 & 0 & 5 & ?
+  \hline
+  Love at last & 5 & 5 & 0 & 0 \\
+  Romance forever & 5 & ? & ? & 0 \\
+  Cute puppies of love & ? & 4 & 0 & ? \\
+  Nonstop car chases & 0 & 0 & 3 & 4 \\
+  Swords vs karate & 0 & 0 & 5 & ?
 \end{tabular}
 
 Parameters:
@@ -2622,10 +2625,9 @@ The task is to predict the missing ratings.
 \subsection{Content Based Recommendations}
 \label{sec:16-2}
 
-First approach to Recommendation Systems.
-Introduce a set of features, e.g $x_1$ (romance) and $x_2$ (action).
-Technically, add $x_0$ = 1 (``interceptor'' feature). Introduce number
-of features n = 2.
+First approach to Recommendation Systems. Introduce a set of features,
+e.g $x_1$ (romance) and $x_2$ (action). Technically, add $x_0$ = 1
+(``interceptor'' feature). Introduce number of features n = 2.
 
 Then for each user j, learn a parameter $\theta^{(j)} \in
 \mathbf{R}^3$. Predict user j as rating movie i with $(\theta^{(j)})^T
@@ -2642,10 +2644,10 @@ x^{(i)}$ stars.
   $(\theta^{(j)})^T(x^{i)})$.
 \item $m^{(j)}$ = no of movies rated by user j
 \end{itemize}
-To learn $\theta^{(j)}: 
- \min \limits_{\theta^{(j)}} \frac{1}{2 m^{(j)}} \sum
- \limits_{i:r(i,j)=1} \left( (\theta^{(j)})^T (x^{(i)}) - y^{(i, j)}
- \right)^2 + \frac{\lambda}{2 m^{(j)}} \sum \limits_{k = 1}^n (\theta_k^{(j)})^2 $
+To learn $\theta^{(j)}: \min \limits_{\theta^{(j)}} \frac{1}{2
+  m^{(j)}} \sum \limits_{i:r(i,j)=1} \left( (\theta^{(j)})^T (x^{(i)})
+  - y^{(i, j)} \right)^2 + \frac{\lambda}{2 m^{(j)}} \sum \limits_{k =
+  1}^n (\theta_k^{(j)})^2 $
 
 Optimisation: remove $\frac{1}{m^{(j)}}$ from both part of the
 formula. Then:
@@ -2671,11 +2673,11 @@ Then use gradient descent update (based on partial derivatives):
   \theta_k^{(j)} := \theta_k^{(j)} - \alpha \left(
     \sum\limits_{i:r(i,j)=1} ((\theta^{(j)})^Tx^{(i)} - y^{(i,
       j)})x_k^{(i)} + \lambda \theta_k^{(j)} \right) & \mathrm{ for }
-  & k \neq  0\\ 
+  & k \neq  0\\
 \end{array} \]
 
 Requires manually selecting features $x^{(i)}$ which is not always
-easy to do. 
+easy to do.
 
 \subsection{Collaborative Filtering}
 \label{sec:16-3}
@@ -2684,10 +2686,10 @@ This algorithm learns necessary features by itself - without manually
 selecting them.
 
 Imagine each user provided its preferences: $\theta^{(1)},
-\theta^{(2)}, \dots, \theta^{(n_u)}$, to learn $x^{(i)}$: 
-\[ \min \limits_{x^{(i)}} \frac{1}{2} \sum \limits_{j:r(i,
-  j) = 1} ((\theta^{(i)})^T x^{(i)} - y^{(i,j)})^2 + \frac{\lambda}{2}
-\sum \limits_{k=1}^n (x_k^{(i)})^2 \]
+\theta^{(2)}, \dots, \theta^{(n_u)}$, to learn $x^{(i)}$:
+\[ \min \limits_{x^{(i)}} \frac{1}{2} \sum \limits_{j:r(i, j) = 1}
+((\theta^{(i)})^T x^{(i)} - y^{(i,j)})^2 + \frac{\lambda}{2} \sum
+\limits_{k=1}^n (x_k^{(i)})^2 \]
 
 - actually, minimising the square error:
 \begin{itemize}
@@ -2708,9 +2710,10 @@ x^{(i)} - y^{(i,j)})^2 + \frac{\lambda}{2} \sum \limits_{i=1}^{n_m}
 
 \paragraph{Collaborative filtering}
 \begin{itemize}
-\item Given  $x^{(1)}, \dots, x^{(n_m)}$ (and movie ratings), can
-estimate $\theta^{(1)}, \dots, \theta^{(n_u)}$.
-\item Given $\theta^{(1)}, \dots, \theta^{(n_u)}$ can estimate $x^{(1)}, \dots, x^{(n_m)}$
+\item Given $x^{(1)}, \dots, x^{(n_m)}$ (and movie ratings), can
+  estimate $\theta^{(1)}, \dots, \theta^{(n_u)}$.
+\item Given $\theta^{(1)}, \dots, \theta^{(n_u)}$ can estimate
+  $x^{(1)}, \dots, x^{(n_m)}$
 \end{itemize}
 
 So chicken and egg problem. To solve: randomly guess initial $\theta$,
@@ -2725,39 +2728,39 @@ collaboration between users to learn better features.
 \label{sec:16-4}
 
 The idea is to minimise $x^{(1)}, \dots, x^{(n_m)}$ and $\theta^{(1)},
-\dots, \theta^{(n_u)}$ simultaneously: \[
-J(x^{(1)}, \dots, x^{(n_m)}, \theta^{(1)},\dots, \theta^{(n_u)} =
-\frac{1}{2} \sum \limits_{(i, j):r(i, j) = 1} ((\theta^{(j)})^Tx^{(i)}
-- y^{(i, j)})^2 + \frac{\lambda}{2} \sum \limits_{i=1}^{n_m} \sum
+\dots, \theta^{(n_u)}$ simultaneously: \[ J(x^{(1)}, \dots, x^{(n_m)},
+\theta^{(1)},\dots, \theta^{(n_u)} = \frac{1}{2} \sum \limits_{(i,
+  j):r(i, j) = 1} ((\theta^{(j)})^Tx^{(i)} - y^{(i, j)})^2 +
+\frac{\lambda}{2} \sum \limits_{i=1}^{n_m} \sum
 \limits_{k=1}^n(x_k^{(i)})^2 + \frac{\lambda}{2} \sum
 \limits_{j=1}^{n_u} \sum \limits_{k=1}^n (\theta_k^{(j)})^2 \]
 
 determining \[\min \limits_{
   \begin{array}{c}
     x^{(1)}, \dots, x^{(n_m)} \\    
-  \theta^{(1)},\dots, \theta^{(n_u)}
+    \theta^{(1)},\dots, \theta^{(n_u)}
   \end{array}} J(x^{(1)}, \dots, x^{(n_m)}, \theta^{(1)},\dots,
 \theta^{(n_u)})\]
 
-where $x \in \mathbf{R}^n$ - not  $x \in
-\mathbf{R}^{n+1}$, and  $\theta \in \mathbf{R}^n$
+where $x \in \mathbf{R}^n$ - not $x \in \mathbf{R}^{n+1}$, and $\theta
+\in \mathbf{R}^n$
 
 \paragraph{Collaborative filtering algorithm}
 
 \begin{enumerate}
 \item Initiate $x^{(1)}, \dots, x^{(n_m)}, \theta^{(1)},\dots,
-  \theta^{(n_u)}$  to small random values.
+  \theta^{(n_u)}$ to small random values.
 \item Minimise $J(x^{(1)}, \dots, x^{(n_m)}, \theta^{(1)},\dots,
-\theta^{(n_u)})$ using gradient descent (or an advanced optimisation
-algorithm). E.g. for every $j = 1, \dots, n_u; i = 1, \dots, n_m$:
-\[x_k^{(i)} :=  x_k^{(i)} - \alpha \underbrace{\left(\sum \limits_{j:r(i,j) = 1}
-  ((\theta^{(j)})^T x^{(i)} - y^{(i,j)}) \theta_k^{(j)} + \lambda
-  x_k^{(i)} \right)}_{ }
-\]
-\[\theta_k^{(j)} :=  \theta_k^{(j)} - \alpha \underbrace{\left(\sum \limits_{j:r(i,j) = 1}
-  ((\theta^{(j)})^T x^{(i)} - y^{(i,j)}) x_k^{(i)} + \lambda
-  \theta_k^{(j)} \right)}_{\frac{\delta}{\delta \theta_k^{(j)}}
-J(\dots)} \]
+  \theta^{(n_u)})$ using gradient descent (or an advanced optimisation
+  algorithm). E.g. for every $j = 1, \dots, n_u; i = 1, \dots, n_m$:
+  \[x_k^{(i)} := x_k^{(i)} - \alpha \underbrace{\left(\sum
+      \limits_{j:r(i,j) = 1} ((\theta^{(j)})^T x^{(i)} - y^{(i,j)})
+      \theta_k^{(j)} + \lambda x_k^{(i)} \right)}_{ }
+  \]
+  \[\theta_k^{(j)} := \theta_k^{(j)} - \alpha \underbrace{\left(\sum
+      \limits_{j:r(i,j) = 1} ((\theta^{(j)})^T x^{(i)} - y^{(i,j)})
+      x_k^{(i)} + \lambda \theta_k^{(j)}
+    \right)}_{\frac{\delta}{\delta \theta_k^{(j)}} J(\dots)} \]
 \item For a user with parameters $\theta$ and a movie with (learned)
   features x, predict a start rating of $\theta^T x$.
 \end{enumerate}
@@ -2766,25 +2769,25 @@ J(\dots)} \]
 \label{sec:16-5}
 
 Create matrix of ratings with $n_m = 5 \times n_u=4$:
-\[ \mathbf{Y} = \left[ 
-\begin{array}{cccc}
-  5 & 5 & 0 & 0 \\
-  5 & ? & ? & 0 \\
-  ? & 4 & 0 & ? \\
-  0 & 0 & 5 & 4 \\
-  0 & 0 & 5 & 0
-\end{array} \right]\]
+\[ \mathbf{Y} = \left[
+  \begin{array}{cccc}
+    5 & 5 & 0 & 0 \\
+    5 & ? & ? & 0 \\
+    ? & 4 & 0 & ? \\
+    0 & 0 & 5 & 4 \\
+    0 & 0 & 5 & 0
+  \end{array} \right]\]
 
-Assuming that predicted rating is $(\theta^{(j)})^T(x^{(i)})$: \[ 
+Assuming that predicted rating is $(\theta^{(j)})^T(x^{(i)})$: \[
 \left[
   \begin{array}{cccc}
-   (\theta^{(1)})^T(x^{(1)}) &  (\theta^{(2)})^T(x^{(1)}) & \dots &
-   (\theta^{(n_u)})^T(x^{(1)}) \\
-   (\theta^{(1)})^T(x^{(2)}) &  (\theta^{(2)})^T(x^{(2)}) & \dots &
-   (\theta^{(n_u)})^T(x^{(2)}) \\
-\vdots & \vdots & \vdots & \vdots \\
-   (\theta^{(1)})^T(x^{(n_m)}) &  (\theta^{(2)})^T(x^{(n_m)}) & \dots &
-   (\theta^{(n_u)})^T(x^{(n_m)}) \\
+    (\theta^{(1)})^T(x^{(1)}) &  (\theta^{(2)})^T(x^{(1)}) & \dots &
+    (\theta^{(n_u)})^T(x^{(1)}) \\
+    (\theta^{(1)})^T(x^{(2)}) &  (\theta^{(2)})^T(x^{(2)}) & \dots &
+    (\theta^{(n_u)})^T(x^{(2)}) \\
+    \vdots & \vdots & \vdots & \vdots \\
+    (\theta^{(1)})^T(x^{(n_m)}) &  (\theta^{(2)})^T(x^{(n_m)}) & \dots &
+    (\theta^{(n_u)})^T(x^{(n_m)}) \\
   \end{array}
 \right]
 \]
@@ -2814,7 +2817,7 @@ property ``low rank matrix'' of the whole $X * |theta^T$ product).
 For each product i we learn a feature vector $x^{(i)} \in
 \mathbf{R}^n$. To find movies j related to movie i: find movies whose
 distance to i ($||x^{(i)} - x^{(j)}||$) is small. This would mean that
-movies j and i are ``similar''. 
+movies j and i are ``similar''.
 
 \subsection{Implementation Detail: Mean Normalisation}
 \label{sec:16-6}
@@ -2826,34 +2829,34 @@ regularisation term \[\frac{\lambda}{2} \sum \limits_{i=1}^{n_m} \sum
 \limits_{j=1}^{n_u} \sum \limits_{k=1}^n (\theta_k^{(j)})^2\]
 
 Obviously this will be minimal when (for number of features n = 2):
-$\theta^{(5)} = \left[ \begin{array}{c}  0 \\ 0 \end{array} \right]$
+$\theta^{(5)} = \left[ \begin{array}{c} 0 \\ 0 \end{array} \right]$
 
 Then for any x the $(\theta^{(5)})^T x^{(i)}$ which is not very
 useful. In this case it'd better to recommend a movie with ``overall''
 high rating (do distinguish from movies which got ``0''s from previous
-users). 
+users).
 
 The mean normalisation is going to fix this. We compute vector $\mu$
 which grabs the mean rating from all movies:
-\[ \mathbf{Y} = \left[ 
-\begin{array}{ccccc}
-  5 & 5 & 0 & 0 & ?\\
-  5 & ? & ? & 0 & ? \\
-  ? & 4 & 0 & ? & ? \\
-  0 & 0 & 5 & 4 & ? \\
-  0 & 0 & 5 & 0 & ?
-\end{array} \right]; 
+\[ \mathbf{Y} = \left[
+  \begin{array}{ccccc}
+    5 & 5 & 0 & 0 & ?\\
+    5 & ? & ? & 0 & ? \\
+    ? & 4 & 0 & ? & ? \\
+    0 & 0 & 5 & 4 & ? \\
+    0 & 0 & 5 & 0 & ?
+  \end{array} \right]; 
 \mu = \left[\begin{array}{c}  2.5 \\ 2.5 \\ 2 \\ 2.25 \\
     1.25\end{array}\right]  \to
 \mathbf{Y} = \left[ 
-\begin{array}{ccccc}
-  2.5 & 2.5 & -2.5 & -2.5 & ? \\
-  2.5 & ? & ? & -2.5 & ? \\
-  ? & 2 & -2 & ? & ? \\
-  -2.25 & -2.75 & 2.75 & 1.75 & ? \\
-  -1.25 & -1.25 & 3.75 & -1.25  & ?
-\end{array} \right]
- \]
+  \begin{array}{ccccc}
+    2.5 & 2.5 & -2.5 & -2.5 & ? \\
+    2.5 & ? & ? & -2.5 & ? \\
+    ? & 2 & -2 & ? & ? \\
+    -2.25 & -2.75 & 2.75 & 1.75 & ? \\
+    -1.25 & -1.25 & 3.75 & -1.25  & ?
+  \end{array} \right]
+\]
 
 Now use this derived matrix for learning $\theta^{(j)}, x^{(i)}$: for
 user j on movie i predict $(\theta^{(j)})^T (x^{(i)}) + \mu_i$.
@@ -2864,7 +2867,7 @@ sense: we expect ``average'' rating from the user we have no rating at
 all yet.
 
 Similar trick with unrated movies is possible but might be not that
-important.  
+important.
 
 \section{Large Scale Machine Learning}
 \label{sec:17}
@@ -2882,10 +2885,406 @@ idea of algorithm properties (like high bias etc).
 
 \paragraph{Linear regression with gradient descent}
 
+The ``usual'' approach for a number of problems is to use a Gradient
+Descent to optimise some cost function J. This approach could be quite
+computationally expensive as training set size reaches really high
+values.
+
 Suppose we're learning Linear Regression with hypothesis $h_\theta(x)
 = \sum \limits_{j=0}^n \theta_{j} x_{j}$ and cost function
 $J_{train}(\theta) = \frac{1}{2m}\sum
-\limits_{j=1}^m(h_\theta(x^{(i)}) - y^{(i)})^2$ 
+\limits_{j=1}^m(h_\theta(x^{(i)}) - y^{(i)})^2$
+
+Algorithm looks like:
+\begin{tabbing}
+  Repeat \{    \\
+  \quad \quad \= $\theta_j := \theta_j - \alpha \frac{1}{m} \sum
+  \limits_{i=1}^m(h_\theta(x^{(i)}) - y^{(i)})x_j^{(i)} $ \\
+  \quad \quad \> (for every $j = 0, \dots, n$) \\
+  \}
+\end{tabbing}
+
+The whole idea of this algorithm is that we initialise a process with
+some random vector $\theta$ and move (``descend'') to the optimum
+using derivatives. This can be quite expensive: the summation term in
+algorithm will need to summarise m elements for every n dimensions
+{\it on each step}. Such algorithm is also called a ``batch gradient
+descent''.
+
+To optimise this process, we use Stochastic gradient descent:
+\[
+\begin{array}{c|c}
+  \textnormal{\bf Batch gradient descent} & \textnormal{\bf Stochastic gradient descent}
+  \\
+  J_{train}(\theta) = \frac{1}{2m}\sum
+  \limits_{j=1}^m(h_\theta(x^{(i)}) - y^{(i)})^2 & cost(\theta, 
+  (x^{(i)}, y^{(i)})) = \frac{1}{2} (h_\theta(x^{(i)}) - y^{(i)})^2 \\ 
+  \quad & J_{train}= \frac{1}{m} \sum \limits_{i=1}^m cost(\theta,
+  (x^{(i)}, y^{(i)})) \\
+  \begin{array}{l}
+    \mathrm{ Algorithm: Repeat } \{ \\
+    \quad  \theta_j := \theta_j - \alpha \frac{1}{m} \sum
+    \limits_{i=1}^m(h_\theta(x^{(i)}) - y^{(i)})x_j^{(i)} \\
+    \quad  (\textnormal{for every } j = 1, \dots, n) \\
+    \}
+  \end{array} 
+  & 
+  \begin{array}{l}
+    \mathrm{ Algorithm:}  \\
+    1. \textnormal{Randomly shaffle dataset}  \\
+    2. \textnormal{Repeat } \{ \\
+    \quad \mathrm{for } i = 1, \dots, m \{ \\
+    \quad \quad \theta_j := \theta_j - \underbrace{(h_\theta(x^{(i)}) -
+      y^{(i)})x_j^{(i)}}_{ \frac{\delta}{\delta\theta_j} cost(\theta,
+      (x^{(i)}, y^{(i)}))} \\ 
+    \quad \quad (\textnormal{for every } j = 0, \dots, n) \\
+    \quad \}\\
+    \}
+  \end{array} 
+\end{array}
+\]
+
+calculate cost for each training example as its' square error in
+respect to $\theta$. Then, on each outside iteration step, loop over
+samples and on each step ``slightly'' modify $\theta$ towards better
+fitting of current $i^{th}$ sample. This speeds up things a bit:
+rather then summarising the whole errors, use each sample for small
+modifications.
+
+In ``general'', every step does not always move solution to the
+optimum, but overall process converges to the solution point. Amount
+of outside loops can be quite small - sometimes even 1. It is
+considered enough to make up to 10 iterations.
+
+This idea is applicable to other algorithms (logistic regression,
+neural network etc).
+
+\subsection{Mini-Batch Gradient Descent}
+\label{sec:17-3}
+
+Sometimes a bit faster then the Stochastic Gradient Descent.
+\begin{itemize}
+\item Batch gradient descent: Use all m examples in each iteration
+\item Stochastic gradient descent: Use 1 example in each iteration
+\item Mini-batch gradient descent: Use $b$ examples in each iteration
+\end{itemize}
+
+There $b$ is called mini-batch size, usually somewhere in $2 \dots
+100$.
+
+Example: let $b = 10$, examples $(x^{(i)}, y^{(i)}), \dots, x^{(i+9)},
+y^{(i+9)}))$. On each iteration: \[ \theta_j = \theta_j - \alpha
+\frac{1}{10} \sum \limits_{k=i}^{i+9}(h_\theta(x^{(k)} - y^{(k)})
+x_j^{(k)}\] Next iteration: $ i := i + 10$, so for $b=10, m = 1000$ i
+will have values $1, 11, 21, 31, \dots, 991$
+
+This can be faster then Stochastic algorithm due to vectorization (and
+paralleling work).
+
+\subsection{Stochastic Gradient Descent Convergence}
+\label{sec:17-4}
+
+\subsubsection{Checking for convergence}
+\begin{itemize}
+\item Batch gradient descent
+  \begin{itemize}
+  \item Plot $J_{train}(\theta)$ as a function of the number of
+    iterations of gradient descent
+  \item $J_{train}(\theta) = \frac{1}{2m} \sum \limits_{i=1}^m
+    (h_\theta(x^{(i)}) - y^{(i)})^2$
+  \end{itemize}
+\item Stochastic gradient descent:
+  \begin{itemize}
+  \item $cost(\theta, (x^{(i)}, y^{(i)})) =
+    \frac{1}{2}(h_\theta(x^{(i)}) - y^{(i)})^2$
+  \item During learning, compute $cost(\theta, (x^{(i)}, y^{(i)}))$
+    before updating $\theta$ using $(x^{(i)},y^{(i)})$.
+  \item Every 1000 iterations (say), plot $cost(\theta, (x^{(i)},
+    y^{(i)}))$ averaged over the last 1000 examples processed by
+    algorithm.
+  \end{itemize}
+\end{itemize}
+
+Picture - see page 14 of doc 17:
+\begin{itemize}
+\item UL - two variants with bigger and smaller $\alpha$ (learning
+  rate). Sometimes smaller rate leads to better result (if algorithm
+  as a whole is OK)
+\item UR - increasing d from 1000 to 5000. Smoother curve but lost
+  some precision.
+\item LL (cost does not decrease) - one can try to increase d - this
+  will make algorithm to converge slowly
+\item LR - algorithm diverges. Use smaller $\alpha$.
+\end{itemize}
+
+Learning rate $\alpha$ is typically constant. Can slowly decrease
+$\alpha$ over time if we want $\theta$ to converge, e.g. $\alpha =
+\frac{const1}{iterationNumber + const2}$. This can not only speed up
+the convergence but also give slightly better hypothesis (but this
+requires more complex tuning and makes whole algorithm more complex).
+
+\subsection{Online Learning}
+\label{sec:17-5}
+
+Works on the continuous stream of data.
+
+\paragraph{Example}
+
+Shipping service website where user comes, specifies origin and
+destination, you offer to ship their package for some asking price,
+and user sometimes choose to use your shipping service ($y=1$),
+sometimes not ($y=1$).
+
+Features x capture properties of user, of origin/destination and
+asking price. We want to learn $p(y=1|x, \theta)$ to optimise price.
+
+Start with logistic regression: Repeat forever {
+  \begin{itemize}
+  \item Get (x, y) corresponding to user
+  \item Update $\theta$ using $(x, y)$ (not $(x^{(i)}, y^{(i)})$ - we
+    discard this example immediately after using):
+    \[ \theta_j := \theta_j - \alpha (h_\theta(c) - y) x_j; j = 0,
+    \dots, n \]
+  \end{itemize}
+}
+
+It adapts to changing user preferences - i.e. when new type of users
+join, or because of changes in economy users tend to pay less etc.
+
+\paragraph{Example 2 }
+
+Product search (learning to search).
+
+User searches for ``android phone 1080p camera'' Have 100 phones in
+store. Will return 10 results,
+\begin{itemize}
+\item For each phone, given specific user query, we build feature
+  vector x: how many words in user query match name of phone, how many
+  words in query match description of phone etc.
+\item y = 1 if user clicks on link, y = 0 otherwise
+\item Learn $p(y = 1|x;\theta)$
+\end{itemize}
+So return (show to user) 10 phones they're most likely to click on.
+
+So every time we'll get 10 pairs $(x, y)$ - so we'll get 10 training
+examples on each user iteration. This data can be discarded after use
+too; we also can show ``10 best'' every time for particular user.
+
+Other name for this problem - ``Click - Through Rate (CTR)
+prediction''. Other examples include: choosing the special offers to
+show user; customised selection of news articles; product
+recommendation etc.
+
+\subsection{Map Reduce and Data Parallelism}
+\label{sec:17-6}
+
+Some ML problems are too big to run on the single machine so data is
+processed in parallel.
+
+\paragraph{Map-reduce}
+
+Let's assume we run a Batch gradient descent with m = 400: $\theta_j
+:= \theta_j - \alpha \frac{1}{400} \sum_{i=1}^{400} (h_\theta(x^{(i)})
+- y^{(i)}) x_j^{(i)}$. We can parallel this as:
+\begin{itemize}
+\item Machine 1: Use $(x^{(1)}, y^{(1)}), \dots, (x^{(100)},
+  y^{(100)})$ to compute \[temp_j^{(1)} = \sum_{i=1}^{100}
+  (h_\theta(x^{(i)}) - y^{(i)})x_j^{(i)}\]
+\item Machine 2: Use $(x^{(101)}, y^{(101)}), \dots, (x^{(200)},
+  y^{(200)})$ to compute \[temp_j^{(2)} = \sum_{i=101}^{200}
+  (h_\theta(x^{(i)}) - y^{(i)})x_j^{(i)}\]
+\item $\vdots$
+\end{itemize}
+Now combine the results: $\theta_j = \theta_j - \alpha
+\frac{1}{400}(temp_j^{(1)} + temp_j^{(2)} + temp_j^{(3)} +
+temp_j^{(4)})$ - for $j = 0,\dots, n$
+
+This approach works for many algorithms - if they allow separation
+(i.e. in summations). Another example - advanced optimisation with
+logistic regression:
+
+\[ J_{train}(\theta) = -\frac{1}{m} \sum \limits_{i=1}^m y^{(i)} \log
+h_\theta(x^{(i)}) - (1 - y^{(i)}) \log (1-h_\theta(x^{(i)})) \]
+\[\frac{\delta}{\delta \theta_j} J_{train}(\theta) = \frac{1}{m}
+\sum_{i=1}^m (h_\theta(x^{(i)}) - y^{(i)}) * x_j^{(i)} \]
+
+can be distributed by ranges of m.
+
+The same story is about distribution between processing cores on the
+same machine. The network latency will be no issue.
+
+\section{Application Example: Photo OCR}
+\label{sec:18}
+
+OCR - Optical Character Recognition
+
+\subsection{Problem Description and Pipeline}
+\label{sec:18-1}
+
+Need to find out the text regions and decode them looking at the
+picture. Steps:
+\begin{enumerate}
+\item Text detection
+\item Character segmentation
+\item Character classification
+\end{enumerate}
+
+\subsection{Sliding Windows}
+\label{sec:18-2}
+
+Is a type of classifier used for {\bf text detection}.
+
+Illustrated on the example of pedestrian detection. The idea is to use
+a small standardised window which moves over the photo and uses a sort
+of classifier (i.e. trained on some sort of sample data) to detect the
+cases when the window lays over the pedestrian. The move is made with
+step of some size (called ``stride''): ideally equal to 1 pixel (but
+this can be computational expensive). 
+
+Such moves are done with the windows of different sizes: from smallest
+to reasonable large ones.
+
+Returning to characters: train classifier on various fonts and/or
+letter combination. Then, run sliding window over the photo, get the
+probabilities of ``this fragment is a text'' events. Next, apply
+so-called ``expansion'': take each of the ``white'' pixel and paint
+all pixels around it in range, say, 5 pixels.
+
+Next, select white areas which look like rectangles and build
+rectangles (bound boxes) around them (see page 14 of Notes).
+
+\paragraph{Character Segmentation} 
+
+is performed using 1D-sliding window (slide a window 1 direction
+once). Use logistic regression / neural network train a classifier as
+shown at page 15. 
+
+Last step - {\bf character classification} performed ``as usual'',
+decoding bitmap pictures into characters.
+
+\subsection{Getting Lots od Data and Artificial Data}
+\label{sec:18-3}
+
+The idea of artificial Data synthesis comprises of two approach:
+\begin{itemize}
+\item creating new training data from scratch.
+
+For OCR we still need to collect some real-life data. To generate some
+artificial part of it, take the font library and place the characters
+on some random background (see example of synthetic data on pp 19-20).
+
+\item getting a ``small'' real-life training set and amplify it.
+
+We take a real-life images and add some artificial distortions (like
+on p 21). This distortion should be representation of the type of
+noise?distortions in the test set; plus it usually does {\bf not} help
+to add purely random / meaningless noise to the data.
+\begin{itemize}
+\item if $x_i = $ intensity (brightness) if pixel i
+\item then in amplified data: $x_j \leftarrow x_j + \textnormal{random noise}$
+\end{itemize}
+
+Example (for speech recognition): use the original audio and add some
+noises. 
+\end{itemize}
+
+\paragraph{Discussion on getting more data}
+
+\begin{enumerate}
+\item Make sure you have a low bias classifier before expending the
+  effort (plot learning curves). E.g. keep increasing the number of
+  features/number if hidden units in neural network until you have a
+  low bias classifies.
+\item ``How much work would it be to get 10x as much data as we
+  currently have?'' - sometimes not so much efforts with:
+  \begin{itemize}
+  \item Artificial data synthesis
+  \item Collect / label it yourself
+  \item ``Crowd source'' (like Amazon Mechanical Turk)
+  \end{itemize}
+\end{enumerate}
+
+\subsection{Ceiling Analysis: What Part of Pipeline to Work on Next}
+\label{sec:18-4}
+
+Ceiling analysis is used to prioritise efforts. We do it by {\bf
+  estimating errors due to each component}. On example of OCR: what
+part of the pipeline should you spend the most time trying to improve? 
+
+For this purpose, it is advisable to have a single-row metric (like
+accuracy, in \%). Then play some tricks: 
+
+take some test data, manually label it with correct answers (simulate
+perfect, or 100\% accuracy of this particular module), estimate the
+overall system accuracy, like:
+
+\begin{tabular}{c|c}
+  \textbf{Component} & \textbf{Accuracy} \\
+  \hline
+  Overall System & 72\% \\
+  Text detection & 89\% \\
+  Character segmentation & 90\% \\
+  Character recognition & 100 \%
+\end{tabular}
+- i.e. when Text detection provides 100\% accuracy, overall systems
+improves from 72 to 89 \%, when Character segmentation work perfectly
+well - from 89 to 90\% etc.
+
+So it becomes obvious that improvements on Character segmentation step
+are not very promising (as this will give only 1\% improvement).
+
+Another example - Face recognition system. Steps:
+\begin{itemize}
+\item Pre-process (removing background)
+\item Face detection:
+  \begin{itemize}
+  \item Eyes segmentation
+  \item Nose segmentation
+  \item Mouth segmentation
+  \end{itemize}
+\item Logistic regression
+\end{itemize}
+
+Here the ceiling analysis will look like:
+\begin{tabular}{c|c}
+  \textbf{Component} & \textbf{Accuracy} \\
+  \hline
+  Overall System & 85\% \\
+  Pre-process (remove background)& 85.1\% \\
+  Face detection & 91\% \\
+  Eyes segmentation & 95\% \\
+  Nose segmentation & 96\% \\
+  Mouth segmentation & 97\% \\
+  Logistic regression & 100\%
+\end{tabular}
+
+The component which looks most promising is Face detection (5.9\%
+increase). 
+
+\section{Summarise}
+\label{sec:19}
+
+\begin{itemize}
+\item Supervised learning
+  \begin{itemize}
+  \item Linear regression, logistic regression, neural networks, SVM
+  \end{itemize}
+\item Unsupervised learning 
+  \begin{itemize}
+  \item K-means, PCA (principal component analysis: reducing data from
+    n-dimensions to k-dimensions , Anomaly detection
+  \end{itemize}
+\item Special applications/special topics
+  \begin{itemize}
+  \item Recommender systems, large scale machine learning.
+  \end{itemize}
+\item Advice on building a machine learning system
+  \begin{itemize}
+  \item Bias/variance, regularisation, deciding what to work on next,
+    evaluation of learning algorithms, learning curves, error
+    analysis, ceiling analysis.
+  \end{itemize}
+\end{itemize}
 
 
 \end{document}
