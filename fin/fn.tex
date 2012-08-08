@@ -1,0 +1,398 @@
+%\documentclass{ncc}
+%\documentclass{article}
+\documentclass{scrartcl}
+
+\usepackage{amsmath,amssymb,amsfonts} % Typical maths resource packages
+\usepackage{graphics}                 % Packages to allow inclusion of graphics
+\usepackage{color}                    % For creating coloured text and background
+\usepackage{hyperref}                 % For creating hyperlinks in
+                                % cross references 
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+\usepackage{listings}
+\lstloadlanguages {[LaTeX]TeX, Octave}
+\lstset {language=[LaTeX]TeX,
+  extendedchars=true ,escapechar=|}
+
+\begin{document}
+\section{Blah-blah}
+\label{sec:1}
+
+\begin{itemize}
+\item Finance is about value (not money)
+\item Value creation is about two key components: time and uncertainty
+\item (Almost) anything can be valued: project, human capital etc.
+\end{itemize}
+
+Assumptions:
+\begin{itemize}
+\item Competitive markets
+\item Frictions small relative to power of most good ideas (the small changes
+  should be sufficient to make the big changes)
+\item Capital can flow (relatively) easily
+\end{itemize}
+
+\paragraph{Essence of Desicision-Making}
+\begin{itemize}
+\item (Virtually) every decision involves time and uncertainty
+\item Important to understand the impact of just the passage of time on a
+  decision
+\item At first, assume ``no uncertainty'' to internalise the time value of money
+\end{itemize}
+Terminology:
+\begin{itemize}
+\item PV = Present Value (\$)
+\item FV = Future Value (\$)
+\item n = \# of Periods (\#)
+\item r = Interest Rate (\%) > 0 (assumption) - applied to one time period
+\end{itemize}
+Time line: ``A dollar today is worth more then a dollar tomorrow'' - i.e. time
+``by itself'' have some value - so {\bf do not compare money across the time!}
+
+\section {Time Value for Money: PV and FV for Single Cash Flows}
+\label{sec:2}
+In general, {\bf Future Value} = Initial Payment + Accumulated Interest: $$FV =
+P + r * P = (1+r) * P$$
+
+P - Payment, r - rate. Then $(1 + R)$ - a {\it future value factor}
+
+For two years: $$FV_2 = (1 + r)^2 * P$$, this is called ``Compounding'' percent.
+
+To calculate FV after 10 years of 7\% year rate for \$500 deposit:
+
+Using Excel: $FV(rate, nper, pmt, [pv], [type])$
+\begin{itemize}
+\item rate - now 0.07
+\item nper - 10 (number of period)
+\item pmt - 0 (see later)
+\item PV - 500
+\end{itemize}
+Returns -983.58: negative (some dance about this negative here).
+
+{\bf Present Value} - can be derived from FV by boring
+$\frac{FV}{(1+r)^{nper}}$. So the future value becomes lesser now - so this
+``phenomenon'' (that something becomes less valuable today comparatively to its
+value in future) is called {\bf discounting}.
+
+In Excel: $PV(rate, nper, pmt, [fv],[type])$; pmt is still 0; other are obvious.
+
+\section {Time Value for Money: PV and FV for Multiple Cash Flows}
+\label{sec:3}
+
+\subsection{FV of Annuity - Concept}
+\label{sec:3-2}
+
+A special case of multiple payments: annuities (C for Cash Flow, PMT for
+payment). Classic annuity: loan
+
+\begin{tabular}{c|c|c|c}
+  Year & Cash Flow & Years to end: n & Future Value \\
+  \hline
+  0 & 0 & 3 & 0 \\
+  1 & C & 2 & $C(1 + r)^2$ \\
+  2 & C & 1 & $C(1 + r)$ \\
+  3 & C & 0 & C
+\end{tabular}
+
+FV of annuity: formula: $FV = C(1 + r)^2 + C(1+r) + C = \\
+= C[(1+r)^2 + (1+r) + 1]$. Finally: $$FV_n = C[(1+r)^{n-1} + \dots + 1]$$
+
+Example: I'm going to put into pension fund 10,000 every year running for 40
+years. Rate is 8\%. How much money will it be at the end? (2.59 million)
+
+In Excel, payment (10,000) is a ``pmt'' part of FV function (in out particular
+case PV becomes 0).
+
+Example 2: we want to guarantee 500,000 for retirement after 25 years. The rate
+is 8\%. How much do I need to invest every year, starting at the end of this
+year?
+
+FV is know, so use in Excel: $PMT((rate, nper, pv, fv, hype)$:
+\begin{itemize}
+\item rate - 0.08
+\item nper - number of periods, 25
+\item pv - present value, 0
+\item fv - future value, 500,000
+\end{itemize}
+Answer: 6,840
+
+\subsubsection{Annuities: Present Values}
+
+\begin{tabular}{c|c|c|c}
+  Year & Cash Flow & Years to Discount: n & Present Value \\
+  \hline
+  0 & 0 & 0 & 0 \\
+  1 & C & 1 & $C/(1 + r)$ \\
+  2 & C & 2 & $C/(1 + r) + C/(1 + r)^2$ \\
+  3 & C & 3 & $C/(1 + r) + C/(1 + r)^2 + C/(1 + r)^3$
+\end{tabular}
+
+Years to discount - because this is so many years the relative sum should be
+discounted for today
+
+In the end of $3^{rd}$ period: $PV_3 = \frac{C}{(1+r)} + \frac{C}{(1+r)^2}
++\frac{C}{(1+r)^3} = C \left[\frac{1}{(1+r)} + \frac{1}{(1+r)^2} +
+  \frac{1}{(1+r)^3} \right]$
+
+\paragraph{PV of an Annuity: Example 1}
+\label{sec:3-6}
+
+How much money do you need in the bank today so that you can spend 10,000 every
+year for the next 25 years, starting at the end of this year. Suppose r=5\%.
+
+Solution: PMT=C; and $PV = C [ \frac{1}{(1+r)} + \frac{1}{(1+r)^2} + \dots +
+\frac{1}{(1+r)^{25}} ]$
+
+In Excel: $=PV(0.05, 25, 10000)$; answer 140,939
+
+\paragraph{PV of an Annuity: Example 2}
+\label{sec:3-6-1}
+
+You plan to attend a business school and you will be forced to take out 100,000
+in a loan at 10\%. You need to figure out yearly payments, given that you'll
+have 5 years to pay back the loan.
+
+Here: PV = 100,000. We're looking for PMT / C for every year:
+
+In Excel: $PMT(0.10, 5, 100,000)$; answer is 26.380 (!!!)
+
+Validation: PV(0.1, 5, 26380
+
+\paragraph{Example 2: Loan Amortisation} same story
+
+\begin{tabular}{c|c|c|c|c}
+  Year & Beginning Balance & Yearly Payment & Interest & Principal Repayment \\
+  \hline
+  1 & 100,000 & 26,380 & 10,000  & 16,380 \\
+  2 & 83,620 & 26,380 & 8,362 & 18,018 \\
+  3 & 65.602 & 26,380 & 6,560 & 19,820 \\
+  4 & 45,783 & 26,380 & 4578 & 21802 \\
+  5 & 23,982 & 26,380 & 2398 & 23982 
+\end{tabular}
+
+Next questions: how much do you owe to bank at the beginning of year. Calculate
+PV for 3 (remaining) years with payment 26,380.
+
+Another one: what is the sum you have to pay, staying at the beginning of year
+have 5 years to pay back the loan? The answer is not the 5 * 26.380, it is
+PV(0.1, 5, 26380) = 100,000
+
+The idea is: it is impossible to make money {\it only} by borrowing-landing, so
+bank charges additional sums when provides a loan.
+
+\subsubsection{Compounding}
+\label{sec:3-8}
+
+Now change story a bit: what are the monthly payments for the same 100,000, 10\%
+and 5 years. Plus, what is the ``real'' annual interest rate?
+
+Time line changes, so 5 years become 60 months; rate r becomes $r_{month} =
+\frac{0.10}{12}$.
+
+The PV = 100,000; so calculate PMT for 60 months: $=P(0.1/12, 60, 100000)$;
+becomes 2,124.7
+
+Actual annual rate (Effective Annual Rate, EAR): calculate sums for one dollar:
+$EAR=\left(1 + \frac{r}{k}\right)^k - 1$. Using k=12 and r=0.1, get 10.47\%
+which $\gg 10\%$.
+
+\subsubsection{Valuing Perpetuity}
+\label{sec:3-9}
+
+A {\bf perpetuity} as simply a set of equal payments that are paid forever, with
+or without growth. Examples: Bonds, stocks, etc.
+
+$PV = \frac{C}{r}$ - the PV is the same, so C is the same too. If, however, the
+sum should grow over time, the growth rate g is used to measure/calculate the
+growth: $PV = \frac{C}{r-g}$
+
+\section{Decision Making}
+\label{sec:4}
+
+\subsection{Properties of a good decision criteria}
+\label{sec:4-2}
+
+\begin{itemize}
+\item Makes sense (benefits exceeds costs) - including non-money values
+\item Unit of measurement
+\item Benchmark is obvious
+\item Easy to communicate (oops)
+\item Easy to compare different ideas/projects
+\item Easy to calculate
+\item Other (?)
+\end{itemize}
+
+
+\subsection{Decision Criteria: NPV}
+\label{sec:4-2-1}
+
+
+{\bf Net Present Value} (NPV) - differs from ``just'' Present Value as we
+subtract the expenses (?)
+
+Assume that interest rate is 10\%, what is NPV of the idea?
+
+\begin{tabular}{c|c|c|c}
+  Year & Cash Flow & Years to Discount: n & Present Value  \\
+  \hline
+  0 & -\$1,000 & 0 & -\$1,000  \\
+  1 & \$1,320 & 1 & \$1,200 \\
+  \hline
+  \multicolumn{3}{l} {NPV =}  & \$200
+\end{tabular}
+
+% Video 4-3
+\begin{itemize}
+\item {\bf Cash flow } comes from idea (is an attribute of business idea);
+  equals to profit (not income). Responsibility of ``you'' as initiator
+\item ``r'' (10\%) comes from ``opportunity cost of investing''; it is a return
+  from investing into similar business (competitor?)
+\item Final number (NPV) - created value
+\item Should you pursue this idea/project - yes, because you're in plus
+\item Caution: if you do not have resources to do? Go to market; ``if the idea
+  is good, the resources will come'' (?)
+\end{itemize}
+
+The essence: Value is always incremental to investment (relative, never
+absolute!).
+
+\begin{tabular}{c|c|c|c}
+  Year & Cash Flow & Years to Discount: n & Present Value  \\
+  \hline
+  0 & -\$1,000 & 0 & -\$1,000  \\
+  1 & \$1,320 & 1 & \$1,200 \\
+  1 & \$1,452 & 2 & \$1,200 \\
+  \hline
+  \multicolumn{3}{l|} {NPV =}  & \$1400
+\end{tabular}
+
+In Excel: $NPV(rate, value1, value2, \dots)$ but value starts from the end of
+year 1, so {\it do not give time 0 info there!}.
+
+\subsection{NPV - Properties and Calculation}
+\label{sec:4-4}
+
+NPV starts with a negative number (investment): $$NPV = -I_0 + \frac{C_1}{1+r} +
+\frac{C_2}{(1+r)^2} + \dots + \frac{C_n}{(1+r)^n}$$ where
+\begin{itemize}
+\item $I_0$ (or $C_0$) - investment cost of the project
+\item $C_i$ - the cash flow in period $i$.
+\end{itemize}
+
+Properties of NPV:
+\begin{itemize}
+\item Makes sense? $B-C (TVM)$
+\item Unit of measurement? \$ (1400 NPV)
+\item Benchmark obvious? $NPV > 0$
+\item Easiest to communicate - yes
+\item Easy to compare - compare NPV values, so yes
+\item Easy to calculate - {\it no}
+\item Other? 
+\end{itemize}
+
+The main problem with NPV is that it provides very static view of future, and
+does not works with flexibility in future.
+
+\subsection{Decision Criteria: Payback}
+\label{sec:4-5}
+
+\subsubsection{Payback Period}
+\label{sec:4-5-1}
+
+What is the payback of the following idea:
+\begin{tabular}{c|c|c}
+  Year & Cash Flow & Years from Today \\
+  \hline
+  0 & -\$1,000 & 0  \\
+  1 & \$300 & 1 \\
+  2 & \$700 & 2 \\
+  3 & \$2000 & 3 \\
+  \hline
+  \multicolumn{2}{l|} {NPV =}  & \$1400
+\end{tabular}
+
+Answer: 2 years (\$300 + \$700 = \$1000)
+
+Better parameter is {\bf Payback period with discounting}.
+
+Properties: \begin{itemize}
+\item Makes sense: {\bf no}
+\item Unit of measurement {\bf time} - this makes the whole story useless (oops)
+\item Benchmark obvious? not too much
+\item Easy to communicate? not too much
+\item Easy to compare ideas? again, NPV is better
+\item Easy to calculate? again, NPV is better
+\end{itemize}
+
+The problem with Payback is that it is hungry for ``fast money''. Is considered
+as ``bad habit''.
+
+\subsection{Decision Criteria: IRR}
+\label{sec:4-6}
+
+{\bf IRR} stands for {\bf Internal Rate of Return}
+
+\begin{tabular}{c|c|c}
+  Year & Cash Flow & Years from Today \\
+  \hline
+  0 & -\$100 & 0  \\
+  1 & \$110 & 1 \\
+%  \hline
+%  \multicolumn{2}{l|} {NPV =}  & \$1400
+\end{tabular}
+
+Naive answer: 10\% (\$110 - \$100) / year, or $r = \frac{\text{Final Sum} -
+  \text{Initial Sum}}{\text{Initial Sum}} =  \frac{\text{Profit}} {\text{Investment}}$
+
+\paragraph{Intuition } What is the NPV of the idea if you use the IRR to
+calculate it?$-100 + \frac{110}{1 + IRR} = 0$
+
+This is why this parameter is ``internal'' - no reference to rate (as an
+indicator of how other similar businesses are going on)
+
+{\bf Is a good idea?} Not too much as there is no benchmark to compare.
+
+%slides 4-7 - Graphical representation
+Example: calculate IRR here:
+\begin{tabular}{c|c|c}
+  Year & Cash Flow & Years from Today \\
+  \hline
+  0 & -\$100 & 0  \\
+  1 & \$0 & 1 \\
+  2 & \$110 & 2 \\
+%  \hline
+%  \multicolumn{2}{l|} {IRR =}  & \$1400
+\end{tabular}
+
+Here IRR = 10\% over 2 years. How to solve it (to find per year)? A: ``Make NPV
+zero'':$$NPV=0=-100+\frac0{1+IRR} + \frac{110}{(1+IRR)^2}$$
+
+In Excel: $=IRR(values...) = IRR(-100, 0, 110)$
+
+\subsubsection{IRR: a Practical Issues}
+\label{sec:4-7}
+
+\begin{tabular}{c|c|c}
+  Year & Cash Flow & Years from Today \\
+  \hline
+  0 & -\$100 & 0  \\
+  1 & \$230 & 1 \\
+  2 & -\$132 & 2 \\
+\end{tabular}
+
+The joke is that IRR value can be both 10\% and 20\%. In fact, it is possible to
+calculate so many values how many times the Cash Flow changes the sign:$$0=-100
++ \frac{230}{(1+IRR)} + \frac{(-132)}{(1+IRR)^2}$$ - square function, 2 roots
+(see slides 4-8 for graphics).
+
+The intuitive decision rule when comparing mutually exclusive projects, would be
+to accept the project with the highest IRR. This rule is {\bf incorrect} - see
+next examples.
+
+
+\end{document}
