@@ -1,0 +1,887 @@
+%\documentclass{ncc}
+%\documentclass{article}
+\documentclass{scrartcl}
+
+ % Typical maths resource packages
+\usepackage{amsmath,amssymb,amsfonts,amscd}
+ % Packages to allow inclusion of graphics
+\usepackage{graphics}                
+% For creating coloured text and background
+\usepackage{color}                    
+% For creating hyperlinks in cross  references 
+\usepackage{hyperref}                 
+
+\usepackage{algorithm, algorithmic}
+\usepackage{textcomp}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+\usepackage{listings}
+\lstloadlanguages {[LaTeX]TeX, Octave}
+\lstset {language=[LaTeX]TeX,
+  extendedchars=true ,escapechar=|}
+
+\newcommand{\ket}[1]{\left| #1 \right>} % for Dirac kets
+\newcommand{\bra}[1]{\left< #1 \right|} % for Dirac bras
+\newcommand{\braket}[2]{\left< #1 | #2 \right>} % for Dirac brakets
+
+\begin{document}
+
+\section{Axioms}
+\label{sec:2, week 1}
+
+\subsection {Superposition Principle}
+\label{sec:2-1}
+
+\begin{itemize}
+\item{\bf Superposition axiom} Suppose we have a k-level quantum system
+  \begin{itemize}
+  \item k distinguishable or classical states of the system
+  \item Possible classical states $\ket{0},\ket{1}, \dots , \ket{k-1}$
+  \end{itemize}
+\item {\bf Superposition principle:} if a system can be in one of the k states,
+  it can also be in any linear superposition of k states: \[\alpha_0 \ket{0} +
+  \alpha_1 \ket{1} + \dots + \alpha_{k-1} \ket{k-1} \] where $\alpha_i \in
+  \mathbf{C}$ - complex ``probability amplitude'' for each of these
+  states: \[\sum \limits_{i=0}^{k-1} |\alpha|^2=1\]
+
+  Examples for k = 3:
+
+  $\frac 1{\sqrt{3}} \ket0 + \frac1{\sqrt{3}} \ket1 + \frac1{\sqrt{3}}\ket2$ or
+  $\frac1{2}\ket0 - \frac1 {\sqrt{2}}\ket1 + (\frac1{\sqrt{2}} +
+  \frac{i}{\sqrt{2}}) \ket2$
+\end{itemize}
+
+\subsection{Measurement axiom}
+\begin{itemize}
+\item Suppose our system is in state $$\ket\psi = \alpha_0\ket0 + \alpha_1\ket1
+  + \ldots + \alpha_{k-1} \ket{k-1} $$
+\item Measure: outcome is one of the k classical states
+  \begin{itemize}
+  \item Observe j with probability $|\alpha_j|^2$.
+  \item New state = $\ket j$.
+  \end{itemize}
+\end{itemize}
+
+\paragraph{Qubit}
+
+Two-level systems (k=2) are called {\bf qubits}. These can be presented as
+system where electron can be either in ``ground'' state $\ket0$ or in excited
+state $\ket1$. The ``common'' state is a superposition $\alpha_0 \ket0 +
+\alpha_1 \ket1$
+
+\subsubsection{Geometrical Interpretation}
+\label{sec:2-2}
+
+The notation of state (linear superposition) can be presented also:
+\[\alpha_0 \ket0 + \alpha_1 \ket1 + \dots +
+\alpha_{k-1} \ket{k-1} = \begin{pmatrix} \alpha_0 \\ \alpha_1 \\ \vdots \\
+  \alpha_{k-1} \end{pmatrix}\] As so we can present the state as a vector in
+some space of k-measures where axes are vectors representing $i^{th}$ states:
+$\begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix}$ represents the system in ground
+state ($\ket0$), $\begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix}$ represents $1^{st}$
+excited state ($\ket1$) etc.
+
+So, the quantum state of a k-level system is a unit vector (which means it's
+size is equal to 1) in k-dimensional complex Gilbert space: $\vec u \in
+\mathbf{C}^k$
+
+For qubits: $\ket\psi = \alpha_0 \ket0 + \alpha \ket1$ can be represented in two
+- dimensional space as a vector of length 1 and angle $\theta$. Projections of
+this vector are the probabilities of the system to be in the relevant state
+after measurement:
+\[ Pr[0] = \alpha_0^2 = \cos^2 \theta; Pr[1] = \alpha_1^2 = sin^2 \theta\]
+
+\subsubsection{Measurement in an arbitrary basis}
+\label{sec:2-3}
+
+For given vector $\psi$ representing a state of a qubit we can use arbitrary
+basis (let's call it u, it should consist of axis $\ket u$ and
+$\ket{u^{\perp}}$) and do our measurements in this new basis u:
+\begin{itemize}
+\item $\ket u = \beta_0\ket0 + \beta_1\ket1$
+\item $\ket {u^{\perp}} = -\beta_1\ket0 + \beta_0\ket1$
+\end{itemize}
+
+In this new basis, the bow angle will be $\theta'$ and probabilities for
+outcomes of measurement will be:
+\begin{itemize}
+\item $u$ with probability $\cos^2 \theta' \leftrightarrow (\ket u, |\psi
+  \rangle)^2 $
+\item $u^{\perp}$ with probability $\sin^2 \theta' \leftrightarrow
+  (|u^{\perp}\rangle, |\psi \rangle)^2$
+\end{itemize}
+
+\paragraph{Example } Hadamard basis (so - called ``sign basis''). A basis turned
+$-\frac\pi4$:
+\begin{itemize}
+\item $\ket+ = \frac1{\sqrt{2}} \ket0 + \frac1{\sqrt{2}} \ket1$
+\item $\ket- = \frac1{\sqrt{2}} \ket0 - \frac1{\sqrt{2}} \ket1$
+\end{itemize}
+
+Curiosity: can we distinguish $\ket+$ from $\ket-$ through a measurement in the
+standard basis? The problem is that for state $\ket+$ probabilities for $\ket0$
+and $\ket1$ are both $\frac1{2}$ - and so for $\ket-$. The idea is to used ``yet
+another'' basis - namely, switch to sign basis in this case.
+
+So measure (for example) $\ket\psi = \frac1{2} \ket0 + \frac{\sqrt{3}}{2}\ket1$
+in $\ket+ / \ket-$ basis can be found by good old linear algebra:
+\begin{enumerate}
+\item Compute inner product:
+  \[ Pr[+] = |(\ket\psi, \ket+)|^2 = \left|\left(\frac1{2}\ket0 +
+      \frac{\sqrt{3}}{2}\ket1, \frac1{\sqrt{2}}\ket0 + \frac1{\sqrt{2}}\ket1
+    \right)\right|^2 =\]
+  \[ = \left| \frac1{2 \sqrt{2}} + \frac{\sqrt{3}}{2\sqrt{2}} \right|^2 =
+  \frac{(1 + \sqrt{3})} {8} = \frac{4 + 2 \sqrt{3}}8 \]
+
+  $ Pr[-] = |(\ket\psi, \ket-)|^2$, or simpler $\dots = 1 - Pr[+] = \frac{4 - 2
+    \sqrt{3}}{8}$
+\item Change of basis: rewrite state in new basis $\ket\psi = \beta_0 \ket+ +
+  \beta_1 \ket-$ so that $Pr[+] = |\beta_0|^2, Pr[-] = |\beta_1|^2$. Then,
+  accepting that
+  \begin{itemize}
+  \item $\ket+ = \frac1{\sqrt{2}} \ket0 + \frac1{\sqrt{2}} \ket1$
+  \item $\ket- = \frac1{\sqrt{2}} \ket0 - \frac1{\sqrt{2}} \ket1$
+  \end{itemize}
+  put these into formula, after simplifications:
+  \[ Pr[+] = | \frac1{2 \sqrt{2}} + \frac{\sqrt{3}}{2\sqrt{2}} |^2 = \frac{4 + 2
+    \sqrt{3}}{8} \]
+  \[ Pr[-] = | \frac1{2 \sqrt{2}} - \frac{\sqrt{3}}{2\sqrt{2}} |^2 = \frac{4 - 2
+    \sqrt{3}}{8} \]
+\end{enumerate}
+
+\subsection{Uncertainity principle}
+\label{sec:2-4}
+
+\paragraph{Heisenberg}forever: One can never know with perfect accuracy both of
+those two important factors which determine the movement of one of the smallest
+particles - its position and its velocity.
+
+Similar story for qubits (hydrogen atom) :
+\begin{itemize}
+\item it has energy (Bit) : $\ket0$ or $\ket1$
+\item it has sign : $\ket+$ or $\ket-$
+\end{itemize}
+
+It is impossible to know both bit and sign of qubit, because if we have value
+for, say, bit, this will provide maximum uncertainty for sign (0.5 - 0.5
+probability) and vice verse: if we know sign (and thus fix electron in either
+state) we get uncertainly for the any other basis.
+
+Thus, these two basis are incompatible with each other (as well as any two
+different basis).
+
+To quantify this we define a {\bf spread} of a quantum state.
+\[\ket\psi = \alpha_0 \ket0 + \alpha_1 \ket1 = \beta_0 \ket+ + \beta_1
+\ket- \]
+\begin{itemize}
+\item The spread in standard basis $:= S(|\psi|) = |\alpha_0| + |\alpha_1|$
+\item The spread in sign basis $:= \hat{S}(|\psi|) = |\beta_0| + |\beta_1|$
+\end{itemize}
+For fixed states:
+\begin{itemize}
+\item In standard basis:
+  \begin{itemize}
+  \item $S(\ket0) = 1 + 0 = 1$
+  \item $S(\ket+) = \frac1{\sqrt{2}} + \frac1{\sqrt{2}} = \sqrt{2}$
+  \end{itemize}
+\item In sign basis:
+  \begin{itemize}
+  \item $\hat{S}(\ket0) = \frac1{\sqrt{2}} + \frac1{\sqrt{2}} = \sqrt{2}$
+  \item $\hat{S}(\ket+) = 1 + 0 = 1$
+  \end{itemize}
+\end{itemize}
+
+Uncertainty principle for bit and sign: $S(|\psi\rangle) \hat{S}(|\psi\rangle)
+\geq \sqrt{2}$ for any $|\psi\rangle$
+
+\section{Two Qubits \& Entanglement}
+\label{sec:week 2}
+Two qubit system is classically represent with two bits of information: $00, 01,
+10, 11$, so quantum state is a superposition over all four classical
+possibilities: $$|\psi \rangle = \alpha_{00}|00\rangle + \alpha_{01}|01\rangle +
+\alpha_{10}|10\rangle + \alpha_{11}|11\rangle $$, and $$|\alpha_{00}|^2 +
+|\alpha_{01}|^2 + |\alpha_{10}|^2 + |\alpha_{11}|^2 = 1$$
+ 
+Observer j with probability $|\alpha_j|^2$. New state = $|j\rangle$
+
+\subsubsection{Partial Measurement}
+\label{sec:3-2}
+
+What is the result of measurement {\bf just one} qubit? I.e. the probability to
+see the first qubit as 0 is $$P[0] = |\alpha_{00}|^2 + |\alpha_{01}|^2$$
+
+But what about the new state? Just discard the states which are not possible any
+more, and re-normalise probabilities: $$New State = \frac{\alpha_{00}|00\rangle
+  + \alpha_{01}|01\rangle }{\sqrt{|\alpha_{00}|^2 + \alpha_{01}|^2} } $$
+
+\subsection{Entanglement}
+\label{sec:3-3}
+
+Imagine a composite system: qubit 1 with state $\alpha_{0}\ket0 +
+\alpha_{1}\ket1$ and qubit 2 with state $\beta_{0}\ket0 + \beta_{1}\ket1$. The
+composite state will be \[ (\alpha_{0}\ket0 + \alpha_{1}\ket1) (\beta_{0}\ket0
++\beta_{1}\ket1) = \alpha_0 \beta_0 |00\rangle + \alpha_0 \beta_1 |01\rangle +
+\alpha_1\beta_0 |10\rangle + \alpha_1 \beta_1 |11\rangle \]
+
+Now back: Given the state of the composite system, determine the state of each
+qubit. In theory, we have 4 variables ($\alpha_0, \alpha_1, \beta_0, \beta_1$),
+4 products - so we can calculate. The problem is - not all composite states are
+possible to ``de-compose''; such ``en-decomposing'' states are called {\bf
+  entangled}.
+
+For such states, each qubit does not have its own separate state - it is not in
+some definite state. All we can say is that the whose system is in some
+superposition quantum state.
+
+Canonical example - {\bf Bell State}
+$$|\psi\rangle = \frac1{\sqrt{2}} |00\rangle + \frac1{\sqrt{2}}|11\rangle $$
+- the formula implies that $\alpha_0, \beta_0, \alpha_1, \beta_1$ are non-zero
+which contradicts the fact $\alpha_0 \beta_1 = 0; \alpha_1 \beta_0 = 0$.
+
+\paragraph{Measuring the Bell State}
+
+Measure first qubit:
+\begin{itemize}
+\item see 0 with probability $\frac1{2}$. New state = $|00\rangle$
+\item see 1 with probability $\frac1{2}$. New state = $|11\rangle$
+\end{itemize}
+The trick is: let's separate qubits by a big distance. The measure first of them
+- let's say, we get 0. Then measure the second one (we are expecting to get 0
+with probability 1). As such, we have coincidence in particle states -
+regardless of the distance between particles (something like if two particles
+share a coin flip before they are separated).
+
+\subsection{EPR Paradox}
+\label{sec:3-4}
+
+Einstein, Podolsky, Rosen (1935). Was introduced to show problems with QM
+theory. The idea is: we can rewrite the state of a Bell State using the sign
+basis:
+$$|\psi\rangle = \frac1{\sqrt{2}} |00\rangle + \frac1{\sqrt{2}}|11\rangle =
+\frac1{\sqrt{2}} |++\rangle + \frac1{\sqrt{2}}|--\rangle $$
+
+Then, assuming the trick from previous paragraph:
+\begin{itemize}
+\item Faster then light communication?
+\item If when two particles were together they flipped two coins to coordinate
+  how they would answer on bit and sign measurement, then they violate
+  uncertainty principle (measure first qubit in bit basis and second qubit in
+  sign basis; know both bit and sign for first qubit contradicts uncertainty
+  principle).
+\end{itemize}
+Variants for solution:
+\paragraph{Local Hidden Variable Theory:} The two particles carry with them all
+the information necessary to locally decide the outcome of any future
+measurements.
+
+- contradicted by Bell's experiment
+
+\paragraph{Quantum Mechanics:} As soon as the first qubit is measured, say in
+the bit basis, the entanglement between the two qubits is destroyed. The new
+state is either $|00\rangle$ or $|11\rangle$, each of which is unentangled.
+Measuring the second qubit in the sign basis no longer reveals any information
+about the first qubit. (Does not constitute faster than light communication,
+since no information is communicated).
+
+
+\section{Bell's Experiment}
+\label{sec:4}
+John Bell devised an experiment with one of two outcomes:
+\begin{enumerate}
+\item Nature is inconsistent with quantum mechanics but might be better
+  explained by some local hidden variable theory
+\item Nature is consistent with quantum mechanics but inconsistent with any
+  local hidden variable theory
+\end{enumerate}
+The Bell experiment relies on properties of entangled qubits. Performed numerous
+times, outcome is second (consistent with quantum mechanic).
+ 
+\subsection{Experiment Setup}
+\label{sec:4-1}
+Two boxes situated far apart (light should not have enough time to travel
+between during experiment => time of experiment should be short): first one gets
+input x (0 or 1), second box gets input y (also 0 or 1). Both boxes are set up
+to output a bit: a for first box, b for second.
+
+Experiment: if both boxes are give 1 input, we expect both boxes to output the
+different values ($a \neq b$). Otherwise, want output of the boxes to be the
+same The idea is that
+\begin{itemize}
+\item if boxes are described by local hidden variables, the experiment should be
+  successful with probability $\leq \frac{3}{4} = 0.75$
+
+  Proof: Fail on any of the 4 inputs implies success probability $\leq
+  \frac{3}{4}$ Suppose output on x=y=0 is a=b=0. By locality, output on x=0, y=1
+  and x=1, y=0 must also be a=b=0.
+
+  Finally by locality, output on x=y=1 must also be a=b=0 => contradiction.
+
+\item But, if boxes share a Bell state, then experiment can succeed with
+  probability as high as 0.85. See next section for proof.
+\end{itemize}
+
+\subsection{Properties of Bell state}
+\label{sec:4-2}
+
+\subsubsection{Rotational invariance of Bell State}
+\label{sec:4-2-1}
+
+The idea is to measure state of both qubits in some basis $(u, u^{\perp})$.
+Initially, the probabilities are the same: $P[u] = \frac1{2}, P[u^{\perp}] =
+\frac1{2}$. But, if measured state of qubit 1 is u, then probability of qubit 2
+to be in state u is P[u] = 1.
+
+Now add yet one more basis: $(v, v^{\perp})$ - rotated from $(u, u^{\perp})$ by
+angle $\theta$. If qubit 1 is in state $u$, the probability for qubit 2 to be in
+state $v$ is $\cos^2 \theta$.
+
+Proof: The state of a qubit can be expressed as: $$|\psi\rangle =
+\frac1{\sqrt{2}} |00\rangle + \frac1{\sqrt{2}}|11\rangle = \frac1{\sqrt{2}}
+|uu\rangle + \frac1{\sqrt{2}}|u^{\perp}u^{\perp}\rangle$$ - through $\ket u = a
+\ket0 + b \ket1;|u^{\perp}\rangle = -b \ket0 + a \ket1; a, b \in R; a^2 + b^2 =
+1$ and re-calculating
+
+For complex a and b, use different form of Bell's state: $$ |\psi\rangle =
+\frac1{\sqrt{2}} | 01 \rangle - \frac1{\sqrt{2}} | 10 \rangle $$, then $$\ket u
+= \alpha \ket0 + \beta \ket1; |u^{\perp}\rangle = -\beta^* \ket0 + \alpha^*
+\ket1;$$ $ \alpha, \beta \in C; |\alpha|^2 + |\beta|^2 = 1$ - complex
+conjugates.
+
+\subsubsection{Bell's Experiment}
+\label{sec:4-3}
+
+In box 1, we measure the state of a qubit in a basis depending on the input
+value (select basis U if input is 1 and some other if 0). In box 2 - select yet
+another basis V if input is 1 and other is input is 0).
+
+If y = 1 (second box is given 1), then P[matching output] = $cos^2 \theta$ where
+$\theta$ is the angle between basis U and V (see previous subsection).
+
+The trick is to select relevant basis's in a manner to make such outcome
+maximally probable. One of the variants is: Box 1: basis $U_0$ (to be used if
+x=0) is the ``normal'' basis; basis $U_1$ will be turned $\pi / 4$
+
+Box 2: Basis $V_0$ (for y = 0): turned by $\pi /8$; basis $V_1$ (for y =1)
+turned by $ - \pi / 8$
+
+So, the probabilities will be:
+\begin{tabular}{cc|c}
+  \textbf{ x=} & \textbf{ y = } & \textbf{P(match)} \\
+  \hline
+  0 & 0  & $cos^2 \pi/8$ \\
+  0 & 1  & $cos^2 \pi/8$ \\
+  1 & 0  & $cos^2 \pi/8$ \\
+  1 & 1  & $cos^2 3\pi/8 = sin^2 \pi/8$ \\
+\end{tabular}
+
+In last case, P(not match) = $cos^2 \pi / 8$; so for the whole experiment
+$$P[success] = cos^2 \pi / 8 \approx 0.85$$
+
+Returning to original formulations:
+\begin{itemize}
+\item Success probability $\leq 3/4 \Rightarrow$ Nature is inconsistent with
+  quantum mechanics but might be better explained by some local hidden variable
+  theory
+\item Success probability $> 3/4 \Rightarrow$ Nature is consistent with quantum
+  mechanics and inconsistent with any local hidden variable theory
+\end{itemize}
+The Bell experiment has been performed numerous time; the result have always
+been consistent with quantum mechanics. Einstein wasted near 20 years of hos
+life.
+
+\subsubsection{Certifying Randomness}
+\label{sec:5-1}
+
+{\bf Task:} Construct a physical random generator whose output can be certified
+to be random. The Bell experiment is used to certify the ``true randomness'' of
+the outputs.
+
+The idea is to check if Bell's experiment is successful with probability at
+least 0.85. Details - see papers mentioned at (5-1 10:10)
+
+\subsection{Evolution of a Qubit}
+\label{sec:5-2}
+
+Allowable states of k-level system: unit vector in a k-dimensional complex
+vector space (called a Hilbert space):
+
+\[\ket\psi = \alpha_0\ket0 + \dots + \alpha_{k-1}\ket{k-1} =
+\begin{pmatrix} \alpha_0 \\ \vdots \\ \alpha_{k-1} \end{pmatrix} \in
+\mathbf{C}^k\]
+
+
+\subsection{Axioms of Quantum Mechanics}
+\label{sec:5-2}
+... re-formulation
+\begin{enumerate}
+\item {\bf Superposition principle: } allowable states of k-level system: unit
+  vector in a k-dimensional complex vector space (called a Hilbert space)
+
+\item {\bf Measurement}
+
+  \begin{itemize}
+  \item A measurement is specified by choosing an orthonormal basis.
+  \item The probability of each outcome is the square of the length of the
+    projection onto the corresponding basis vector.
+  \item The state collapses to the observed basis vector
+  \item If $\ket{u_0}, \ket{u_1}, \dots, \ket{u_{k-1}}$ was the chosen basis and
+    $\ket\psi = \alpha \ket{u_0} + \alpha \ket{u_1} + \dots + \alpha_{k-1} |
+    u_{k-1}\rangle$, then qubit is in the state $u_i$ with probability
+    $|\alpha_i|^2 = |(|\psi \rangle,|u_i\rangle)|^2$. New state is
+    $|u_i\rangle$.
+  \end{itemize}
+
+
+\item {\bf Unitary evolution}
+
+  Quantum systems evolve by rotating of the Hibert space (so-called rigid body
+  rotation, meaning that the angles between vectors are preserved). As rotation
+  of the space is a linear transformation, it can be represented by a matrix.
+
+  Example: turning basis by angle $\theta$. Coordinate vectors: $\ket0 \to cos
+  \theta \ket0 + sin \theta \ket1;\ket0 \to - sin \theta \ket0 + cos \theta
+  \ket1$, so
+
+\[\mathbf{R}_\theta = \left( \begin{array}{cc} cos \theta & -sin \theta \\ sin
+    \theta & cos \theta \end{array}  \right)\]
+
+Later on, \[ \mathbf{R}_{- \theta} = \left( \begin{array}{cc} cos \theta & sin
+    \theta \\ -sin \theta & cos \theta \end{array} \right) =
+\mathbf{R}_\theta^T \] and \[ \mathbf{R}_\theta \mathbf{R}_{-\theta} =
+\mathbf{I}; \mathbf{R}_\theta \mathbf{R}_{\theta}^T = \mathbf{R}_\theta^T
+\mathbf{R}_{\theta} = \mathbf{I} \]
+\end{enumerate}
+
+\subsection{Unitary Transformation}
+\label{sec:5-3}
+
+Unitary transformation is a rotation of a qubit state vector in a complex space.
+The rotation matrix is: $U = \begin{pmatrix} a & c \\ b & d \end{pmatrix}; a, b,
+c, d \in \mathbf{C}$.
+
+If our state is represented be real (not complex) parameters, then
+transformation can be expressed as rotation by angle $\theta$: $R_\theta =
+\begin{pmatrix} \cos \theta & -\sin\theta \\ \sin\theta &
+  \cos\theta \end{pmatrix}$
+
+Examples:
+\begin{itemize}
+\item $\ket\psi \to U\ket\psi$
+\item for $\ket0$ vector: $ \dbinom{a}{b} = \ket0 \to \dbinom ab = a\ket0 + b
+  \ket1$
+\item for $\ket1$ vector: $\ket1 \to = c\ket0 + d \ket1$
+\end{itemize}
+
+By definition, a {\bf conjugate transpose} matrix $U^\dag$ is obtained from $U$
+by taking the transpose and then taking the {\it complex conjugate} (that is,
+negating their imaginary parts bu not their real parts) of each entry. In
+addition, if for given matrix $A$ it's inverse matrix $A^{-1} = A^\dag$, that is
+$A \times A^\dag = I$, then matrix $A$ is called {\bf unitary matrix}.
+
+The main idea is that angles are preserved, and orthogonal vectors remains
+orthogonal: $|a|^2 + |b|^2 = 1 = |c|^2 + |d|^2$, and $a^*c + b^*d = 0$
+
+Another property - {\bf Linearity}, i.e. if
+\begin{gather*}
+  U\ket0 = \ket{\phi_0} = a\ket0 + b \ket1 \\
+  U\ket1 = \ket{\phi_1} = c\ket0 + d \ket1 \end{gather*} then
+\[\begin{split}
+  U(\alpha \ket0 + \beta \ket1) &= \alpha\ket{\phi_0} + \beta\ket{\phi_1} \\ &=
+  \alpha (a\ket0 + b \ket1) + \beta (c\ket0 + d\ket1) \\ &= (\alpha a + \beta b)
+  \ket0 + (\alpha b + \beta d) \ket1 \end{split}\]
+
+\subsubsection{Single Qubit Gates}
+\label{sec:5-4}
+
+\paragraph{Quantum gates} transforms qubits passed to them. Examples:
+\begin{itemize}
+\item ``Bit flip'': $\alpha_0 \ket0 + \alpha_1 \ket1 \to \alpha_1 \ket0 +
+  \alpha_0 \ket1 $ Transformation matrix:
+  \begin{gather*}
+    \mathbf{X} = \left( \begin{array}{cc} 0 & 1 \\ 1 & 0 \end{array} \right);
+    \mathbf{X} \ket0 = \ket1; \mathbf{X} \ket1 = \ket0; \\
+    \mbox{ and } \mathbf{X}^T = \left( \begin{array}{cc} 0 & 1 \\ 1 &
+        0 \end{array} \right) = \mathbf{X}; \mathbf{X}^2 = \mathbf(I)
+  \end{gather*}
+
+  Can be considered as a reflection (rotation) of vector over axis tilted at
+  45\textdegree.
+
+\item ``Phase flip'': $\alpha_0 \ket0 + \alpha_1 \ket1 \to \alpha_0 \ket0 -
+  \alpha_1 \ket1 $ Transformation matrix:
+  \begin{gather*}
+    \mathbf{Z} = \left( \begin{array}{cc} 1 & 0 \\ 0 & -1 \end{array} \right);
+    \mathbf{Z} \ket0 = \ket0; \mathbf{Z} \ket1 = - \ket1; \\
+    \mbox{ again } \mathbf{Z}^T = \mathbf{Z}; \mathbf{Z}^2 = \mathbf(I)
+  \end{gather*}
+
+  Reflection over $\ket0$ axis. BTW, \begin{gather*} \mathbf{Z} \ket+ = \ket-;
+    \\ \mathbf{Z} \ket- = \ket+
+  \end{gather*} - Phase flip swaps the axis of the sign basis.
+
+\item ``Hadamard transform''
+
+  \begin{gather*}
+    \mathbf{H} = \left( \begin{array}{cc} \frac1{\sqrt{2}} & \frac1{\sqrt{2}} \\
+        \frac1{\sqrt{2}} & - \frac1{\sqrt{2}}
+      \end{array} \right);\\
+    \mathbf{H} \ket0 = \ket+ = \frac1{\sqrt{2}} \ket0 +
+    \frac1{\sqrt{2}} \ket1 \\
+    \mathbf{H} \ket1 = \ket- = \frac1{\sqrt{2}} \ket0 -
+    \frac1{\sqrt{2}} \ket1 \\
+    \mbox{ again }  \mathbf{H}^T = \mathbf{H}; \mathbf{H}^2 = \mathbf(I) \\
+    \mathbf{H} \ket+ = \ket0; \mathbf{H} \ket- = \ket1\\
+  \end{gather*}
+
+  Reflection over $\pi / 8 $ axis.
+\end{itemize}
+
+Now we have a bit of tricks: if we do not have a Z gate, we can emulate one with
+the chain $\mathbf{H} \to \mathbf{X} \to \mathbf{H}$, in other words,
+$\mathbf{Z} = \mathbf{H} \mathbf{X} \mathbf{H}$. Big picture:
+
+$$\begin{array}{ccccc}
+  &\ket0 & \stackrel{X}{---} & \ket1 & \\
+  & | & & | &  \\
+  H & | & & | & H \\
+  & | & & | & \\
+  &\ket+ &  \stackrel{Z}{---} & \ket- & \\
+\end{array}$$
+
+\subsubsection{No cloning theorem}
+\label{sec:5-5}
+
+It is impossible to create a qubit with exactly the same state as some arbitrary
+state.
+
+\subsubsection{Two qubit gate}
+\label{sec:5-5-1}
+
+Transformation U transforms the two=qubit state $|\psi \rangle$ into another
+two-qubit state $|\phi\rangle$. Such transformation is set by 4 x 4 matrix (U)
+that $\mathbf{U} |\psi_1 \rangle = |\phi_1 \rangle; \mathbf{U} | \psi_2 \rangle
+= | \phi_2 \rangle$.
+
+Then, if $|\psi \rangle = |\psi_1 \rangle + | \psi_2 \rangle$, then
+$\mathbf{U}|\psi \rangle = |\phi_1 \rangle + |\phi_2 \rangle$
+
+Now try to build a gate (circuit ?) to copy a quantum bit:
+\subsubsection{Quantum circuit for copying a quantum bit}
+\label{sec:5-5-2}
+
+Input: unknown state $|\psi\rangle = a \ket0 + b \ket1$. Put this and ``clean
+qubit'' $\ket0$, expected output should be: \begin{equation}(a \ket0 + b
+  \ket1)(a \ket0 + b \ket1) = a^2 |00\rangle + ab |01 \rangle + ab |10 \rangle +
+  b^2|11\rangle \label{copy-eq} \end{equation}
+
+Cases:
+\begin{itemize}
+\item $|\psi \rangle = \ket0$, expected output $|00\rangle$
+\item $|\psi \rangle = \ket1$, expected output $|11\rangle$
+\item Then, by linearity, if input is $|\psi \rangle = a \ket0 + b \ket1$ then
+  output should be $a |00\rangle + b |11\rangle$
+\end{itemize}
+The last must be equal to (\ref{copy-eq}), so it must be ab=0 which is possible
+only if a=0 or b=0.
+
+So, {\bf the fact that you can clone $\ket0 \mbox{ or } \ket1$ prevents you from
+  copying the ``normal'' state } or
+
+\paragraph{No cloning theorem} It is impossible to clone an unknown quantum
+state.
+
+Or, even stronger, it is not possible to construct a two qubit of the same
+states from the one qubit in this state and one arbitrary one.
+
+\section{Quantum circuits and teleportation}
+\label{sec:6}
+
+\subsection{CNOT gate + circuits}
+\label{sec:6-1,2}
+
+One-qubit gate U can be specified either by matrix U or by
+\begin{gather*} \ket0 \to \dots \\ \ket1 \to \dots \end{gather*} - because it is
+a linear transformation.
+
+For two-qubit gates: $$\alpha_{00} |00\rangle + \alpha_{01} |01\rangle +
+\alpha_{[10} |10\rangle + \alpha_{11} |11\rangle \to \alpha_{00}' |00\rangle +
+\alpha_{01}' |01\rangle + \alpha_{10}' |10\rangle + \alpha_{11}' |11\rangle$$
+
+So that U is the 4-dimensional unitary ($UU^\dag = U^\dag U = I$) matrix.
+
+\subsubsection{CNOT gate}
+\label{sec:6-1-1}
+
+The first bit (a AKA control) goes unchanged: $a \to a$; the second one (b AKA
+Target bit) is being flipped if a is 1 and NOT flipped otherwise: $b \to b
+\oplus a$.
+
+So: $\begin{array}{ccc}
+  |00\rangle & \to & |00\rangle \\
+  |01\rangle & \to & |01\rangle \\
+  |10\rangle & \to & |11\rangle \\
+  |11\rangle & \to & |10\rangle \\
+\end{array}$, and superposition is being mapped as: $\begin{array}{c}
+  \alpha_{00} |00\rangle + \alpha_{01} |01\rangle + \alpha_{[10} |10\rangle +
+  \alpha_{11} |11\rangle \\
+  \downarrow \mbox{ CNOT } \\
+  \alpha_{00} |00\rangle + \alpha_{01} |01\rangle + \alpha_{11} |10\rangle +
+  \alpha_{10} |11\rangle 
+\end{array}$
+
+The matrix looks even more interesting: $\mathbf{CNOT} = \left(
+  \begin{array}{cccc}
+    1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 1 & 0
+  \end{array}
+\right)$,
+
+and $\mbox{CNOT CNOT}^\dag = I$
+
+\subsubsection{Quantum circuit}
+\label{sec:6-1-2}
+
+Let's play with Hadamard gate $\binom{H\ket0=\ket+=\frac1{\sqrt2}\ket0 +
+  \frac1{\sqrt2}\ket1}{H\ket1=\ket-=\frac1{\sqrt2}\ket0 - \frac1{\sqrt2}\ket1}$
+on qubit 1 followed by CNOT on both. Transformations:
+\begin{equation*} \begin{split} \ket{00} \to \mbox{Step 1: } & (\frac1{\sqrt{2}}
+    \ket0 + \frac1{\sqrt{2}} \ket1 ) ( \ket0 ) =
+    \frac1{\sqrt{2}} \ket{00} + \frac1{\sqrt{2}} \ket{10} \\
+    \to \mbox{Step 2: } & \mbox{flip $2^{nd}$ qubit when the $1^{st}$ is 1: getting Bell state: }\\
+    \to &\frac1{\sqrt{2}}(\ket{00} + \ket{11}) \\
+  \end{split}\end{equation*}
+
+By playing the input states, we can get all four Bell states:
+\begin{align*}
+  \ket{00} \to \ket{\phi^+} = \frac1{\sqrt{2}} (\ket{00} + \ket{11})\\
+  \ket{10} \to \ket{\phi^-} = \frac1{\sqrt{2}} (\ket{00} - \ket{11})\\
+  \ket{01} \to \ket{\psi^+} = \frac1{\sqrt{2}} (\ket{01} + \ket{10})\\
+  \ket{11} \to \ket{\psi^-} = \frac1{\sqrt{2}} (\ket{01} - \ket{10})
+\end{align*}
+- so-called Bell basis states
+
+As Hadamard and CNOT are their own inversions, the same input can go ``from
+right to left'': feed the circuit with, say, $\ket{\phi^+}$ and get $\ket{00}$
+at the left. So it is possible to restore the initial state - measure qubits in
+bit basis after passing it through ``CNOT -> Hadamard'' circuit.
+
+\subsection{Teleportation}
+\label{sec:6-3}
+
+It is impossible to clone quantum information but it is possible to teleport a
+quantum state to another location.
+
+Settings: Alice has a qubit is state $\ket\psi = \alpha\ket0 + \beta\ket1$,which
+she wants to transfer. In addition, Alice and Bob create a pair in Bell state:
+$\ket\psi = \frac1{\sqrt{2}} \ket{00} + \frac1{\sqrt{2}}\ket{11}$
+
+Then Alice measures both her qubit $\psi$ and her qubit from the Bell pair with
+outcome, of two bits: $b_1, b_2$ - one of (00, 01, 10, 11). This iformation is
+passed to Bob.
+
+Bob performs some (depending on $b_1, b_2$) unitary transformation on his part
+of Bell state - in such a way that outcome is $\alpha\ket0 + \beta\ket1$ - so
+the qubit destroyed by Anna during her measurement ``suddenly'' re-appears on
+the Bob's end. So we have a ``teleportation'' of quantum state.
+
+% point 6-3 08:26
+
+\subsubsection{Mechanics: Assume CNOT}
+\label{sec:6-3-1}
+
+Imagine we can create an entanglement pair out from Alice's $\alpha\ket0 +
+\beta\ket1$ and Bob's ``pure'' $\ket0$, and put it through CNOT gate. The
+outcome will be $\alpha\ket{00} + \beta\ket{11}$.
+
+Then Alice measures her qubit {\it in sign basis}. The outcome for the pair will
+be:
+\[\begin{split}
+  \alpha \ket{00} + \beta \ket{11}) &= \alpha\left(\frac1{\sqrt{2}}\ket+ +
+    \frac1{\sqrt{2}}\ket-\right)(\ket0) +
+  \beta\left(\frac1{\sqrt{2}}\ket+ - \frac1{\sqrt{2}}\ket-\right)(\ket0)  \\
+  &= \frac1{\sqrt{2}}\ket+(\alpha\ket0 + \beta\ket1) +
+  \frac1{\sqrt{2}}\ket-(\alpha\ket0 - \beta\ket1)
+\end{split}\] So:
+\begin{itemize}
+\item if Alice measured $+$, Bob gets $\alpha\ket0 + \beta\ket1$ - job done
+\item if Alice measured $-$, Bob gets $\alpha\ket0 - \beta\ket1$ - need to apply
+  the ``phase flip'' Z gate.
+\end{itemize}
+- now we have a challenge to create the entangled state $\alpha\ket{00} +
+\beta\ket{11}$ without quantum communication between Alice and Bob.
+
+\subsubsection{Mechanics: Implementation}
+\label{sec:6-4}
+
+So task is to create a $\alpha\ket{00} + \beta\ket{11}$ state. Suppose we have
+two qubits sharing a Bell state. Can we use it to effectively apply CNOT
+remotely?
+\begin{itemize}
+\item {\bf Step 1 (initial):} Alice has her source (or ``unknown'') qubit
+  $\alpha\ket0 + \beta\ket1$; Alice and Bob share the Bell state
+  $\left(\frac1{\sqrt{2}}\ket{00} + \frac1{\sqrt{2}}\ket{11}\right)$. Common
+  state: \begin{gather*}(\alpha\ket0 +
+    \beta\ket1)\left(\frac1{\sqrt{2}}\ket{00} + \frac1{\sqrt{2}}\ket{11}\right) = \\
+    = \frac\alpha{\sqrt{2}}\ket{000} + \frac\alpha{\sqrt{2}}\ket{011}
+    +\frac\beta{\sqrt{2}}\ket{100} + \frac\beta{\sqrt{2}}\ket{111}
+  \end{gather*}
+
+\item {\bf Step 2: } Alice applies CNOT gate to her qubits (from qubit 1 to
+  qubit 2): in states when qubit 1 is 0, nothing happens, when qubit 1 is 1, the
+  qubit 2 flips: $$\frac\alpha{\sqrt{2}}\ket{000} +
+  \frac\alpha{\sqrt{2}}\ket{011} +\frac\beta{\sqrt{2}}\ket{110} +
+  \frac\beta{\sqrt{2}}\ket{101}$$
+
+\item {\bf Step 3:} Alice measures qubit 2. Possible state outcomes:
+  \begin{itemize}
+  \item $0 \to \alpha\ket{00} + \beta\ket{11}$ (selected 1st and 4th parts of
+    Step 2). {\bf Done:} Alice and Bob share two qubits with the same state
+    $\alpha\ket0 + \beta\ket1$.
+  \item $1 \to \alpha\ket{01} + \beta\ket{10}$ (selected 2nd and 3rd parts of
+    Step 2). Then Bob performs a Bit flip ($X$) on his qubit, and we get
+    $\alpha\ket{00} + \beta\ket{11}$ again.
+  \end{itemize}
+
+\item Alice performs measurement on unknown qubit (qubit 1) in Hadamard basis
+  (i.e. applies $H$, then measures), reports outcome to Bob. If outcome is $+$,
+  Bob does nothing, if it is $-$ - Bob applies ``phase flip'' - $Z$ to his
+  qubit.
+\end{itemize}
+For the diagram of the whole protocol - see slide 6-4, page 6. Result: both
+Alice's qubits are measured (``destroyed''), but her unknown state qubit is
+``materialised'' on the Bob side.
+
+\subsection{Computation by Teleportation}
+\label{sec:6-5}
+
+Order of application: Apply $ZX$ means apply first $X$, then $Z$!
+
+I general case, it would not work to apply some arbitrary gate at the Bob's side
+before teleportation - because at most cases $U \times X \neq X \times U$ (see
+slides 6-5, notice U-gate at the Bob's side). For details - see
+http://arxiv.org/pdf/quant-ph/9908010v1.pdf)
+
+\section{Bra-ket notation, Eigenvectors, Tensor products}
+\label{chap:7}
+
+Ket notation:$$\ket\psi = \begin{pmatrix} \alpha_0 \\\alpha_1 \\ \vdots \\
+  \alpha_{k-1} \end{pmatrix} = \alpha_0\ket0 + \alpha_1\ket1 + \dots +
+\alpha_{k-1}\ket{k-1}$$
+
+Corresponding to this vector (called ``ket'') there exists ``bra'' vector:
+$$(\alpha_0^* \enskip \alpha_1^* \enskip \dots \enskip \alpha_{k-1}^*) =
+\bra\psi $$, where $\alpha_i^*$ - complex conjugates for $\alpha_i$.
+
+Suppose we have another vector state $\ket\phi = \beta_0\ket0 + \beta_1\ket1 +
+\dots + \beta_{k-1}\ket{k-1}$. The inner product of $\ket\psi$ and $\ket\phi$
+will be: $$(\alpha_0^* \enskip \alpha_2^* \enskip \dots \enskip \alpha_{k-1}^*)
+\times \begin{pmatrix} \beta_0 \\ \beta_1 \\ \vdots \\ \beta_{k-1} \end{pmatrix}
+= \sum_j\alpha_J^* \beta_J^* = \braket\psi\phi $$
+
+The length of a vector: $|\ket\psi| = \sqrt{ \braket\psi\psi} = \sqrt{\sum
+  \alpha_j^* \alpha_j} = \sqrt{\vphantom{\sum\alpha_j^*} \sum|\alpha_j|^2}$
+
+Another story: inner product is equal to the $\cos\theta$ between unit vectors
+in complex space: $\cos \theta = \frac{|\braket\psi\phi|}{|\ket\psi||\ket\phi|};
+0\leq \theta \leq \pi/2$
+% video 7-2
+
+\paragraph{Projection Matrix} P onto $\ket\phi$ - i.e. the matrix which for
+given vector $\ket\psi$ provides a projection of this vector to
+$\ket\phi= \begin{pmatrix}\beta_0 \\ \vdots \\ \beta_{k-1} \end{pmatrix}$
+(vector!)
+
+Such projection matrix will be $P=\begin{pmatrix} \beta_0 \\ \vdots \\
+  \beta_{k-1}\end{pmatrix} (\beta_0^* \dots \beta_{k-1}^*)$ or, in bra-ket
+notation, $$P=\ket\phi \bra\phi$$
+
+Then, when applied to vector $\ket\psi = (\ket\phi\bra\phi)\ket\psi$. Further
+down: $\ket\psi = (\ket\phi\bra\phi)\ket\psi = \ket\phi \times
+\underbrace{\bra\phi\ket\psi}_{\text{inner product}} = \braket\phi\psi \ket\phi$
+- i.e. the vector $\ket\phi$ scaled by the inner product.
+
+Another story: $P^2 = P$ (projection of already projected vector equals to this
+projection). In out notation: $P^2 = \ket\phi \bra\phi \ket\phi \bra\phi$,
+assuming that middle part is inner product of the unit vector, and so equals to
+1: $\ldots = \ket\phi\bra\phi = P$
+
+\paragraph{U unitary} - by definition $$U U^\dag = U^\dag U = I$$
+
+and rows are orthonormal (as are the columns): if $U_{.j}$ = $j^{th}$ column of
+U then the vectors represented by these columns/rows are orthogonal in space of
+measurement k = ``U preserves angles'' (or, rather, inner products): if
+$U\ket\phi = \ket{\phi'}, U\ket\psi = \ket{\psi'}$ then
+$\braket\phi\psi=\braket{\phi'}{\psi'}$
+
+Proof: if $U\ket\phi = \ket{\phi'}, U\ket\psi = \ket{\psi'}$ then $\bra{\phi'}
+=\bra\phi U^\dag$ then $\braket{\phi'}{\psi'} = \braket{\bra\phi U^\dag}{U
+  \ket\psi}$. With $U U^\dag = I$ - done.
+
+\subsection{Hermitian Matrices, eigenvectors}
+\label{sec:7-3}
+
+\paragraph{Def} Matrix A is {\bf Hermitian} $\Leftrightarrow A=A^\dag$. It has
+to be square, entries on the diagonal has to be real, and entries not on the
+diagonal has to be conjugates relatively to diagonal.
+
+If A is Hermitian and Real, it is symmetric.
+
+\paragraph{Def} Vector $\ket\phi$ is {\bf eigenvector} of matrix A if $A\ket\phi
+= \lambda\ket\phi (\lambda \in \mathbf{C})$
+
+\paragraph{Spectral Theorem: } if A is Hermitian $\Rightarrow$ A has an
+orthonormal set of eigenvectors ($\ket{\phi_0}, \dots, \ket{\phi_{k-1}}$) with
+real evalues ($\lambda_0, \dots, \lambda_{k-1}$).
+
+I.e. matrix A maps unit sphere to ellipsoid of k principle axis.
+% video 7-3,time 05:40
+
+For example, for {\bf X operator}: $X = \begin{pmatrix} 0 & 1 \\ 1&
+  0 \end{pmatrix}$; obviously Hermitian. $\ket+,\ket-$ are eigenvectors for it:
+\begin{itemize}
+\item $X\ket+ = \begin{pmatrix} 0 & 1 \\ 1 &
+    0 \end{pmatrix}\binom{\frac1{\sqrt2}}{\frac1{\sqrt2}} =
+  \binom{\frac1{\sqrt2}}{\frac1{\sqrt2}}; \; \lambda_+ = 1 $
+\item $X\ket- = \begin{pmatrix} 0 & 1 \\ 1 &
+    0 \end{pmatrix}\binom{\frac1{\sqrt2}}{-\frac1{\sqrt2}} =
+  \binom{-\frac1{\sqrt2}}{\frac1{\sqrt2}}; \; \lambda_- = -1 $
+\end{itemize}
+
+Another example: {\bf Hadamard transform}: $H = \begin{pmatrix} \frac1{\sqrt2} &
+  \frac1{\sqrt2} \\ \frac1{\sqrt2}& -\frac1{\sqrt2} \end{pmatrix}$;
+
+For arbitrary vector $\ket\phi$ that of $H \ket\phi = \lambda\ket\phi$. Than we
+have: $$(H-\lambda I)\ket\phi = 0 \text{ i.e. determinant } \det(H-\lambda I) =
+0$$
+Then $$\det \begin{pmatrix} \frac1{\sqrt2} - \lambda & \frac1{\sqrt2} \\
+  \frac1{\sqrt2} & -\frac1{\sqrt2} - \lambda \end{pmatrix} =
+\left(\frac1{\sqrt2} - \lambda \right)\left( -\frac1{\sqrt2} - \lambda \right) -
+\frac1{\sqrt2} \frac1{\sqrt2} = -\frac12 + \lambda^2 -\frac12 = 0$$
+
+So $\lambda = \pm 1 $; we can select any of these value and find out the
+relevant eigenvector.
+% video 7-3, 11:30
+
+So Hermitian matrix A has orthonormal set of eigenvectors $\ket{\phi_0} \dots
+\ket{\phi_{k-1}}$ with real evalues $\lambda_0 \dots \lambda_{k-1}$.
+
+If we'll write our matrix A in the $\ket{\phi_0} \dots \ket{\phi_{k-1}}$ basis,
+it will be just the diagonal matrix $\Lambda = \begin{pmatrix} \lambda_0 &&&0 \\
+  & \lambda_1 && \\ & & \ddots & \\ 0 &&& \lambda_{k-1} \end{pmatrix}$. Then $A
+= U^\dag \Lambda U$ where $U= \begin{pmatrix} \vdots & \vdots &&\vdots \\
+  \ket{\phi_0} & \ket{\phi_1} & \dots & \ket{\phi_{k-1}} \\ \vdots & \vdots
+  &&\vdots \end{pmatrix}$. Then (remember, $\ket\phi \bra\phi = P$ - projection
+of the vector on itself!): $A = \lambda_0 \ket{\phi_0}\bra{\phi_0} + \lambda_1
+\ket{\phi_1}\bra{\phi_1} + \dots + \lambda_{k-1}
+\ket{\phi_{k-1}}\bra{\phi_{k-1}} = \sum \limits_{j=0}^{k-1}\lambda_j P_j$
+
+\subsection{Tensor Products}
+\label{sec:7-4}
+
+
+
+
+
+
+\end{document}
