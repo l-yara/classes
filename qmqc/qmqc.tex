@@ -22,6 +22,9 @@
 \lstset {language=[LaTeX]TeX,
   extendedchars=true ,escapechar=|}
 
+\newcommand{\cplx}{\mathbb{C}} % Complex numbers space
+\newcommand{\bigR}{\mathbb{R}} % Real numbers space
+\newcommand{\hilbert}{\mathbb{H}} % Hilbert space
 \newcommand{\ket}[1]{\left| #1 \right>} % for Dirac kets
 \newcommand{\bra}[1]{\left< #1 \right|} % for Dirac bras
 \newcommand{\braket}[2]{\left< #1 | #2 \right>} % for Dirac brakets
@@ -43,7 +46,7 @@
 \item {\bf Superposition principle:} if a system can be in one of the k states,
   it can also be in any linear superposition of k states: \[\alpha_0 \ket{0} +
   \alpha_1 \ket{1} + \dots + \alpha_{k-1} \ket{k-1} \] where $\alpha_i \in
-  \mathbf{C}$ - complex ``probability amplitude'' for each of these
+  \cplx$ - complex ``probability amplitude'' for each of these
   states: \[\sum \limits_{i=0}^{k-1} |\alpha|^2=1\]
 
   Examples for k = 3:
@@ -85,7 +88,7 @@ excited state ($\ket1$) etc.
 
 So, the quantum state of a k-level system is a unit vector (which means it's
 size is equal to 1) in k-dimensional complex Gilbert space: $\vec u \in
-\mathbf{C}^k$
+\cplx^k$
 
 For qubits: $\ket\psi = \alpha_0 \ket0 + \alpha \ket1$ can be represented in two
 - dimensional space as a vector of length 1 and angle $\theta$. Projections of
@@ -409,7 +412,7 @@ vector space (called a Hilbert space):
 
 \[\ket\psi = \alpha_0\ket0 + \dots + \alpha_{k-1}\ket{k-1} =
 \begin{pmatrix} \alpha_0 \\ \vdots \\ \alpha_{k-1} \end{pmatrix} \in
-\mathbf{C}^k\]
+\cplx^k\]
 
 
 \subsection{Axioms of Quantum Mechanics}
@@ -440,18 +443,18 @@ vector space (called a Hilbert space):
   rotation, meaning that the angles between vectors are preserved). As rotation
   of the space is a linear transformation, it can be represented by a matrix.
 
-  Example: turning basis by angle $\theta$. Coordinate vectors: $\ket0 \to cos
-  \theta \ket0 + sin \theta \ket1;\ket0 \to - sin \theta \ket0 + cos \theta
+  Example: turning basis by angle $\theta$. Coordinate vectors: $\ket0 \to \cos
+  \theta \ket0 + \sin \theta \ket1;\ket0 \to - \sin \theta \ket0 + \cos \theta
   \ket1$, so
 
-\[\mathbf{R}_\theta = \left( \begin{array}{cc} cos \theta & -sin \theta \\ sin
-    \theta & cos \theta \end{array}  \right)\]
+\[\bigR_\theta = \left( \begin{array}{cc}\cos\theta &-\sin\theta \\ \sin
+    \theta & \cos\theta\end{array}  \right)\]
 
-Later on, \[ \mathbf{R}_{- \theta} = \left( \begin{array}{cc} cos \theta & sin
-    \theta \\ -sin \theta & cos \theta \end{array} \right) =
-\mathbf{R}_\theta^T \] and \[ \mathbf{R}_\theta \mathbf{R}_{-\theta} =
-\mathbf{I}; \mathbf{R}_\theta \mathbf{R}_{\theta}^T = \mathbf{R}_\theta^T
-\mathbf{R}_{\theta} = \mathbf{I} \]
+Later on, \[ \bigR_{- \theta} = \left( \begin{array}{cc} \cos \theta & \sin
+    \theta \\ -\sin \theta & \cos \theta \end{array} \right) =
+\bigR_\theta^T \] and \[ \bigR_\theta \bigR_{-\theta} =
+\mathbf{I}; \bigR_\theta \bigR_{\theta}^T = \bigR_\theta^T
+\bigR_{\theta} = \mathbf{I} \]
 \end{enumerate}
 
 \subsection{Unitary Transformation}
@@ -459,7 +462,7 @@ Later on, \[ \mathbf{R}_{- \theta} = \left( \begin{array}{cc} cos \theta & sin
 
 Unitary transformation is a rotation of a qubit state vector in a complex space.
 The rotation matrix is: $U = \begin{pmatrix} a & c \\ b & d \end{pmatrix}; a, b,
-c, d \in \mathbf{C}$.
+c, d \in \cplx$.
 
 If our state is represented be real (not complex) parameters, then
 transformation can be expressed as rotation by angle $\theta$: $R_\theta =
@@ -765,6 +768,10 @@ http://arxiv.org/pdf/quant-ph/9908010v1.pdf)
 \section{Bra-ket notation, Eigenvectors, Tensor products}
 \label{chap:7}
 
+Euler's formula: $e^{ix} = \cos x + i \sin x$
+
+ 
+
 Ket notation:$$\ket\psi = \begin{pmatrix} \alpha_0 \\\alpha_1 \\ \vdots \\
   \alpha_{k-1} \end{pmatrix} = \alpha_0\ket0 + \alpha_1\ket1 + \dots +
 \alpha_{k-1}\ket{k-1}$$
@@ -828,7 +835,7 @@ diagonal has to be conjugates relatively to diagonal.
 If A is Hermitian and Real, it is symmetric.
 
 \paragraph{Def} Vector $\ket\phi$ is {\bf eigenvector} of matrix A if $A\ket\phi
-= \lambda\ket\phi (\lambda \in \mathbf{C})$
+= \lambda\ket\phi (\lambda \in \cplx)$
 
 \paragraph{Spectral Theorem: } if A is Hermitian $\Rightarrow$ A has an
 orthonormal set of eigenvectors ($\ket{\phi_0}, \dots, \ket{\phi_{k-1}}$) with
@@ -879,9 +886,314 @@ of the vector on itself!): $A = \lambda_0 \ket{\phi_0}\bra{\phi_0} + \lambda_1
 \subsection{Tensor Products}
 \label{sec:7-4}
 
+\paragraph{Tensor Product} is an operation of ``forming'' a Hilbert space of
+possible states for two particles ($\ket{00}, \ket{01}, \ket{10}, \ket{11}$, 4 -
+dimension space) out of two spaces for the states of two separate particles. So
+if we have Hilbert spaces $\mathbf{H}_1 \in \cplx^2$ and $\mathbf{H}_2 \in
+\cplx^2$ then ``common'' space is $\mathbf{H} = \mathbf{H}_1 \otimes
+\mathbf{H}_2$; so the state vectors become: $\ket0 \otimes \ket0 = \ket{00} =
+\ket0\ket0; \ket0 \otimes \ket1 = \ket{01} = \ket0\ket1$ etc.
 
+So the state vectors in the relevant spaces are ``product-ed'' too (math
+expressions are boring obvious).
 
+Consider two vectors: $\ket{\phi_1} \otimes \ket{\phi_2}$ and $\ket{\psi_1}
+\otimes \ket{\psi_2}$. Inner product of these will
+be: $$(\braket{\phi_1}{\psi_1}) (\braket{\phi_2}{\psi_2})$$
 
+To describe a state in the first system, you need k complex parameters; and l
+complex parameters to describe in second.
+
+Let $H_1 = \mathbf{C^k}$ and $H_2 = \mathbf{C^l}$. The tensor product will be a
+space $H = H_1 \otimes H_2 \in \cplx^{k*l}$. To describe a state in the
+first system, you need k complex parameters; and l complex parameters to
+describe in second. The whole state will be a vector consisting of:
+$$\begin{pmatrix}
+  \ket0 \otimes \ket0 & \ket0 \otimes \ket1& \dots& \ket0 \otimes \ket{l-1} \\
+  \dots &\dots & \dots & \dots \\
+  \ket{k-1}\otimes \ket0 & \ket{k-1} \otimes \ket1 & \dots & \ket{k-1} \otimes
+  \ket{l-1}
+\end{pmatrix}$$
+
+\subsection{Tensor Product of Operators (gates)}
+\label{sec:7-5}
+
+Imagine we apply $U= \begin{pmatrix} a & c \\ b & d \end{pmatrix}$ and
+$V= \begin{pmatrix} e & g \\ f & h \end{pmatrix}$ to two vectors from different
+spaces: $$U \otimes V = \begin{pmatrix} aV & cV \\ bV & dV \end{pmatrix} =
+\begin{pmatrix} \left[ aV = \begin{pmatrix} ae & ag \\ af & ah \end{pmatrix}
+  \right] & cV \\ bV & dV \end{pmatrix}$$
+
+Example: U = H (Hadamard); V = X (bit flip). Then
+$$H \otimes V =\begin{pmatrix} \frac1{\sqrt2}X & \frac1{\sqrt2}X \\
+  \frac1{\sqrt2}X & -\frac1{\sqrt2}X \end{pmatrix} =
+\begin{pmatrix}
+  0 & \frac1{\sqrt2} & \; & 0 & \frac1{\sqrt2} \\
+  \frac1{\sqrt2} & 0 & \; & \frac1{\sqrt2} & 0 \\
+  \; \\
+  0 & \frac1{\sqrt2} & \; & 0 & -\frac1{\sqrt2} \\
+  \frac1{\sqrt2} & 0 & \; & -\frac1{\sqrt2} & 0 \\
+\end{pmatrix}$$
+
+\section{Observables and Schredinger's equation}
+\label{sec:8}
+
+\subsection{Observables}
+\label{sec:7-1}
+
+An {\bf observable } is a quantity like energy, position, momentum - something
+which can be measured. We feed the quantum state to some measurement device and
+get some real number
+
+For some k-dimension system the observable A will be a $k \times k$ Hermitian
+matrix: $A = A^\dag$. This means that, according to the Spectral Theorem, $A$
+has k orthogonal vectors $\ket{\phi_0}, \ket{\phi_1} \dots \ket{\phi_{k-1}}$
+with real eigenvalues $\lambda_0, \lambda_1 \dots, \lambda_{k-1}$ that
+$$A \ket{\phi_i} = \lambda_i \ket{\phi_i}$$
+
+\paragraph{Measurement}
+
+Let $\ket\psi = \sum \alpha_i\ket{\phi_i}$. Measurement outcome is $\lambda_i$
+with probability $|\alpha_i|^2$; new state $\ket{\psi_{new}} = \ket{\phi_i}$.
+
+I.e. specifying matrix $A$ we really specify orthonormal basis with
+corresponding eigenvalues. So, if our measurement results in $i$, the outcome
+will be equal to $\lambda_i$
+
+{\bf Example} let $\ket\psi = \alpha \ket0 + \beta\ket1$; Observable $X
+= \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$. Eigenvectors of $X$ are
+\begin{gather*} \ket{\phi_0} = \ket+; \; \lambda_0 = 1 \\ \ket{\phi_1} = \ket-;
+  \; \lambda_1 = -1 \end{gather*}
+
+When we measure, we get the value in the matrix's basis: $$\ket\psi =
+\frac{\alpha + \beta}{\sqrt2} \ket+ + \frac{\alpha-\beta}{\sqrt2} \ket-$$
+
+Outcome:
+\begin{itemize}
+\item +1 with probability $\left| \frac{\alpha + \beta}{\sqrt2}\right| ^2$; new
+  state $\ket+$
+\item -1 with probability $\left| \frac{\alpha - \beta}{\sqrt2}\right| ^2$; new
+  state $\ket-$
+\end{itemize}
+
+So expected value is $= 1 \left| \frac{\alpha + \beta}{\sqrt2}\right| ^2 +
+(-1)\left| \frac{\alpha - \beta}{\sqrt2}\right| ^2$
+
+For the situation with {\bf repeated eigenvectors} (i.e. we have $\ket{\phi_1}$
+and $\ket{\phi_2}$ with both $\lambda_1 = \lambda_2 = 1$). In this case it is
+impossible to find out which of the state was measured: any other vector
+$\ket\psi = \alpha\ket{\phi_1} + \beta\ket{\phi_2}$ will also be eigenvector
+with $\lambda = 1$. Then the measure outcome will be a vector - projection of
+$\ket\psi$ onto the plain formed by $\ket{\phi_1}, \ket{phi_2}$.
+% video 8-2
+
+\paragraph{Example}
+
+Imagine we have good old hydrogen atom with k possible state of the electron -
+as such, it's quantum state is a unit vector in $\psi_0. \psi_1, \dots,
+\psi_{k-1}$. If we need to measure energy, our observable then will be a matrix
+A with same states but eigenvalues equal to energies of corresponding states:
+$$\begin{pmatrix} E_0 & 0 & \dots & 0 \\ 0 & E_1 & \dots & 0 \\ \\ \dots \\ 0 & 0 & \dots & E_{k-1} \end{pmatrix}$$
+
+Another example: imagine we're going to have eigenvectors $\ket+, \ket-$ and
+want them to have eigenvalues 2, -3. First step: find a projection for our new
+basis:
+\begin{itemize}
+\item Vector $\ket+$: $\ket+\bra+ = \ket+ (\ket+)^\dag =
+  \binom{\frac1{\sqrt2}}{\frac1{\sqrt2}} (\frac1{\sqrt2} \quad \frac1{\sqrt2})
+  = \begin{pmatrix} \frac12 & \frac12 \\ \\ \frac12 & \frac12 \end{pmatrix}$
+\item Vector $\ket-$: $\ket-\bra- = \ket- (\ket-)^\dag =
+  \binom{\frac1{\sqrt2}}{-\frac1{\sqrt2}} (\frac1{\sqrt2} \quad -\frac1{\sqrt2})
+  = \begin{pmatrix} \frac12 & -\frac12 \\ \\ -\frac12 & \frac12 \end{pmatrix}$
+\end{itemize}
+Summary: $A = 2 \ket+\bra+ + (-3) \ket-\bra- =
+\begin{pmatrix} \frac52 & -\frac12 \\ -\frac12 & \frac52 \end{pmatrix} $ Let's
+apply this to the $\ket+$ state: $(2 \ket+\bra+ + (-3) \ket-\bra-)\ket+ = 2\ket+
++ (-3) 0 = 2 \ket+$
+
+\paragraph{In general: } given $\ket{\phi_i}, \lambda_i$, corresponding
+observable is
+$$A = \sum \lambda_i \ket{\phi_i}\bra{\phi_i}$$
+- therefore equivalent to our previous notion of measurement: ``pick the
+orthonormal basis''
+
+\subsection{Expectation Value and Variance}
+\label{sec:8-3}
+
+\begin{itemize}
+\item An observable M for a k-level quantum system is a $k\times k$ Hermitian
+  matrix. Random value $X$ denotes outcome of measurement of state $\ket \psi =
+  \sum \alpha_i \ket{phi_i}$.
+\item Distribution of X: $Pr[X = \lambda_j] = |\alpha_j|^2$
+\end{itemize}
+So we have usual parameters:
+\begin{gather*}
+  \mu = E[X] \\ \sigma^2 = Var[X] = E[(X-\mu)^2]
+\end{gather*}
+Interpretation: if we'd rotate the shape around $\mu$ - axis, moment of inertia
+will be equal to the one created by ...
+
+So, if we have observable $M$ on state $\ket\psi$, then:
+$$\mu=E[X]=\bra\psi M\ket\psi$$
+
+\paragraph{Prof:} by definition $\mu = E[x] = \sum |\alpha_j|^2 \lambda_j$; and
+$M$ is a diagonal matrix, so \begin{gather*}\bra\psi M\ket\psi = (\alpha_0^* \;
+  \alpha_1^* \dots \alpha_{k-1}^*) \begin{pmatrix} \lambda_0 &&& \\ & \lambda_1
+    && \\ && \ddots &\\ &&& \lambda_{k-a}\end{pmatrix} \begin{pmatrix} \alpha_0
+    \\ \alpha_1
+    \\ \vdots \\ \alpha_{k-1} \end{pmatrix} = \\
+  = \sum \alpha_j^*\lambda_j\alpha_J = \sum \alpha_j^*\alpha_j\lambda_j = \sum
+  |\alpha_j|^2 \lambda_j
+\end{gather*}
+
+Variance: \begin{gather*} \sigma^2 = Var[X] = E[X^2] - (E[X])^2 = E[X^2] - \mu^2\\
+  = \bra\psi M^2 \ket\psi - (\bra\psi M \ket\psi)^2
+\end{gather*}
+
+\paragraph{Prof:} by definition $E[x^2] = \sum |\alpha_j|^2 \lambda_j^2$, and
+\begin{gather*}\bra\psi M^2\ket\psi = (\alpha_0^* \; \alpha_1^*
+  \dots \alpha_{k-1}^*) \begin{pmatrix} \lambda_0 &&& \\ & \lambda_1 && \\ &&
+    \ddots &\\ &&& \lambda_{k-a}\end{pmatrix}^2 \begin{pmatrix} \alpha_0 \\
+    \alpha_1
+    \\ \vdots \\ \alpha_{k-1} \end{pmatrix} = \\
+  = \sum \alpha_j^*\lambda_j^2\alpha_J = \sum \alpha_j^*\alpha_j\lambda_j^2 =
+  \sum |\alpha_j|^2 \lambda_j^2
+\end{gather*}
+
+(when you square observable, it is eigenvalues which are being squared, the
+eigenvectors remain the same).
+
+\subsection{Schredinger's Equation}
+\label{sec:8-4}
+
+Axiom of unitary rotation:
+\begin{itemize}
+\item {\bf Unitary evolution axiom:} a quantum system evolves by unitary
+  rotation of the Hibert space: $$U U^\dag = U^\dag U = I$$
+\item But.. by which unitary rotation?
+\item Energy observable $H$, called the Hamiltonian of the
+  system \begin{itemize}
+  \item Its eigenvectors $\ket{\phi_i}$'s are the states with definite energy
+  \item The eigenvalues $\lambda_i$'s are the energy of the corresponding state
+  \end{itemize}
+\item Example $H = \begin{pmatrix} -\frac12 & \frac52 \\ \frac52 &
+    -\frac12 \end{pmatrix}$
+  \begin{itemize}
+  \item $\ket+$ with energy = 2
+  \item $\ket-$ with energy = -3
+  \end{itemize}
+\item The {\bf Schrodinger's equation }. If $\ket{\psi{t}}$ - the state of the
+  system at time $t$, then:
+$$i\hbar \frac\partial{\partial t}\ket{\psi(t)} = H\ket{\psi(t)}$$
+- differential equation:
+\begin{itemize}
+\item $i = \sqrt{-1}$
+\item $\hbar$ - Plank's constant
+\end{itemize}
+\end{itemize}
+
+\paragraph{Solving Schrodinger's equation}
+
+Let initial state $\ket{\psi(0)} = \ket{\phi_j}$ where $\ket{\phi_j}$ is some
+eigenvector of $H$ with a corresponding eigenvalue $\ket{\lambda_j}$
+
+Then $\ket{\psi(t)} = e^{-\frac{i\lambda_j t}{\hbar}} \ket{\phi_j}$ - at time
+$t$ the state is the same eigenvector $\ket{\phi_j}$ with some phase
+$e^{-\frac{i\lambda_j t}{\hbar}}$ associated with it (see slide 8-4 page 5).
+I.e. the phase ($\theta$ angle) rotates at a rate proportional to energy.
+
+Next, as $H \ket{\phi_j} = \lambda_j \ket{\phi_j} \Rightarrow $ at any time the
+state vector points at the same direction, just with different amplitude:
+$$\ket{\psi(t)} = a(t)\ket{\phi_j}$$
+So, solving equation:
+\begin{equation*}
+  \begin{split}
+    i\hbar\frac{\partial a(t)}{\partial t}\ket{\phi(t)} &= H(a(t) \ket{\phi_j})
+    = \\
+    &=a(t) \lambda_j \ket{\phi_j}\\
+    \frac{\partial a(t)}{a(t)} &= \frac{\lambda_j}{i\hbar} \partial t\\
+    \Rightarrow \quad a(t) &= e^{-\frac{i\lambda_j t}{\hbar}}
+  \end{split}
+\end{equation*}
+
+Again, ``if the state starts with some direction, it always points at this
+direction - with some phase precession over time''.
+
+Of course, in general, the starting position is some superposition of states -
+good old $\ket{\psi(0)} = \sum \alpha_j \ket{\phi_j}$. By linearity, this means
+that $\ket{\psi(t)} = \sum \alpha_j e^{-\frac{i\lambda_j t}{\hbar}}
+\ket{\phi_j}$
+
+i.e. each state stays invariant in time - ``just precesses''.
+
+In the eigenbasis, we can write
+$$\ket{\psi(t)} =
+\begin{pmatrix} e^{-\frac{i\lambda_1 t}{\hbar}} & 0 \\ \\ 0 &
+  e^{-\frac{i\lambda_k t}{\hbar}} \end{pmatrix} \ket{\psi(0)}$$ - the state at
+the moment $t$. The matrix (let's call it $U(t)$) is obvious unitary: $U(t)
+U^\dag(t) = U^\dag(t) U(t) = I$. Shorthand notation:
+$$U(t) = e^{-\frac{i H t}{\hbar}}$$
+(in format: $B = e^A$ for matrices A and B means that B has the same
+eigenvectors as A but eigenvalues of B are the exponents of eigenvalues for A)
+
+\paragraph{Example}
+
+Suppose Hamiltonian is $H = X$; start of the zero state: $\ket\psi(0) = \ket0$.
+What is $\ket\psi(t)$?
+
+Solution: The X's eigenvectors are: $\ket+$ with eigenvalue 1, $\ket-$ with
+eigenvalue -1. So:
+\begin{equation*} \begin{split}
+    \ket{\psi(0)} &= \frac1{\sqrt2}\ket+ + \frac1{\sqrt2}\ket- \\
+    \ket{\psi(t)} &= \frac1{\sqrt2}e^{-\frac{i\lambda_1 t}{\hbar}} +
+    \frac1{\sqrt2}e^{-\frac{i\lambda_2 t}{\hbar}} \\
+    &= \frac1{\sqrt2}e^{-\frac{i \; t}{\hbar}} + \frac1{\sqrt2}e^{\frac{i \;
+        t}{\hbar}}
+  \end{split} \end{equation*}
+
+% video 8-5
+The whole story about Schrodinger's equation is that it ties the evolution of
+the system to the system's energy (as observable H is the ``energy''
+measurement).
+
+From the unitary evolution axiom we derive that evolution operator (U) should
+look like $U=e^{-iMt}$ for some Hermitian operator $M$. Let's try to understand
+why M should be H (Hamiltonian).
+
+If A is arbitrary (``any'') observable this means that ($\equiv$) it conserves
+physical quantity over time, then A must commute with M:
+$$ A M = M A$$ (in general, matrix multiplication does not commute).
+
+Let's we have a state $\ket\psi$, and after some infinitely small time t we have
+a state $\ket{\psi'} = U \ket \psi = e^{-iMt}\ket\psi $.
+
+``A is a conserved quantity'' means that $\bra\psi A \ket\psi = \bra{\psi'} A
+\ket{\psi'} = \bra\psi U^\dag A U \ket\psi$.
+
+As this holds for all $\psi$, then:
+$$A = U^\dag A U = e^{iMt} A e^{-iMt}\approx (1+iMt) A (1-iMt)$$
+
+(t is small so this ``$\approx$'' should work). Again:
+$$ \dots \approx A + it[MA-AM] \Rightarrow it [MA-AM] = 0$$
+(ignoring $O(t^2)$ terms coming from multiplication). So $MA = AM$, and A must
+commute with M.
+
+So, for now on: \begin{itemize}
+\item $U = e^{-iMt}$ where M is Hermitian
+\item if A is conserved $\Rightarrow AM = MA$
+\end{itemize}
+Th idea is that energy is always conserved (in contrast with, say, momentum
+which can change if potential energy changed). There must be some ``intrinsic
+reason'' why A and M commute.
+% video 8-5, 10:21
+The most natural reason would be that $H = \hbar M$ - i.e. A (in our case A is
+H) is just linearly connected to M. At least, we expect $H = f(M)$, but, due to
+some ``out of our scope physical reasons'' this function $f$ must be linear. For
+the case: imagine we have a system consisting of two destroying pieces 1 and 2,
+having associated operators $M_1, M_2$ and Hamiltonian $H_1, H_2$. The energy of
+composed system is $H_1 + H_2$; on the other hand, the operator of the composed
+system will also be $M = M_1 + M_2$, so $H = f(M_1 + M_2)$ and $f(M_1 + M_2) =
+f(M_1) + f(M_2)$, so $f(M)$ must be a linear function.
 
 
 \end{document}

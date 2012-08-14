@@ -391,8 +391,183 @@ calculate so many values how many times the Cash Flow changes the sign:$$0=-100
 (see slides 4-8 for graphics).
 
 The intuitive decision rule when comparing mutually exclusive projects, would be
-to accept the project with the highest IRR. This rule is {\bf incorrect} - see
+to accept the project with the highest R. This rule is {\bf incorrect} - see
 next examples.
 
+\subsection{IRR: Bias}
+\label{sec:IRR:bias}
+%video 5-2
+
+As it was mentioned, an intuitive rule would be to accept the projects with the
+highest IRR. This is incorrect - see these examples.
+
+\begin{enumerate}
+\item consider two projects, A and B, with the following cash flows. Which one
+  is better?
+\begin{tabular}{|c|c|c|}
+  Year & Project A & Project B \\
+  \hline
+  0 & -\$2,000 & -\$2,000 \\
+  1 & \$400 & \$2,000 \\
+  2 & \$2,400 & \$625 \\
+\hline
+IRR & 20\%  & 25\% \\
+NPV at 5\% & \$558  & \$472  \\
+NPV at 11\% & \$308    & \$309  \\
+NPV at 20\% & \$0   & \$101  \\
+\end{tabular}
+
+Naive approach - to pick Project 2 because of earlier income reflected in IRR.
+The problem is we're not comparing IRR to the outside market (rate $r$). Actual
+decision should be made based on rate (see figures for variants).
+% video 5-3
+
+\item Consider two projects A and B again:
+\begin{tabular}{|c|c|c|}
+  Year & Project A & Project B \\
+  \hline
+  0 & -\$5,000 & -\$50,000 \\
+  1 & \$7,500 & \$62,500 \\
+\hline
+IRR & 50\%  & 25\% \\
+\end{tabular}
+
+Another problem with IRR - it ``likes'' the small investments. And again, the
+actual selection should depend on rate $r$.
+\end{enumerate}
+
+So, taking decision on IRR only will tend to select the small and short-term projects.
+% video 5-4 
+Per-ce, IRR does make (some) sense. Unit if measurement (\%) is quite universal,
+but not that clear as value. This is why we tend to compare it with rate $r$
+(which works as benchmark too). Also it is very communicate by itself (at a
+``superficial'' level). 
+
+Conclusion: NPV works better, but IRR is in use wider. 
+
+\section{Cash Flows}
+\label{sec:Cashflow}
+% video 5-5
+
+The NPV is defined as $$NPV = -I_0 + \frac{C_1}{1+r} + \frac{C_2}{(1+r)^2} +
+\dots + \frac{C_n}{(1+r)^n}$$
+
+where $I_0$ (or $C_0$) is the investment cost of the project and $C_i$ is the
+cash flow in period $i$.
+
+\subsubsection*{A snapshot of Project/Firm/You}
+\begin{itemize}
+
+
+\item  \begin{tabular}{|c|c|}
+\hline
+  Assets & Liabilities \\
+  \hline
+  Real Assets &  Equity \\
+& Debt \\
+\hline 
+\end{tabular}
+Real assets - ``things'' to generate (create) value in form of cash flow. On the
+``liability'' side we finance our idea.
+
+\item Time line: for simplicity, let's set 10 years time. 
+\item All Value is relative (Law of one price)
+\item There are two basic ingredients to conducting a valuation:
+  \begin{itemize}
+  \item Cash Flows: ``belongs'' to project
+  \item Cost of Capital, $r$: ``belongs'' to market 
+  \end{itemize}
+
+\item Sources: pro-for-ma Income Statement and Balance Sheets
+\item Income Statement: Year's flows
+\item Balance Sheet: A snapshot of assets/stocks.
+\end{itemize}
+% video 5-6
+
+\subsubsection{Estimating Cash FLows for a Specific Year}
+
+Cash Flows from Projects/Operations. 
+\begin{itemize}
+\item {\bf Revenue} is $P \times Q$ - Price times (say, 5.0 M)
+Quantity. To understand expected price, we make the market analysis 
+\item {\bf Costs of Goods Sold} : $P \times Q$ (say, 2.0 M)
+\item {\bf Selling, General \& Administration costs.}Shown separately because
+  they may be non-incremental (it is hard to estimate them on per-project
+  basis) - say, 0.5 
+\item {\bf Depreciation} - this is largely imaginary (not the real number),
+  based on appreciation - say, 1 M
+\end{itemize}
+
+{\bf Operating Profits}: = Revenues - Costs of Goods Sold, - Selling, General \&
+Admin. costs - Depreciation. For us, it is 1.5
+
+Assuming Cash Taxes on Operating Profit as 33\%, calculate its value (becomes
+0.5);  {\bf Net Operating Profits After Tax} = 1.0 M
+
+Next, we {\bf add} the Depreciation (the same we've subtracted before). The
+whole story was done in order to lower the tax on Operating Profit value. So:
+Net Operating Profits After Tax + Depreciation - Capital Expenditures
+
+{\bf Capital Expenditures} come NOT from Income Statement but from Balance
+Sheet (say 0).
+
+Next item to subtract is {\bf Increases in Working Capital} (say 0.1)
+
+So, {\bf Cash Flow from Operations}: + 1.9 M
+
+Again the word {\bf Profit} means it is calculated for specific year!
+
+% video 5-8
+The whole story:
+
+\begin{tabular}{cl|c}
+\hline
+ & Revenues & +5 M \\
+- & Costs of Goods Sold & 2 M \\
+- & Selling, General \& Admin. costs & 0.5 M \\
+- & Depreciation & 1 M\\
+  \hline
+= & Operating Profits &  1.5 M \\
+- & Cash Taxes on Operating Profit & 0.5 M \\
+\hline
+= & Net Operating Profit After Tax & 1.0 M \\
++ & Depreciation & 0.5 M \\
+- & Capital Expenditures & 0 \\
+- & Increases in Working Capital & 0.1 \\
+\hline
+= & Cash Flows from Operations & 1.9 M \\
+\end{tabular}
+
+\subsection{Cash Flows: Important Principle}
+% video 5-8 03:10
+
+\begin{enumerate}
+\item Estimate all cash flows in an {\bf incremental} basis - i.e. draw two time
+  lines: with project (values $B_1 \dots B_n$ and without project $A_0 \dots
+  A_n$. Actual info is shown in $B_i - A_i$
+\item Do not forget the importance of year 0 and the last year of the chosen
+  timeline for the project Examples of Capital items (coming from Balance
+  sheets): 
+  \begin{itemize}
+  \item Capital Expenses
+  \item Working Capital (cash for business + inventory + account receivables:
+    things sold on credit - account payables (payments for credits)) Managing
+    inventory (Working Capital) creates value by itself.
+  \end{itemize}
+\item Accounting issues
+  \begin{itemize}
+  \item Depreciation - because it is made up
+  \item Similar non-cash items
+  \end{itemize}
+\item Do not mix financing with operations
+- Please stay on the assets side (C): ``care on things which generate values'';
+stay away from financing.
+
+\item Include the effects of inflation/deflation. Every item in the accounting
+  statement / cash flow statement has a different inflation.
+\item Do not compare projects with unequal lives. ``Cheaper machines are usually
+  shorter-lived'', so never compare numbers for the costs of different lives. If
+  needed - convert into annuity.
+\end{enumerate}
 
 \end{document}
