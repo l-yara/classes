@@ -19,9 +19,12 @@
 \lstset {language=[LaTeX]TeX,
   extendedchars=true ,escapechar=|}
 
+\newcommand{\example}{\subparagraph{Example:}} % Example
+% \newcommand{\def}{\subparagraph{Definition:}} % Definition
+
 \begin{document}
-\section{Blah-blah}
-\label{sec:1}
+\part{Blah-blah}
+\label{par:1}
 
 \begin{itemize}
 \item Finance is about value (not money)
@@ -54,8 +57,11 @@ Terminology:
 Time line: ``A dollar today is worth more then a dollar tomorrow'' - i.e. time
 ``by itself'' have some value - so {\bf do not compare money across the time!}
 
-\section {Time Value for Money: PV and FV for Single Cash Flows}
-\label{sec:2}
+\part{Time Value for Money}
+\label{part:2}
+
+\section{PV and FV for Single Cash Flows}
+\label{sec:2-1}
 In general, {\bf Future Value} = Initial Payment + Accumulated Interest: $$FV =
 P + r * P = (1+r) * P$$
 
@@ -81,8 +87,8 @@ value in future) is called {\bf discounting}.
 
 In Excel: $PV(rate, nper, pmt, [fv],[type])$; pmt is still 0; other are obvious.
 
-\section {Time Value for Money: PV and FV for Multiple Cash Flows}
-\label{sec:3}
+\section { PV and FV for Multiple Cash Flows}
+\label{sec:2-2}
 
 \subsection{FV of Annuity - Concept}
 \label{sec:3-2}
@@ -292,7 +298,7 @@ Properties of NPV:
 \item Easiest to communicate - yes
 \item Easy to compare - compare NPV values, so yes
 \item Easy to calculate - {\it no}
-\item Other? 
+\item Other?
 \end{itemize}
 
 The main problem with NPV is that it provides very static view of future, and
@@ -342,12 +348,12 @@ as ``bad habit''.
   \hline
   0 & -\$100 & 0  \\
   1 & \$110 & 1 \\
-%  \hline
-%  \multicolumn{2}{l|} {NPV =}  & \$1400
+  % \hline \multicolumn{2}{l|} {NPV =} & \$1400
 \end{tabular}
 
 Naive answer: 10\% (\$110 - \$100) / year, or $r = \frac{\text{Final Sum} -
-  \text{Initial Sum}}{\text{Initial Sum}} =  \frac{\text{Profit}} {\text{Investment}}$
+  \text{Initial Sum}}{\text{Initial Sum}} = \frac{\text{Profit}}
+{\text{Investment}}$
 
 \paragraph{Intuition } What is the NPV of the idea if you use the IRR to
 calculate it?$-100 + \frac{110}{1 + IRR} = 0$
@@ -357,7 +363,7 @@ indicator of how other similar businesses are going on)
 
 {\bf Is a good idea?} Not too much as there is no benchmark to compare.
 
-%slides 4-7 - Graphical representation
+% slides 4-7 - Graphical representation
 Example: calculate IRR here:
 \begin{tabular}{c|c|c}
   Year & Cash Flow & Years from Today \\
@@ -365,8 +371,7 @@ Example: calculate IRR here:
   0 & -\$100 & 0  \\
   1 & \$0 & 1 \\
   2 & \$110 & 2 \\
-%  \hline
-%  \multicolumn{2}{l|} {IRR =}  & \$1400
+  % \hline \multicolumn{2}{l|} {IRR =} & \$1400
 \end{tabular}
 
 Here IRR = 10\% over 2 years. How to solve it (to find per year)? A: ``Make NPV
@@ -396,7 +401,7 @@ next examples.
 
 \subsection{IRR: Bias}
 \label{sec:IRR:bias}
-%video 5-2
+% video 5-2
 
 As it was mentioned, an intuitive rule would be to accept the projects with the
 highest IRR. This is incorrect - see these examples.
@@ -404,46 +409,47 @@ highest IRR. This is incorrect - see these examples.
 \begin{enumerate}
 \item consider two projects, A and B, with the following cash flows. Which one
   is better?
-\begin{tabular}{|c|c|c|}
-  Year & Project A & Project B \\
-  \hline
-  0 & -\$2,000 & -\$2,000 \\
-  1 & \$400 & \$2,000 \\
-  2 & \$2,400 & \$625 \\
-\hline
-IRR & 20\%  & 25\% \\
-NPV at 5\% & \$558  & \$472  \\
-NPV at 11\% & \$308    & \$309  \\
-NPV at 20\% & \$0   & \$101  \\
-\end{tabular}
+  \begin{tabular}{|c|c|c|}
+    Year & Project A & Project B \\
+    \hline
+    0 & -\$2,000 & -\$2,000 \\
+    1 & \$400 & \$2,000 \\
+    2 & \$2,400 & \$625 \\
+    \hline
+    IRR & 20\%  & 25\% \\
+    NPV at 5\% & \$558  & \$472  \\
+    NPV at 11\% & \$308    & \$309  \\
+    NPV at 20\% & \$0   & \$101  \\
+  \end{tabular}
 
-Naive approach - to pick Project 2 because of earlier income reflected in IRR.
-The problem is we're not comparing IRR to the outside market (rate $r$). Actual
-decision should be made based on rate (see figures for variants).
-% video 5-3
+  Naive approach - to pick Project 2 because of earlier income reflected in IRR.
+  The problem is we're not comparing IRR to the outside market (rate $r$).
+  Actual decision should be made based on rate (see figures for variants).
+  % video 5-3
 
 \item Consider two projects A and B again:
-\begin{tabular}{|c|c|c|}
-  Year & Project A & Project B \\
-  \hline
-  0 & -\$5,000 & -\$50,000 \\
-  1 & \$7,500 & \$62,500 \\
-\hline
-IRR & 50\%  & 25\% \\
-\end{tabular}
+  \begin{tabular}{|c|c|c|}
+    Year & Project A & Project B \\
+    \hline
+    0 & -\$5,000 & -\$50,000 \\
+    1 & \$7,500 & \$62,500 \\
+    \hline
+    IRR & 50\%  & 25\% \\
+  \end{tabular}
 
-Another problem with IRR - it ``likes'' the small investments. And again, the
-actual selection should depend on rate $r$.
+  Another problem with IRR - it ``likes'' the small investments. And again, the
+  actual selection should depend on rate $r$.
 \end{enumerate}
 
-So, taking decision on IRR only will tend to select the small and short-term projects.
-% video 5-4 
+So, taking decision on IRR only will tend to select the small and short-term
+projects.
+% video 5-4
 Per-ce, IRR does make (some) sense. Unit if measurement (\%) is quite universal,
 but not that clear as value. This is why we tend to compare it with rate $r$
 (which works as benchmark too). Also it is very communicate by itself (at a
-``superficial'' level). 
+``superficial'' level).
 
-Conclusion: NPV works better, but IRR is in use wider. 
+Conclusion: NPV works better, but IRR is in use wider.
 
 \section{Cash Flows}
 \label{sec:Cashflow}
@@ -459,23 +465,22 @@ cash flow in period $i$.
 \begin{itemize}
 
 
-\item  \begin{tabular}{|c|c|}
-\hline
-  Assets & Liabilities \\
-  \hline
-  Real Assets &  Equity \\
-& Debt \\
-\hline 
-\end{tabular}
-Real assets - ``things'' to generate (create) value in form of cash flow. On the
-``liability'' side we finance our idea.
+\item \begin{tabular}{|c|c|} \hline
+    Assets & Liabilities \\
+    \hline
+    Real Assets &  Equity \\
+    & Debt \\
+    \hline
+  \end{tabular}
+  Real assets - ``things'' to generate (create) value in form of cash flow. On
+  the ``liability'' side we finance our idea.
 
-\item Time line: for simplicity, let's set 10 years time. 
+\item Time line: for simplicity, let's set 10 years time.
 \item All Value is relative (Law of one price)
 \item There are two basic ingredients to conducting a valuation:
   \begin{itemize}
   \item Cash Flows: ``belongs'' to project
-  \item Cost of Capital, $r$: ``belongs'' to market 
+  \item Cost of Capital, $r$: ``belongs'' to market
   \end{itemize}
 
 \item Sources: pro-for-ma Income Statement and Balance Sheets
@@ -486,14 +491,14 @@ Real assets - ``things'' to generate (create) value in form of cash flow. On the
 
 \subsubsection{Estimating Cash FLows for a Specific Year}
 
-Cash Flows from Projects/Operations. 
+Cash Flows from Projects/Operations.
 \begin{itemize}
-\item {\bf Revenue} is $P \times Q$ - Price times (say, 5.0 M)
-Quantity. To understand expected price, we make the market analysis 
+\item {\bf Revenue} is $P \times Q$ - Price times (say, 5.0 M) Quantity. To
+  understand expected price, we make the market analysis
 \item {\bf Costs of Goods Sold} : $P \times Q$ (say, 2.0 M)
 \item {\bf Selling, General \& Administration costs.}Shown separately because
-  they may be non-incremental (it is hard to estimate them on per-project
-  basis) - say, 0.5 
+  they may be non-incremental (it is hard to estimate them on per-project basis)
+  - say, 0.5
 \item {\bf Depreciation} - this is largely imaginary (not the real number),
   based on appreciation - say, 1 M
 \end{itemize}
@@ -502,14 +507,14 @@ Quantity. To understand expected price, we make the market analysis
 Admin. costs - Depreciation. For us, it is 1.5
 
 Assuming Cash Taxes on Operating Profit as 33\%, calculate its value (becomes
-0.5);  {\bf Net Operating Profits After Tax} = 1.0 M
+0.5); {\bf Net Operating Profits After Tax} = 1.0 M
 
 Next, we {\bf add} the Depreciation (the same we've subtracted before). The
 whole story was done in order to lower the tax on Operating Profit value. So:
 Net Operating Profits After Tax + Depreciation - Capital Expenditures
 
-{\bf Capital Expenditures} come NOT from Income Statement but from Balance
-Sheet (say 0).
+{\bf Capital Expenditures} come NOT from Income Statement but from Balance Sheet
+(say 0).
 
 Next item to subtract is {\bf Increases in Working Capital} (say 0.1)
 
@@ -521,21 +526,21 @@ Again the word {\bf Profit} means it is calculated for specific year!
 The whole story:
 
 \begin{tabular}{cl|c}
-\hline
- & Revenues & +5 M \\
-- & Costs of Goods Sold & 2 M \\
-- & Selling, General \& Admin. costs & 0.5 M \\
-- & Depreciation & 1 M\\
   \hline
-= & Operating Profits &  1.5 M \\
-- & Cash Taxes on Operating Profit & 0.5 M \\
-\hline
-= & Net Operating Profit After Tax & 1.0 M \\
-+ & Depreciation & 0.5 M \\
-- & Capital Expenditures & 0 \\
-- & Increases in Working Capital & 0.1 \\
-\hline
-= & Cash Flows from Operations & 1.9 M \\
+  & Revenues & +5 M \\
+  - & Costs of Goods Sold & 2 M \\
+  - & Selling, General \& Admin. costs & 0.5 M \\
+  - & Depreciation & 1 M\\
+  \hline
+  = & Operating Profits &  1.5 M \\
+  - & Cash Taxes on Operating Profit & 0.5 M \\
+  \hline
+  = & Net Operating Profit After Tax & 1.0 M \\
+  + & Depreciation & 0.5 M \\
+  - & Capital Expenditures & 0 \\
+  - & Increases in Working Capital & 0.1 \\
+  \hline
+  = & Cash Flows from Operations & 1.9 M \\
 \end{tabular}
 
 \subsection{Cash Flows: Important Principle}
@@ -546,8 +551,8 @@ The whole story:
   lines: with project (values $B_1 \dots B_n$ and without project $A_0 \dots
   A_n$. Actual info is shown in $B_i - A_i$
 \item Do not forget the importance of year 0 and the last year of the chosen
-  timeline for the project Examples of Capital items (coming from Balance
-  sheets): 
+  timeline for the project Examples of {\bf Capital} items (coming from {\it
+    Balance sheets}\;!):
   \begin{itemize}
   \item Capital Expenses
   \item Working Capital (cash for business + inventory + account receivables:
@@ -559,9 +564,9 @@ The whole story:
   \item Depreciation - because it is made up
   \item Similar non-cash items
   \end{itemize}
-\item Do not mix financing with operations
-- Please stay on the assets side (C): ``care on things which generate values'';
-stay away from financing.
+\item Do not mix financing with operations - Please stay on the assets side (C):
+  ``care on things which generate values''; stay away from financing
+  (liabilities).
 
 \item Include the effects of inflation/deflation. Every item in the accounting
   statement / cash flow statement has a different inflation.
@@ -569,5 +574,569 @@ stay away from financing.
   shorter-lived'', so never compare numbers for the costs of different lives. If
   needed - convert into annuity.
 \end{enumerate}
+
+% video 6-2
+\part{Financing Bonds and Stocks}
+\label{part:BondsAndStocks}
+
+\paragraph{Project vs Firm: Timeline again}
+
+Project does have the end: at the end, the whole story is ``undone'', machinery
+sold, capital restored etc. The final cost (PV of all expected cashflows after
+project end if it would continue - {\bf Terminal Value})
+
+Example: for 10-year project, the last Cashflow was $C_{10} = 20M$. Consider
+$C_{11} = C_{10}(1+g)$ - so-called perpetuity (here $g$ is a growth rate).
+
+% Then $\frac{C_{11}}{R-g}$ as )
+
+The firm continues its existence after the project ended - so-called ``ongoing
+thing''.
+
+\section{Bonds and Stocks}
+\label{sec:BondsAndStocksDef}
+
+All bonds are eventually loans, but actually value creation goes on
+projects/ideas/entities etc; finance can not be value-creating per se.
+
+% video 6-2; 11:20
+There are two kinds of financing ideas: Bonds/Debt and Stocks/Equity.
+
+The snapshot of Idea/Entity again:
+
+\begin{tabular}{|c|c|} \hline Assets & Liabilities \\ \hline Real Assets -
+  create cashflows $C$, require $r$ (cost of capital) & Stock / Equity / Shares
+  \\ & Debt / Bonds \\ \hline \end{tabular}
+
+% video 6-3
+\subsection{Bonds}
+\label{sec:Bonds}
+
+Bonds binds the borrower to the lender in a contract - just like in a loan. It
+has the explicit IOU (``I owe you''): a promise to pay money in the future in
+return for the money borrowed. Typically bonds pay in two ways: periodically
+(so-called coupons, or PMT) and face value (a fixed value at {\bf maturity} - a
+moment when the bond contract is over). The deposit contract is essentially a
+bond.
+
+Governments issue the simplest type of IOU. Types:
+\subsubsection { Zero-Coupon Bonds} (or {\bf Discount Bonds}). This bond has
+only one payment, the face value, at maturity.
+
+\example Treasury bill or strip in the US.
+% video 6-3 07:00
+The price is
+$$P=(\text{Face Value}) \times PF(r, n) = \frac{\text{Face Value}}{(1+r)^n}$$
+Having $r>0$ we get price $P<F$ - because there is no coupons to compensate a
+decrease in value.
+% video 6-3 09:00
+\example Suppose a zero-coupon bond pays \$1,000 in exactly one year. The price
+of value / price of the bond today if the interest rate on similar bonds is 2\%
+is $P=\frac{FaceValue}{(1+r)^n} = \frac{\$1,000}{(1.02)^1}=\$980.39$
+
+\paragraph{Yield to Maturity (YTM)} - a return built into the pricing of a bond,
+``a return(value) until maturity time''. \example What is YTM of a 10-year
+zero-coupon bond with face value of \$1,000 and a current price of \$744.09?
+$$P=\frac{FaceValue}{(1+YTM)^n} = \frac{\$1,000}{(1+YTM)^{10}} = \$744.09 \to YTM=3\%$$
+
+One can consider YTM as some sort of IRR.
+
+It is considered that YTM and price are going simultaneously despite the fact
+that bonds are sold by value.
+
+What makes the YTM of a zero-coupon government bonds risk-free? Nothing should
+happen from ``now'' until a maturity time - so nothing should happen with
+government issuing this bond.
+
+In USA, the compounding interval is {\bf six months}. The YTM of the 10-year
+\$1,000 zero-coupon bond selling for \$744.09:
+$$YTM = \left( \frac{\$1,000}{\$744.09}\right)^{\frac1{20}} - 1 = 1.489\%$$
+
+% video 6-4
+\paragraph{Yield Curve} is a relation between the maturity (i.e. the term of
+contract) and the YTM of government bonds. Typically - slightly increasing (due
+to increasing risk) graph.
+
+\subsubsection{(Government) Coupon Bonds}
+The most common type of bond is a coupon bonds. These bonds pay periodic coupons
+and a larger face value at maturity. All payments are explicitly stated in the
+IOU/contract.
+
+\example A government bond has a 6\% coupon, a face value of \$1,000 and 10
+years to maturity. What is the price of this bond given that similar bonds yield
+an annual return of $r_a = 6\%$? What if similar bonds yield 4\% or 8\%?
+
+As we have six-months terms, we have 20 periods of payments. So we get \$30
+every six months (6\% of \$1000 per year but payed every six months) 19 times
+and \$1,030 = \$30 + \$1,000 at the end of period 20.
+
+So the whole price will be of two components: PMT flow (20 payments of \$30 with
+$r_{6\;months} = r_a / 2 = 3\%$) and good old PV of \$1,000 in 20 periods (10
+years) on $r_{6\;months}=3\%$ {\bf !!! Match the compounding periods !!!}
+% video 6-5
+
+In Excel, calculation will be: $P=PV(rate, nper, pmt, fv)= PV(0.03, 20, 30,
+1000)$ For coupon (C) equal to rate r (6\%), we have P = \$1,000: the coupon
+payments are equal to interest rate payments.
+
+If rate r = 4\%, $P= PV(0.02, 20, 30, 1000)=\$1,163.51$; such situation (PV>Face
+Value) is called ``trading at a premium'': coupon payments are higher then
+market rate.
+
+If rate r = 8\%, $P= PV(0.04, 20, 30, 1000)=\$864.10$; such situation (PV<Face
+Value) is called ``selling at a discount'': coupon payments are lower then
+market rate.
+
+``Interest goes up - price goes down''. Zero coupons always sold at a discount;
+non-zero coupons depend on coupon values C: (F - face value, P - current price)
+\begin{itemize}
+\item if $C/F > r \to P > F$
+\item if $C/F < r \to P < F$
+\item if $C/F = r \to P = F$
+\end{itemize}
+
+The graph Price(r) is a hyperbola (see video 6-5, time 07:45). Plus, long-term
+bonds are more influenced with changes in rate r, and zero-coupon bonds are more
+sensitive to such changes (as all your money are coming at the end of maturity
+period).
+% video 6-6
+
+\subsubsection{Sources of Rist in Bonds}
+\label{sec:SourcesOfRiskBonds}
+
+The uncertainty concerning bond values/prices due to interest rates fluctuations
+is known as the {\bf interest rate risk} of a bonds. There are two types of
+interest rate risk:
+\paragraph{Price risk:} the fact that you do not know how the price (and YTM,
+both depend on each other and rate) will change during time until maturity time
+(Price Up when YTM Down etc).
+
+\paragraph{Coupon reinvestment risk - CRR:} 
+usually coupon is put back on market - so-called ``coupon reinvestment'' - the
+fact that YTM changes over time so re-investing coupons can be less productive
+then expected (FV of remaining payments changes when rate changes).
+
+\subsubsection{Corporate Bonds }
+\label{sec:CorporateBonds}
+
+Corporate bonds almost always pay coupons. They are subject to interest rate
+risk.
+
+In addition, they are also subject to {\bf default risk} (Rating agencies, S\&P,
+Moody's etc. rate corporate bonds in the US)
+
+Most ``bonds'' are contracts/loans issued by a bank.
+
+\example Suppose you have two identical bonds (same maturities and some coupon
+rates), but one is a government bond and the other is a corporate bond. Which
+will sell for less?- the one which has more chance of default (usually the
+corporate bond).
+% video 6-7
+
+\subsubsection{Market Data on Bonds}
+\label{sec:MarketDataOnBonds}
+
+wwww.finance.yahoo.com, see bonds section.
+
+\subsection{Stock}
+\label{sec:StockEquity}
+
+Stock/Equity is another form of financing. It is different from bond as bond is
+a contract while stock is not (and so has no end date and Face Value). The
+question on the ``is stock a IOU, really'' is ``maybe'': you're giving money
+without promise of some money in return (actually, the bonds (the ``contracts'')
+are paid first, the owners of stocks are getting the ``leftovers''):
+\begin{itemize}
+\item dividend - like coupon in bonds world: money paid regularly
+\item selling price (capital gain or loss)
+\end{itemize}
+
+So you give in expectation of getting but you do not have contract. Particularly
+this works at the start of the business, when there is no information if there
+will be cash-flow for contract debts (bonds).
+% video 7-3
+
+\subsubsection{Stock Pricing and Valuation}
+\label{sec:StockPricingValuation}
+
+\paragraph{Pricing a Stock}
+
+Let $P_0$ be today's stock pricing. Then $P_1$ is the {\bf expecting} stock
+price next year. Expected dividend at the end of the year is $DIV_1$.
+
+Going one period at a time (as it is a long-lived asset). Then
+$$P_0 = \frac{DIV_1 + P_1}{1+r} $$
+
+Now - {\bf expected} $P_1$. Surprise! $P_1 = \frac{DIV_2 + P_2}{1+r}$ (we're
+ignoring risk right now). So for $P_0$:
+
+$$P_0 = \frac{DIV_1 + \frac{DIV_2 + P_2}{1+r}}{1+r} = \frac{DIV_1}{1+r} +
+\frac{DIV_2}{(1+r)^2}+\frac{P_2}{(1+r)^2}=\dots$$
+
+All figures are {\bf expectations}!
+
+After similar story for stock being kept for n years:
+$$P_0 = \frac{DIV_1 + \frac{DIV_2 + P_2}{1+r}}{1+r} = \sum \limits_{t=1}^n
+\frac{DIV_t}{(1+r)^t} + \frac{P_n}{(1+r)^n}$$
+
+After expanding to extremely large $n$: as $n \to \infty$, $P_n$ part goes to 0:
+
+$$P_0 = \sum_{t=1}^\infty \frac{DIV_t}{(1+r)^t}$$
+
+- when you sell stock you get the expected price of its dividends.
+
+% video 7-4
+
+\paragraph{Dividend Growth Stocks}
+
+\example Suppose dividends expected to remain approximately constant {\bf
+  Dividend Stock}. What is the price?
+
+This is similar to regular payments (cash-flows): $P_0 = \frac{C}r =
+\frac{DIV}{r}$ - as a limit for $n \to \inf$
+
+I.e. if some company pays \$0.50 per share for the foreseeable future and the
+return of a business is 10\% (something like over-regulated utility company),
+the stock price should be $P_0 = 0.5 / 0.1 = \$5.00$ ({\bf perpetuity}).
+
+But, assume that this company paid the dividends for 30 years. Then we have {\bf
+  annuity}: $=PV(0.1, 30, 5.0) = \$4.71$.
+
+The difference: $\$0.29 = PV(0.1, 0.50, year 31 \to \infty)$ - so perpetuity
+gives a good estimation.
+
+\example Suppose dividend are expected to grow at a rate of $g$ per year ({\bf
+  Growth Stock}). What is the stock price?
+
+$$P_0 = \frac{C_1}{r-g} = \frac{DIV_1}{r-g}$$
+
+So for company which is expected to pay \$20 per share next year and the
+dividends are expected to grow indefinitely at a rate of 5\% per year. Stocks of
+similar firms are earning an expected rate of return of 15\%. The price is
+$P_0=\frac{DIV_1}{r-g} = \frac{\$20}{0.15-0.05} = \$200$
+% video 7-5
+
+\subsubsection{Engine of Growth (Assume Perpetuities)}
+\label{sec:EngineOfGrowth}
+
+Definitions:
+\begin{itemize}
+\item {\bf ICPS - Invested Capital Per Share}; $ICPS = CAPITAL/SHARE$ - as
+  stocks are traded ``per share''
+\item {\bf ROI - Return Of Investment} > 0;ROI is a different word for ROR (Rate
+  of Return).
+\item {\bf EPS - Earnings Per Share}; $EPS = CFPS = ICPS \times ROI$ ({\bf CFPS
+    - Cash Flow Per Share}, but sometimes these terms are used for different
+  meanings)
+
+  It is a Real Assets which generate CF, but {\bf cash flows is completely
+    separated from the financing}.
+
+\item {\bf RE - Retained Earnings}, $RE = CFPS - DIV$; a part of CF which was
+  not paid out as dividend but retained to provide growth (the ``Engine of
+  Growth'') . So reinvesting is characterised as $b=\frac{RE}{EPS}$.
+
+  This money are going ``back'' as (re)investment in the same ideas, so
+  increasing assets. This makes sense if you have ``great ideas'' (like
+  Microsoft for the first few years - they did not pay any dividends, just
+  re-invested in business growth).
+
+  So getting dividends is not always a good thing - ``it depends''; as paid
+  dividends mean the company does not grow ``in full potential''.
+
+  So the {\bf growth rate} $g = b \times ROI$ - ``the engine of growth''.
+\end{itemize}
+% video 7-6
+\subsubsection{Valuation}
+\label{sec:StockPricingValuation}
+
+The price of a firm's stock can be divided up into
+$$P_0 = \frac{EPS}{r} + PVGO,$$
+where $EPS$ - cash flow per share, $PVGO$ is a $PV$ of growing opportunities.
+
+Why? Because $P_0 = PV(DIV_s)$ - price is a PV of future dividends. Consider two
+cases:
+\begin{itemize}
+\item no growth $P_0 = \frac{EPS}r = \frac{DIV}r = \frac{EPS}r$
+\item growth - no dividends paid: as seen before $P_0 = \frac{DIV_1}{r-g}$. So
+  $PVGO = \frac{DIV_1}{r-g} - \frac{DIV_1}{r}$
+\end{itemize}
+
+So the growth opportunities reflect value.
+
+\example Suppose you know that Macrosoft:
+\begin{itemize}
+\item is expecting to earn 10\% on existing assets
+\item has \$60 of capital per share
+\item the {\bf market capitalisation rate} (another word for $r$) is 12\%.
+\item the company is not planing to grow
+\end{itemize}
+% video 7-7
+Then shares should be traded at $P_0 = \frac{DIV}{r} = \frac{EPS}{r} = \frac{CPS
+  \times 0.1}{0.12} = \frac{\$6}{0.12} = \$50$
+
+\example Now suppose that company announces a growth policy that {\bf plows
+  back} (or $RE$ when measured in \$, or $b$ when measured in \$) 70\% of its
+earnings every year at the same ROI as its existing assets.
+\begin{itemize}
+\item what growth rate will this policy generate?
+\item what will happen to share price?
+\end{itemize}
+
+Having $EPS = \$6$ (see above), growth rate $g = b \times ROI = 0.70 \times 0.10
+= 0.07$. Then $P_0 = \frac{DIV_1}{(r-g)}=\frac{0.3 \times \$6}{0.12-0.07} =
+\frac{\$1.80}{0.05} = \$36$ - compared to \$50. As $IRR < r$, we're throwing
+money into negative growth (see next section).
+
+% video 7-8
+\subsubsection{Good or Bad Growth}
+\label{sec:GoodOrBadGrowth}
+
+Growth in earnings is generated by investing into ideas which make $ROI > r$.
+Sometimes IRR is inflated by short-term management. So the ``good'' growth is
+the growth in assets, not just cash flows.
+
+\example Macrosoft again. Alternative growth policy that plows back ($RE$) 50\%
+of its earning every year at an $ROI$ of 14\% (they have better ideas).
+\begin{itemize}
+\item what growth rate will this policy generate? $g = b \times ROI = 0.5 \times
+  14\% = 7\%$
+\item what will happen to share price? As $ROI > r$, price $P_0 =
+  \frac{DIV_1}{(r-g)} = \frac{50\% (\$6)}{(0.12-0.07)} = \frac{\$3}{0.05} =
+  \$60$ - 20\% increase over initial variant.
+\end{itemize}
+The value is in stock price, not in CF!
+\begin{itemize}
+\item Emphasis on growth, but it is a flow
+\item Could be ``good'' or ``bad''
+\item Same applies to the whole nation. GNP is a {\bf flow}!
+\item Same applies to the whole world
+\end{itemize}
+% video 7-9
+
+\subsubsection{Stock Market Data}
+\label{sec:StockMarketData}
+
+Like morningstar.com; but go to good old finance.yahoo.com
+
+Means: Market Cap - $price \times NumberOfShares$; $EPS$ is {\bf not} CF per
+share.
+
+See ``Key Statistic'' section
+
+% video 8-1
+\subsection{Risk \& Return}
+\label{sec:Risk}
+
+\paragraph{Why Risk Return} There are two basic ingredients to conduct a
+valuation
+\begin{itemize}
+\item Cash Flows: they belong to the company/idea/project.
+\item Cost of Capital, $r$: belongs to market (or competition).
+\end{itemize}
+
+There are two main sources of financing any idea: Bonds/Debt and Shares/Equity.
+Now we'll devote some time to the ``cost of the capital'' Different
+ideas/projects have different risks. Most people are risk-averse, and hence the
+returns on ideas should be different depending on their risk. Therefore, we need
+to measure risk and understand a return of different ideas/projects/firms.
+
+In our examples we're measuring ``oranges'' which is a name for
+idea/project/firm that is launching a u-phone, u-pad etc. We've projected all
+cash flows. How would we determine the cost of capital? Things to remember:
+\begin{itemize}
+\item all valuation is relative
+\item law of one price (same business - same risk).
+\end{itemize}
+
+% video 8-3
+In order to evaluate CF, we compare our assets with similar assets which are
+present on the same or similar market - to find out their return on assets. I.e.
+imagine we have a company (Apple) which produces something similar - so we can
+go at marketplace with hope that such company:
+\begin{itemize}
+\item exists
+\item is publicity traded
+\end{itemize}
+% video 8-3 04:22
+We still do not know the Apple's assets, but we have info about their
+liabilities (equity and debt).
+
+Let's assume the Apple's debt is 0 (it has only equities). Then we can find the
+Risk and Return values for Apple's equity, and this have to be identical to the
+Apple's {\bf real assets risk/return} (this is under assumption that there is no
+debt!!!). See Yahoo Finance for such information.
+
+% video 8-4
+All boils down to
+\begin{itemize}
+\item Measuring the risk of a "comparable"
+\item Determining the return that would compensate investors for that risk
+\end{itemize}
+For simplicity, assume we have only equity (no debt) for now.
+
+\paragraph{What is Risk}
+
+Tomorrow can be Good (with a chance of $P_G$), Normal (with probability $P_N$)
+or Bad ($P_B$).Obviously $P_G + P_N + P_B = 1$ (no hidden variants should be
+left) - so-called {\bf States of Nature (SoN)}.
+
+The Treasury Bill is risk-less because we believe their repayment will be
+provided regardless of SoN. The identical bond issued by an average corporation
+is considered more riskier because $P_B$ is now considered >0. There are two
+fundamental sources of risk:
+\begin{itemize}
+\item Economy - wide/Macro/Systematic - like ``big oil shock'', interest rate
+  changes (things which impacts almost everybody).
+\item Specific/Idiosyncratic/Unique (technology-specific to your product, like
+  the management of a company) - something specific to your company.
+\end{itemize}
+
+% video 8-5
+\subsubsection{Statistics}
+\label{sec:Statistics}
+
+Introduced the normal distribution (probability vs value). The average is named
+also ``Mean'', or ``Median'', or ``Mode''. If our distribution is of parameter
+$y$, the mean (also called expectation) is labelled as $Mean = \bar y = E(y) =
+\sum \limits_i^n P_i y_i = \frac{\sum y_i}n$ (assuming $y_i = 1/n$ - assumption
+are equal for all values).
+% video 8-5 08:06
+
+Variance (uncertainty): $Variance = \sum p_i (y_i - \bar y)^2 = \sum
+\sigma_i^2$. Standard deviation: $\sigma_i = \sqrt{\sigma^2}$.
+
+Adverse to risk $\to$ portfolios (collection of things) $\to$ relationships.
+
+% video 8-6
+\paragraph{Measuring Relationships}
+Assume two values: $y$ (like bushels of corn) and $x$ i.e. inches of rainfall) -
+both normally distributed.
+
+To find out relation, check ``how does $y$ change when $x$ below mean?''. We
+calculate $Covariance = \sum P_i (y_i - \bar y)(x_i - \bar x)$
+% video 8-6 06:00
+- shows the tendency of ``corn behaviour''depending of ``raindrop behaviour''.
+Or ``how does $x$ deviate from mean when $y$ deviates from its mean''?
+
+Two problems:
+\begin{itemize}
+\item magnitude is not communicative: $\sigma_{yx} = \sum p_i (y_i - \bar y)(x_i
+  - \bar x)$ - only sign makes sense
+\item unit dependent
+\end{itemize}
+To fix it, we take $Corellation = P_{x, y} = \frac{\sigma_{yx}}{\sigma_y
+  \sigma_y}$. It ranges in [-1 \dots 1].
+
+% video 8-7
+\paragraph{Regression}
+
+Standard formula for linear regression: $y_i = \alpha + \beta x_i + \epsilon_i$.
+It can be based on the ``scatter plot'' by drawing the line on graph.
+Parameters:
+\begin{itemize}
+\item $\alpha$ - value of $y$ where $x=0$
+\item $\beta$ - slope (if $x$ changes by 1\%, how much $y$ change?). $\beta =
+  \frac{Cov(\delta x, \delta y)}{Var(\delta x)}$ - can be any number.
+\item $\epsilon_i$ - a level of ignorance (on average it should be 0) about
+  ``what drives why''.
+\end{itemize}
+
+% video 8-8
+\subsubsection{Diversification}
+\label{sec:Diversification}
+
+Portfolio which is ``just'' large but not diversified (i.e. containing only
+high-tech assets but not diversified across areas) does not make much sense - it
+is still not diversified enough. The diversification itself makes sense only if
+there is a positive relation between risk and return (and individual securities
+are much more risky then portfolio): $\sigma_P \ll \frac1n \sum \sigma_i$. This
+whole phenomenon (that the average risk of the components of the portfolio is
+much higher then the combined risk of portfolio) is called {\bf
+  diversification}. 
+
+Risk aversion (almost) automatically means portfolio. Small stocks (stocks of
+small companies) are more risky while more returning. Next - S\&P 500 (companies
+from S\&P 500 list).
+
+{\bf Strips} - zero-coupon bonds with term longer then 1 year.
+
+{\bf Risk Return} - a difference between risky and ``non-risky'' portfolio. 
+
+\paragraph{Diversification: 1 asset}
+%video 9-2
+Suppose we hold one asset/security in portfolio; let it be Google. The risk of
+Google securities is $\sigma_{GOOG}^2$ (STDEV on the Google's returns).
+
+The risk of whole portfolio: $\sigma^2_p (\text{or }\sigma_p) =
+\sigma^2_{GOOG}\text{or }\sigma_{GOOG}$
+%video 9-2 05:20
+- bad idea, ``all eggs in the same basket''.
+
+\paragraph{Diversification: 2  assets}
+
+- say, Google and Yahoo. Risk of each is $\sigma^2_{GOOG}|\sigma_{GOOG}$ and $\sigma^2_{YAHO}|\sigma_{YAHO}$
+
+The average risk is $\frac12 \sum (\sigma_{GOOG} + \sigma_{YAHO}$ 
+- assuming equal is invested in both. 
+
+But the risk of a portfolio is a bit more interesting: $\sigma_p = $
+definitions:
+\begin{itemize}
+\item $\sigma_p$ - variance
+\item $cov_{a, b} = \sigma_{a, b}$ - covariance (aha, labelled with $\sigma$ -
+  but with two sub-indexes)
+\item $\rho_{a, b} = \frac{ \sigma_{a, b}}{\sigma_a \times \sigma_b}$ -
+  correlation: $-1 \leq \rho_{a,b} \leq 1$
+\item $x_a = \frac{\text{amount of investment in a}}{\text{total investment}}$ -
+  proportion in $a$.
+\end{itemize}
+Return of a portfolio:
+ $$R_p = x_a R_a + x_b R_b$$ -  linear function on proportion and return.
+
+So the risk of the two assets portfolio:
+$$\sigma^2(R_p) = \sigma^2_p = x_a^2\sigma_a^2 + x_b^2\sigma_b^2 + 2 x_a x_b
+\sigma_{ab} =  x_a^2\sigma_a^2 + x_b^2\sigma_b^2 + 2 x_a x_b
+\rho_{ab}\sigma_a \sigma_b$$
+
+%video 9-3 - blah-blah
+If the correlation is perfect ($\rho_{ab} = 1$), the main risk comes from {\bf
+  market} (not company-specific) - !!!
+
+%video 9-4
+The risk of the two-security portfolio is affected by four factors: two standard
+deviations and two relations (correlations).  
+
+For three assets: say, Google, Boeing and Merck (pharmaceutical company).
+Measuring risk of each: $x_a^2 \sigma_a^2 + x_b^2 \sigma_b^2 + x_c^2\sigma_c^2 +
+2x_a x_b \sigma_{ab} + 2x_b x_c \sigma_{bc} + 2x_a x_c \sigma_{ac}$, or 
+$$\sigma^2(R_p) = x_a^2 \sigma_a^2 + x_b^2 \sigma_b^2 + x_c^2\sigma_c^2 + 2x_a
+x_b\rho_{ab} \sigma_a\sigma_b + 2x_b x_c \rho_{bc} \sigma_b\sigma_c + 2x_a x_c
+\rho_{ac} \sigma_a\sigma_c$$ 
+
+Total amount of factors for 3-asset portfolio: $9 = 3^2$ (3 sigmas and 6
+relations). 
+
+\paragraph{Bottom line on diversification}
+\begin{itemize}
+\item Variance of an asset determines risk faced by you only if you hold one (or
+  very few) assets: you face both systematic and specific risks of that/those
+  asset(s).
+\item Variance of any assets is unimportant when held in a large (assets > 30)
+  portfolio
+\item Specific risks are diversified (cancel each other); Only relations among
+  the assets matter
+\item An asset's contribution to a portfolio's risk is determined by its
+  relations with all other assets in the portfolio
+\item All relations are due to common/systematic/market (not specific!) affects
+\end{itemize}
+
+% video 9-5
+Empirically, starting from (around) 30 assets in portfolio, increasing amount
+further does not affect the risk seriously. However, most of us invest in mutual
+funds or existing portfolio (professor recommends Vanguard). 
+
+%video 9-5 09:30
+
 
 \end{document}

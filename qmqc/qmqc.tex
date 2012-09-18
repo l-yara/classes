@@ -28,6 +28,13 @@
 \newcommand{\ket}[1]{\left| #1 \right>} % for Dirac kets
 \newcommand{\bra}[1]{\left< #1 \right|} % for Dirac bras
 \newcommand{\braket}[2]{\left< #1 | #2 \right>} % for Dirac brakets
+\newcommand{\half}{\frac12} % one half
+\newcommand{\hqrt}{\frac1{\sqrt2}} %
+\newcommand{\means}{\Rightarrow} % "means" or "leads to"
+\newcommand{\same}{\Leftrightarrow} % "means" or "leads to"
+\newcommand{\slide}[2]{slide~#1/#2} % reference to slides
+\newcommand{\video}[2]{ } % reference to video - empty 
+%\newcommand{\video}[2][ ]{video #1~#2} % reference to video
 
 \begin{document}
 
@@ -46,8 +53,8 @@
 \item {\bf Superposition principle:} if a system can be in one of the k states,
   it can also be in any linear superposition of k states: \[\alpha_0 \ket{0} +
   \alpha_1 \ket{1} + \dots + \alpha_{k-1} \ket{k-1} \] where $\alpha_i \in
-  \cplx$ - complex ``probability amplitude'' for each of these
-  states: \[\sum \limits_{i=0}^{k-1} |\alpha|^2=1\]
+  \cplx$ - complex ``probability amplitude'' for each of these states: \[\sum
+  \limits_{i=0}^{k-1} |\alpha|^2=1\]
 
   Examples for k = 3:
 
@@ -87,8 +94,7 @@ state ($\ket0$), $\begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix}$ represents $1^{st}$
 excited state ($\ket1$) etc.
 
 So, the quantum state of a k-level system is a unit vector (which means it's
-size is equal to 1) in k-dimensional complex Gilbert space: $\vec u \in
-\cplx^k$
+size is equal to 1) in k-dimensional complex Gilbert space: $\vec u \in \cplx^k$
 
 For qubits: $\ket\psi = \alpha_0 \ket0 + \alpha \ket1$ can be represented in two
 - dimensional space as a vector of length 1 and angle $\theta$. Projections of
@@ -154,7 +160,7 @@ in $\ket+ / \ket-$ basis can be found by good old linear algebra:
     \sqrt{3}}{8} \]
 \end{enumerate}
 
-\subsection{Uncertainity principle}
+\subsection{Uncertainty principle}
 \label{sec:2-4}
 
 \paragraph{Heisenberg}forever: One can never know with perfect accuracy both of
@@ -283,7 +289,7 @@ measurements.
 
 \paragraph{Quantum Mechanics:} As soon as the first qubit is measured, say in
 the bit basis, the entanglement between the two qubits is destroyed. The new
-state is either $|00\rangle$ or $|11\rangle$, each of which is unentangled.
+state is either $|00\rangle$ or $|11\rangle$, each of which is untangled.
 Measuring the second qubit in the sign basis no longer reveals any information
 about the first qubit. (Does not constitute faster than light communication,
 since no information is communicated).
@@ -328,7 +334,7 @@ same The idea is that
 \subsection{Properties of Bell state}
 \label{sec:4-2}
 
-\subsubsection{Rotational invariance of Bell State}
+\subsubsection{Rotational in-variance of Bell State}
 \label{sec:4-2-1}
 
 The idea is to measure state of both qubits in some basis $(u, u^{\perp})$.
@@ -342,7 +348,7 @@ state $v$ is $\cos^2 \theta$.
 
 Proof: The state of a qubit can be expressed as: $$|\psi\rangle =
 \frac1{\sqrt{2}} |00\rangle + \frac1{\sqrt{2}}|11\rangle = \frac1{\sqrt{2}}
-|uu\rangle + \frac1{\sqrt{2}}|u^{\perp}u^{\perp}\rangle$$ - through $\ket u = a
+\ket{uu} rangle + \frac1{\sqrt{2}}|u^{\perp}u^{\perp}\rangle$$ - through $\ket u = a
 \ket0 + b \ket1;|u^{\perp}\rangle = -b \ket0 + a \ket1; a, b \in R; a^2 + b^2 =
 1$ and re-calculating
 
@@ -411,8 +417,7 @@ Allowable states of k-level system: unit vector in a k-dimensional complex
 vector space (called a Hilbert space):
 
 \[\ket\psi = \alpha_0\ket0 + \dots + \alpha_{k-1}\ket{k-1} =
-\begin{pmatrix} \alpha_0 \\ \vdots \\ \alpha_{k-1} \end{pmatrix} \in
-\cplx^k\]
+\begin{pmatrix} \alpha_0 \\ \vdots \\ \alpha_{k-1} \end{pmatrix} \in \cplx^k\]
 
 
 \subsection{Axioms of Quantum Mechanics}
@@ -439,7 +444,7 @@ vector space (called a Hilbert space):
 
 \item {\bf Unitary evolution}
 
-  Quantum systems evolve by rotating of the Hibert space (so-called rigid body
+  Quantum systems evolve by rotating of the Hilbert space (so-called rigid body
   rotation, meaning that the angles between vectors are preserved). As rotation
   of the space is a linear transformation, it can be represented by a matrix.
 
@@ -451,10 +456,9 @@ vector space (called a Hilbert space):
     \theta & \cos\theta\end{array}  \right)\]
 
 Later on, \[ \bigR_{- \theta} = \left( \begin{array}{cc} \cos \theta & \sin
-    \theta \\ -\sin \theta & \cos \theta \end{array} \right) =
-\bigR_\theta^T \] and \[ \bigR_\theta \bigR_{-\theta} =
-\mathbf{I}; \bigR_\theta \bigR_{\theta}^T = \bigR_\theta^T
-\bigR_{\theta} = \mathbf{I} \]
+    \theta \\ -\sin \theta & \cos \theta \end{array} \right) = \bigR_\theta^T \]
+and \[ \bigR_\theta \bigR_{-\theta} = \mathbf{I}; \bigR_\theta \bigR_{\theta}^T
+= \bigR_\theta^T \bigR_{\theta} = \mathbf{I} \]
 \end{enumerate}
 
 \subsection{Unitary Transformation}
@@ -474,7 +478,8 @@ Examples:
 \item $\ket\psi \to U\ket\psi$
 \item for $\ket0$ vector: $ \dbinom{a}{b} = \ket0 \to \dbinom ab = a\ket0 + b
   \ket1$
-\item for $\ket1$ vector: $\ket1 \to = c\ket0 + d \ket1$
+\item for $\ket1$ vector: $ \dbinom{c}{d} =\ket1 \to \dbinom{c}{d} = c\ket0 + d
+  \ket1$
 \end{itemize}
 
 By definition, a {\bf conjugate transpose} matrix $U^\dag$ is obtained from $U$
@@ -905,9 +910,9 @@ To describe a state in the first system, you need k complex parameters; and l
 complex parameters to describe in second.
 
 Let $H_1 = \mathbf{C^k}$ and $H_2 = \mathbf{C^l}$. The tensor product will be a
-space $H = H_1 \otimes H_2 \in \cplx^{k*l}$. To describe a state in the
-first system, you need k complex parameters; and l complex parameters to
-describe in second. The whole state will be a vector consisting of:
+space $H = H_1 \otimes H_2 \in \cplx^{k*l}$. To describe a state in the first
+system, you need k complex parameters; and l complex parameters to describe in
+second. The whole state will be a vector consisting of:
 $$\begin{pmatrix}
   \ket0 \otimes \ket0 & \ket0 \otimes \ket1& \dots& \ket0 \otimes \ket{l-1} \\
   \dots &\dots & \dots & \dots \\
@@ -935,7 +940,7 @@ $$H \otimes V =\begin{pmatrix} \frac1{\sqrt2}X & \frac1{\sqrt2}X \\
   \frac1{\sqrt2} & 0 & \; & -\frac1{\sqrt2} & 0 \\
 \end{pmatrix}$$
 
-\section{Observables and Schredinger's equation}
+\section{Observables and Schrodinger's equation}
 \label{sec:8}
 
 \subsection{Observables}
@@ -1069,7 +1074,7 @@ eigenvectors remain the same).
 Axiom of unitary rotation:
 \begin{itemize}
 \item {\bf Unitary evolution axiom:} a quantum system evolves by unitary
-  rotation of the Hibert space: $$U U^\dag = U^\dag U = I$$
+  rotation of the Hilbert space: $$U U^\dag = U^\dag U = I$$
 \item But.. by which unitary rotation?
 \item Energy observable $H$, called the Hamiltonian of the
   system \begin{itemize}
@@ -1195,5 +1200,1270 @@ composed system is $H_1 + H_2$; on the other hand, the operator of the composed
 system will also be $M = M_1 + M_2$, so $H = f(M_1 + M_2)$ and $f(M_1 + M_2) =
 f(M_1) + f(M_2)$, so $f(M)$ must be a linear function.
 
+\section{Continuous quantum states}
+\label{sec:ContinuousQuantumStates}
+% video 9-1
+The formalism applicable to discrete states works for continuous states too.
+
+\subsubsection*{ Representation of the continuous state:}
+
+Imagine a particle which can be in one of discrete points of the 1D space, but
+from $-\infty$ to $\infty$. Its state is $\ket\psi = \sum\limits_{j=-k}^{k}
+\alpha_j \ket j$, where $|\ket\psi|^2 = \sum|\alpha_j|^2 = 1$. Shorter form
+(slightly abusive but still OK): $\alpha_j = \psi(j)$.
+
+Now consider distance between points to be $\delta$ (not 1) - see slide 9-1,
+page 3. Then with $\delta \to 0; k \to \infty$, and for every $x$ we can build
+so-called wave-function: $\Psi(x): \bigR \to \cplx$.Thus we get the infinite
+dimensional vector - function which returns the complex amplitude for every real
+value. Then:
+$$\int \limits_{-\infty}^\infty \Psi^*(x) \Psi(x) \delta x =\int
+\limits_{-\infty}^\infty |\Psi(x)|^2 \delta x = 1$$
+
+So particle on the line is described by wave function. It is normalised,
+
+At time $t = 0$: position is described as Gaussian
+$$\psi(x, t=0) = \frac1{\sqrt[4]{2\pi}} e ^{-x^2}$$ 
+
+\subsubsection*{Observables}
+
+\begin{itemize}
+\item How does $\psi(x, t)$ evolves with time?
+\item What is the velocity of the particle? If we measure the state, we'll
+  destroy the state - so more convenient is to measure momentum ($mv$), not
+  velocity (as measuring momentum does not include measuring position in two
+  different times).
+\end{itemize}
+
+\subsubsection*{Schrodinger's equation for free particle in 1D}
+% video 9-2 (site only)
+Motion equation is a {\bf local} equation - which means ``every point is space
+minds it's own business'', but wave function also is dependant on the values in
+the immediate neighbourhood: change speed in $\psi(x,t)$ value is proportional
+to the difference between current value and average value of wave function - see
+slide 9-2, page 3:
+ $$\frac{\partial\psi(x, t)}{\partial t}  \propto y $$
+
+ When $\partial \to 0$, then $y$ is similar to derivative: $y \sim
+ \frac{\partial \psi(x)}{\partial x}$. But really it is proportional to the
+ second derivative: $y \sim \frac{\partial \psi^2(x)}{\partial^2x}$:
+
+$$ y \sim \frac{\psi(x-\partial x) + \psi(x+\partial x) }2 -
+\psi(x) = \frac{ (\psi(x+\partial x)-\psi(x)) - (\psi(x)-\psi(x-\partial x))}2$$
+
+- this is proportional to the second derivative. So Schrodinger's equation says:
+
+$$i \frac{\partial \psi(x,t)}{\partial t} = \text{<<some constant>>}\frac{\partial^2 \psi(x, t)}{\partial x^2}$$
+
+- notice $i$ on the left part. This means that complex amplitude of $\psi$ will
+be the same but the whole vector will rotate keeping normalisation.
+
+The full form of equation:
+$$ i\hbar\frac{\partial \psi}{\partial t} = - \frac{\hbar ^2}{2m}
+\frac{\partial^2 \psi}{\partial x^2}$$
+
+\subsubsection*{Uncertainty principle - position \& momentum}
+
+Measuring position means finding probability as function of $X$ with parameters
+$E[x]$ (mean value) and distribution $\Delta x = E[x^2] - E^2[x]\; (=\sigma^2)$
+and/or momentum: probability of seeing some value of momentum as function of
+momentum value: $P[p]$ with spread $\Delta p = E[p^2] - E^2[p]$ So uncertainty
+principle says:
+$$ \Delta x \Delta p \geq \hbar / 2$$
+
+As $\psi(x, t)$ is a continuous function, the probability of finding a particle
+in some point x is 0, so we get a probability of finding particle in some
+interval $[x .. x + \delta x]$:
+$$P = \int \limits_x^{x+\delta x} |\psi(x, t)|^2 \partial x $$
+- see slide 9-3, page 3 for combination of position and momentum.
+
+Now for velocity: as $\psi(x, t = 0) = e^{ikx}$ - can be presented as complex
+plane perpendicular to axis; so complex amplitude vector draws a ``spring'' with
+a step of $2 \pi/k$: $\psi(x) = \psi(x + 2\pi/k$ (see slide 9-3 page 4).
+
+Then $\psi(x, t) = e^{i(kx + \omega t)}$, and we can apply the ``rough'' form of
+the Schrodinger's equation $\frac{i\partial\psi}{\partial t} = \frac{\partial^2
+  \psi}{\partial x^2}$: $ii \omega e^{i(kx + \omega t)} = (ik)^2 e^{i(kx +
+  wt)}$. Removing exponents: $\omega = k^2$, and
+$$\psi(x, t) = e^{ik(x + kt)}$$
+% video 9-4
+
+So velocity is proportional to $k$:
+\begin{itemize}
+\item period = $2\pi/k$
+\item time = $2\pi/k^2$
+\item velocity = $\frac{2\pi/k}{2\pi/k^2} = k$
+\end{itemize}
+
+
+Actually, we're given $\psi(x, t)$ as wave function, not $e^{ikx}$. We can
+imagine distribution of $\phi(v, t)$ depending on velocity $v$ as some separate
+superposition. This should be an inner product of the ``original'' function:
+$$\phi(v, t) = < e^{ikx}, \psi(x, t)> = \int \limits_\infty^\infty e^{-ikx}
+\psi(x, t) \delta x$$
+
+Then $\phi$ is a Fourier transform of $\psi$ (position). See slide 9-3, page 6
+for illustration; and from the properties of the Fourier transform: $\Delta x
+\Delta p \geq \hbar/2$ (actually it is $\geq$ some constant, of course).
+
+\section{Position and momentum observables }
+\label{sec:Position_and_momentum_observables}
+% video 10-1
+
+% ?????
+Let's return to the idea of k discrete points on the line: $[0 .. k-1]$. The
+state is $\ket\psi = \sum \limits_{j=0}^{k-1} \alpha_j \ket j$. Position
+observable $M = M^\dag$ (Hermitian); eigenvector is a state of definite
+position: $M = \left[ \begin{array}{cccc} 0 & 0 & & 0 \\ 0 & 1 & & \\ & & \ddots
+    & \\ 0 & & &k- 1 \end{array}\right]$; $M \ket j = j \ket j$ (eigenvalue is
+also $j$).
+
+If we want particle to be anywhere on the line, we go for wave function $\psi(x)
+: \bigR \to \cplx $ (infinite dimension function).
+% ?????
+Inner product: if we have two wave functions $\psi(x)$ and $\phi(x)$, we can
+define {\bf inner product}: $$<\phi(x)| \psi(x)> = \int \limits_{-\infty}^\infty
+\overline{\phi(x)} \psi(x) \delta x $$
+
+where $\overline{ \phi(x)}$ - conjugate: if $\alpha = a + ib$ then $\alpha^* =
+\overline\alpha = a-ib$
+
+So observable M is a Hermitian: $M = M^\dag \Leftrightarrow \bra i M \ket j =
+\overline{\bra j M \ket j}$ - (AKA self - adjoint matrix). (BTW, this holds for
+any two states $\psi$ and $\phi$: $\bra\phi M \ket\psi = \bra \psi M \ket \phi$
+
+So the observable is a linear mapping of wave functions: self-adjoint M that
+maps wave functions to wave functions.
+
+Example: {\bf position observable} $\hat{x}$. When applied to some wave function
+$\psi$: $\hat x \psi(x) = \phi(x)$ where $\phi(x) = x \; \psi(x)$.
+
+Remember in a finite-position case we had a position observable
+$\left[ \begin{array}{cccc} 0 & & & 0 \\ & 1 & & \\ & & \ddots & \\ 0 & & &k-
+    1 \end{array}\right]$. When applied to some state $\psi(x) = \begin{pmatrix}
+  \alpha_0 \\ \alpha_1 \\ \vdots \\ \alpha_{k-1} \end{pmatrix}$ gave $
+\begin{pmatrix} 0 \; \alpha_0 \\ 1 \; \alpha_1 \\ \vdots \\ (k-1) \;
+  \alpha_{k-1} \end{pmatrix} $ - the position's eigenvector is a position itself
+($\ket j$): whatever is in the position $j$ gets multiplied by position number
+(eigenvalue) itself. And this is exactly what happens with position observable
+$\hat x$.
+
+
+{\bf Momentum operator}: $\hat p = -i\hbar \frac \partial {\partial x}$. When
+applied to the state:
+$$ \hat p \; \psi(x) = - i \hbar \frac{\partial \psi(x)}{\partial x}$$
+
+Finite-dimension analogue: the derivative $\frac \partial {\partial x}$ on our
+discrete 1D space in point $x$ should be something like ``take values in $x-1$
+and $x+1$ points, calculate median, divide by 2 (distance between $x-1$ and
+$x+1$)''. This corresponds to $\left[ \begin{array}{cccccc}
+    0& 1&  &  & & 0 \\
+    -1& 0& 1&  & & \\
+    &-1& 0& 1& & \\
+    &  & \ddots & \ddots & \ddots \\
+    & & &-1 & 0 &1 \\
+    0 & & & & -1 &0 \\
+  \end{array}\right]$. Applied to $\psi(x) = \begin{pmatrix} \alpha_0 \\ \alpha_1 \\ \vdots \\
+  \alpha_{j-1} \\ \alpha_j \\ \alpha_{j+1} \\ \vdots \\
+  \alpha_{k-1} \end{pmatrix}$ will be
+% video 10-1 13:10
+$\begin{pmatrix} \vdots \\ \vdots \\ \alpha_{j+1} - \alpha_{j-1} \\ \vdots \\
+  \vdots \end{pmatrix}$
+
+The problem is, this matrix is not Hermitian, so we need to multiple the matrix
+by $i$:
+$$\left[ \begin{array}{cccccc}
+    0& i&  &  & & 0 \\
+    -i& 0& i&  & & \\
+    &-i& 0& i& & \\
+    &  & \ddots & \ddots & \ddots \\
+    & & &-i & 0 &i \\
+    0 & & & & -i &0 \\
+  \end{array}\right]$$
+
+So, for {\bf momentum operator} $\hat p = -i\hbar \frac \partial {\partial x}$.
+Remember the Schrodinger's equation: $i \hbar \frac{\partial \ket\psi}{\partial
+  t} = H \ket\psi$ - so we ``just'' need to understand what is the $H$
+(Hamiltonian). Formally, this is the energy operator: Potential Energy + Kinetic
+Energy. By definition, the free particle does not have a potential energy.
+Classically, Kinetic Energy is $\frac{m\;v^2}2 =anujsaxena3 \frac{p^2}{2 \; m}$.
+Heuristically (``guessing'') just replace momentum with momentum operator (this
+trick is named a ``correspondence principle''):
+
+\begin{gather*}
+  i \; \hbar \; \frac{\partial \psi}{\partial t} = \frac{\hat p^2}{2 m} \ket
+  \psi = -i \hbar \frac\partial{\partial x} (-i \hbar \frac\partial{\partial x})
+  \frac1{2m} \ket\psi = \\
+  = \frac{-\hbar}{2m}\frac{\partial^2 \ket\psi}{\partial x^2}
+\end{gather*}
+-i.e. the second derivative of a state
+% video 10-2
+
+Remember: different operator have different eigenvectors $\Leftrightarrow$ they
+do not commute: $Z \; X \neq X Z$, or $ZX - XZ \neq 0$
+
+\subsubsection{Position-momentum Uncertainty:}
+$$[\hat x, \hat p] = \hat x \hat p - \hat p \hat x = i\hbar$$
+
+Or, through spreads: $\Delta\hat x \Delta\hat p \geq \frac{|[\hat x, \hat p]|}2
+\geq \frac \hbar 2$ - actually, a sub-case of a more general theorem saying that
+$ \Delta A \Delta B \geq \frac{|[A, B]|}2$
+
+So let's look at this: \begin{gather*}(\hat x \hat p - \hat p \hat x) \psi(x) =
+  \hat x \hat p \psi(x) - \hat p \hat x \psi(x) \\
+  = x \frac{-i \hbar \partial }{\partial x} \psi(x) - \left( \frac{-i
+      \hbar \partial
+    }{\partial x} x \psi(x)\right) = \\
+  = -i \hbar \left(x \frac{\partial \psi}{\partial x} - \underbrace{
+      \frac \partial {\partial x} x \psi(x)}_{\psi(x) + x\frac\partial{\partial
+        x} \psi(x) } \right) = i \hbar \psi(x)
+\end{gather*}
+
+\subsection{Particle in a box}
+\label{sec:Particle-in-a-box}
+% video 10-3
+
+Basically, it is a toy model for a hydrogen atom: the electron is ``trapped'' by
+proton: Coulomb attraction confines the electron to within some distance $l$ -
+so we model it in 1D as radial distance. See slides 10-3, page 3: outside of
+$[0..l]$ range we consider potential to be infinite (in any case, electron can
+not cross this border).
+
+We'll solve the Schrodinger's equation for the ``particle in the box'':
+$$i \hbar \frac{\partial \psi}{\partial t} = H \psi = \frac{\hat{p}^2}{2m}
+\ket\psi + V(x) \ket \psi = \underbrace{-\frac{\hbar^2}{2m}
+  \frac{\partial^2}{\partial x^2}}_{Hamiltonian} \ket\psi $$
+
+where $V(x)$ - potential energy. Boundary condition: $\psi(0) = \psi(l) = 0$
+
+So let's try to solve this for an eigenstate of H: $H \ket \phi = \lambda \ket
+\phi$. Once we find such eigenstate, then we'll know that if $\psi(0) = \ket\phi
+\Rightarrow \psi(t) = e ^ {-i \lambda t/\hbar} \ket\phi$. Then we can figure out
+all the eigenvectors of $H$ with corresponding eigenvalues; after decomposing
+initial state $\psi$ by these eigenvalues we'll understand how that state will
+evolve.
+
+Let's guess these eigenstates: we have operator $H = -\frac{\hbar^2}{2m}
+\frac{\partial^2}{\partial x^2}$ and state $\phi(x) = e^{ikx}$.
+
+Applying: $H \phi(x)= -\frac{\hbar^2}{2m}\frac{\partial^2}{\partial x^2} e^{ikx}
+= \frac{\hbar^2}{2m} k^2 e^{ikx}$. This is eigenstate with eigenvalue $E =
+\frac{\hbar^2 k^2}{2m}$; the same eigenvalue is for $\phi^\perp(x) = e^{-ikx}$.
+
+So we have an eigen-space, and solution will be $\phi_E(x) = Ae^{ikx} +
+Be^{-ikx} (\text{by Euler's formula:}) = C\sin kx + D\cos kx$; eigenvalue
+(energy) is $E_k = \frac{\hbar^2 k^2}{2m}$.
+
+We also need to impose the boundary conditions: $\phi(0) = 0; \phi(l) = 0$.
+Then:
+\begin{gather*}
+  \phi(0) = C \times 0 + D \times 1 = 0 \Rightarrow C=0 \\
+  \phi(l) = C \times sin kl = 0 \Rightarrow kl = n\pi \Rightarrow k_n =
+  \frac{n\pi}l
+\end{gather*}
+
+So energy is $E_n = \frac{\hbar^2 K_n^2}{2m} = \frac{\hbar^2 n^2 \pi^2}{2ml^2}$,
+and eigen-function is $\phi_n(x) = c \sin \frac{n\pi}l x$
+
+Now we need to ensure that $\int \limits_0^l C^2 \sin^2\frac{n\pi}l x \delta x =
+1 \Rightarrow C^2 = 2/l \Rightarrow C=\sqrt{2/l} $
+
+So {\bf solution for Schrodinger's equation}:
+$$\text{Energy: } E=\frac{\hbar^2 n^2 \pi^2}{2ml^2}; \quad \text{Wave function: } \psi_n(x) = \sqrt \frac2l \sin \frac{n
+  \pi x}l$$
+
+-''quantized'' by integer $n$ - see plotting on slide 10-3, page 5. Every next
+$n$ value means increasing energy by $n^2$; eigen-states are looking like
+standing waves.
+
+Any particular $\psi(x)$ could be decomposed as $\psi(x) - \alpha_n \psi_n(x)$
+at time 0. So at time $t$: $$\psi(x, t) = \alpha_n e^{-iE_nt/\hbar} \psi_n(x)$$
+
+% video 10-4
+
+\subsection{Qubits}
+\label{sec:Qubits}
+
+\begin{itemize}
+\item To implement a qubit we ensure that electron has small enough energy $E <
+  E_3$ - to ensure that our electron is either in $n=1$ or in $n=2$ state. Then
+  we can codify
+  \begin{itemize}
+  \item $n=1$ as $\ket0$
+  \item $n=2$ as $\ket1$
+  \end{itemize}
+\item Suppose $\ket{\psi(t=0)} = \alpha\ket0 + \beta\ket1 =
+  \alpha\sqrt{\frac2{l}} \sin \frac{\pi x}l + \beta \sqrt{\frac2l}\sin
+  \frac{2\pi x}l $
+\item Then:
+$$\ket{\psi(t)} = \alpha \sqrt{\frac2l} e^{-\frac{iE_1t}\hbar} \sin \frac{\pi
+  x}l + \beta \sqrt{\frac2l} e^{-\frac{iE_2t}\hbar} \sin \frac{2\pi x}l =
+\dots$$ - each of two components precesses with its own frequency (rates are
+proportional to $E_1$ and $E_2$ respectively). Factoring out the $E_1$:
+$$\dots = \sqrt{\frac2l} e^{-\frac{iE_1t}\hbar} \left( \alpha \sin \frac{\pi x}l
+  + \beta e^{-\frac{i(E_2-E_1)t}\hbar} \sin \frac{2 \pi x}l \right)$$
+
+- So we have relative rotation with frequency proportional to $\Delta E =
+E_2-E_1$; for hydrogen atom it will be $\Delta E \approx 10 \; eV $, and the
+frequency is $v \approx 2.5 \times 10^{15} Hz$E
+
+This frequency is close to the frequency of light - this is why one can control
+qubit optically through interaction with precise light pulses directed at qubit.
+\end{itemize}
+
+% video 11-1
+\section{Quantum circuits}
+\label{sec:Circuits}
+
+\subsection{n qubit systems}
+\label{sec:nQubitSystems}
+A quantum state of the system of $n$ qubits is a superposition of their quantum
+states - so it is a $\cplx^{2^n}$ space. This power comes from the idea of the
+Tensor Products: the system composed from two subsystems of $k$ and $m$
+parameters is characterised by $k \times m$ parameters due to Quantum
+entanglement. Axioms for n-qubit systems:
+\begin{itemize}
+\item Axiom 1: superposition principle The system state is $$\Psi = \sum_x
+  \alpha_x \ket x \text{, normalised: } \sum_x |\alpha_x|^2 = 1$$ where each x
+  is all n-bit string
+
+\item Axiom 2: unitary evolution.
+
+  We can select any two qubit and make some operation on them:
+$$\left[ \begin{array}{cccc}
+    1& 0& 0 & 0 \\
+    0& 1& 0 & 0 \\
+    0& 0& 0 & i \\
+    0& 0& -i & 0 \\
+  \end{array}\right] \otimes I_{n-2} \text{; the whole system state changes: } \Psi = \sum_x \alpha'_x \ket x  $$
+the whole Hilbert space rotates on applying this Hamiltonian (slides 11-1, pages
+6, 7).
+\end{itemize}
+
+\subparagraph{Example} Let's apply Hadamard to the first qubit of the system.
+Initial state is: $$\psi_{before} = \alpha_{0x'} \ket{0x'} + \alpha_{1x'}
+\ket{1x'}$$ where $x'$ is the state string of all qubits except 1.
+
+After application:
+$$\psi_{after} = \frac{\alpha_{0x'} + \alpha_{1x'}}{\sqrt2} \ket{0x'} +
+\frac{\alpha_{0x'} - \alpha_{1x'}}{\sqrt2} \ket{1x'}$$ - updating all $2^n$
+amplitudes $\alpha_x$ {\bf in the single operation}.
+
+Looks quite promising to be used in computations. One of the problems is that
+the whole operation is ``private'': the whole system is destroyed at a moment of
+the {\bf measurement} (getting output).
+
+% video 11-2
+\subsection{Universal family of gates}
+\label{sec:FamilyOfGates}
+
+Quantum circuit is a sequence of gates with some amount of input qubits - see
+slides 11-2, page 2. The ``classical output'' can be a state string.
+
+\subsubsection{Universal quantum gate set}
+
+In classical circuits, a certain set of gates enables universal computation:
+AND, OR, XOR etc and NAND ($\overline{x \wedge y}$) is universal.
+
+Quantum analogue: the claim is that having CNOT, H, X, Z, $\pi/8$ rotations one
+can implement any circuit:
+\begin{itemize}
+\item clearly, we can not implement an arbitrary U with infinite precision
+\item instead, given $\epsilon$, we implement $U_{\epsilon}$ which is
+  $\epsilon$-close to $U$: $||U-U_{\epsilon}|| \leq \epsilon$. Expected amount
+  of the elements needed for $d \times d$ system ($d$ inputs and $d$ outputs)
+  looks like $O(d^2 \log^3 \frac1{\epsilon})$
+\end{itemize}
+
+\subsection{Reversible Computation}
+
+Quantum computers are always reversible: if exists $U$ that, when applied to
+$\ket x$ produces $U \ket x$, then exists $U^\dag$ that, when applied to $U \ket
+x$, results in $\ket x$. Or $$U U^\dag = U^\dag U = I$$
+
+One can just take the initial circuit and apply the reverses $g^\dag$ of the
+elements $g$ in the reverse order (slides 11-3, page 2).
+
+Classical circuits for computing a Boolean function provide $$f: \{0, 1\}^n
+\rightarrow \{0, 1\}$$. Such function is not reversible, as some information
+about input is lost (e.g. it is not possible to restore input of the AND
+function by output and, say, the value of one of the inputs).
+ 
+A quantum version of $C_f$ have to be reversible, so we add qubits $b$ in state
+0 in addition to $x$ set and implement out function that (see slide 11-3, page
+4):
+\begin{itemize}
+\item x states are passed ``as is''
+\item b is XOR-ed with the function output, so initially we get the function
+  result in b qubits: $b \oplus f(x)$; then, after applying the same $U_f$, we
+  get reversed values.
+\end{itemize}
+
+Elements for classical circuit (see slide 11-3 page 4):
+\begin{itemize}
+\item NOT: X-gate
+\item XOR: CNOT gate
+\item AND: C-SWAP gate with c=0
+\end{itemize}
+
+So classical reversible computation can be built as $R_c$ with $x=\sum \limits_x
+\alpha_x \ket x , \ket0$ input and $C(x), junk(x) = \sum \limits_x \ket{C(x)} |
+junk(x) $ output. The problem is that we really want output of $C(x)$, and $x$
+(plus, probably, some zero's), but not $junk(x)$.
+
+% video 11-4
+We need to remove junk because it prevents quantum interference (slides 11-3,
+page 6). We can not just throw the junk away as output parts are entangled.
+
+In order to preserve the result, we male a copy of $C(x)$ using the C-NOT and a
+bunch of 0's (slides 11-3, page 9). Then we reverse whole story: $x, C(x),
+junk(x)$ back to the x and 0's.
+
+So it is possible, having an input of classical circuit $C: c \to C(x)$, to
+build a quantum circuit such that $U_c: c, 0' \to x, C(x), 0's$, or in other
+notation (through superposition):
+$$ \sum_x \alpha_x \ket x \ket{0 \dots 0} \to \sum_x \alpha_x \ket x \ket{C(x)}
+\ket{0\dots0}$$ (remember $\ket{xy} = \ket x \ket y = \ket x \otimes \ket y$).
+
+% video 12-1
+
+\section{Early Quantum Algorithms}
+\label{sec:EarlyQuantumAlgs}
+
+\subsection{Fourier Sampling}
+\label{sec:FourierSampling}
+
+The Hadamard transformation is a basic building block of quantum circuits.
+\begin{itemize}
+\item Single qubit: $\left( \begin{array}{cc} \frac1{\sqrt{2}} & \frac1{\sqrt{2}} \\
+      \frac1{\sqrt{2}} & - \frac1{\sqrt{2}}
+    \end{array} \right)$
+  \begin{itemize}
+  \item $\ket0 \to \ket+ = \frac1{\sqrt2} \ket0 + \frac1{\sqrt2} \ket1$
+  \item $\ket1 \to \ket- = \frac1{\sqrt2} \ket0 - \frac1{\sqrt2} \ket1$
+  \end{itemize}
+\item Double qubit: $\left( \begin{array}{cc} \frac1{\sqrt{2}} & \frac1{\sqrt{2}} \\
+      \frac1{\sqrt{2}} & - \frac1{\sqrt{2}}
+    \end{array} \right) \otimes \left( \begin{array}{cc} \frac1{\sqrt{2}} & \frac1{\sqrt{2}} \\
+      \frac1{\sqrt{2}} & - \frac1{\sqrt{2}}
+    \end{array} \right) = \left( \begin{array}{rrrr} 
+      \half & \half & \half & \half \\
+      \half & -\half & \half & -\half \\
+      \half & \half & -\half & -\half \\
+      \half & -\half & -\half & \half \\
+    \end{array} \right) $
+  \begin{equation*} \begin{split} \ket{00} \to \ket{++} &= \left(\frac1{\sqrt2}
+        \ket0 + \frac1{\sqrt2} \ket1\right) \otimes
+      \left(\frac1{\sqrt2} \ket0 + \frac1{\sqrt2} \ket1\right) = \\
+      &= \frac12\ket{00} + \frac12\ket{01} + \frac12\ket{10} + \frac12\ket{11}\\
+      \vdots \\
+      \ket{11} \to \ket{--} &= \left(\frac1{\sqrt2} \ket0 - \frac1{\sqrt2}
+        \ket1\right) \otimes
+      \left(\frac1{\sqrt2} \ket0 - \frac1{\sqrt2} \ket1\right) = \\
+      &= \frac12\ket{00} - \frac12\ket{01} - \frac12\ket{10} + \frac12\ket{11}\\
+    \end{split}
+  \end{equation*}
+\item Triple qubits: similar:
+  \begin{equation*} \begin{split} \ket{000} &\to \ket+++ = \frac1{2\sqrt2}
+      \ket{000} + \dots +
+      \frac1{2\sqrt2} \ket{111} \\
+      \ket{001} &\to \ket+++ = \frac1{2\sqrt2} \ket{000} + \dots +
+      \frac1{2\sqrt2} \ket{111} \\
+      \vdots \\
+      \ket{111} &\to \ket--- = \dots
+    \end{split}
+  \end{equation*}
+\end{itemize}
+
+So, for arbitrary $n$ qubits: $H^{\otimes n}$: for all 0's - it's simple: $
+\ket{0 \dots 0} \to \frac1{2^{n/2}} \sum \limits_{x \in \{0, 1\}^n} \ket x $
+
+For arbitrary $\ket u = \ket {u_1 u_2 \dots u_n}$:
+$$H^{\otimes n} \ket u = \sum_x \frac{(-1)^{u \cdot x}}{2^{n/2}} \ket x \text{ where }u
+\cdot x = u_1 x_1 + \dots + u_n x_n $$
+
+Example: for n = 3, u = 1 1 1, x = 1 0 1: $u \cdot x = 1 \cdot 1 + 1 \cdot 0 + 1
+\cdot 1 = 2; \frac{(-1)^{u \cdot x}}{2^{n/2}} = \frac1{2\sqrt2}$
+
+\subsubsection{Fourier Sampling}
+\label{sec:FourierSampling}
+
+Fourier Sampling is applying $H^{\otimes n}$ to the input state $\ket \psi =
+\sum \limits_x \alpha_x \ket x$, resulting in output state $\ket {\hat \psi} =
+\sum \limits_x \beta_x \ket x$, and subsequent measurement. Measurement outcome
+is $y$ with probability $|\beta_y|^2$.
+
+It is called Fourier transform because Hadamard transform is really a Fourier
+transform of the group (?). But, the important part is the idea that you can set
+up (create) some superposition $\ket \psi$, perform $H^{\otimes n}$, then
+measure. This will give better sampling then direct measurement of $\ket\psi$.
+% video 12-2
+
+\subparagraph{Parity problem}
+
+Imagine we're given some function $f: \{0, 1\}^n \to \{0, 1\}$ as a black box.
+We know that $f(x) = u \cdot x$ for some ``hidden'' $u \in \{0, 1\}^n$. Our task
+is to figure out $u$ in {\bf as few queries as possible}.
+
+Classically, we'd feed it with input values like [1 0 \dots 0], [0 1 \dots 0],
+[0, 0, \dots 1] and check output - total n measurements.
+
+For quantum circuit, we'd be given $U_f$ with input $x = \sum \limits_x
+\alpha_x, b$ and output $\sum \limits_x \alpha_x, b \oplus f(x)$. To reconstruct
+a function, we can use so-called {\bf Bernstein - Vazirani Algorithm}:
+\begin{itemize}
+\item Set up a superposition $\frac1{2^{n/2}} \sum \limits_x (-1)^{f(x)} \ket x
+  = \frac1{2^{n/2}} \sum \limits_x (-1)^{u \cdot x} \ket x$ (output of the
+  Hadamard transform with input of $u$ we're looking for).
+\item Fourier sample to obtain $u$.
+\end{itemize}
+
+\subparagraph{Setting up superposition}(slides 12-1, page 8):
+
+feed input with $\ket{0^n} \to \frac1{2^{n/2}} \sum \limits_x \ket x$ and $\ket
+b = \ket- = \hqrt \ket0 - \hqrt \ket1 $. Then, depending of answer:
+\begin{itemize}
+\item if $f(x) = 0$ then $\ket{b \oplus f(x)} = \ket- = \hqrt \ket0 - \hqrt
+  \ket1$
+\item if $f(x) = 1$ then $\ket{b \oplus f(x)} = - \ket- = \hqrt \ket1 - \hqrt
+  \ket0$ - toggle phase
+\end{itemize}
+So now our function is:
+$$ \frac1{2^{n/2}} \sum \limits_x \ket x \ket- \stackrel{U_f}{\longrightarrow}
+\underbrace{\frac1{2^{n/2}} \sum \limits_x (-1)^{f(x)} \ket x}_{needed} \ket-$$
+
+The final schema looks like slides 12-1, page 9.
+
+\subsubsection{Recursive Fourier Sampling}
+\label{sec:RecursiveSampling}
+
+Further development of this algorithm is a {\bf Recursive Fourier Sampling}:
+\begin{itemize}
+\item Recursive version of the parity problem
+\item Classical algorithms satisfy the recursion
+$$T(n) > nT(n/2) + n$$
+Solution: $T(n) = \Omega(n^{\log n})$ (super-polynomial)
+\item Quantum algorithm satisfies recursion
+$$T(n) = 2T(n/2) + O(n \log n)$$
+Solution: $T(n) = O(n \log n)$ - polynomial
+\end{itemize}
+
+\subsection{Simon's Algorithm}
+\label{sec:SimonAlg}
+
+We're given s 2-1 function $f: \{0, 1\}^n \to \{0, 1\}^n$ such that there is a
+secret string $s \in \{0, 1\}^n$ that $f(x) = f(x \oplus s)$.
+
+Challenge: find $s$.
+
+Example: $n = 3, s = 101, f(x=011) = f(x=110)$
+
+Classically, we'd have a circuit implementing $f(x)$, and feed it with inputs
+until we'd get a collision. According to birthday paradox, expected time is
+after feeding $2^{(n/2)}$ - exponential time (number of attempts).
+
+\paragraph{Algorithm}
+
+assuming $r$ as random n bit string
+\begin{itemize}
+\item Set up random superposition $\hqrt \ket r + \hqrt \ket{r \oplus s}$ - see
+  slide 12-3, page 5. When we measure $f(r)$, we get the superposition we've
+  wanted.
+\item Fourier sample to get a random $y: y \cdot s = 0 (mod2)$ Output state
+  before measurement is $\sum \limits_y \beta_y \ket y$, where
+$$\beta_y = \hqrt (\frac{(-1)^{r \cdot y}}{2^{n/2}} + \frac{(-1)^{(r \oplus s)
+    \cdot y}}{2^{n/2}} = \frac{(-1)^{r\cdot y}}{2^{\frac{n+1}2}} \left[ 1 +
+  (-1)^{s\cdot y}\right] $$
+\begin{itemize}
+\item Case 1: $s \cdot y \equiv 1 \to \beta_y = 0$
+\item Case 2: $s \cdot y \equiv 0 \to \beta_y = \frac{(-1)^{r \cdot
+      y}}{2^{\frac{n-1}2}}$
+\end{itemize}
+So half of y's will have a property for Case 2 ($y: y \cdot s \equiv 0$), and
+they all will have equal probability of measurement $|\beta_y|^2 =
+\frac1{2^{n-1}}$
+\item Repeat steps n-1 times to generate n-1 linear equations in s
+\item Solve for s (there will be two solutions: all 0's and the one we're
+  looking for). OK, we have a system of $n-1$ equations $y^{(1)}, y^{(2)},
+  \dots, y^{(n-1)}$, so what is the chance of these not to be dependant on
+  previous (non-trivial)?
+  \begin{itemize}
+  \item for the first one: chance of being trivial is $\frac1{2^n}$ - at least
+    one of members should not be 0
+  \item for the second one: if the first equation is not trivial, chance for
+    second to be trivial is ``it is all-0s or equal to first'':
+    $\frac1{2^{n-1}}$
+  \end{itemize}
+  so summary chance for this system to be trivial is:
+$$\frac1{2^n} + \frac1{2^{n-1}} + \dots + \frac14 \leq \half $$
+- so equations are independent with probability $\geq \half$. If system is
+dependant, we'll need to run it again.
+\end{itemize}
+the final schema - see slides 12-3, page 8
+
+\subsubsection{Double Slit Experiment}
+\label{sec:DblSlitExp2}
+Simon's algorithm can be viewed as some form of a double-slit experiment.
+Imagine initial state $u = u_1 \dots u_n$ passed through two Hadamard transforms
+as on slide 12-4, page 3.
+
+After first transformation: $\sum \limits_{x \in \{0, 1\}^n} \frac{(-1)^{u \cdot
+    x}}{2^{n/2}} \ket x$; after second one: $\dots \to \sum \limits_y \beta_y
+\ket y$, where
+$$ \beta_y = \sum_x \frac{(-1)^{u\cdot x}}{2^{n/2}} \frac{(-1)^{x\cdot y}}{2^{n/2}}$$
+\begin{itemize}
+\item Case 1: y = u
+$$ \beta_y = \sum_x \frac1{2^n} = 1$$
+\item Case 2: $y \neq u$
+$$ \beta_y = 0$$
+\end{itemize}
+
+\subsection{Quantum Fourier Transform}
+\label{sec:QuantumFourierTransform}
+
+\subsubsection{Building Blocks}
+
+\paragraph{Period finding}
+
+We're given function that maps numbers [0 \dots N] to elements of some set $S$:
+$f : \{0, 1, \dots, N-1\} \to S$, and:
+\begin{itemize}
+\item $f$ is periodic with (unknown) period $r: \forall x \; f(x) = f(x + r
+  (mod\; N))$
+\item apart from periodic, there is no other equality: $x \neq y \means f(x)
+  \neq f(y)$
+\end{itemize}
+
+The challenge is to find $r$. We can consider this function as a black box with
+input $x$ and output $f(x)$. (for graph - see slide 13-0, page 2).
+
+Primitive approach is $O(r)$. Quantum algorithm is $O(\log N)$.
+
+Consider our black box as quantum circuit with $$\text {input } \sum \alpha_x
+\ket x \ket0 \text{ and output } \sum \limits_x \alpha_x \ket x \ket{f(x)}$$
+
+\paragraph{Quantum Period Finding Algorithm}
+
+see slide 13-0, page 3 for schema. The idea is:
+
+input becomes $\ket0$ transformed by Hadamard transform (now called Quantum
+Fourier Transform - $QFT_N$) and fed to $U_f$. Resulting $\ket{f(x)}$ is
+measured (or just thrown away); resulting $\ket x$ is transformed through
+$QFT_N$ again, result is stored in $l$.
+
+The claim is $\frac{l}{N} \approx \frac{k}{r}$ - if $N \gg r$ we can efficiently
+reconstruct $r$.
+
+Special case: assume $r / N$ ($N$ is a multiple of $r$).
+
+\subsubsection{Definitions and Properties}
+\label{sec:DefinitionsAndProps}
+
+Quantum Fourier Transform (QFT) is a general case of Hadamard Transform -
+actually, Hadamard Transform is a special case of QFT for a restricted group of
+integers mod 2 (?).
+
+The {\bf unity} is a set of points (vectors) $\omega \in \cplx: \omega^N = 1$.
+Then step $\omega = e^{\frac{2\pi i}N}$, and $\omega^j = e^{\frac{2\pi j i}N}$
+Example for $N=5$ - see slide 13-1 page 2.
+
+The Fourier Transform is a matrix $N \times N$:
+$$F_N = \frac1{\sqrt N} \left(  
+\begin{array}{cccccc}
+  1 &  1&  1& 1& \dots & 1 \\
+  1 &  \omega & \omega^2 & \omega^3 & \dots & \omega^{N-1} \\
+  1 &  \omega^2 & \omega^4 & \omega^6 & \dots & \omega^{2(N-1)} \\
+  \vdots & \vdots &  \vdots & \vdots & \ddots & \vdots \\
+  1 &  \omega^{N-1} & \omega^{2(N-1)} & \omega^{3(N-1)} & \dots & \omega^{(N-1)^2} \\
+\end{array}\right)$$
+so that $\omega = e^{\frac{2\pi i}N}$, and $(F_N){jk} = \omega^{jk}$
+
+This is a unitary transform: any two distinct row or column are orthogonal.
+
+Prof: Consider $$ \frac1N(1 + \omega + \omega^j + \omega^{2j} + \dots +
+\omega^{(N-1)j}) = \left\{
+  \begin{array}{cl}
+    1 & if \; j = 0 \\ 
+    0 & if \; j \neq 0
+  \end{array}
+\right. $$
+
+The inner product of a column by itself will get a sum of $N$ terms for $j=0$ -
+so product is 1. The inner product of any two different columns will be the case
+for $j \neq 0$ and result in 0 $\to F_N$ is unitary.
+
+Example: $N = 4 \to \omega = i; \; F_n = \frac12 \left(
+  \begin{array}{cccc}
+    1 & 1 & 1 & 1 \\
+    1 & -i & -1 & -i \\
+    1 & -1 & 1 & -1 \\
+    1 & -i & -1 & i 
+  \end{array} \right)$
+
+Applying to some superposition: suppose initial superposition is
+$\begin{pmatrix} \alpha_1 \\ \alpha_2 \\ \alpha_4 \\ \alpha_4 \end{pmatrix}
+= \begin{pmatrix} 0 \\ 1 \\ 0 \\ 0 \end{pmatrix}$, then $F_N
+\times \begin{pmatrix} \alpha_1 \\ \alpha_2 \\ \alpha_4 \\
+  \alpha_4 \end{pmatrix} = \frac12 \left(
+  \begin{array}{cccc}
+    1 & 1 & 1 & 1 \\ 1 & -i & -1 & -i \\ 1 & -1 & 1 & -1 \\ 1 & -i & -1 & i 
+  \end{array} \right) \times \begin{pmatrix} 0 \\ 1 \\ 0 \\ 0 \end{pmatrix}
+= \begin{pmatrix} 1 \\ i \\ -1 \\ -i \end{pmatrix} = \half \ket0 + \frac{i}2
+\ket1 - \half \ket2 - \frac{i}2 \ket3$ - same amplitude but different phases.
+% video 13-3
+
+When Fourier Transform is applied to some input, we get $N$ - dimensional
+vector:
+$$F_N \times A = \frac1{\sqrt N} \left(  
+\begin{array}{cccccc}
+  1 &  1&  1& 1& \dots & 1 \\
+  1 &  \omega & \omega^2 & \omega^3 & \dots & \omega^{N-1} \\
+  1 &  \omega^2 & \omega^4 & \omega^6 & \dots & \omega^{2(N-1)} \\
+  \vdots & \vdots &  \vdots & \vdots & \ddots & \vdots \\
+  1 &  \omega^{N-1} & \omega^{2(N-1)} & \omega^{3(N-1)} & \dots & \omega^{(N-1)^2} \\
+\end{array}\right) \times
+\begin{pmatrix} \alpha_0 \\ \alpha_1 \\ \vdots \\ \alpha_{N-1} \end{pmatrix} =
+\begin{pmatrix} \beta_0 \\ \beta_1 \\ \vdots \\ \beta_{N-1} \end{pmatrix} $$
+
+Classical approach require $O(N^2)$ steps. {\bf Fast Fourier Transform (FFT)}
+runs in $O(N \log N)$ steps. In the quantum case:
+\begin{itemize}
+\item input vector is represented as the state of $n = \log N$ qubits: $\sum
+  \limits_j \alpha_j \ket j$
+\item FT ``just'' transforms this: $\sum \limits_j \alpha_j \ket j \to \sum
+  \limits_k \beta_k \ket k$
+\end{itemize}
+our question is: does the quantum circuit which makes this transformation work
+with polynomial time? QFT works in $O(n^2) = O(\log^2 N)$ steps - exponential
+growth. The problem is that the amplitudes are inaccessible until we measure. On
+measurement we see only $k$ with probability $|\beta_k|^2$. So we need a trick
+to see the whole picture.
+
+% video 13-4
+\subsubsection{Period Finding}
+\label{sec:PeriodFinding}
+
+There are two interesting properties of QFT:
+\begin{itemize}
+\item Convolution-multiplication property of FT
+
+  if $F_n(\sum \limits_j \alpha_j \ket j) = \sum \limits_k \beta_k \ket k$. Then
+  we can apply the same transformation to the cyclic shift of initial position
+  (imagine shift by 1 for example):
+  $$ F_n((\sum \limits_j \alpha_j \ket j)_{shifted}) = $$ 
+$$ = \frac1{\sqrt N} \left(\begin{array}{cccccc}
+    1 &  1&  1& 1& \dots & 1 \\
+    1 &  \omega & \omega^2 & \omega^3 & \dots & \omega^{N-1} \\
+    1 &  \omega^2 & \omega^4 & \omega^6 & \dots & \omega^{2(N-1)} \\
+    \vdots & \vdots &  \vdots & \vdots & \ddots & \vdots \\
+    1 &  \omega^{N-1} & \omega^{2(N-1)} & \omega^{3(N-1)} & \dots & \omega^{(N-1)^2} \\
+  \end{array}\right) \times 
+\begin{pmatrix} \alpha_{N-1} \\ \alpha_0 \\ \alpha_1 \\ \vdots \\
+  \alpha_{N-2} \end{pmatrix} = $$
+$$= \begin{pmatrix} 1 \times \beta_0 \\ \omega \times \beta_1 \\ \omega^2 \times
+  \beta_2 \\ \vdots \\ \omega^{N-1} \times \beta_{N-1} \end{pmatrix} $$ -
+basically, amplitudes just change their phases (amplitudes are the same, actual
+phase change {\bf depends on actual shift})
+
+At this point, if we're going to do a measurement on the ``shifted'' output, the
+probability will be the same as on the ``main'' case: $|\beta_k|^2$
+
+So, if you're doing Quantum Fourier Sampling (QFS), the {\bf cyclic shift does
+  not change the output distribution} - so-called {\bf
+  Convolution-multiplication} property of FT.
+\item if $F_M\left(\sum \limits_{j=0}^{M-1} \alpha_j \ket j \right) = \sum
+  \limits_{k=0}^{M-1} \beta_k \ket k$. Claim: $\alpha_{j+r} = \alpha_j \means
+  \beta_{k+\frac{M}r} = \beta_k$ (see slide 13-3, page 4).
+  % video 13-4 10:03
+  First prove a special case (non-zero amplitude only in multiplices of $r$ (see
+  slip 13-3, page 5): $$\sqrt{\frac r N}(\ket0 + \ket r + \ket {2r} + \dots +
+  \ket {N - r}) \xrightarrow{F_N} \frac1{\sqrt r} \left(\ket0 + \ket{\frac N r}
+    + \ket{\frac{2N}{r}} + \dots + \ket {\frac{(r-1)N}{r}} \right)$$
+
+  For example: $\ket0 \xrightarrow{F_N} \frac1{\sqrt{N}}(\ket0 + \ket1 + \dots +
+  \ket{N-1})$ (only the first column is used).
+
+  As we see, if left side function has a period of $r$, then the right side
+  (after FT) has the period of $\frac{N}r$ - so the smaller $r$, the bigger
+  period of Fourier-transformed function is (for special case!).
+
+  % video 13-5
+  Prof: as $(F_N){jk} = \omega^{jk}$, let's try to find the amplitudes: for
+  particular entry: $$\beta_k = \sum \limits_{j=0}^{\frac Nr - 1}\sqrt{\frac rN}
+  \frac1{\sqrt N} \omega^{jrkN/r} = \frac{\sqrt r}N \sum \limits_{j=0}^{\frac Nr
+    - 1} \omega^{jkN}$$
+
+  But $\omega^N = 1$, so whole $\omega^{jkN} = (1)^{jk} = 1$, and
+$$\beta_k = \frac{\sqrt r} N \times \frac Nr = \frac1{\sqrt r} \text{ ; done}$$
+
+Our resulting $B = \frac1{\sqrt{r}}\sum \limits_{k=0}^{r-1} \ket{k\frac Nr}$ is
+already a unit vector, so amplitudes in all other points {\bf must } be 0.
+\end{itemize}
+
+\paragraph{Period Finding}
+
+Quantum circuit-based solution - \slide {13-3} 8 (notice change in notation, now
+total amount of elements in range of definition is $M$, not $N$).
+
+First QFT, being applied to $\ket0$, will result in $\frac1{\sqrt
+  M} \begin{pmatrix} 1 \\ 1\\ \vdots \\ 1 \end{pmatrix} = \frac1{\sqrt M} \sum
+\limits_{x=0}^{M-1} \ket x$
+
+After applying $U_f$: outcome will be $\sum \limits_{x=0}^{M-1}\ket x f(x)$ plus
+$f(x)$ in second register which is to be measured for some value $f(k)$.
+Measuring means that we exclude from the first register all states which are
+inconsistent with the $f(k)$ being measured. So the state of first register
+before measurement will be
+$$\sqrt{\frac rM}( \ket k + \ket{k+r}+ \ket{k+2r} + \dots +
+\ket{k+ M - r}) = \sqrt{\frac rM}\sum\limits_{j=0}^{\frac Mr -1} \ket{jr + k} $$
+
+Now apply $QFT_M$. We remember that the measurement will not depend on cyclic
+shift on the state (as $QFT_M$ is not changed with it) - so measurement will
+remove $k$ from $\dots \ket{jr + k} \dots$ part - so we'll measure a
+superposition of $\frac1{\sqrt r} \sum\limits_{l=0}^{r-1}\ket{l \frac Mr}$.
+
+So with every measurement we'll get a random multiple of $\frac Mr$. We'll
+repeat the whole story a few times and get a Greatest Common Denominator (GCD)
+of the results.
+
+% video 14-1
+\subsection{Shor's Algorithm}
+\label{sec:ShorsAlgorithm}
+
+The Period Finding (PF) is used in Shor's Algorithm of factoring integers which
+means a finding of factors for give $N$ that $N = p_1^{\;l_1} p_2^{\;l_2} \dots
+p_k^{\;l_k}$. Classical approach takes exponential time; solving this problem is
+highly anticipated in cryptography.
+
+Conventions: the source number is $N$ of length $n$ bits; $N \approx 2^n$. The
+best classical algorithm takes $O(exp(\sqrt n))$. Quantum algorithm takes
+$O(n^3)$.
+
+For our examples, assume $N = 21$. Now look: $\sqrt 1 = \pm 1; 1^2 \equiv 1
+(\mod 21)$, but also $-1^2 = 20^2 \equiv 1 (\mod 21)$. There is another square
+root of 21: $8^2 = 64 \equiv 1 (\mod 21)$. The claim is that in this case:
+\begin{itemize}
+\item $gsd(8 + 1, 21)$ will give one of the non-trivial roots (3)
+\item $gsd(8 - 1, 21)$ will give another non-trivial roots (7)
+\end{itemize}
+% video 14-1, 11:44
+
+Other non-trivial square root is -8: use $21-8 = 13$:
+$$-8^2 = 13^2 \equiv 1 (\mod 21) \means gcd(13-1, 21) = 7; gcd(12, 21) = 3$$
+
+\paragraph{Lemma:} If $x$ is a non-trivial square root of $1 (\mod N)$ then
+$gcd(x+1, N)$ and $gcd(x-1, N)$ is a nontrivial factor of $N$.
+
+\paragraph{Prof:} $x^2 \equiv \pm 1(\mod N) \same x^2 - 1 \equiv 0 (\mod N)
+\same N \mid (x^2-1) \same N \mid (x+1)(x-1)$
+
+But $x$ {\bf does not} divide $x\pm1: x \neq1(\mod N)$ - such is possible only
+when $(x+1)$ divides one of the prime divisors (label P in future) while $(x-1)$
+divides another one (label Q).
+
+% video 14-2
+As out N is really large (say 1000 digits). Our approach will be:
+
+select small number (let's 2) and consider powers of 2:
+\begin{itemize}
+\item $2^0 = 1(\mod 21)$
+\item $2^1 = 2(\mod 21)$
+\item $2^2 = 4(\mod 21)$
+\item $2^3 = 8(\mod 21)$
+\item $2^4 = 16(\mod 21)$
+\item $2^5 = 11(\mod 21)$
+\item $2^6 = 1(\mod 21)$
+\end{itemize}
+
+Knowing that $2^6 \equiv 1(\mod21) \means (2^3)^2 \equiv 2^6 \equiv 1(\mod21)$,
+and $2^3 = 8$ is our non-trivial square.
+
+\paragraph{Lemma:} Let $N$ be an odd composite with at least two distinct prime
+factors, and let $x$ be uniformly random between 0 and $N-1$. If $gcd(x, N) =
+1$, then with probability at least $1/2$ the order $r$ of $x (\mod N)$ is even,
+and $x^{r/2}$ is a nontrivial square root of $1 (\mod N)$.
+
+Order $r$ means that $1 \equiv x^r (\mod N)$. If $r$ is even and $y = x^{r/2}
+\neq \pm 1 (\mod N)$ then $y^2 = x^r \equiv 1 (\mod N)$ - can be used to find a
+non-trivial root of N and use it for factoring.
+
+Proof is out of scope.
+
+This is nice, but we still have a task to find an order $r$ (can be quite
+large).
+
+\begin{tabular}{c|c}
+  \textbf{ a } & \textbf{ $f(a) = x^a (\mod N)$ } \\
+  \hline
+  0 & 1  \\
+  1 & 2  \\
+  2 & 4  \\
+  3 & 8  \\
+  4 & 16  \\
+  5 & 11  \\
+  6 & 1  \\
+  7 & 2  \\
+  8 & 4  \\
+  9 & 8  \\
+  10 & 16  \\
+  11 & 11  \\
+  12 & 1  \\
+  13 & 2  \\
+  14 & 4  \\
+\end{tabular}
+
+- we see a form of periodic function $\means$ we can find a period. To find it,
+set up a superposition: $\frac1{\sqrt{M}} \sum \limits_{a=0}^{M-1}f(a)$, use
+relevant algorithm.
+
+After getting period (in our example 6), we're ready to compute non-trivial
+square root: $2^{6/2} = 8$, take $gcd(8+1, 21); gcd(8-1, 21)$.
+
+Final circuit - slides 14-1 page 10:
+\begin{itemize}
+\item Start with two registers of $\ket0$
+\item apply $QFT_M$ to the first register, obtain (?)
+\item feed both registers to quantum circuit; calculate $f(a) = x^a (\mod N)$
+\item measure (or throw away) second register
+\item apply $QFT_M$ to the first register and measure
+\end{itemize}
+
+After measuring, we get the period $r$ value. Calculate $x^{r/2}$ - non-trivial
+square root; use it to calculate factors of M. This works with probability
+$\frac12$, so check and re-run if it did not work.
+
+\paragraph{Algorithm in a Nutshell}
+
+To find the factors of $N = PQ :P,Q \in {primes}$
+\begin{itemize}
+\item Create a function $f(a) = h^a (mod N)$, for some integer h where 1<h<N and
+  h \& N are relatively prime.
+\item $f(a)$ is periodic with period $r$. Use period finding to find $r$.
+\item If $r$ is odd, repeat with different $h$ until $r$ is even.
+\item $P = gcd(h^{r/2}+1,N),\; Q = gcd(h^{r/2-1}, N)$
+\end{itemize}
+
+% video 14-3
+\subsubsection{Quantum Fourier Transformation Circuit}
+\label{sec:QFTCircuit}
+
+FT has its specific structure - as seen on slides 14-3 page 2. Classical schema
+works in $O(n^2)$ time, but efficient FT circuit works much faster. This is
+possible due to using the structure of FT operation:
+
+\begin{itemize}
+\item First - sort $\ket \alpha$, separating odd and even rows in two different
+  halves of a vector. Similarly re-sort the columns of FT matrix. (slide 14-3
+  page 3).
+\item Now notice some pattern in rows: $\omega^{(j = \frac n2)2k} = \omega{2jk +
+    nk}$ - as $\omega^{kn} = 1$. (slide 14-3, page 3, right part of a slide) -
+  every row $j$ in upper part is equal to the $j + n/2$ row in the lower part.
+\item As $\omega = e^{2 \pi i/n}$, then $\omega^2$ can be represented as
+  $\omega^2 = e^{2 \pi i /(n/2)}$. Then if the whole FT matrix is $F_n$, the
+  upper left part of it is $F_{n/2}$; lower left part is similar.
+\item For upper right part it is a bit more interesting: for every column $2k$
+  from left the column of index $2k+1$ is equal to $2k$ multiplied by
+  $\omega^j$.
+\item Lower right part is a bit more complicated: it is multiplied by
+  $-\omega^j$.
+\end{itemize}
+The whole matrix reminds a Hadamard matrix a bit, but remember: we have swapped
+values if $\ket \alpha$ and columns in $F_N$.
+
+Now consider actual multiplication (slide 14-3 page 4). It looks now obvious
+that there should be a recursive circuit - see slide 14-3 page 5 for a schema.
+The size for $n\times n$ matrix: $S(n) - 2S(\frac n2) + O(n) \means S(n) = O(n
+\log n)$ - instead of $O(n^2)$.
+
+\paragraph{In quantum circuit}
+
+Our input is the amplitudes on $m$ qubits so the state is described by $M = 2^m$
+complex vector. Now try to perform a unitary transformation $QFT_M$
+% video 14-4
+The structure is to be similar to the classical circuit. First step is to
+separate odd from even rows - based on least significant bit (this separates
+odds from evens).
+
+After applying $QFT_{M/2}$ to the $m-1$ bits we already have the ``odds'' part
+(as superposition with zero's will not change anything). Then we apply H to the
+least significant bit. As H transforms $0$ to $+$ and $1$ to $-$, we get our ``j
+from evens added''/ ``j from odds subtracted'' functionality.
+
+The trick is to use controls: $\omega^J = \omega^{J_{m-2}J_{m-3} \dots J_0} =
+\omega^{J_{m-2} \times 2^{m-2}} \times \omega^{J_{m-3} \times 2^{m-3}} \dots
+\omega^{J_0 \times 2^0}$ - see slides 14-3, page 3.
+
+So the size of a circuit is $S(m) = S(m-1) + O(m) \means S(m) = O(m^2)$. As $M =
+2^m$, $S=O(\log^2 M)$ - exponentially better the classical circuit.
+
+\subsection{Quantum Search}
+\label{sec:QuantumSearch}
+
+Goal: search for the marked entry. Classically: try every entry in turn (or
+random entries) which shows $O(N/2)$ time.
+
+Typical computation problem, so-called NP-complete problems, are hard to find an
+answer bu easy to check if given entity is the needed one. Finding a solution to
+NP-complete problem can be viewed as a search problem like
+$$(x_1 \vee -x_2 \vee) \wedge (x_2 \vee -x_5 \vee x_6) \wedge \dots$$
+- is there a configuration of $x_1, x_2, \dots$ that satisfy the above formula?
+
+There are $2^N$ possible configuration. As the source data is unstructured, we
+can not use indexing. But:
+\begin{itemize}
+\item Let $N=2^n$, and each entry in ``haystack'' corresponds to some set of $n$
+  Boolean values.
+\item Some number out of $N$ entries satisfy the required condition. We're
+  looking for any one of them
+\end{itemize}
+\video{15-1}{06:30} The idea is to use the fact that we have an exponential
+superposition to prove all of these $n$ entries in parallel, in so-to-speak
+``different quantum universes''. I.e. we can take $n$ qubits, put them into
+equal superposition of all n-bit strings from 0 to $N-1$:
+$$\frac1{\sqrt{N}}\sum\limits_{y=0}^{N-1} \ket y $$  
+or digital ``haystack'' corresponds to
+$$f(x) = (x_1 \vee \bar x_2 \vee x_3) \wedge (\dots) \wedge \dots (\;)\text{,
+  where } x = x_1, x_2, \dots x_n$$
+
+Now let's feed our superposition $\frac1{\sqrt{N}}\sum\limits_{y=0}^{N-1} \ket y
+$ to the circuit implementing $U_f$ (\slide{15-1}7). Outputs will be a
+superposition $\sum\limits_y \ket y$ and function result $\ket{f(y)}$.
+
+Measuring this will be a bad idea, as this will give no better then probing a
+random entry of the table.
+
+\subparagraph{Theorem:} Any quantum algorithm must take at least $\sqrt N$ time
+(still exponential in $n$).
+
+\subsubsection{Grover's Algorithm} is a theoretically fastest realisation of a
+search - $O(\sqrt N)$ time.
+
+\subparagraph{Problem } Given $f:{0, 1, \dots , N-1} \to {0, 1}$, find $x:f(x) =
+1$. {\bf Hardest case:} There is exactly one $x: f(x) = 1$.
+
+Classical circuit: $N$ inputs for $x$, single output for $f(x)$. Quantum
+circuit: $N$ input for $x$, single input for $0$; $n$ output for $x$, single
+output for $f(c)$. In other variant: feed $x$ and some bit $b$ as input, get $x$
+and $b \oplus f(x)$ as output.
+
+The trick will be to feed a superposition $\sum_x \alpha_x \ket x, b$ to input
+and obtain the same superposition $\sum_x \alpha_x \ket x, ket {b \oplus f(x)}$
+as output:
+
+The quantum algorithm uses two new primitives:
+\begin{itemize}
+\item {\bf Phase Inversion} if exists $x^*: f(x^*) = 1$, then phase inversion
+  modifies superposition $\sum \limits_x \alpha_x \ket x$ in such a way that
+  $Phased(\alpha_{x^*}) = - \alpha_{x^*}$ (see \slide{15}2), or
+$$\sum_x \alpha_x \ket x \xrightarrow{\text{Phase inversion}} \sum_{x \not
+  \equiv x^*}\alpha_x \ket x - \alpha_{x^*}\ket{x^*}$$ Implementation - see
+later \video{15-2}{04:00}
+\item {\bf Inversion About Mean} - \slide{15-2}4
+
+  Flip everything around mean value $\mu: \sum\limits_x \alpha_x \ket x \to
+  \sum\limits_x(2\mu - \alpha_x) \ket x$ (there is quantum circuit, see later).
+\end{itemize}
+
+\subparagraph{Steps}
+\begin{itemize}
+\item Start with the equal superposition of all N items: $\frac1{\sqrt N} \sum_x
+  \ket x$.
+\item select (?) one $x$ and perform phase inversion on it (\slide{15-2}6).
+\item perform inversion about mean: $x*$ moves up, new value is $\frac3{\sqrt
+    N}$; in other points it becomes slightly less then $\frac1{\sqrt N}$ (\slide
+  {15-2}7).
+
+  At this point, amplitude of $x^*$ becomes roughly 3 times more then all
+  others.
+\item on repeat, the disproportion increases: new amplitude in $x^*$ becomes
+  $\frac5{\sqrt N}$. After some amount of steps our amplitude in $x^*$ becomes
+  closer and closer to $\frac1{\sqrt2}$
+\end{itemize}
+
+So, {\bf amplitude of the rest} when the needle has $\frac1{\sqrt2}$:
+$\frac1{\sqrt{2N}}$. We're making $2 \times \frac1{2N} = \sqrt{\frac2N}$
+improvement per step, and reach $\frac1{\sqrt2}$ in $O(\sqrt N)$ steps:
+$$\frac{1/{\sqrt2}}{\sqrt2/{\sqrt N}} = \frac{\sqrt n}{2} \text{ steps}$$
+
+\subsubsection{Implementing Grover's algorithm}
+\label{sec:GroverImplmenting}
+
+{\it Problem (remind):} Given $f:{0, 1, \dots , N-1} \to {0, 1}$, find $x:f(x) =
+1$. {\bf Hardest case:} There is exactly one $x: f(x) = 1$.
+
+We need two new elements to build a solver:
+
+\paragraph{Phase Inversion} 
+\video{15-3}
+
+How do we send $f(x)$ to the phase? Use the effect that if we provide a $b$ bit
+as input to $U_f$ quantum circuit we get result inverted if $f(x) = 1$. 
+\video{15-3}{02:00}
+
+But - we try to build $\hat U_f$ in such way that it returns $(-1)^{f(x)}\ket x$
+when provided with $\ket x$ input (\slide{15-3}3): $\sum_x \alpha_x \ket x \to
+\sum_x (-1)^{f(x)} \alpha_x \ket x$. \video{15-3}{03:33} - so only the needle's
+phase will be inverted.
+
+As such, if we send $\ket-$ to the input of the $U_f$, we'll get relevant output
+qubit in state $(-1)^{f(x)}$. Proof: as $\ket- = \hqrt \ket0 - \hqrt \ket1$, and
+we have two cases:
+\begin{itemize}
+\item Case 1: $f(x) = 0$; output is unchanged: $\ket-$
+\item Case 2: $f(x) = 1$; output is toggled: $\ket- \to \hqrt \ket1 - \hqrt
+  \ket0 = - (\ket-) = (-1)^{f(x)}$
+\end{itemize}
+The final circuit - see LL corner of \slide{15-3}3
+
+\video{15-3}{07:35}
+\paragraph{Reflection About Mean}
+
+We start with $\sum_x \alpha_x \ket x$; getting $\mu = \frac{\sum \alpha_x}N$
+and need to get a new superposition $\sum_x (2\mu - \alpha_x) \ket x$
+
+For the implementing circuit - see \slide{15-3}4. The trick is similar to Phase
+Inversion: input is $\ket x, \ket-$. The function $U_{\neq 0^n}$ returns 0 if
+all $n$ input are 0 and 1 otherwise: $g(x) = \left\{\begin{array}{cl} 0 & if \;
+    x = 0 \dots 0 \\ 1 & otherwise \end{array} \right.$ 
+
+\subparagraph{How does it work?}
+Reflection about mean is the same as doing reflection about $\ket u =
+\frac1{\sqrt N} \sum_x \ket x$. First we move (map to) the uniform superposition
+to the $\ket 0$ vector (this is done by Hadamard transform). Then we perform
+inversion about $\ket{0 \dots }$ using $\left(\begin{array}{cccc} 1 & & & 0 \\ &
+    -1 & & \\ &  & \ddots & \\ 0 & & & -1 \end{array} \right)$  - leaving
+all-zero string alone and inverting (reflecting) everything else. Then -
+Hadamard transform back:
+$$H^{\otimes n} \left[
+  \begin{pmatrix} 2 & & & 0 \\  & 0 & \\ & & \ddots \\ 0 & & & 0
+  \end{pmatrix} - \begin{pmatrix} 1 & & & 0 \\  & 1 & \\ & & \ddots \\ 0 & & &
+    1  \end{pmatrix}\right] H^{\otimes n}= $$ $$= H^{\otimes n}
+  \begin{pmatrix} 2 & & & 0 \\  & 0 & \\ & & \ddots \\ 0 & & & 0
+  \end{pmatrix} H^{\otimes n} - \underbrace{ H^{\otimes n} I H^{\otimes
+      n}}_{I}$$
+As Hadamard consists of $1/\sqrt{N}$, this will end in
+$$= \begin{pmatrix} \frac2N &\frac2N & \dots  & \frac2N \\ 
+  \frac2N& & & \vdots \\ \vdots & & & \vdots \\ \frac2N & \frac2N & \dots & \frac2N
+  \end{pmatrix} - I = \begin{pmatrix} \frac2N-1 &\frac2N & \dots  & \frac2N \\ 
+  \frac2N&\frac2N - 1 & & \vdots \\ \vdots & & & \vdots \\ \frac2N & \frac2N &
+  \dots & \frac2N-1\end{pmatrix}$$ 
+\video{15-3}{13:36}
+This operator (diagonal entries $\frac2N-1$, all other are $\frac2N$) is really
+a reflection: when applied to $\sum_x \alpha_x \ket x$: as  $\frac2N(\alpha_0 +
+\alpha_1 + \dots + \alpha_{N-1} = 2\mu$, so:
+$$\begin{pmatrix} \frac2N-1 &\frac2N & \dots  & \frac2N \\ 
+  \frac2N&\frac2N - 1 & & \vdots \\ \vdots & & & \vdots \\ \frac2N & \frac2N &
+  \dots & \frac2N-1\end{pmatrix}
+\begin{pmatrix} \alpha_0 \\ \alpha_1 \\ \vdots \\ \alpha_{N-1} \end{pmatrix} =
+\begin{pmatrix} 2\mu - \alpha_0 \\  2\mu - \alpha_1 \\ \vdots \\  2\mu -
+  \alpha_{N-1} \end{pmatrix}$$ 
+So $\sum_x \alpha_x \ket x \to \sum_x (2\mu - \alpha_x) \ket x$ - exactly as
+needed. Final schema is shown in \slide{15-3}8. The ``working'' part (a part
+after initialisation) is to be repeated $O(\sqrt N)$ times. Then - measure the
+first n qubits of the output, and with the probability at least $\half$ we should
+get a needle.
+
+Then we check: if it is marked (is a needle), we repeat, otherwise - repeat the
+process again.
+
+Another observation for Grover's algorithm - the number of iteration should be
+right ($\sqrt N$). If it is to be run too long, it might ``un-compute'' the
+answer: eventually amplitude of the needle (after it reaches it's maximum)
+starts reducing. 
+
+If there is more then one needle, the Grover's algorithm runs faster, but
+``un-computing'' starts earlier.
+
+The whole algorithm is quite general, even while it gives only quadratic (not
+exponential) speed-up, it solves quite generic problem, so it can be applied to
+the solutions of a number of problems.
+
+\subsection{Quantum complexity theory}
+\label{sec:QuantumComplexityTheory}
+\video{16-1}
+
+Our old theorem about ``Any quantum algorithm must take at least $\sqrt N$ time''
+(which means - make at least $\sqrt N$ queries), assuming $N=2^n$ gives minimum
+time $O(2^{n/2})$ dependence on input size. This is exponential on number of
+bites. 
+
+{\bf Prof} 1 quantum query: no algorithm can guarantee success probability >
+$c/N$,where $C$ - amount of needles. 
+
+Perform test run with empty (i.e. no needle) haystack. Suppose algorithm makes
+query; placing needle in the location that gets queried with minimum squared
+amplitude: $x^* \leq \frac1N$
+
+So change from $\ket \psi$ measured in running algorithm on empty stack to $\ket
+{\psi'}$  measured on one-needle stack can not be more then $\frac1{\sqrt N}$ -
+as $|\alpha_x|^2 \leq \frac1N$
+
+But subsequent queries amplitudes can change depending on previous answers. For
+$t$ steps, probability of success is $P[success] = \frac{O(t^2)}N$
+
+\paragraph{Hybrid Argument}
+
+Let's work with serial (not parallel) executing gates running on the non-empty
+stack. Then, replacing last steps $f \to f'$ we'll get approaches to the
+solution - $\frac1{\sqrt N}$ at the time.
+
+As quantum evolution is unitary $\to$ last step will preserve angle between
+input and output vectors. So replacing (one by one) the empty haystack runs with
+the $f'$ we'll approach to the solution (\slide{16-1}6) that the probability
+changes by $O(\frac{t^2}N)$.
+
+The whole story with Grover's algorithm is that it manages these changes to line
+up. 
+
+This not necessarily means that quantum computer can not solve NP-complete
+problem in polynomial time - just banality that ``any quantum algorithm must use
+the structure of the problem''. Some algorithms do show polynomial time, it is
+just impossible to rule out from the pure problem syntax if this problem is
+solvable in polynomial or exponent time. 
+
+In 2001 the paper about so-called {\bf adiabatic optimisation} framework was
+published. Really this is an algorithms for solving ``satisfy-ability'' of the
+algorithms. On small examples $n=[10 \dots 15]$ it showed polynomial times.
+
+\paragraph{Adiabatic Quantum Optimisation}
+
+We start with Hamiltonian $H_0$ of known ground state and try to gradually
+transform it to the desirable output $H_f$ (the Hamiltonian which is easy to
+implement and works that its ground state is the output of our algorithm (the
+solution for the actual problem). Gradual transformation goes as
+$$H(t) = (1-t)H_0 + tH_f$$ 
+
+The theorem says that if you do this slowly enough ($T=\frac1{\min_t g(t)^2})$
+where $g(t)$ is the difference 2 smallest eigenvalues of $H(t)$): if
+\begin{itemize}
+\item $E_0$ = ground energy
+\item $E_1 = 1^{st}$ excited energy
+\end{itemize}
+then $g = E_1-E_0$
+
+\subparagraph{Example} 3SAT as a local Hamiltonian Problem
+\video{16-2}{09:24}
+
+\begin{itemize}
+\item $n$ bits -> $n$ qubits
+\item 
+\end{itemize}
+
+\paragraph{Extended Church-Turing Thesis}
+
+Any ``reasonable'' model of computation can be simulated on a (probabilistic)
+Turing Machine with at most polynomial simulation overhead.
+\begin{itemize}
+\item Turing Machine describes the set of functions that are humanly
+  compute-able (i.e. the class P describes what you could compute with an
+  unlimited amount of paper at your disposal).
+\item The class P represents what can be physically computed (in a reasonable
+  amount of time).
+\end{itemize}
+
+Quantum computations is the only model of computation that violates the Extended
+Church-Turing thesis.
+
+BQP - bounded error quantum polynomial time.
 
 \end{document}
