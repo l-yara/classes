@@ -1137,6 +1137,70 @@ further does not affect the risk seriously. However, most of us invest in mutual
 funds or existing portfolio (professor recommends Vanguard). 
 
 %video 9-5 09:30
+Risk of an idea/project/asset has to measure its relations with other assets.
+Using a large diversified market portfolio (like S\&P or Russel 2000) we can
+capture (almost) all relations (so-called {\bf market model}:
+$$\tilde r_i = \alpha_i + \beta_i\tilde r_m + \tilde \epsilon_i$$
+\begin{itemize}
+\item $\tilde r_i$ - return of $i$ equity
+\item $\tilde r_m$ - return of market ``as a whole''(i.e. large portfolio like
+  S\&P 500) 
+\item $\beta_i$ - regression (the sensitivity) of $i$ asset to the entire
+  market: $\beta_i = \frac{\sigma_{im}}{\sigma^2_m} = \frac{cov(R_iR_m)}
+  {Var(R_m)^2} $- covariance of Return of our asset with the return of market
+  normalised on return of market. 
+
+It captures all relationships between our asset and all other assets on market.
+Slang name - {\bf beta}; idea is that risk is just this - a correlation between
+our asset and whole market.
+\item $\alpha_i$ - ???
+\item $\epsilon_i$ - captures all the unique (specific) staff
+\end{itemize}
+
+% video 9-6
+
+\paragraph{Capital Asset Pricing Model (CAPM)}
+
+The relationship between risk (beta) and return is linear, with the following
+form:
+$$r_i = r_f + (r_m - r_f)\beta_i$$
+\begin{itemize}
+\item $r_f$ - ``risk-free'' return (like in long-term government bonds). For it
+  $\beta_f = 0$
+\item $r_i$ - {\bf expected } rate of return on the equity of project/idea/firm
+  $i$
+\item $r_m$ - {\bf expected} rate of return on the ``market'' portfolio
+\item $(r_m - r_f)$ is the average market risk premium
+\item $\beta_i$ - a risk of comparable equity
+\end{itemize}
+- any return can be broken in two parts: risk-free and risk-specific. The second
+one is average market risk premium (is considered about 7\% in USA usually, prof
+considers real figure is about 5\%).
+
+So two points: one for risk-free (beta is 0), one for ``market'' (beta is 1),
+$r_i = r_m$. Draw straight line and enjoy.
+
+The intuition is that it is based on intuitive and simple idea. But not all
+assets fit this model.
+
+% video 9-7
+Up to now we based everything on assumption that debt is 0. Let's try to value
+``Orange'' vs ``Apple'' (back to the Beginning). We need to minimise a
+measurement error - so in real life we need more then one asset to compare
+(using just ``Apple'' is not sufficient - use something else to cut off noise).
+
+Use Yahoo Finance to measure cost of capital for ``Orange''. Get a good
+reflection of market (say, S\&P 500). Get source for $r_f$ - like 10-year
+treasury bonds (do {\bf not} look at past averages!).
+
+Now accept risk premium (5\%) and go for our $\beta_i$ - it is calculated in
+yahoo finance. Also one can go to ``Key statistic'' and look for Total Debt (if
+not 0 - the equity and assets are not the same).  
+
+\subparagraph{Putting it Together}
+
+Debt is 0, so $\beta_{assets} = \beta_{equity}$. Looking at Apple (as comparable
+to Orange), we get $\beta_a = 0.94$ (from Yahoo Finance).   
 
 
 \end{document}
