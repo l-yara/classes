@@ -1,0 +1,394 @@
+%\documentclass{ncc}
+%\documentclass{article}
+\documentclass{scrartcl}
+
+\usepackage{amsmath,amssymb,amsfonts} % Typical maths resource packages
+\usepackage{graphics}                 % Packages to allow inclusion of graphics
+\usepackage{color}                    % For creating coloured text and background
+\usepackage{hyperref}                 % For creating hyperlinks in
+                                % cross references 
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+\usepackage{listings}
+\lstdefinelanguage{scala}{
+  morekeywords={abstract,case,catch,class,def,%
+    do,else,extends,false,final,finally,%
+    for,if,implicit,import,match,mixin,%
+    new,null,object,override,package,%
+    private,protected,requires,return,sealed,%
+    super,this,throw,trait,true,try,%
+    type,val,var,while,with,yield},
+  otherkeywords={=>,<-,<\%,<:,>:,\#,@},
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[n]{/*}{*/},
+  morestring=[b]",
+  morestring=[b]',
+  morestring=[b]"""
+}
+%\lstset {language=scala}
+
+\newcommand{\example}{\subparagraph{Example:}} % Example
+\newcommand{\term}[1]{\verb~#1~} % Definition
+\newcommand{\video}[1]{} % Definition
+
+\begin{document}
+\part{Intro}
+\label{part:Intro}
+
+OO programming is considered orthogonal to the ``classical'' paradigms:
+\begin{itemize}
+\item imperative programming
+\item functional programming
+\item logic programming
+\end{itemize}
+as it can be combined with either one.
+
+\paragraph{Imperative programming}
+
+The most common informal way to understand imperative programming is as
+instruction sequences for a Von Neumann computer. There are a number of
+correspondences: between mutable variables and memory cells, control structures
+and jumps etc. The problem arises as we scale up: pure imperative programming is
+limited by the ``Von Neaumann'' bottleneck: {\bf One tends to conceptualize data
+  structures word-by-word}
+
+We need techniques for defining high-level abstractions such as collections,
+polynomials, geometric shapes, strings, documents. Ideally, develop {\it
+  theories} of collections, shapes, strings etc.
+
+A {\it theory} consists of
+\begin{itemize}
+\item one or more data types
+\item operations on these types
+\item laws that describe the relations between values and operations
+\end{itemize}
+Normally, a theory does NOT describe mutations!
+% video 2-1 05:10
+
+In implementation of high-level concepts following their mathematical theories,
+there's no place for mutations:
+\begin{itemize}
+\item the theories do not admit it
+\item mutation can destroy useful laws in the theories
+\end{itemize}
+Therefore, the ``right'' programming should:
+\begin{itemize}
+\item concentrate on defining theories for operations expressed as functions
+\item avoid mutations
+\item have powerful ways to abstract and compose functions
+\end{itemize}
+
+\paragraph{Functional Programming Languages}
+\begin{itemize}
+\item In a {\bf restricted} sense, a functional language is one which does not
+  have mutable variables, assignments, or imperative control structures:
+  \begin{itemize}
+  \item Pure Lisp, XSLT, XPath, FP
+  \item Haskell (without I/O Monad or UnsafePerformIO)
+  \end{itemize}
+\item In a {\it wider} sense, a functional programming language enables the
+  construction of elegant programs that focus on functions
+  \begin{itemize}
+  \item Lisp, Scheme, Racket, Closure
+  \item SML, Ocaml, F\#
+  \item Haskell (full language)
+  \item Scala
+  \item Smalltalk, Ruby, JavaScript (!)
+  \end{itemize}
+\item In particular, functions in FP language are firs-class citizens
+\end{itemize}
+
+% video 2-2
+
+\section{Elements of Programming}
+\label{sec:Elements}
+
+Console can be started by either honest
+\begin{lstlisting}[language=scala, caption=={Plugin function }]
+>scala  
+\end{lstlisting}
+
+(exit with \verb!:quit! command), or using \verb!sbt!
+
+\begin{lstlisting}
+>sbt console
+scala>
+\end{lstlisting}
+(def - definition) Function definition:
+\begin{lstlisting}
+  def power(x: Double, y: Int): Double = ...
+\end{lstlisting}
+If a return parameter is given, it follows the parameter list. Primitive types
+are as in Java, but are written capitalised: Int (32-bit integer). Double
+(64-bit floating point number), Boolean.
+
+\paragraph{Evaluation rules:} see slides 1-2, pp 5 and 13. This scheme of
+expression evaluation is called the {\it substitution model}: all evaluation
+does is {\it reduce expression to a value}. It can be applied to all
+expressions, as long as they have no side effects. The substitution model is
+formalised in the $\lambda$-calculus, which gives a foundation for functional
+programming.
+ 
+\paragraph{Termination} Not every expression evaluates to a value:
+counter-example is
+\begin{lstlisting}
+  def loop: Int = loop
+\end{lstlisting}
+
+\paragraph{Changing evaluation strategy.} In contrast to reduction, one could
+apply the function to unreduced arguments:
+\begin{lstlisting}
+sumOfSquares(3, 2+2)
+square(3) + square(2+2)
+3*3 + square(2+2)
+9 + (2+2) * (2+2)
+9 + 4 * (2+2)
+9 + 4 * 4
+25
+\end{lstlisting}
+
+\subsection{Call-by-name and call-by-value}
+\label{sec:CallBy}
+
+The first seen evaluation strategy (reducing) is known as \term{call-by-value
+  (CBV)}, the second is known as \term{call-by-name (CBN)}. Both strategies
+reduce to the same final values as long as
+\begin{itemize}
+\item the reduced expression consists of pure function
+\item both evaluations terminate
+\end{itemize}
+
+Call-by-value has the advantage that it evaluates every function argument only
+once.
+
+Call-by-name has the advantage that a function argument is not evaluated if the
+corresponding parameter is unused in the evaluation of the function body.
+
+% video 2-3
+\subsection{Evaluation strategy and termination}
+\label{sec:evalStrategy}
+
+\subparagraph{Theorem} If CBV evaluation of expression \term e terminates, then
+CBN evaluation of \term e terminates too. The other direction is not true.
+
+Scala normally uses CBV, as it often is exponentially faster then CBN, plus it
+plays much nicer with side effects. But if the type of a function starts with
+\verb!=>! it uses call-by-name:
+
+\example
+\begin{lstlisting}
+  def constOne(x: Int, y: => Int) = 1
+\end{lstlisting}
+now evaluate (in CBV):
+\begin{lstlisting}
+constOne(1 + 2, loop)
+ constOne(3, loop)
+       1
+\end{lstlisting}
+Versus another story here:
+\begin{lstlisting}
+ constOne(loop, 1+2)
+      <oops>
+\end{lstlisting}
+\video{2-4}
+
+\subsection{Conditions and Value Definitions}
+\label{sec:CondAndValueDefs}
+
+\begin{lstlisting}
+def abs(x: Int) = if (x >= 0) x else -x
+\end{lstlisting}
+where \lstinline|x >= 0| is a \term{predicate} of type Boolean.
+
+Boolean expressions use 'short-circuit' evaluation.
+
+\paragraph{Value Definitions}
+
+We have seen that function parameters can be passed by value or by name; the
+same applies to definitions. The \lstinline|def| form is ``by-name'', its right
+hand side is evaluated on each use.
+
+There is also a \lstinline|val| form, which is ``by-value'':
+\begin{lstlisting}[language=scala]
+val x = 2
+val y = square(x)
+\end{lstlisting}
+
+The right-hand side of a \lstinline|val| definition is evaluated at the point of
+the definition itself; afterwards, the name refers to the value. So
+\begin{lstlisting}
+def x = loop
+\end{lstlisting}
+is OK (we just define another name for loop), while
+\begin{lstlisting}
+val x = loop
+\end{lstlisting}
+puts REPL into infinite loop (break by Ctrl-C). \video{2-5} \example Compute
+\lstinline|sqrt(x)| using Newtons method
+
+In Scala, recursive functions always should have an explicit return type
+(otherwise compiler will get into indefinite loop); for non-recursive, the
+return type is optional.
+
+In Eclipse, a worksheet is a sort of ``REPL macros'' \video{2-6}
+
+\subsection{Blocks and Lexical Scope}
+\label{sec:BlocksAndScope}
+
+The good idea would be to avoid a ``name-space pollution'', getting utility
+functions inside the main one.
+
+So final text would be
+\begin{lstlisting}
+object session {
+  def sqrt(x: Double) = {
+    def sqrtIter(guess: Double, x: Double): Double =
+      if (isGoodEnough(guess, x)) guess
+      else sqrtIter(improve(guess, x), x)
+
+    def isGoodEnough(guess: Double, x: Double) = 
+      abs(guess * guess - x) / x < 0.001
+
+    def improve(guess: Double, x: Double)=
+      (guess + x / guess) / 2
+
+    sqrtIter(1.0, x)
+  }
+}
+\end{lstlisting}
+
+\subsubsection{Blocks in Scala}
+\label{sec:BlocksAndScope}
+
+A \term{block} is delimited by braces \lstinline|{ ... }|.
+\begin{lstlisting}
+ { val x = f(3) 
+     x * x
+}
+\end{lstlisting}
+\begin{itemize}
+\item Contains a sequence of definitions or expression
+\item The last element of a block is an expression that defines its value
+\item The return expression can be preceded by auxiliary definitions
+\item Blocks are themselves expressions: a block may appear everywhere an
+  expression can.
+\end{itemize}
+
+\subsubsection{Visibility}
+\label{sec:visibility}
+
+\begin{itemize}
+\item the definitions inside a block are only visible from within the block
+\item the definitions inside a block \term{shadow} definitions of the same names
+  outside the block
+\end{itemize}
+So we can remove references to \lstinline|x| everywhere in our \lstinline|sqrt|:
+\begin{lstlisting}
+object session {
+  def sqrt(x: Double) = {
+    def sqrtIter(guess: Double): Double =
+      if (isGoodEnough(guess, x)) guess
+      else sqrtIter(improve(guess, x), x)
+
+    def isGoodEnough(guess: Double) = 
+      abs(guess * guess - x) / x < 0.001
+
+    def improve(guess: Double)=
+      (guess + x / guess) / 2
+
+    sqrtIter(1.0)
+  }
+}
+\end{lstlisting}
+
+Semicolon is optional, it is needed if there are more then one expression in the
+line. The problem here is that long multi-line expression like
+\begin{lstlisting}
+someLongExpression
++ someOtherExpression
+\end{lstlisting}
+would be interpreted as two expressions.
+
+There are two ways to fix it:
+\begin{itemize}
+\item use parenthesis:
+\begin{lstlisting}
+(someLongExpression
++ someOtherExpression)
+\end{lstlisting}
+\item move operator on the previous line:
+\begin{lstlisting}
+someLongExpression +
+ someOtherExpression
+\end{lstlisting}
+  - this will flag that expression is not finished
+\end{itemize}
+
+\section{Higher Order Functions}
+\label{sec:Lection2-HigherOrderFunctions}
+
+\subsection{Tail Recursion}
+\label{sec:TailRecursion}
+
+Consider \lstinline|gcd|, the function that computes the greatest common divisor
+of two numbers:
+\begin{lstlisting}
+def gcd(a: Int, b: Int): Int = 
+  if (b == 0) a else gcd(b, a % b)
+\end{lstlisting}
+Evaluation for  \lstinline|gcd( 14, 21)|:
+\begin{itemize}
+\item \lstinline|gcd( 14, 21)|
+\item \lstinline|if (21 == 0) 14 else gcd(21, 14 % 21)|
+\item \lstinline|gcd(21, 14 % 21)|
+\item \lstinline|gcd(21, 14)|
+\item \lstinline|if (14 == 0) 21 else gcd(14, 21 % 14)|
+\item \lstinline|gcd(14, 7)|
+\item \lstinline|gcd(7, 0)|
+\item \lstinline|if (0 == 0) 7 else gcd(0, 7 % 0)|
+\item \lstinline|7|
+\end{itemize}
+
+Similar story - factorial:
+\begin{lstlisting}
+def factorial(n : Int): Int =
+  if (n == 0) 1 else n * factorial(n - 1)
+\end{lstlisting}
+Evaluation for  \lstinline|factorial( 4)|:
+\begin{itemize}
+\item \lstinline|if (4 == 0) 1 else 4 * factorial(3)|
+\item \lstinline|4 * factorial(3)|
+\item \lstinline|4 * (3 * factorial(2))|
+\item \lstinline|4 * (3 * (2 * factorial(1)))|
+\item \lstinline|4 * (3 * (2 * (1 * factorial(0))))|
+\item \lstinline|4 * (3 * (2 * (1 * 1)))|
+\end{itemize}
+
+
+The main difference between evaluations is that in \lstinline|gcd| we always have
+the ``pure'' call of \lstinline|gcd|. In \lstinline|factorial| we add one more
+element to expression: the expression becomes bigger on each call - until the
+end where it is reduced to a final value.
+
+This difference in rewriting rule translates into different {\bf executions
+  consideration}: if a function calls itself as its last action, the function's
+stack frame can be reused. This is called \term{tail recursion}. Tail recursive
+function can execute in constant stack space (which makes just another
+formulation of an {\bf iterative process}). 
+%video 3-1 06:48
+
+For example, \lstinline|gcd| calls itself as a last part of else block - this
+will be translated into tail - recursive block of constant size (space). 
+
+In \lstinline|factorial| example, even after the call to
+\lstinline|factorial(n-1)|, there is still work to be done - namely, we have to
+multiply the result of this call to \lstinline|n|.
+%video 3-1 07:40
+
+\end{document}

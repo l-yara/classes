@@ -701,7 +701,7 @@ sensitive to such changes (as all your money are coming at the end of maturity
 period).
 % video 6-6
 
-\subsubsection{Sources of Rist in Bonds}
+\subsubsection{Sources of Risk in Bonds}
 \label{sec:SourcesOfRiskBonds}
 
 The uncertainty concerning bond values/prices due to interest rates fluctuations
@@ -1077,7 +1077,7 @@ The risk of whole portfolio: $\sigma^2_p (\text{or }\sigma_p) =
 
 - say, Google and Yahoo. Risk of each is $\sigma^2_{GOOG}|\sigma_{GOOG}$ and $\sigma^2_{YAHO}|\sigma_{YAHO}$
 
-The average risk is $\frac12 \sum (\sigma_{GOOG} + \sigma_{YAHO}$ 
+The average risk is $\frac12 \sum (\sigma_{GOOG} + \sigma_{YAHO})$ 
 - assuming equal is invested in both. 
 
 But the risk of a portfolio is a bit more interesting: $\sigma_p = $
@@ -1200,7 +1200,230 @@ not 0 - the equity and assets are not the same).
 \subparagraph{Putting it Together}
 
 Debt is 0, so $\beta_{assets} = \beta_{equity}$. Looking at Apple (as comparable
-to Orange), we get $\beta_a = 0.94$ (from Yahoo Finance).   
+to Orange), we get $\beta_a = 0.94$ (from Yahoo Finance; for more serious
+analysis use more sources - like morningstar). 
+
+Next - calculate CAPM: expected return 
+$$R^{APPLE}_e = \underbrace{R_f}_{1.45\%} + \underbrace{[R_m - R_f]}_{7\%}
+\underbrace{\beta_e^{APPLE}}_{0.94} = 8.5\%$$ 
+Here we got return on assets $\to$ can calculate cost of capital (as Debt is 0).
+
+% video 10-2
+\subsubsection{Valuation}
+\label{sec:StockPricingValuation}
+
+\paragraph{Cost of Capital WACC}
+
+All published betas (and the ones which can be used for CAPM  are {\bf betas of
+  equity} (not debt!). But the world has Equity and Debt (a firm/project/idea
+could be financed by equity and debt (or hybrid). These capture most important
+aspects of financing and evaluation.
+
+Leverage means that the firm uses debt in its ``capital structure''. In a world
+with competitive markets and no frictions, financing (or the mix of equity and
+debt) has no effect on the value of a idea/project/firm (Modigliani - Miller). 
+
+Value is created by the idea (real asset) and its ability to generate cash
+flows. The cost of capital. or the return on asset, is determined by the
+inherent (market) risk (beta) of the business (real access), not by ow it is
+financed. 
+
+Under perfect capital markets. $E(R_a)$ - estimation of return on assets is just
+the weighted average of the equity and debt cost of capital, or the {\bf weighted
+average cost of capital} (WACC):
+
+$$WACC = E(R_a) = \frac{D}{E_L + D}E(R_d) + \frac{E_L}{E_L + D}E(R^L_e)$$
+where
+\begin{itemize}
+\item $E(R_a)$ -  required rate of return on debt (estimated)
+\item $E(R_e^L)$ - required rate of return on the {\it levered} equity of the
+  firm
+\item $D$ - weight of debt
+\item $E_L$ - equity (?)
+\end{itemize}
+here $E()$ means estimation and $L$ means ``leverage'' 
+% video 10-2, 10:20
+
+% video 10-3
+\paragraph{Leverage Risk}
+As return on assets is the same for the situation ``no debt'' and ``financing
+includes debt'', the cost of capital changes (see formula for WACC). Then the
+expected rate of return on equity of a levered firm increases in proportion to
+the debt-equity ration ($D/E$), expressed in market values (re-focusing the WACC
+formula):
+$$E(R^L_e) = E(R_a) + \frac{D}{E_L} [ E(R_a) - E(R_d)]$$
+- as you take on debt, the expected return on equity goes up - because you take
+on more risk. Similarly, the {\bf Risk of Equity}:
+$$\beta_e^L = \beta_a + \frac{D}{E_L}(\beta_a - \beta_d)$$
+\begin{itemize}
+\item $\beta_a$ - Business Risk
+\item $\beta_a - \beta_d$ - Financial Risk
+\item if $D=0$ (i.e. firm has no leverage), $\beta_a = \beta_e$
+\item if $D/E$ is positive (i.e. firm is {\it levered}), then $\beta_e >>
+  \beta_a$ due to financial risk
+\end{itemize}
+- ``whenever you consider return, you should consider risk''
+
+\paragraph{Business Risk and Financial Risk}
+
+{\bf Business risk} is the risk of the firm's assets; the riskiness inherent in
+their operations. It is also the risk of the equity of an all equity firm.
+
+{\bf Financial risk} is the {\bf additional risk} place on {\bf equity} as a
+result of the firm's decision to use senior fixed-income securities - i.e.,
+debt. So ``debt is a promise, and you pay it first'' - which makes equity more
+risky. 
+
+Payment to equity holders = (project cash flow) - (amount owed on fixed
+borrowing). But WACC is always the same - just when $\frac{D_L}{E_L}$ rises,
+expected return on equity ($e_E$) rises too - and so rises return on financing
+($r_D$). As a result, WACC (which is {\it weighted average} cost of capital)
+stays the same.  
+
+%video 10-4
+Return on equity $r_E$ will always be more or equal to return on assets $r_A$,
+because $\beta_E > \beta_A$ 
+\begin{itemize}
+\item To evaluate investment project, we need to find the $\beta$ and return of
+  the assets, i.e. the risk and return of the assets generating the cash flows
+\item Since the $\beta$ of assets are not observable, we take the $\beta$ of
+  equity and remove the effects of financial leverage of the firm ({\it
+    unlever}) to get an estimate of beta asset.
+\end{itemize}
+
+%video 10-5
+\subsubsection{Valuation Mega Example}
+\label{sec:MegaExample}
+
+\begin{itemize}
+\item Online, Inc is a video gaming company with no debt. Recently their stock
+  has been added to NASDAQ and it has an (equity) $\beta_e^V = 1.50$ - ``V''
+  for Video Games
+\item Online, Inc is considering investing in the software business, The
+  business project will require an initial investment of \$50,000,000. If
+  undertaken, the video gaming business will represent 25\% of Online, Inc.'s
+  assets. 
+\item  There is 50\% chance the project will generate an annual payoff of
+  \$7,000,000 forever, a 40\% chance of an annual payoff of \$5,000,000 forever,
+  and a 10\% chance that the project will fail and generate no cash flows.
+\item Companies solely in the software business have an equity beta of 1.40.
+  These firms have a debt/equity ration of 0.25 (on average) and the risk-less
+  debt. Online, Inc. is forecasting that the average market risk premium is
+  about 5\% and the risk-free rate on a long-term bond is 4.5\%
+
+So $\beta_e^{SOFT} = 1.40$, but $\frac{D}E = 0.25$. As debt is risk-less,
+$\beta_d = 0$. For CAPM: $R_f = 4.5\%$; $(R_m - R_f) = 5\%$.
+\end{itemize}
+%video 10-6
+Example questions:
+\begin{enumerate}
+\item What is Online Inc.'s {\bf cost of capital} before undertaking the project?
+
+Debt is 0, so 
+$$WACC = R_a^V (= R_e) = R_f + (Rm-Rf)\beta_e = 4.5\% + 5\% \times 1.5 = 12\%$$
+%video 10-8
+\item What is IRR of the new project?
+
+Use cash-flows: $I_0 = 50M$, but cash-flows are actually ``expected'':
+$$E(C) = \frac12 (7M) + 0.4(5M) + 0.1 \times 0 = 5.5$$ 
+- actually it is bouncing up-down, and never equals to 5.5! 
+
+So, for perpetual:
+$$IRR = \frac{C}{I_0} = 5.5/50 = 11\%$$
+(to check: calculate present value $PV = C/IRR = 5.5/0.11 = 50M$, which is equal
+to Investment - checked!
+
+IRR in isolation does not much sense, but here it is quite simple (cash-flow
+changed sign only once, and there is single project - no other projects to
+compare, where IRR causes problems), so everything is fine for now.
+
+%video 10-10
+\item Should Online, Inc. take the new project?
+
+The cost of capital Online ``standalone'' (as-is) is 12\%, the IRR if a new
+project is 11\%. 
+
+Answer: do not know. IRR looks less then present CoC ($R_a$), but {\bf IRR is
+  calculated for different business then $R_0$!}. So we need to find a cost of
+capital for software: $R_a^{SOFT}$ - to compare similar risks and returns. 
+
+%video 10-12
+\item what is the hurdle value (cost of capital) for the project?
+
+So $\beta_a = \beta_e(\frac{E}{D+E}) + \beta_d(\frac{D}{D+E}) \to \beta_e =
+\beta_a + \frac DE(\beta_a - \beta_d)$. 
+
+We have data for: $\beta_e^S = 1.40 = \beta_a^S + 0.25(\beta_a^S - 0)$. Here
+$\beta_d = 0$ as debt is riskless (usually not true, typically $0.1 < \beta_d <
+0.4$). Then $\beta_a^S = 1.40/1.25 = 1.12$ - beta for the software business. 
+
+So {\bf cost of capital}: $R_a^S = R_f + [R_m - R_f] \beta_a^S = 4.5\% + [5\%] 1.12
+\approx 10.1\%$
+
+% video 10-14
+\item Should Online, Inc. take the new project (2)?
+
+IRR is 11\%, cost of capital for software business $R_a^S = 10.1\%$ - so $IRR >
+R_a$, answer is {\bf yes}.
+
+Separate question is how difficult it is to come with idea/project which will
+beat the companies already on the market. 
+
+% video 10-15 
+\item If Online, Inc has 1 million shares, what will happen to its stock price? 
+
+The NPV of a decision is $NPV = -I_0 + PV(C_1, C_2 \dots) =-I_0 + \frac
+C{R_a^S}= -50M + \frac{5.5M}{0.101} \approx -50M + 55M = +5M$
+
+So Share price should go up by $S_{up} = \$5M/1M = \$5$
+
+% video 10-17
+\item What is Online Inc. new cost of capital? Is this good or bad news?
+
+Having $R_a^V = 12\%, R_a^S = 10.1\%$ and $\beta_a^V = 1.50; \beta_a^S = 1.12$
+(BTW, high risk - high return works here fine).
+
+Then $R_a = 12\%(0.25) + 10.1 (0.75) = 3\% + 7.5\% = 10.5\% $ - as software
+business makes 75\% of the whole business. So cost of capital dropped from 12\%
+to 10.5\%, which is {\bf NOT} bad - because as return drops, so drops risk:
+$\beta_a = 1.50 (0.25) + 1.12 (0.75) = $<less then initial 1.50>.
+
+So the change is {\bf neither good nor bad}.
+\end{enumerate}
+
+% video 10-18
+A lot of firms use their own cost of capital in evaluations. For the case,
+General Electric (GE) uses its own value for COC to evaluate {\bf ALL} projects.
+This is dangerous as lead to comparing returns only without assuming risks - so
+you tend to use high-risk projects.
+
+Two reasons why capital structure might affect firm value in the {\bf real
+  world}: 
+\begin{itemize}
+\item Capital structure policy may result in the realisation of tax benefits due
+  to the interest tax shields provided by debt at the corporate level
 
 
+\item The capital structure policy adopted by a company's management may lead to
+  costs incurred due to the presence of debt, especially if the firm is in
+  financial distress.
+\end{itemize}
+
+The weighted average cost of capital (WACC) of a firm {\bf with corporate taxes}
+becomes 
+$$WACC = \frac D{V_L}(1-T_c)E(R_d) + \frac{E_L}{V_L} E(R_e^L) $$
+
+where $T_c$ - corporate tax rate. Then $(1-T_c)$ makes serious influence on the
+final figures (WACC goes down in comparison to the ``pure'' calculation) -
+because Government decides to let you deduct the interest as expense so debt
+becomes attractive (artificially!).
+
+The tax-deductibles of interest on debt implies that firms should have 100\%
+leverage, but the evidence shows that firms do not borrow even close to 100\%
+for two potential reasons:
+\begin{itemize}
+\item Personal taxes may favour equity
+\item Bankruptcy-related costs
+\end{itemize}
+ 
 \end{document}
