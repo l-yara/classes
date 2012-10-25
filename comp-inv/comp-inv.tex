@@ -1,0 +1,356 @@
+%\documentclass{ncc}
+%\documentclass{article}
+\documentclass{scrartcl}
+
+\usepackage{amsmath,amssymb,amsfonts} % Typical maths resource packages
+\usepackage{graphics}                 % Packages to allow inclusion of graphics
+\usepackage{color}                    % For creating coloured text and background
+\usepackage{hyperref}                 % For creating hyperlinks in
+                                % cross references 
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+\usepackage{listings}
+\lstdefinelanguage{scala}{
+  morekeywords={abstract,case,catch,class,def,%
+    do,else,extends,false,final,finally,%
+    for,if,implicit,import,match,mixin,%
+    new,null,object,override,package,%
+    private,protected,requires,return,sealed,%
+    super,this,throw,trait,true,try,%
+    type,val,var,while,with,yield},
+  otherkeywords={=>,<-,<\%,<:,>:,\#,@},
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[n]{/*}{*/},
+  morestring=[b]",
+  morestring=[b]',
+  morestring=[b]"""
+}
+\usepackage{color}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+  
+% Default settings for code listings
+\lstset{frame=tb,
+  language=scala,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  frame=single,
+  breaklines=true,
+  breakatwhitespace=true
+  tabsize=3
+}
+
+\newcommand{\example}{\subparagraph{Example:}} % Example
+\newcommand{\term}[1]{\verb~#1~} % Term
+
+\begin{document}
+\part{Part I}
+\label{part:Intro}
+They promised the Part II with more geeky staff!
+Course info - wiki.quantsoftware.org
+Books: ``Active Portfolio Management''(for deeper look); ``All about Hedge Funds''.
+
+% video 2-2
+\section{Portfolio Management Basics}
+\label{sec:Basics}
+\subsection{Portfolio Management at a Glance}
+\label{sec:PortfolioManagement}
+\term{ETF} - Electronically Traded Fund.
+There are (basically) two possible incentives for Portfolio Manager / Hedge
+Fund:
+\begin{itemize}
+\item By \term{Expense ratio}
+  \begin{itemize}
+  \item Used mostly by mutual funds and ETFs
+  \item The percentage is less then 1\% of all the funds managed
+  \end{itemize}
+When managing such fund/ETF, the main goal becomes attracting investments.
+\item ``Two and twenty'' - the standard structure for hedge fund. Includes 2\%
+  of the total assets plus 20\% of profits.
+\end{itemize}
+
+\paragraph{Attracting investors}
+Know your audience:
+\begin{itemize}
+\item Individuals (probably the smallest component)
+\item Institutions:
+  \begin{itemize}
+  \item Harvard Foundation
+  \item CalPERS
+  \end{itemize}
+\item Funds of Funds
+\end{itemize}
+
+Attracting investors:
+\begin{itemize}
+\item Must have a track record
+\item Very compelling story and back test - provide a good simulation result 
+\item Fit in a ``pigeon hole''? (i.e. fit the expectation of investor on a
+  particular type of assets)
+\end{itemize}
+
+Two main types of fund goals:
+\begin{itemize}
+\item Reference to a benchmark (pigeon hole)
+\item Absolute return
+\end{itemize}
+
+% video 2-3
+\subsection{Common Metrics for Hedge Funds}
+\label{sec:CommonMetricsHedgeFunds}
+Common Metrics:
+\begin{itemize}
+\item Annual Return - in percent
+$$ metric = value[end] / value[start] - 1$$
+- can be yearly, daily etc.
+\item Risk: standard deviation of return (volatility)
+For particular day $i$:
+$$daily\_rets[i] = value[i]/value[i-1]-1$$
+$$std\_metric = stdev(daily\_rets)$$
+\item Risk: Draw down (D-down): ``when a market(benchmark index) goes down - how
+  much does our fund goes down?'' (proportion of the overall fund size)  
+- being calculated as ``Max Draw down'': 
+\item Reward / Risk: Sharpe Ratio:  
+\item Reward / Risk: Sortino Ratio: only counts volatility when it is downward
+\item Jensen's Alpha
+\end{itemize}
+
+% video 2-4
+
+\subsection{Sharpe Ratio}
+\label{sec:SharpeRatio}
+
+Used to differentiate similar portfolios (imagine their returns metrics are
+similar). The Sharpe Ratio is calculated from daily returns and standard
+deviation metrics:
+$$daily_rets[i] = (value[i]/value[i-1]) - 1$$
+$$std\_metric = stdev(daily\_rets)$$
+Properties:
+\begin{itemize}
+\item most ``important'' measure of asset performance (the higher - the better) 
+\item how well does the return of an asset compensate the investors for the risk
+  taken?
+\item when comparing two assets with the same return, higher Sharper ratio gives
+  more return for the same risk
+\end{itemize}
+
+$$S = \frac{E[R-R_f]}{\sigma} = \frac{E[R-R_f]}{\sqrt{var[R-R_f]}} $$
+here:
+\begin{itemize}
+\item $E[R - R_f]$ - expected return:
+  \begin{itemize}
+  \item  $R_f$ - a ``risk-free return'' (return for low-risk asset); quite often
+    it is ignored
+  \item $R$ - return itself
+  \end{itemize}
+\item $var[R-R_f]$ - the volatility, or the standard deviation of day-to-day
+  changes in return
+\end{itemize}
+a bit simplified version: $k *
+\frac{average\_daily\_return}{std(daily\_return)}$, or 
+$$ metric = k * mean(daily\_rets)/stdev(daily\_rets)$$
+where $k = \sqrt{250}$ for daily returns (250 - amount of working days in a
+trading year). For monthly returns, use $k = \sqrt{12}$
+
+% video 2-5
+\subsubsection{Homework \& Demo with Excel}
+\label{sec:Excel}
+Getting data: yahoo finance, Stock ticker -> Historical Prices, ``Download as
+Spreadsheet''. 
+Columns: Open, High, Low, Close, Volume, Adj(Adjusted) Close. We work with {\bf
+  Adj Close}. Sort by Date ascending (it is generated in descending order).
+
+Then calculate:
+\begin{itemize}
+\item $Total\_return=final\_value/starting\_value$ (in \%)
+\item for the first day = 0;$Daily_returns[i] = return[i]/return[i-1] - 1$ 
+\item Sharpe ratio: first get $=AVERAGE(daily_return)$, then
+  $=STDEV(daily_returns)$. Finally,
+  $Sharpe\_ratio=sqrt(250)*[avg\_daily\_ret]/[stdev\_daily\_ret]$ 
+\end{itemize}
+
+% video 2-6
+\subsection{Homework 1}
+\label{sec:Homework1}
+
+\begin{itemize}
+\item Find online broker to ``paper trade'' (google/yahoo finance)
+\item Invest \$1M in 4 equities.
+\item Access portfolio for 2011:
+  \begin{itemize}
+  \item Annual Return
+  \item Average daily return
+  \item Cumulative return: $price[i]/starting\_price$ 
+  \item Investment: $original\_investment * cumulative\_return$
+  \item STDEV of daily return
+  \item Sharpe Ration
+  \end{itemize}
+\item Compare with benchmark: SPY
+\item Submit:
+  \begin{itemize}
+  \item .pdf printout of the spreadsheet
+  \item Screen-shot of portfolio online
+  \end{itemize}
+\end{itemize}
+(see trick with relative investment values at video 2-6, 07:10).
+The highest Sharpe ration comes up to 4 - try to beat it (ho-ho).
+
+% video 3-1
+\section{Mechanics of the Market}
+\label{sec:MechanicsOfMarkets}
+Types of orders at the Exchange:
+\begin{itemize}
+\item Symbol (name of the equity)
+\item Buy / Sell
+\item Market order (take whatever price is available)/ Limit (max/minimum price
+  for buying/selling respectively order)
+\item Shares (how many?)
+\item Price (if Limit order)
+\end{itemize}
+
+\subsection{The Order Book}
+\label{sec:OrderBook}
+The \term{Order Book} - something like a blackboard at the exchange where
+players post their Limit orders where:
+\begin{itemize}
+\item \term{Ask} price - ``ready to sell by this price''
+\item \term{Bid} price - ``ready to buy by this price''
+\end{itemize}
+The gap between maximum Bid and minimum Ask prices is called \term{Spread}.
+Usually for very liquid (?) assets this is quite small.  
+The order book remains static until one of the event occurs:
+\begin{itemize}
+\item One of the buying parties goes ahead and order buying by the Asking price
+  - so-called \term{Crossing the Spread}
+\item Market order comes in
+\end{itemize}
+
+% video 3-2
+If there a lot more shares to sell then to buy - that means that the price is
+going to go down (the high-frequency trading is about that).
+
+\subsection{How Brokers Connected to Exchange}
+\label{sec:BrokerConnectionToExchange}
+
+Quite often the order from Trader (you) does not even reach the Exchange - it is
+being fulfilled withing the Broker. This can make them some coins:
+\begin{itemize}
+\item every order placed on exchange costs broker some money - they can save it
+  a bit
+\item sometimes broker can make some coins on margin between Bid and Ask price
+  for the same symbol from different traders.
+\end{itemize}
+
+Sometimes brokers pass orders not directly to \term{Stock Exchange(SE)} but to
+the \term{Market Makers(MM)}, and they fulfil them internally. 
+
+The SE itself accepts only very basic orders - like Buy/Sell Market/Limit. There
+are a lot more complex types of orders which may occur, usually through the
+broker:
+\begin{itemize}
+\item Sell short (to open): bet against stock
+\item Buy (to close)
+\item More complex orders (stop limit)
+\end{itemize}
+
+\subsubsection{Mechanics of Short Selling}
+\label{sec:MechanicsOfShortSelling}
+Shorting the stock - when you believe it is going to go down:
+\begin{itemize}
+\item Borrow the shares
+\item Sell them. Now we have:
+  \begin{itemize}
+  \item Asset: Cash
+  \item Liability: Shares owed
+  \end{itemize}
+\item Share price drops. Buy the shares at lower price (close the transaction). 
+\item Return shares. Profit (C).
+\end{itemize}
+There is a theoretical limit of what you can make: if the price of a stock goes
+all the way to 0, you get the whole price of your sell. However, if the market
+price goes up, there is no limit for your loss.
+
+%video 3-3
+\subsection{Hedge finds and Arbitrage}
+\label{sec:HedgeFundsAndArbitrage}
+
+\subsubsection{Order Book Observation}
+\label{sec:OrderBookObservation}
+Classical: if there are much more players trying to sell some stock hen trying
+to buy, there is a good chance that the price will go down - it makes sense to
+stay in short. To catch-up with such imbalances, often Hedge Funds rent the
+co-located rack space on SE for observing the order books.
+
+\subsubsection{Arbitrage}
+\label{sec:HedgeFundsAndArbitrage}
+Imagine there are two SE trading the same shares. The hedge fund can execute
+transaction between these SE can make money on such differences.
+
+% video 3-4
+\subsection{Computational Components of a Hedge Fund}
+\label{sec:HFAnatomy}
+We're working on slides 3-4. 
+\paragraph{Page 2 (Slower) Quant Shop.}
+Trading algorithm is connected to order book, Live Portfolio, Historical Price
+Data; is parametrised (at the moment of opening) with the Target Portfolio. 
+Trading algorithm works to bring the Live Portfolio to the Target one. The trick
+is not to disturb market too much - so orders are issues slowly. (\term{Fat
+  Finger} - a trader who worked with large amounts of equities so ``prices going
+mad'').
+
+Step back: how do we get the Target Portfolio?
+\paragraph{Page 3 Quant Shop}
+The centre is the Portfolio Optimiser algorithm, fed by data from forecasts
+(sometimes insider), Current Portfolio, Historical Price Data, and Risk
+Constraints. 
+
+Nice, but the forecast comes from (sometimes) people like ``Cramer on TV'', or 
+\paragraph{Page 4: Forecasting Algorithm}
+Often built of top of some Machine Learning systems, fed with some information
+feeds (like News) and Historical Price Data.
+
+Some news providers are providing the news optimised for forecasting: in a
+format ``Equity symbol, bad news/good news''. See TR (Thomas Reuters?) for
+detail. 
+
+% video 3-5 (part 4-1)
+\subsection{Company Value}
+\label{sec:CompanValue}
+The ``traditional'' ways are:
+\begin{itemize}
+\item Market cap (shares * share price)
+\item Future dividends 
+
+So, imagine the \term{Notional Company} which prints \$1/year each year,
+forever. The company worth is figured out by a Current Value of a the future
+\$1. 
+Assume that discount rate is 0.95 (it is lower then the banking rate, but we
+trust bank more). So the \$1 in next year costs 0.95 today. The \$1 in two years
+costs even less: $9.95^2$. Next year - $0.95^3$, etc. 
+
+So the present value will be $$\sum_{i=1}^\infty 0.95^i=\sum_{i=1}^\infty
+dividend * \gamma^i = dividend * \frac 1{(1-\gamma)} = \frac{\$1}{1-0.95}=\$20$$
+
+Various information (like CEO effectiveness, cost of raw materials) informs
+traders about company's capacity to make money in the future.
+\item Book value
+\end{itemize}
+
+% video 3-6 (part 4-2)
+
+\end{document}
