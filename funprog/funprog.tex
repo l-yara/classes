@@ -32,6 +32,30 @@
   morestring=[b]"""
 }
 %\lstset {language=scala}
+\usepackage{color}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+  
+% Default settings for code listings
+\lstset{frame=tb,
+  language=scala,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  frame=single,
+  breaklines=true,
+  breakatwhitespace=true
+  tabsize=3
+}
+
 
 \newcommand{\example}{\subparagraph{Example:}} % Example
 \newcommand{\term}[1]{\verb~#1~} % Definition
@@ -342,7 +366,7 @@ of two numbers:
 def gcd(a: Int, b: Int): Int = 
   if (b == 0) a else gcd(b, a % b)
 \end{lstlisting}
-Evaluation for  \lstinline|gcd( 14, 21)|:
+Evaluation for \lstinline|gcd( 14, 21)|:
 \begin{itemize}
 \item \lstinline|gcd( 14, 21)|
 \item \lstinline|if (21 == 0) 14 else gcd(21, 14 % 21)|
@@ -360,7 +384,7 @@ Similar story - factorial:
 def factorial(n : Int): Int =
   if (n == 0) 1 else n * factorial(n - 1)
 \end{lstlisting}
-Evaluation for  \lstinline|factorial( 4)|:
+Evaluation for \lstinline|factorial( 4)|:
 \begin{itemize}
 \item \lstinline|if (4 == 0) 1 else 4 * factorial(3)|
 \item \lstinline|4 * factorial(3)|
@@ -371,24 +395,1951 @@ Evaluation for  \lstinline|factorial( 4)|:
 \end{itemize}
 
 
-The main difference between evaluations is that in \lstinline|gcd| we always have
-the ``pure'' call of \lstinline|gcd|. In \lstinline|factorial| we add one more
-element to expression: the expression becomes bigger on each call - until the
-end where it is reduced to a final value.
+The main difference between evaluations is that in \lstinline|gcd| we always
+have the ``pure'' call of \lstinline|gcd|. In \lstinline|factorial| we add one
+more element to expression: the expression becomes bigger on each call - until
+the end where it is reduced to a final value.
 
 This difference in rewriting rule translates into different {\bf executions
   consideration}: if a function calls itself as its last action, the function's
 stack frame can be reused. This is called \term{tail recursion}. Tail recursive
 function can execute in constant stack space (which makes just another
-formulation of an {\bf iterative process}). 
-%video 3-1 06:48
+formulation of an {\bf iterative process}).
+% video 3-1 06:48
 
 For example, \lstinline|gcd| calls itself as a last part of else block - this
-will be translated into tail - recursive block of constant size (space). 
+will be translated into tail - recursive block of constant size (space).
 
 In \lstinline|factorial| example, even after the call to
 \lstinline|factorial(n-1)|, there is still work to be done - namely, we have to
 multiply the result of this call to \lstinline|n|.
-%video 3-1 07:40
+% video 3-1 07:40
+
+In general, if the last action of a function consists of calling a function
+(which may be the same), one stack frame would be sufficient for both functions.
+Such calls are called \term{tail-calls}.
+
+In Scala, only directly recursive calls to the current function are optimised.
+One can require that a function is tail-recursive using a \lstinline|@tailrec|
+annotation:
+\begin{lstlisting}
+@tailrec
+def cgd(a: Int, b: Int): Int = ...
+\end{lstlisting}
+
+If the annotation is given, and the implementation of \lstinline|gcd| were not
+tail recursive, an error would be issued.
+
+Exercise: tail recursive on \lstinline|factorial|:
+\begin{lstlisting}
+object exercise {
+  def factorial(n: Int): Int = {
+    def loop(acc: Int, n: Int): Int = 
+      if (n == 0) acc
+      else loop(acc * n, n - 1)
+    loop(1, n)
+  }
+}
+\end{lstlisting}
+
+% video 3-2
+\subsection{Higher-Order Functions}
+\label{sec:Lection2-HigherOrderFunctions}
+
+Functional languages treat functions as \term{first-class values}. This means
+that, like any other value, a function can be passed as a parameter and returned
+as a result.
+
+Functions that take other functions as parameters or that return functions as
+results are called \term{higher-order functions}.
+
+\example Take the sum of the integers between \lstinline|a| and \lstinline|b|:
+\begin{lstlisting}
+def sumInts(a: Int, b: Int): Int = 
+  if (a > b) 0 else a + sumInts(a + 1, b)
+\end{lstlisting}
+% video 3-2, 01:15
+
+Take the sum of the cubes of all the integers between \lstinline|a| and
+\lstinline|b|:
+
+\begin{lstlisting}
+def cube(x : Int): Int = x * x * x
+
+def sumCubes(a: int, b: Int): int =
+  if (a > b) 0 else cube(a) + sumCubes(a + 1, b)
+\end{lstlisting}
+
+Similar story - for the sum of factorials. These are special cases of
+$$\sum_{n=a}^b f(n)$$
+for different values of $f$.
+
+\subsubsection{Summig with Higher-Order Functions}
+\label{sec:SummingWHighOderFunctions}
+
+Let's define
+\begin{lstlisting}
+def sum(f: Int => int, a: Int, b: Int): Int = 
+  if (a > b) 0
+  else f(a) + sum(f, a + 1, b)
+\end{lstlisting}
+
+We can then write
+\begin{lstlisting}
+def sumInts(a: Int, b: Int)        = sum(id, a, b)
+def sumCubes(a: Int, b: Int)       = sum(cube, a, b)
+def sumFactorials(a: Int, b: Int)  = sum(fact, a, b)
+\end{lstlisting}
+
+where
+\begin{lstlisting}
+def id(x: Int): Int = x
+def cube(x: Int): Int = x * x * x
+def fact(x: Int): Int = if (x == 0) 1 else fact(x - 1)
+\end{lstlisting}
+
+\subsubsection{Function Types}
+\label{sec:FuncTypes}
+
+The type \lstinline|A => B| if the type of a \term{function} that takes an
+argument of type \lstinline|A| and returns as result of type \lstinline|B|.
+
+\subsubsection{Anonymous Functions}
+\label{sec:AnonymousFuncitons}
+
+Passing functions as parameters leads to the creation of many small functions.
+Sometimes it is tedious to have to define (and name) these functions using
+\lstinline|def|. Instead of
+
+\begin{lstlisting}
+def str = "abc"; println(str) 
+\end{lstlisting}
+
+We can directly write \lstinline|println("abc")| because strings exist as
+\term{literals}. Analogously we would like function literals, which let us write
+a function without giving it a name. These are called \term{anonymous
+  functions}.
+
+So the \lstinline|cube| function can be rewritten as anonymous:
+\begin{lstlisting}
+(x: Int) => x * x * x
+\end{lstlisting}
+- where \lstinline|(x : Int)| is the \term{parameter} of the function and
+\lstinline|x * x * x| is it's \term{body}. The type of the parameter can b
+emitted if ti can be inferred from the context.
+
+\paragraph{Anonymous Functions as Syntactic Sugar}
+
+An anonymous function can always be expressed using \lstinline|def| with
+arbitrary, fresh (that is, not yet used in the program) name. So one can
+therefore say that anonymous functions are \term{syntactic sugar} (something
+that does not add to the expressive power of the language).
+
+So, rewriting:
+
+\begin{lstlisting}
+def sumInts(a: Int, b: Int)  = sum(x => x, a, b)
+def sumCubes(a: Int, b: Int)  = sum(x => x * x * x, a, b)
+\end{lstlisting}
+
+\subparagraph{Exercise}
+
+Re-write the \lstinline|sum| function as tail - recursive one:
+\begin{lstlisting}
+def sum(f: Int => Int)(a: Int, b: Int): Int = {
+  def loop(a: Int, acc: Int): Int = 
+    if (a > b) acc
+    else loop(a + 1, acc + f(a))
+  loop(a, 0)
+}
+\end{lstlisting}
+
+% video 3-3
+
+\subsection{Currying}
+\label{sec:Currying}
+
+The \term{currying} is a special form to write a high-order function. Look again
+at the summation functions:
+\begin{lstlisting}
+def sumInts(a: Int, b: Int)        = sum(x => x, a, b)
+def sumCubes(a: Int, b: Int)       = sum(x => x * x * x, a, b)
+def sumFactorials(a: Int, b: Int)  = sum(fact, a, b)
+\end{lstlisting}
+Note that \lstinline|a| and \lstinline|b| get passed unchanged from
+\lstinline|sumInts| and \lstinline|sumCubes| into \lstinline|sum|.
+
+Can we be even shorter by getting rid of these parameters?
+\begin{lstlisting}
+def sum(f: Int => Int): (Int, Int) => Int = {
+  def sumF(a: Int, b: Int): Int = 
+    if (a > b) 0
+    else f(a) + sumF(a + 1, b)
+  sumF
+}
+\end{lstlisting}
+\lstinline|sum| is now a function that returns another function. The returned
+function \lstinline|sumF| applies the given function parameter \lstinline|f| and
+sums the results.
+
+Then:
+\begin{lstlisting}
+def sumInts(a: Int, b: Int)        = sum(x => x)
+def sumCubes(a: Int, b: Int)       = sum(x => x * x * x)
+def sumFactorials(a: Int, b: Int)  = sum(fact)
+\end{lstlisting}
+
+This functions can in turn be applied like any other function:
+\begin{lstlisting}
+sumCubes(1, 10) + sumFactorials(10, 20)
+\end{lstlisting}
+
+Next trick - avoid the middlemen \lstinline|sumInts, sumQubes, ...| and use the
+general \lstinline|sum| function:
+
+\begin{lstlisting}
+sum(cube)(1, 10)
+\end{lstlisting}
+Then:
+\begin{itemize}
+\item \lstinline|sum(cube)| applies \lstinline|sum| to \lstinline|cube| and
+  returns the {\it sum of cubes} function
+\item \lstinline|sum(cube)| is therefore equivalent to \lstinline|sumCubes|
+\item This function is then applied to the arguments (1, 10)
+\end{itemize}
+% video 3-3 02:52
+
+Generally, function application associates to the left:
+\begin{lstlisting}
+sum(cube)(1, 10) = (sum(cube)) (1, 10)
+\end{lstlisting}
+
+\subsubsection{Multiple Parameter List}
+\label{sec:MultipleParameterList}
+
+The definition of functions that returns functions is so useful is functional
+programming that there is a special syntax for it in Scald. For example, the
+following definition of \lstinline|sum| is equivalent to the one with the nested
+\lstinline|sumF| function, but shorter:
+\begin{lstlisting}
+def sum(f: Int => Int)(a: Int, b: Int): Int = 
+  if (a > b) 0 else f(a) + sum(f)(a+1, b)
+\end{lstlisting}
+
+In general, a definition of a function with multiple parameter lists
+$$\text{def }f(args_1)\dots(args_n) = E$$
+where $n > 1$, is equivalent to
+$$\text{def }f(args_1)\dots(args_{n-1}) = \{\text{def } g(args_n) = E; g\}$$
+where $g$ is a fresh identifier. Or for short:
+$$\text{def } f(args_1)\dots(args_{n-1}) = (args_n \to E)$$
+
+By repeating the process $n$ times
+$$\text{def } f(args_1)\dots(args_n) = E$$
+is shown to be equivalent to
+$$\text{def } f = (args_1 \to (args_2 \to \dots(args_n \to E) \dots )) $$
+
+This style of definition and function application is called \term{currying},
+named for its instigator, Haskell Brooks Curry (1900 - 1982), a logician (in
+fact, the idea goes back further to Schonfinkel and Frege, but the term
+``currying'' has stuck.
+
+So the type of the function \lstinline|sum| that
+\begin{lstlisting}
+def sum(f: Int => Int)(a: Int, b: Int) : Int = ...
+\end{lstlisting}
+is
+\begin{lstlisting}
+(Int => Int) => (int, Int) => Int
+\end{lstlisting}
+- the functional types associate to the right, so
+\begin{lstlisting}
+Int => Int => Int
+\end{lstlisting}
+is equivalent to
+\begin{lstlisting}
+Int => (Int => Int)
+\end{lstlisting}
+{\bf Exercise starts at 3-3, 8:30 }
+
+% video 3-4
+\subsubsection{Example Finding Fixed Point}
+\label{sec:ExampleFindingFixedPoint}
+
+A number $x$ is called \term{fixed point} of a function $f$ if
+$$f(x) = x$$
+
+For some functions $f$ we can locate the fixed points by starting with an
+initial estimate and then applying $f$ in a repetitive way,
+$$x, f(x), f(f(x)), f(f(f(x))), \dots$$
+until the value does not vary anymore (or the change is sufficiently small)
+
+% video 3-5
+\subsubsection{Scala Syntax Summary}
+\label{sec:SyntaxSummary}
+
+- see slides 2-5
+
+% video 5-1
+\section{Data and Abstraction}
+\label{sec:DataAndAbstraction}
+\subsection{Functions and Data}
+\label{sec:FunctionsAndData}
+
+\example Work with rational numbers, represented by \term{numerator} $x$ and
+\term{denominator} $y$ as $\frac xy$. Combine:
+
+So create a \lstinline{class}:
+\begin{lstlisting}
+class Rational(x: Int, y: Int) {
+  def number = x
+  def denom = y
+}
+\end{lstlisting}
+
+Thus introducing two entities:
+\begin{itemize}
+\item A new \term{type} named \lstinline{Rational}
+\item A \term{constructor} \lstinline|Rational| to create elements of this type.
+\end{itemize}
+
+Scala keeps the names of types and values in {\it different namespaces}; it
+always knows from the context whether you mean type or value, so there is no
+conflict between the definitions of type and constructor of
+\lstinline{Rational}.
+
+Elements of a class type are called \lstinline{object}s, created by
+\lstinline{new} operator:
+
+\begin{lstlisting}
+new Rational (1, 2)
+\end{lstlisting}
+
+Objects of the class \lstinline{Rational} have two \term{members},
+\lstinline{number} and \lstinline{denom}:
+\begin{lstlisting}
+val x = new Rational(1, 2)
+x.number
+x.denom
+\end{lstlisting}
+
+Now define arithmetic functions. We can use \lstinline{Rational} as pure
+datatype, and define operations outside:
+
+\begin{lstlisting}
+def addRational(r: Rational, s: Rational): Rational = 
+  new Rational(
+    r.number * s denom + s.number * r.denom, 
+    r.denom * s.denom)
+
+def makeString (r: Rational) = r.number + "/" + r.denom
+\end{lstlisting}
+
+Or we can go further and package functions operating on a data abstractions in
+the data abstraction itself - create \term{methods}:
+\begin{lstlisting}
+class Rational(x: Int, y: Int) {
+  def number = x
+  def denom = y
+  def add(that: Rational) = 
+    new Rational(
+      number * that denom + that.number * denom, 
+      denom * that.denom)
+
+  override def toString = numer + "/" + denom
+
+  def neg: Rational = new Rational(-numer, denom)
+
+  def sub(that: Rational) = add(that.neg)
+
+  def less(that: Rational) number * that.denom < that.numer * denom
+}
+\end{lstlisting}
+
+This works for ``+'' - as \lstinline{add}. Other methods are
+\lstinline|sub, mul, div, equal, less |.
+
+Other trick - method \lstinline|apply|: the ``default'' method like
+\lstinline|''Hello''(1)|
+
+% video 5-2 - More fun with rationals
+The variant \lstinline{x.add(x)}, when applied to
+\lstinline|x = new Rational(5, 7)| will produce $70/49$, which requires
+simplification, in this case reducing them to their smallest numerator and
+denominator by dividing both with a divisor, ideally, during construction:
+
+add to class:
+\begin{lstlisting}
+class Rational(x: int, y: int) {
+  private def gcd(a: Int, b: Int): Int = if (b == 0) a else gcd(b, a % b)
+  private val g = gcd(x, y)
+  def numer = x / g
+  def denom = y / g
+....
+}
+\end{lstlisting}
+another variant:
+\begin{lstlisting}
+class Rational(x: int, y: int) {
+  private def gcd(a: Int, b: Int): Int = if (b == 0) a else gcd(b, a % b)
+  val numer = x / gcd(x, y)
+  val denom = y / gcd(x, y)
+}
+\end{lstlisting}
+In either case client observe exactly the same behaviour. This ability to choose
+different implementations of the data without affecting clients is called
+\term{data abstraction}.
+
+% video 5-2, 04:08
+The \term{self - reference} is implemented through \lstinline|this| keyword.
+Another story - the requirements: for example, we want to restrict denominator
+is not zero:
+\begin{lstlisting}
+class Rational(x: int, y: int) {
+  require(y != 0, "denominator must be nonzero")
+  private def gcd(a: Int, b: Int): Int = if (b == 0) a else gcd(b, a % b)
+  val numer = x / gcd(x, y)
+  val denom = y / gcd(x, y)
+}
+\end{lstlisting}
+- the \lstinline|require| throws exception when requirement is not met.
+
+The \lstinline|require| is a predefined function, similar story is assertions:
+\lstinline|assert(x >= 0)|. Like \lstinline|assert|, it throws exception, but
+the different one (\term{AssertionError}), which reflects a difference in
+intent:
+\begin{itemize}
+\item \lstinline|require| is used to enforce a precondition on the caller of a
+  function
+\item \lstinline|assert| is used as to check the code of function itself
+\end{itemize}
+
+In Scala, a class implicitly introduces a constructor - so-called \term{primary
+  constructor}. This constructor:
+\begin{itemize}
+\item takes the parameters of the class
+\item executes all statements in the class body (such as the \lstinline|require|
+  in our example)
+\end{itemize}
+
+% video 5-2 11:30
+Non-default constructor:
+\begin{lstlisting}
+...
+def this(x: int) = this(x, 1)
+...
+\end{lstlisting}
+
+% video 5-3
+
+\subsection{Evaluation and Operators}
+\label{sec:EvaluationNOperators}
+
+The expression $ \text{new }C(v_1, ... v_m).f(w_1, ..., w_n)$ is being rewritten
+to
+$$[w_1/y_1, ... w_n/y_n][v_1/x_1, ..., v_m/x_m][new C(v_1,...., v_m)/this]b$$
+There are three substitutions at work here:
+\begin{itemize}
+\item the method's \lstinline|f| formal parameters $y_1, \dots y_n$ are
+  substituted by the arguments \lstinline|w_1, ..., w_n|
+\item the formal parameters \lstinline|x_1,...,x_m| of class \lstinline|C| are
+  substituted by the class arguments \lstinline|v_1, ..., v_m|
+\item the substitution of the self-reference \lstinline|this| by the value of
+  the object \lstinline|new C(v_1,...,v_n)|
+\end{itemize}
+
+\subsubsection{Operators}
+\label{sec:Operators}
+
+The operators are introduced is Scala as:
+\begin{itemize}
+\item Step 1: Introduce infix notation: one can write \lstinline|r add s|
+  instead of \lstinline|r.add(s)|
+\item Step 2: Relaxing identifiers: identifier can be
+  \begin{itemize}
+  \item {\it Alphanumeric} - starting with the letter, followed by a sequence of
+    letters or numbers
+  \item {\it Symbolic} - starting with an operator symbol, followed by other
+    operator symbol
+  \item The underscore character ``\_'' counts as a letter
+  \item Alphanumeric identifiers can also end in an underscore, followed by some
+    operator symbols.
+  \end{itemize}
+\end{itemize}
+
+For unary operators - there is a conventions. Say, for negate operator (-):
+\begin{lstlisting}
+def unary_- : Rational = new Rational(-number, denom)
+\end{lstlisting}
+- the space between operator symbol and ``:'' is required when we use
+\lstinline|unary_ | prefix
+
+The precedence of operators is determined by its first character; then
+precedence increases in order (see slide 3-3, page 17):
+
+% video 5-4
+\subsection{Class Hierarchies}
+\label{sec:ClassHierarchies}
+
+\term{Abstract class} can contain members without implementation, like
+\lstinline|incl| and \lstinline|contains| here:
+\begin{lstlisting}
+abstract class IntSet {
+  def incl(x: Int): IntSet
+  def contains(x: Int): Boolean
+}
+\end{lstlisting}
+
+Then - play with binary tree \lstinline|Empty| and \lstinline|NonEmpty| - see
+slide 3-4 pages 3, 4.
+
+The data structure used is one of \term{persistent data structure} class, as
+modification if it do not actually change anything - we really build a new
+instance of a tree re-using existing parts of the old one.
+
+\lstinline|Empty| and \lstinline|NonEmpty| both \term{extend} the class
+\lstinline|IntSet|. This implies that the types \lstinline|Empty| and
+\lstinline|NonEmpty| \term{conform} to the type \lstinline|IntSet|, i.e. an
+object of type \lstinline|Empty| or \lstinline|NonEmpty| can be used wherever an
+object of type \lstinline|IntSet| is required.
+
+In Scala, any user-defined class extends another class. If no superclass is
+given, the standard class \lstinline|Object| from Java.
+
+\subsubsection{Object Definitions}
+\label{sec:ObjectDefinitions}
+
+The {\it singleton object} is created using \term{object definition}:
+\begin{lstlisting}
+object Empty extends IntSet {
+  def contains(x: Int): Boolean = false
+  def incl(x: Int): IntSet = new NonEmpty(x, Empty, Empty)
+}
+\end{lstlisting}
+
+Singleton objects are {\bf not} created with \lstinline|new| operator; they are
+values (\lstinline|Empty| evaluates to itself). They are created at the moment
+of the first reference to them.
+
+\subsubsection{Programs}
+\label{sec:Programs}
+
+The standalone application is expected to have a \lstinline|main| method.
+\begin{lstlisting}
+object Hello {
+  def main(args: Array{String]) = println("hello world")
+}
+\end{lstlisting}
+It must be compiled and run with
+\begin{lstlisting}
+> scala Hello
+\end{lstlisting}
+
+\subsubsection{Dynamic Binding}
+\label{sec:DynamicBinding}
+
+The code invoked by a method call depends on the run-time type of the object
+that contains the method. This trick is called \term{dynamic method dispatch}.
+
+It is analogous to calls to higher-order functions in pure functional languages.
+So (still open) question is: can we implement one concept in terms of the other?
+\begin{itemize}
+\item Objects in terms of higher-order functions?
+\item Higher-order functions in terms of objects?
+\end{itemize}
+
+% video 5-5
+
+\subsection{Class Organisation}
+\label{sec:ClassOrganisation}
+
+Classes are organised in packages with all staff: fully-qualified names,
+\lstinline|package| clause in sources, \lstinline|import| clause etc.
+
+Importing:
+\begin{lstlisting}
+import week3.Rational               //named import - import just Rational
+import week3.{Rational, Hello}      //named import - import both Rational and Hello
+import week3._                      //wild-card import -  import everything in package week3
+\end{lstlisting}
+% video 5-5 03:40
+All members of packages \lstinline|scala, java.lang| and members of singletone
+object \lstinline|scala.Predef| are automatically imported.
+
+\subsubsection{Traits}
+\label{sec:Traits}
+
+A \term{trait} is declared like an abstract class:
+\begin{lstlisting}
+trait Planar{
+  def height: Int
+  def width: Int
+  def surface = height * width
+}
+\end{lstlisting}
+
+Class, objects and traits can inherit from at most one class but arbitrary many
+traits:
+\begin{lstlisting}
+class Square extends Shape with Planar with Movable...
+\end{lstlisting}
+
+Traits can contain fields and concrete methods but can not have (value)
+parameters (only classes can).
+
+\subsubsection{Scala Class Hierarchy}
+\label{sec:ScalaClassHierarchy}
+
+Root is \lstinline|scala.Any|, the base type of all types, with methods
+\lstinline|==, !=, equals, hashCode, toString| defined. Then \lstinline|AnyVal|
+(for values like \lstinline|scala.Float, scala.Boolean, scala.Unit| and
+\lstinline|scala.AnyRef| - essentially, the alias for
+\lstinline|java.lang.Object|.
+
+Numeric value types are automatically convertible but they are {\bf not}
+inherited from one to another (so-called \term{View} relations)
+
+There are also \lstinline|scala.Nothing| and \lstinline|scala.Null|:
+\begin{itemize}
+\item \lstinline|scala.Nothing| is at the bottom of Scala's type hierarchy, it
+  is a subtype of every other type, and {\it there is no value of type Nothing}.
+  It is used:
+  \begin{itemize}
+  \item To signal abnormal termination
+  \item As an element type of empty collection
+  \end{itemize}
+
+\item \lstinline|scala.Null| is a subtype of all reference classes. So:
+  \begin{itemize}
+  \item Every reference class type also has null as a value
+  \item The type of \lstinline|null| is \lstinline|Null|
+  \item \lstinline|Null| is a subtype of every class that inherits from
+    \lstinline|Object|; it is incompatible with subtypes of \lstinline|AnyVal|
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Exceptions}
+\label{sec:Exceptions}
+
+\begin{lstlisting}
+...
+throw new Error("oops") // method return Nothing
+\end{lstlisting}
+
+% video 7-1
+
+\section{Types and Pattern Matching}
+\label{sec:TypesAndPMatching}
+\subsection{Polymorphism}
+\label{sec:Polymorphism}
+
+A \term{cons-list} is a fundamental data structure constructed from two data
+blocks:
+\begin{itemize}
+\item \lstinline|Nil| the empty list
+\item \lstinline|Cons| a cell containing an element and the remainder of the
+  list
+\end{itemize}
+So implementation for the list of integer:
+\begin{lstlisting}
+trait IntList ...
+class Cons(val head: Int, val tail: IntList) extends IntList ...
+class Nil extends IntList ...
+\end{lstlisting}
+notice \lstinline|class Cons(val head: Int, val tail: IntList)| -
+\lstinline|val|s are showing \term{value parameters} of the class - the fields
+assigned ``directly''.
+
+Next step - generalise the definition using a type parameter:
+\begin{lstlisting}
+trait List[T]
+class Cons[T](val head: T, val tail: List[T]) extends List[T]
+class Nil[T] extends List[T]
+\end{lstlisting}
+
+\begin{lstlisting}
+trait List[T] {
+  def isEmpty: Boolean
+  def head: T
+  def tail: List[T]
+}
+
+class Cons[T](val head: T, val tail: List[T}) extends List[T] {
+  def isEmpty = false
+  //head and tail are implemented "automatically"
+}
+
+class Nil[T] extends List[T] {
+  def isEmpty = true
+  def head: Nothing = throw NoSuchElementException("Nil.head")
+  def tail: Nothing = throw NoSuchElementException("Nil.tail")
+//Nothing is a subtype of any other type, including T
+}
+\end{lstlisting}
+
+Symbols defined by \lstinline|val| and \lstinline|def| can be used ``in mix'';
+the difference between them is that \lstinline|val| is evaluated during object
+initialisation while \lstinline|def| is evaluated every time it is referenced.
+
+\subsubsection{Generic Functions}
+\label{sec:GenericFunction}
+
+Functions also can have type parameters:
+\begin{lstlisting}
+def singleton[T](elem: T) = new Cons[T](elem, new Nil[T])
+\end{lstlisting}
+Full-blown call should be
+\begin{lstlisting}
+singleton[Int](1)
+singleton[Boolean](true)
+\end{lstlisting}
+but usually compiler can deduce type
+\begin{lstlisting}
+singleton(1)
+singleton(true)
+\end{lstlisting}
+
+So type parameters do not affect evaluation in Scala: we can assume that all
+parameters and type arguments are removed before evaluating the program -
+so-called \term{type erasure}, like in Java, Scala, Haskell, ML, OCaml.
+
+Languages like C++, C\#, F\# keep the type parameters at runtime.
+
+Polymorphism means that a function type comes in many forms:
+\begin{itemize}
+\item the function can be applied to arguments of many types, or
+\item the type can have instances of many types.
+\end{itemize}
+This can be implemented on two principal forms:
+\begin{itemize}
+\item \term{subtyping}: instances of a subclass can be passed to a base class
+\item \term{generics}: instances of a function or class are created by type
+  parametrisation
+\end{itemize}
+
+% video 7-2
+\subsection{Objects Everywhere}
+\label{sec:ObjectsEverywhere}
+
+For the efficiency, the Scala compiler represents the values of type
+\lstinline|scala.Int| by 32-bit integers, values of \lstinline|scala.Boolean| as
+JVM primitive type boolean etc, but one can consider this as just an
+implementation optimisation.
+
+After all, this is still possible to re-write primitives in ``idealised'' pure
+object manner, but who would need it?
+
+The similar story - for \lstinline|Int, Float| etc.
+
+% video 7-3
+\subsection{Functions as Objects}
+\label{sec:FunctionsAsObjects}
+
+The function type \lstinline|A => B| is an abbreviation for the class
+\lstinline|scala.Function1[A, B]|, which is roughly defined as
+\begin{lstlisting}
+package scala
+trait Function1[A, B]{
+  def apply(x: A): B
+}
+\end{lstlisting}
+There are also traits \lstinline|Function2, Function3, ...| for functions with
+more parameters (up to 22).
+
+\paragraph{Function Values}
+
+An anonymous function like
+\begin{lstlisting}
+(x: Int) => x * x
+\end{lstlisting}
+is expanded to:
+\begin{lstlisting} 
+class AnonFun extends Function1[Int, Int] { 
+  def apply(x: Int) = x * x } new AnonFun 
+}
+\end{lstlisting}
+or, shorter, using \term{anonymous class syntax}:
+
+\begin{lstlisting}
+new  Function1[Int, Int] {
+  def apply(x: Int) = x * x
+}
+\end{lstlisting}
+
+\paragraph{Expansion of Function Calls}
+
+A function call, such as \lstinline|f(a, b)|, where \lstinline|f| is a value of
+some class type, is expanded to
+\begin{lstlisting}
+f.apply(a, b)
+\end{lstlisting}
+
+so the OO-translation of
+\begin{lstlisting}
+val f = (x: Int) => x * X
+f(7)
+\end{lstlisting}
+
+would be
+\begin{lstlisting}
+val f = new Function1[Int, Int] {
+  def apply(x: Int) = x * x
+}
+f.apply(7)
+\end{lstlisting}
+
+The method itself is not a function value, but used in a place where a Function
+type is expected, being converted automatically (expanded) to the function value
+(so - called eta - expansion).
+
+% video 7-4
+\subsection{Subtyping and Generics}
+\label{sec:SubtypingAndGenerics}
+
+If \term{subtyping} and \term{generics} are two principal forms of polymorphism,
+the \term{bounds} and \term{variance} can be considered as the areas of their
+interactions.
+
+\subsubsection{Type Bounds}
+\label{sec:TypeBounds}
+
+Consider the method \lstinline|assertAllPos| which:
+\begin{itemize}
+\item takes an \lstinline|IntSet|
+\item returns the \lstinline|IntSet| itself if all its elements are positive
+\item throws an exception otherwise
+\end{itemize}
+what would be the best type you can give to \lstinline|assertAllPos|?
+\lstinline|IntSet| would be fine in most situation, but can one be more precise?
+
+Realistically, we have three variants:
+\begin{itemize}
+\item \lstinline|assertAllPos(Empty)| should return \lstinline|Empty|
+\item \lstinline|assertAllPos(NonEmpty)| should return either
+  \lstinline|NonEmpty| or throw exception.
+\end{itemize}
+One might want to express that \lstinline|assertAllPos| takes \lstinline|Empty|
+sets to \lstinline|Empty| sets and \lstinline|NonEmpty| sets to
+\lstinline|NonEmpty| ones.
+
+A way to express it is:
+\begin{lstlisting}
+def assertAllPos[S <: IntSet](r: S): S = ...
+\end{lstlisting}
+here ``<: IntSet'' is an \term{upper bound} of the type parameter \lstinline|S|:
+It means that S can be instantiated only to types that conform to
+\lstinline|IntSet|.
+
+Generally, the notation
+\begin{itemize}
+\item \lstinline|S <: T| means: \lstinline|S| is a subtype of \lstinline|T| and
+\item \lstinline|S >: T| means \lstinline|S| is a supertype of \lstinline|T|, or
+  T is a subtype of S.
+\end{itemize}
+
+The \term{lower bound} for a type variable like \lstinline|S >: NonEmpty|
+introduces a type parameter S that cab range only over \term{supertypes} of
+\lstinline|NonEmpty|.
+
+So S could be one of \lstinline|NonEmpty, IntSet, AnyRef, or Any|.
+
+Similar story - \term{mixed bound}:
+\lstinline|[S >: NonEmpty <: IntSet]|
+
+would restrict S any type on the interval between \lstinline|NonEmpty| and
+\lstinline|IntSet| (actually only these two in our case).
+
+\subsubsection{Covariance}
+\label{sec:Covariance}
+
+Given \lstinline|NonEmpty <: IntSet|,
+
+is \lstinline|List[NonEmpty] <: List[IntSet]| ?
+
+Intuitively this makes sense for \lstinline|List|. So the types for which this
+relationship holds are called \term{covariant} because their subtyping
+relationship varies with the type parameter.
+
+This does not hold for all cases - for instance, in Array this would not work.
+As such, \lstinline|Array| is not covariant.
+
+\subsubsection{The Liskov Substitution Principle}
+\label{sec:Liskov}
+
+Says: {\it If A <: B, then everything one can to do with a value of type B one
+  should also be able to do with a value of type A}
+
+Actually, (more formal): {\it Let q(x) be a property provable about object x of
+  type B. Then q(x) should be provable for objects y of type A where A <: B}.
+
+% video 7-5
+\subsection{Variance}
+\label{sec:Variance}
+
+Some types should be covariant (like \lstinline|List|) while other should not
+(like \lstinline|Array|). Roughly speaking, a type that accepts mutation of its
+elements should not be covariant (like Array).
+
+But immutable types can be covariant, if some conditions of methods are met.
+
+\subsubsection{Definition of Variance}
+
+Say \lstinline|C[T]| is a parametrised type and \lstinline|A, B| are types such
+that \lstinline|A <: B|. In general, there are three possible relations between
+\lstinline|C[A]| and \lstinline|C[B]|:
+\begin{itemize}
+\item \lstinline|C[A] <: C[B]| - C is \term{covariant}
+\item \lstinline|C[A] >: C[B]| - C is \term{contravariant}
+\item neither \lstinline|C[A]| nor \lstinline|C[B]| is a subtype of the other -
+  C is \term{nonvariant}
+\end{itemize}
+
+Scala lets you declare the variance of a type by annotating the type parameter:
+\begin{itemize}
+\item \lstinline|C[+A]| - C is \term{covariant}
+\item \lstinline|C[-A]| - C is \term{contravariant}
+\item neither \lstinline|C[A]| - C is \term{nonvariant}
+\end{itemize}
+
+\paragraph{General Rule for Functions}
+
+Generally, we have the following rule for subtyping between function types:
+
+If \lstinline|A2 <: A1| and \lstinline|B1 <: B2|, then
+\lstinline|A1 => B1 <: A2 => B2|
+
+So, functions are \term{contravariant} in their argument types and
+\term{covariant} in their result type.
+
+This leads ti the following (revised) definition of the \lstinline|Function1|
+trait: 
+\begin{lstlisting}
+package scala
+trait Function1[-T, +U] {
+  def apply(x: T): U
+}
+\end{lstlisting}
+
+We have seen in the array example that the combination of covariance with
+certain operations is unsound. In this case the problematic operation was the
+update operation on an array.
+
+If we turn \lstinline|Array| into a class, and update into a method, it would
+look like this:
+\begin{lstlisting}
+class Array[+T] {
+  def update(x: T) ...
+}
+\end{lstlisting}
+the problematic combination is
+\begin{itemize}
+\item the covariant type parameter T
+\item which appears in parameter position of the method \lstinline|update| 
+\end{itemize}
+
+The scala compiler will check that there are no problematic combinations when
+compiling a class with variance annotations. Roughly, 
+\begin{itemize}
+\item {\it covariant} type parameters can only appear in method results 
+\item {\it contravariant} type parameters can only appear in method parameters
+\item {\it invariant} type parameters can appear anywhere
+\end{itemize}
+(the precise rules are a bit more involved)
+
+Usual trick - to use \lstinline|Nothing|:
+\begin{lstlisting}
+trait List[+T] {
+...
+}
+...
+object Nil extends List[Nothing] {
+  def isEmpty: Boolean = true
+  ...
+}
+object test {
+  val x: List[String] = Nil
+}
+\end{lstlisting}
+\lstinline|List[String]| becomes a subtype of (convariant) type
+\lstinline|List[T]|; as \lstinline|Nothing| is a subtype of any type (including
+\lstinline|String|, everything looks fine.
+
+In addition, in \lstinline|Nil| object, the \lstinline|head| and
+\lstinline|tail| return \lstinline|Nothing| already.
+
+\paragraph{Making Class Covariant}
+
+Sometimes it takes a bit of work to make a class covariant. Consider adding a
+\lstinline|prepend| method to \lstinline|List| which prepends a given element,
+yielding a new list.
+
+A first implementation could look like this:
+\begin{lstlisting}
+trait List[+T] {
+  def prepend(elem: T): List[T] = new Cons(elem, this)
+}
+\end{lstlisting}
+- will not work, as it fails with ``Covariant type on contravariant position'' -
+this would violate the Liskov Substitution Principle:
+
+For the \lstinline|xs = new List[IntSet]| we can do:
+\begin{lstlisting}
+  xs.prepend(Empty)
+\end{lstlisting}
+
+But the same operation on a \lstinline|ys = new List[NonEmpty]| would lead to a
+type error: 
+\begin{lstlisting}
+ys.prepend(Empty)
+            ^ type mismatch: required NonEmpty found: empty
+\end{lstlisting}
+So \lstinline|List[NonEmpty| can not be a subtype of \lstinline|List[IntSet]|
+(we can do something with \lstinline|List[IntSet]| which we can not do with
+\lstinline|NonEmpty|).
+
+But \lstinline|prepend| is a natural method to have on immutable list, so we
+need to make it variance-correct.
+
+We do so by using a \term{lower bound}:
+\begin{lstlisting}
+...
+def prepend [U >: T] (elem: U): List[U] = new Cons(elem, this)
+...
+\end{lstlisting}
+This passes variance checks, because:
+\begin{itemize}
+\item covariant type parameters may appear in lower bounds of method type
+  parameters.
+\item contravarant type parameters may appear in upper bounds of methods.
+\end{itemize}
+
+% video 7-6
+\subsection{Decomposition}
+\label{sec:Decomposition}
+The task: write a small interpreter for arithmetic expressions, for now
+restricted to numbers and additions. Expressions can be represented as a class
+hierarchy with a base trait \lstinline|Expr| and two subclasses,
+\lstinline|Number| and \lstinline|sum|.
+
+To treat an expression, it's necessary to know the expression's shape and its
+components. Then we can provide an evaluation function like 
+\begin{lstlisting}
+def eval(e: Expr): Int = {
+  if (e.isNumber) e.numValue
+  else if (e.isSum) eval(e.leftOp) + eval(e.rightOp)
+  else throw new Error("Unknown expression " + e)
+}
+\end{lstlisting}
+
+The problem is, writing all these classification (isNumber, isSum etc.) and
+access functions quickly becomes tedious (every new type of operation adds $O^2$
+methods, so we need a better solution.
+
+Using Java-like type check (\lstinline|x.isInstanceOf[T]| like Java's
+\lstinline|x instanceOf T|) and type cast (\lstinline|x.asInstanceOf[T]| like
+Java's \lstinline|(T) x|) is possible but discouraged (as there are better
+alternatives). 
+
+\paragraph{Solution 1: Object - Oriented Decomposition}
+
+If all we want to do is \term{evaluate} expressions, then we can define:
+\begin{lstlisting}
+trait Expr {
+  def eval: Int
+}
+class Number(n: Int) extends Expr {
+  def eval: Int = n
+}
+class Sum(e1: Expr, e2: Expr) extends Expr {
+  def eval: Int = e1.eval + e2.eval
+}
+\end{lstlisting}
+- nice, but if you'd like to display expression now, you'll need to define new
+method in all the subclasses.
+
+Or, if you want to simplify the expressions, like 
+$$ a * b + a * c \to a * (b + c)$$
+- this will be a non-local simplification (it can not be encapsulated in the
+method of a single object)
+
+These are considered as a {\bf fundamental limitations of OO Decomposition}: we
+need test and access methods for all the different subclasses.
+
+% video 7-7
+\subsection{Pattern Matching }
+\label{sec:PatternMatching}
+
+The task is to find a general and convenient way to access object in am
+extensible class hierarchy.
+
+\paragraph{Observation}the sole purpose of test and access methods is to {\bf
+  reverse} the construction process:
+\begin{itemize}
+\item which subclasses was used?
+\item what were the arguments of the constructor?
+\end{itemize}
+this situation is so common that many FL, including Scala, automate it by
+\term{pattern matching}
+
+\subsubsection{Case Classes}
+\label{sec:CaseClasses}
+
+A \term{case class} definition is similar to a normal class definition, except
+that it is preceded by the modifier \lstinline|case|:
+\begin{lstlisting}
+trait Expr
+case class Number(n: Int) extends Expr
+case class Sum(e1: Expr, e2: Expr) extends Expr
+\end{lstlisting}
+- so again we define a trait \lstinline|Expr| and subclasses \lstinline|Number|
+and \lstinline|Sum|.
+
+It also implicitly defines companion objecs with \lstinline|apply| methods:
+\begin{lstlisting}
+object Number {
+  def apply(n: Int) = new Number(n)
+}
+object Sum {
+  def apply(e1: Expr, e2: Expr) = new Sum(e1, e2)
+}
+\end{lstlisting}
+- so we can call \lstinline|Number(1)| instead of \lstinline|new Number(1)|.
+
+However, these classes are now empty. 
+
+\term{Pattern matching} is a generalisation of \lstinline|switch| from C/Java to
+class hierarchies. It is expressed in Scala by keyword \lstinline|match|:
+\begin{lstlisting}
+def eval(e: Expr): Int = e match {
+  case Number => n
+  case Sum(e1, e2) => eval(e1) + eval(e2)
+}
+\end{lstlisting}
+Rules:
+\begin{itemize}
+\item \lstinline|match| is followed by a sequence of \lstinline|cases|,
+  \lstinline|pat => expr|.
+\item Each case associates an \term{expression} \lstinline|expr| with a
+  \term{pattern} \lstinline|pat|.
+\item A \lstinline|MatchError| exception is thrown if no pattern matches the
+  value of the selector
+\end{itemize}
+Patterns are constructed from:
+\begin{itemize}
+\item constructors (like \lstinline|Number, Sum|)
+\item variables, like \lstinline|n, e1, e2|
+\item wildcard patterns \lstinline|_|
+\item constants, e.g. 1, \lstinline|true|
+\end{itemize}
+
+Conventions:
+\begin{itemize}
+\item Variables always begin with a lowercase letter
+\item The same variable name can only appear once in a pattern. So
+  \lstinline|Sum(x, x)| is not a legal pattern.  
+\item Names of the constants begin with a capital letter, excepted reserved
+  words \lstinline|null, true, false|.
+\end{itemize}
+
+So, an expression of the form 
+\begin{lstlisting}
+e match {case p_1 => e_1 ... case p_n => e_n
+\end{lstlisting}
+matches the value of the selector e with the patterns \lstinline|p_1...p_n| in
+the order in which they are written: the whole match expression is rewritten to
+the right - hand side of the first case where the pattern matches the selector
+\lstinline|e|. References to pattern values are replaced by the corresponding
+parts in the selector.
+
+It is also possible to define the evaluation function as a method of the base
+trait:
+\begin{lstlisting}
+trait Expr {
+  def eval: Int = this match {
+    case Number(n) => n
+    case Sum(e1, e2) => e1.eval + e2.eval
+  }
+}
+\end{lstlisting}
+- so this becomes quite similar to OO decomposition (concrete implementations of
+\lstinline|eval|). 
+
+% video 6-1
+\section{Lists}
+\label{sec:Lists}
+\subsection{Lists}
+\label{sec:Listsss}
+
+Fundamental differences between lists and arrays:
+\begin{itemize}
+\item Lists are immutable 
+\item Lists are recursive, arrays are flat
+\end{itemize}
+
+\begin{lstlisting}
+val fruit = List("apples", "oranges", "pears")
+val nums: List[Int] = List(1, 2, 3, 4)
+val empty: List[Nothing] = List()
+\end{lstlisting}
+
+All lists are constructed from:
+\begin{itemize}
+\item the empty list \lstinline|Nil|, and
+\item the construction operator \lstinline|::| (pronounced \term{cons}):
+\lstinline|x :: xs| gives a new list with the first element \lstinline|x|,
+followed by the elements of \lstinline|xs|
+\end{itemize}
+Example:
+\begin{lstlisting}
+fruit = "apples" :: ("oranges" :: ("pears" :: Nil))
+empty = Nil
+\end{lstlisting}
+The convention: {\bf Operators ending in ``:'' associate to the right}:
+
+\lstinline|A :: B :: C| is interpreted as \lstinline|A :: (B :: C)|| 
+
+- so we can omit the parenthesis in the definitions above.
+
+Also, operators ending in ``:'' are also different in they are seen as {\bf
+  method calls of the right-hand operand}, so
+
+\lstinline|val nums = 1 :: 2 :: 3 :: 4 :: Nil| is equivalent to
+\lstinline|Nil.::(4).::(3).::(2).::(1)|
+
+in other words, the \lstinline|::| operator is equivalent to \lstinline|prepend|
+operation defined earlier(?).
+
+\subsubsection{Operations on Lists}
+\label{sec:OprationsOnLists}
+
+All operations on lists can be expressed in terms of the \lstinline|head, tail|,
+and \lstinline|isEmpty| operations.
+
+It is also possible to decompose lists with pattern matching:
+\begin{itemize}
+\item \lstinline|Nil| the \lstinline|Nil| constant
+\item \lstinline|P :: ps| A pattern that matches a list with a head matching
+  \lstinline|p| and tail matching \lstinline|ps|
+\item \lstinline|List(p1, p2, ..., NP)| - same as
+ \lstinline|P1 :: p2 :: ... :: pn :: Nil|
+\end{itemize}
+\example 
+\begin{itemize}
+\item \lstinline|1 :: 2 :: xs| List of that starts with 1 and then 2
+\item \lstinline|x :: Nil| Lists of length 1
+\item \lstinline|List(x)| same as \lstinline|x :: Nil|
+\item \lstinline|List(2 :: xs)| a list that contains as only element another
+  list that starts with 2
+\end{itemize}
+
+\subsubsection{Sorting Lists}
+\label{sec:SortingLists}
+
+Suppose we want to sort a list of numbers \lstinline|List(7, 3, 9, 2)| in
+ascending order: 
+\begin{itemize}
+\item First step - sort the tail \lstinline|List(3, 9, 2)| to obtain
+  \lstinline|List(2, 3, 9|
+\item Next step - insert the head 7 in the right place to obtain the result
+  \lstinline|List(2, 3, 7, 9)| 
+\end{itemize}
+this idea describes \term{Insertion Sort}:
+\begin{lstlisting}
+def isort(xs: List[Int]): List[Int] = xs match {
+  case List() => List()
+  case y :: ys => insert(y, isort(ys))
+}
+def insert(x: Int, xs: List[Int]): List[Int] = xs match {
+  case List() => List(x)
+  case y :: ys => if (x <= y) x :: xs else y :: insert(x, ys)
+}
+\end{lstlisting}
+
+% video 6-2 
+\subsection{More Functions on Lists}
+\label{sec:MoreFunctionsOnLists}
+
+\paragraph{Sublists and Elements Access}
+\begin{itemize}
+\item \lstinline|xs.length|
+\item \lstinline|xs.last|
+\item \lstinline|xs.init| A list consisting of all elements of \lstinline|xs|
+  except the last one; exception if \lstinline|xs| is empty
+\item \lstinline|xs take n| A list consisting of the first \lstinline|n|
+  elements of \lstinline|xs|, or \lstinline|xs| itself if it is shorter than
+  \lstinline|n| 
+\item \lstinline|xs drop n| The rest of the collection after taking
+  \lstinline|n| elements.
+\item \lstinline|xs(n)| (or, written out, \lstinline|xs apply n|). The element
+  of \lstinline|xs| at index \lstinline|n|.
+\end{itemize}
+
+\paragraph{Creating New Lists}
+\begin{itemize}
+\item \lstinline|xs ++ ys| 
+\item \lstinline|xs.reverse|
+\item \lstinline|xs updated (n, x)|- The new list containing the same elements
+  as \lstinline|xs|, except at index \lstinline|n| where it contains
+  \lstinline|x|
+\end{itemize}
+
+\paragraph{Finding Elements}
+\begin{itemize}
+\item \lstinline|xs indexOf x| - The index of the first element in \lstinline|xs|
+  equal to \lstinline|x|, or -1 if \lstinline|x| does not appear in
+  \lstinline|xs| 
+\item \lstinline|xs contains x| - same as \lstinline|xs indexOf x >= 0|
+\end{itemize}
+
+The general idea - lists are implemented through \lstinline|head, tail|, so
+\lstinline|last| and \lstinline|init| are expensive (O(n)).
+
+The concatenation \lstinline|xs ::: ys = ys.:::(xs)| - pre-pend \lstinline|ys|
+with \lstinline|xs|:
+\begin{lstlisting}
+def concat[T](xs: List[T], ys: List[T]) = xs match {
+  case List() => ys
+  case z :: zs => z :: concat(zs, ys)
+}
+\end{lstlisting}
+\lstinline|Concat| is called for every element of \lstinline|xs| - so it takes
+$|xs|$ steps.
+
+The direct implementation of \lstinline|reverse| is quite expensive - $O(n^2)$,
+so better solution is used.
+
+% video 6-3
+\subsection{Pairs and Tuples}
+\label{sec:PairsAndTuples}
+
+Try to implement a \term{merge sort}. Implementation:
+\begin{lstlisting}
+def msort(xs: List[Int]): List[Int] = {
+  val n = xs.length/2
+  if (n == 0) xs
+  else {
+    def merge(xs: List[Int], ys: List[Int]) = ???
+    val (fst, snd) = xs splitAt n
+    merge(msort(fst), msort(snd))
+  }
+}
+\end{lstlisting}
+and implementation of \lstinline|merge|:
+\begin{lstlisting}
+def merge(xs: List[Int]), ys: List[Int]) = 
+  xs match {
+    case Nil => ys
+    case x :: xs1 => 
+      ys match {
+        case Nil => xs
+        case y :: ys1 =>
+          if (x < y) x :: merge(xs1, ys)
+          else y :: merge(xs, ys1)
+      }
+  }
+\end{lstlisting}
+The \lstinline|splitAt| function on lists returns two siblings: the elements up
+to the given index and the elements from that index. These are returned in a
+\term{pair}.
+
+The pair consisting of \lstinline|x| and \lstinline|y| is written 
+\lstinline|(x, y)|:
+\begin{lstlisting}
+val pair = ("answer", 42)   //  pair: (String, Int) = (answer, 42)
+\end{lstlisting}
+
+Pairs also can be used as patterns:
+\begin{lstlisting}
+val (label, value) = pair 
+//label: String = answer, value : Int = 42
+\end{lstlisting}
+
+This works analogously for tuples with more than two elements.
+
+\paragraph{Translation of Tuples}
+
+A tuple type $(T_1 \dots T_n)$ is an abbreviation of the parametrised type 
+\begin{lstlisting}
+scala.TupleN[T_1, ...., T_n]
+\end{lstlisting}
+
+A tuple expression $(e_1, \dots, e_n)$ is equivalent to the function application 
+\begin{lstlisting}
+scala.TupleN(e_1, ..., e_n)
+\end{lstlisting}
+A tuple pattern $(p_1, \dots,p_n)$ is equivalent to the construction pattern
+\begin{lstlisting}
+scala.TupleN(p_1, ..., p_n)
+\end{lstlisting}
+
+All \lstinline|TupleN| classes are modelled after the following pattern:
+\begin{lstlisting}
+case class Tuple2[T1, T2](_1: +T1, _2: +T2) {
+  override def toString = "(" + _1 + "," + _2 + ")"
+}
+\end{lstlisting}
+And, the fields can be accessed with names \lstinline|_1, _2, ...| (but pattern
+matching is usually a bit better). So we can re-write a \lstinline|merge|
+function using a pattern matching (as the previous implementation does not
+reflect the inherent symmetry of the merge algorithm).
+\begin{lstlisting}
+def merge(xs: List[Int], ys: List[Int]): List[Int] = 
+  (xs, ys) match {
+    case (Nil, ys) => ys
+    case (xs, Nil) => xs
+    case (x :: xs1, y :: ys1) =>
+      if (x < y) x :: merge(xs1, ys)
+      else y :: merge(xs, ys1)
+  }
+\end{lstlisting}
+
+% video 6 - 4
+\subsection{Implicit Parameters}
+\label{sec:ImplicitParameters}
+
+Problem: How to parametrise \lstinline|msort| so that it can also be used for
+lists with elements other than \lstinline|Int|?
+\begin{lstlisting}
+def msort[T](xs: List[T]): List[T] = ...
+\end{lstlisting}
+does not work, because comparison \lstinline|<| is not defined for arbitrary
+type \lstinline|T|. So the idea is to parametrise \lstinline|merge| with the
+necessary comparison function:
+\begin{lstlisting}
+def msort[T](xs: List[T])(lt: (T, T) => Boolean) = {
+  ...
+  merge(msort(fst)(lt), msort(snd)(lt))
+}
+def merge(xs: List[T], ys: List[T]) = (xs, ys) match {
+  ....
+  case (x :: xs1, y :: ys1) =>
+    if (lt(x, y)) ...
+    else ...
+}
+\end{lstlisting}
+the call will be
+\begin{lstlisting}
+msort(nums)((x: Int, y: Int) => x < y)
+\end{lstlisting}
+
+There is already a class in the standard library that represents ordering:
+\begin{lstlisting}
+scala.math.Ordering[T]
+\end{lstlisting}
+(see lecture slides for week 5 - 4, pages 5, 6):
+\begin{lstlisting}
+def msort[T](xs: List[T])(ord: Ordering[T]): List[T] = ....
+    def merge(xs: List[T], ys: List[T]): List[T] = ...
+      ...
+      case (x :: xs1, y :: ys1) =>
+        if (ord.lt(x, y)) ...
+    ...
+    merge(msort(fst)(ord), msort(snd)(ord))
+  ...
+  msort(nums)(ordering.Int)
+\end{lstlisting}
+Next problem: it is boring to pass around \lstinline|lt| or \lstinline|ord|
+values. We can avoid this by making \lstinline|ord| an implicit parameter:
+\begin{lstlisting}
+def msort[T](xs: List[T])(implicit ord: Ordering[T]) =
+  ...
+  def merge(xs: List[T], ys: List[T]) =
+    if (ord.lt(x, y)) ...
+  ... merge(msort(fst), msort(snd))...
+\end{lstlisting}
+
+Then calls to \lstinline|msort| can avoid the ordering parameter: 
+\lstinline|msort(nums)|; the compiler will figure out the right implicit to pass
+based on the demanded type.
+
+\paragraph{Rules for Implicit Parameters}
+
+Say, a function takes an implicit parameter of type \lstinline|T|
+
+The compiler will search an implicit definition that
+\begin{itemize}
+\item is marked \lstinline|implicit|
+\item has a type compatible with \lstinline|T|
+\item is visible at the point of the function call, or is defined in a companion
+  object associated with \lstinline|T|.
+\end{itemize}
+
+The most specific definition will be taken as an actual argument; otherwise the
+error will be thrown (if compile finds nothing or more then one suitable
+definition). 
+
+%video 6-5
+\subsection{Higher-Order List Functions}
+\label{sec:HigherOrderListFunctions}
+
+\paragraph{Map}
+A simple way to define \lstinline|map| is:
+\begin{lstlisting}
+abstract class List[T] { ...
+  def map[U](f: T => U): List[U] this match {
+    case Nil      => this
+    case x :: xs => f(x) :: xs.map(f)
+}
+\end{lstlisting}
+(the actual definition is a bit more complicated: it is tail-recursive and works
+for arbitrary collections, not just the lists).
+
+\paragraph{Filtering (filter)}
+for instance, selecting positives:
+\begin{lstlisting}
+xs filter (x => x > 0)
+\end{lstlisting}
+Variations:
+\begin{itemize}
+\item \lstinline|xs fileterNot p| - same as \lstinline|xs filter (x => !p(x))|
+\item \lstinline|xs partition p| - same as 
+\lstinline|(xs filter p, xs filterNot p)|, but computed in a single traversal of
+the list \lstinline|xs|
+\item \lstinline|xs takeWhile p| - the longest prefix of list \lstinline|xs|
+  consisting of elements that all satisfy the predicate \lstinline|p|
+\item \lstinline|xs dropWhile p| - the reminder of the list \lstinline|xs| after
+  any leading elements satisfying \lstinline|p| have been removed
+\item \lstinline|xs span p| - same as 
+\lstinline|(xs takeWhile p, xs dropWhile p)| but computed in a single traversal
+of the list \lstinline|xs|
+\end{itemize}
+
+The pack function (idiotic setting, to be honest):
+\begin{lstlisting}
+// expect pack(List("a", "a", "a", "b", "c", "c", "a")) = 
+//             List(List(a, a, a), List(b), List(c, c), List(a))
+def pack[T](xs: List[T]): List[List[T]] = xs match {
+  case Nil => Nil
+  case x :: xs =>
+    val (first, rest) = xs span (y => y ==x)
+    first :: pack(rest)
+}
+\end{lstlisting}
+
+More interesting - encoding from 
+\lstinline|List(a, a, a, b, c, c, a)| to 
+\lstinline|List(("a", 3),("b", 1),("c", 2),("a", 1))|
+Here we go:
+\begin{lstlisting}
+def encode[T](xs: List[T]): List[(T, Int)] = 
+  pack(xs) map (ys => (ys.head, ys.length))
+\end{lstlisting}
+
+% video 6-6
+\subsection{Reduction of Lists}
+\label{sec:ReductionOfLists}
+
+\term{Reduction} of list is a process of combining elements - like sum, product etc.
+Usual pattern - through \lstinline|reduceLeft| 
+\begin{lstlisting}
+List(x1, ..., xn) reduceLeft op = (...(x1 p x2) op ) op xn
+\end{lstlisting}
+then \lstinline|sum(xs) = (0 :: xs) reduceLeft ((x, y) => x + y)|, or even
+\lstinline|(0 :: xs) reduceLeft (_ + _)|
+
+The idea is that every ''\_'' represents a new parameter, going from left to
+right. The parameters are defined at the next outer pair of parentheses (or the
+whole expression if there are no enclosing parentheses).
+
+The function \lstinline|reduceLeft| is defined in terms of a more general
+function, \lstinline|foldLeft|, which takes an \term{accumulator} as a
+additional parameter (it is returned when \lstinline|foldLeft| is called on an
+empty list):
+\begin{lstlisting}
+(list(x1, ..., xn) foldLeft z)(op) = (...(z op x1) op ...) op xn
+\end{lstlisting}
+Implementation variants - see slides for week 5-6, page 6 for tricks with
+accumulator and recursive call.
+
+The dual functions to \lstinline|foldLeft| and \lstinline|reduceLeft| are
+\lstinline|foldRight| and \lstinline|reduceRight|:
+\begin{lstlisting}
+List(x1, ..., xn) reduceRight op = x1 op (...(x{n-1} op xn) ...)
+(List(x1, ..., xn) foldRight acc) op = x1 op (...(xn op acc) ...)
+\end{lstlisting}
+Definitions - easier:
+\begin{lstlisting}
+def reduceRight(op: (T, T) => T): T = this match {
+  case Nil => throw new Error("Nil.reduceRight")
+  case x :: Nil => x
+  case x :: xs => op(x, xs.reduceRight(op))
+}
+def foldRight[U](z: U)(op: (T, U) => U): u = this match {
+  case Nil => z
+  case x :: xs => op(x, (xs foldRight z)(op))
+}
+\end{lstlisting}
+For operations that are associative and commutative, \lstinline|foldLeft| and
+\lstinline|foldRight| are equivalent (even though there may be a difference in
+efficiency). 
+
+For instance, one of the implementation of the concat:
+\begin{lstlisting}
+def concat[t](xs: List[T], ys: List[T]): List[T] =
+  (xs foldRight ys) (_ :: _)
+\end{lstlisting}
+It is not possible to replace \lstinline|foldRight| with \lstinline|foldLeft|
+because the result will make a type error (attempt to cons list to element, not
+element to list).
+(more graphs on \lstinline|foldLeft/foldRight| and
+\lstinline|reduceLeft/reduceRight| - see slide 5-6, pp 
+
+% video 6-7
+\subsection{Reasoning About Concat}
+\label{sec:Concat}
+
+\subsubsection{Laws of Concat}
+\label{sec:LawsOfConcat}
+We need to verify that concatenation ++ is associative, and that it admits the
+empty list \lstinline|Nil| as neutral element to the left and to the right: 
+\begin{lstlisting}
+(xs += ys ) += zs = xs ++ (ys ++ zs)
+xs ++ Nil = xs
+Nil ++ xs = xs
+\end{lstlisting}
+The question is, can we prove properties like these - for instance, using the
+\term{structural induction} on lists.
+
+Principle of proof by \term{natural induction}:
+To show a property $P(n)$ for all the integers $n \geq b$
+\begin{itemize}
+\item Show that we have $P(b)$ (\term{base case})
+\item for all integers $n geq b$ show the \term{induction step}: if one has
+  $P(n)$, then one also has $P(n + 1)$
+\end{itemize}
+
+Note that a proof can freely apply reduction steps as equalities to some part of
+a term. That works because functional programs don't have side effects; so that
+a term is equivalent to the term to which it reduces. This principle is called
+\term{referential transparency} 
+
+\subsubsection{Structural Induction}
+\label{sec:StructuralInduction}
+The principle of structural induction is analogous to natural induction:
+
+To prove a property $P(xs)$ for all lists $xs$,
+\begin{itemize}
+\item show that $P(Nil)$ holds (\term{base case})
+\item for a list $xs$ and some element $x$, show the \term{induction step}:
+if $P(xs)$ holds, then $P(x :: xs)$ also holds.
+\end{itemize}
+
+So, for implementation
+\begin{lstlisting}
+def concat[T](xs: List[T], ys: List[T]) = xs match {
+  case List() => ys
+  case x :: xs1 => x :: concat(xs1, ys)
+\end{lstlisting}
+let's show that, for lists $xs, ys, zs$:
+$$ (xs ++ ys) ++ zs = xs ++ (ys ++ zs)$$
+
+distil two defining clauses of ++:
+\begin{lstlisting}
+Nil ++ ys = ys    //1st clause
+(x :: xs1) ++ ys = x :: (xs1 ++ ys) //2nd clause
+\end{lstlisting}
+
+\begin{itemize}
+\item Base case: \lstinline|Nil|
+
+For the left-hand side we have:
+\begin{lstlisting}
+(Nil ++ ys) ++ zs 
+ = ys ++ zs  //by the 1st clause of ++
+\end{lstlisting}
+For the right - hand side we have
+\begin{lstlisting}
+Nil ++ (ys ++ zs)
+= ys ++ zs //by the 1st clause of ++
+\end{lstlisting}
+- so case is established 
+\item Induction step: \lstinline|x :: xs|
+For the left - hand side, we have:
+\begin{lstlisting}
+((x :: xs) ++ ys) ++ zs
+= (x :: (xs ++ ys)) + zs  //by 2nd clause of ++
+= x :: ((xs ++ ys) ++ zs) //by the 2nd clause again
+= x :: (xs ++ (ys ++ zs)) //by the induction hypothesis
+\end{lstlisting}
+For the right-hand side:
+\begin{lstlisting}
+(x :: xs ) ++ (ys ++ zs)
+= x :: (xs ++ (ys ++ zs)) //by the 2nd clause of ++
+\end{lstlisting}
+So this case (and with it, the property) is established.
+\end{itemize}
+
+% video 6-8
+
+\subsubsection{A Law of Reverse}
+\label{sec:LawOfReverse}
+Consider the \lstinline|reverse| function for a more interesting example. Let's
+use straightforward definition:
+\begin{lstlisting}
+Nil.reverse = Nil                            // 1st clause
+(x :: xs).reverse = xs.reverse ++ List(x)    // 2nd clause
+\end{lstlisting}
+We'd like to prove the following proposition:
+\begin{lstlisting}
+xs.reverse.reverse = xs
+\end{lstlisting}
+The base case is easy:
+\begin{lstlisting}
+Nil.reverse.reverse
+= Nil.reverse // by the 1st clause of reverse
+= Nil // by the 1st clause of reverse
+\end{lstlisting}
+
+For induction step:
+\begin{lstlisting}
+(x :: xs).reverse.reverse
+= (xs.reverse ++ List(x)).reverse //by 2nd clause of reverse
+\end{lstlisting}
+We can't do much with this expression, therefore play with the right-hand one: 
+\begin{lstlisting}
+x :; xs
+= x :: xs.reverse.reverse // by induction hypothesis
+\end{lstlisting}
+
+Both sides are simplified in different expressions, so induction does not work
+here. We must instead try to \term{generalize} equation replacing
+\lstinline|xs.reverse| with \lstinline|ys|: for any list \lstinline|ys|:
+$$(ys ++ List(x)).reverse = x :: ys.reverse$$. This equation can be proved by a
+second induction argument of $ys$. 
+
+So, the base case (\lstinline|ys = nil|):
+\begin{lstlisting}
+(Nil ++ List(x)).reverse  // to show: = x :: Nil.reverse
+= List(x).reverse         //by 1st clause of ++
+= (x :: Nil).reverse      //by definition of list
+= Nil.reverse ++ List(x) =  Nil ++ (x :: Nil)       //by 2nd clause of reverse
+= x :: Nil.reverse    //what was needed to show
+\end{lstlisting}
+
+Now, inductive step:
+\begin{lstlisting}
+((y :: ys) ++ List(x)).reverse        //to show: = x :: (y :: ys).reverse
+= (y :: (ys ++ List(x))).reverse      //by 2nd clause of ++
+= (ys ++ List(x)).reverse ++ List(y)  //by 2nd clause of reverse
+= (x :: ys.reverse) ++ List(y)        //by induction hypothesis
+= x :: (ys.reverse ++ List(y))        //by 1st clause of ++
+= x :: (y :: ys).reverse              //by 2nd clause of reverse; Qed
+\end{lstlisting}
+This establishes the auxiliary equation, and with it the main proposition.
+The first step is also called \term{unfold}, the last one - \term{fold} (just
+like in math). The whole method is called the \term{fold/unfold method} for
+equation proof of functional programs.
+
+% video 8-1
+\section{Other Collections}
+\label{sec:OtherCollections}
+All the collections here are immutable. 
+
+\subsection{Vectors}
+\label{sec:Vectors}
+
+The \lstinline|Vector| is an alternative sequence implementation with more
+balanced access pattern. Actually, first 32 elements are stored in array. When
+first 32 cells are exhausted, elements are turned into references to other
+32-cell arrays - up to $32 \times 32 = 2^{10}$. Then these are also exhausted,
+the elements are turned into array of references themselves etc - up to six
+levels in total (maximum amount of elements is $2^{30}$. Good news is that
+random access is quite fast here - $O(\log_{32}(N))$ from size of the vector. 
+
+Sequence access is also quite fast - as bunches of 32 elements fit quite good to
+the cache lines of the modern processors. So for \lstinline|map| or
+\lstinline|filter| operators the \lstinline|Vector| is more preferable:
+\begin{lstlisting}
+val nums = Vector(1, 2, 3, -88)
+val people = Vector("Bob", "James", "Peter")
+\end{lstlisting}
+They support the same operations as lists, with the exception of \lstinline|::|
+(\lstinline|cons|). Instead \lstinline|::|, there are
+\begin{itemize}
+\item \lstinline|x +: xs| Created a new vector with leading element
+  \lstinline|x|, followed by all elements of \lstinline|xs|
+\item \lstinline|xs :+ x| Create a new vector with trailing element
+  \lstinline|x|, preceded by all elements of \lstinline|xs|
+\end{itemize}
+{\bf Note} the \lstinline|:| always points to the sequence!
+
+\subsection{Collection Hierarchy}
+\label{sec:CollectionHierarchy}
+Both \lstinline|List| and \lstinline|Vector| (and \lstinline|String|, and
+\lstinline|Array|, and \lstinline|Range|) are the subtypes of \lstinline|Seq|
+- \term{sequence} class. 
+\lstinline|Seq| is he subclass of \lstinline|Iterable|, as well as
+\lstinline|Set| and \lstinline|Map|
+For diagram - see slides 6-1, page 4.  
+ 
+\subsubsection{Arrays and Strings}
+\label{sec:ArraysAndStrings}
+Arrays and Strings support the same operations as \lstinline|Seq| and can
+implicitly be converted to sequences where needed (they can not be subclasses of
+\lstinline|Seq| because they come from Java).
+\begin{lstlisting}
+val xs: Array[Int] = Array(1, 2, 3)
+xs map (x => 2 * x)
+
+val ys: String = "Hello World!"
+ys filter (_.isUpper)
+\end{lstlisting}
+
+\subsubsection{Ranges}
+\label{sec:Ranges}
+A range is a sequence of evenly spaced integers. Three operators to
+create:\lstinline|to| (inclusive), \lstinline|until| (exclusive), \lstinline|by|
+(to determine step value):
+\begin{lstlisting}
+val r: Range = 1 until 5 // 1, 2, 3, 4
+val s: Range = 1 to 5 // 1, 2, 3, 4, 5
+1 to 10 by 3  // 1, 4, 7, 10
+6 to 1 by -2 //6, 4, 2
+\end{lstlisting}
+Ranges are represented as single objects with three fields: lower bound, upper
+bound, step value.
+
+\subsection{More Sequence Operations}
+\label{sec:SequenceOperations}
+
+\begin{itemize}
+\item \lstinline|xs exists p| - \lstinline|true| if there is an element
+  \lstinline|x| of \lstinline|xs| such that \lstinline|p(x)| holds
+\item \lstinline|xs forall p| - \lstinline|true| if \lstinline|p(x)| holds for
+  all elements \lstinline|x| of \lstinline|xs|
+\item xs zip ys - A sequence of pairs drawn from corresponding elements of
+  sequences \lstinline|xs| and \lstinline|ys|
+\item \lstinline|xs.unzip| - Splits a sequence of pairs \lstinline|xs| into two
+  sequences consisting of the respective halves of all pairs
+\item \lstinline|xs.flatMap f| -  Applies collection-valued function \lstinline|f|
+  to all elements of \lstinline|xs| and concatenates the results
+\item \lstinline|xs.sum| - The sum of all elements of this numeric collection
+\item \lstinline|xs.product| - The product of all elements of this numeric
+  collection 
+\item \lstinline|xs.max| - The maximum of all elements of this collection (an
+  \lstinline|Ordering| must exist)
+\item \lstinline|xs.min| - The minimum of all elements of this collection
+\end{itemize}
+For instance, the scalar product of two vectors:
+\begin{lstlisting}
+def scalarProduct(xs: Vector[Double], ys: Vector[Double]): Double = 
+  (xs zip ys).map(xy => xy._1 * xy._2).sum
+\end{lstlisting}
+or, using pattern matching:
+\begin{lstlisting}
+def scalarProduct(xs: Vector[Double], ys: Vector[Double]): Double = 
+  (xs zip ys).map{ case (x, y) => x * y }.sum 
+\end{lstlisting}
+(generally, the function value \lstinline|{ case p1 => e1 ... case pn => en }| is
+equivalent to \lstinline|x => x match { case p1 => e1 ... case pn => en }|
+
+% video 8-2 
+\subsection{Combinatorial Search and For Expression}
+\label{sec:CombinatorialSearchFor}
+We can extend the usage of higher order functions on sequences to many
+calculations which are usually expressed using nested loops.
+\example Given a positive integer $n$, find all pairs of positive integers $i$
+and $j$ with $ 1 \leq j < i < n$ such that $i + j$ is prime. 
+
+A natural way to do so:
+\begin{itemize}
+\item Generate the sequence of all pairs of integers $(i, j)$ such that $1 <= j
+  < i < n$.
+\item Filter the pairs for which $i + j$ is prime
+\end{itemize}
+
+One natural way to generate the sequence of pairs is to:
+\begin{itemize}
+\item Generate all the integers $i$ between 1 and $n$ (excluded)
+\item For each integer $i$, generate the list of pairs $(i, 1), \dots, (i,
+  i-1)$.
+\end{itemize}
+this can be achieved by combining \lstinline|until| and \lstinline|map|:
+\begin{lstlisting}
+(1 until n) map (i =>
+  (1 until i) map (j => (i, j)))
+\end{lstlisting}
+- this generates the collection of sequences (let's call it \lstinline|xss|)
+while we need a flat collection:
+\begin{lstlisting}
+(xss foldRight seq[Int]())(_ ++ _)
+\end{lstlisting}
+or, equivalently, use the built0in method \lstinline|flatten|
+\begin{lstlisting}
+((1 until n) map (i =>
+  (1 until i) map (j => (i, j)))).flatten
+\end{lstlisting}
+The useful law:
+\begin{lstlisting}
+xs flatmap f = (xs map f).flatten
+\end{lstlisting}
+Hence, the above expression can be simplified to
+\begin{lstlisting}
+(1 until n) flatMap (i => 
+  (1 until i) map (j => (i, j)))
+\end{lstlisting}
+finally: 
+\begin{lstlisting}
+(1 until n) flatMap (i => 
+  (1 until i) map (j => (i, j))) filter (pair =>
+    isPrime(pair._1 + pair._2)
+\end{lstlisting}
+
+Works, but quite bulky. The same story can be expressed by
+
+\subsubsection{For-Expression}
+\label{sec:ForExpression}
+For-expression notation by example:
+Let's persons be a list of elements of class Person, with fields \lstinline|name|
+and \lstinline|age|:
+\begin{lstlisting}
+case class Person(name: String, age: Int)
+\end{lstlisting}
+To obtain the names of persons over 20 years old:
+\begin{lstlisting}
+for ( p <- persons if p.age > 20 ) yield p.name
+\end{lstlisting}
+which is equivalent to
+\begin{lstlisting}
+persons filter (p => p.age > 20) map (p => p.name)
+\end{lstlisting}
+
+The for-expression is similar to loops in imperative languages, except that it
+builds a list of the results of all iterations.
+
+The syntax:
+\begin{lstlisting}
+for ( s ) yield e
+\end{lstlisting}
+
+where \lstinline|s| is a sequence of \term{generators} and \term{filters}, and
+\lstinline|e| is an expression whose value is a collection:
+\begin{itemize}
+\item A \term{generator} is of the form \lstinline|p <- e| where \lstinline|p|
+  is a pattern and \lstinline|e| an expression whose value is a collection
+\item A \term{filter} is of the for \lstinline|if f| the \lstinline|f| is a
+  boolean expression
+\item The sequence must start with a generator 
+\item If there are several generators in the sequence, the last generators vary
+  faster than the first
+\end{itemize}
+
+Instead of \lstinline|( s )|, braces \lstinline|{ s }| can also be used, and
+then the sequence of generators and filters can be written on multiple lines
+without requiring semicolons.
+
+\example two variants:
+\begin{lstlisting}
+for {
+  i <- 1 until n
+  j <- 1 until i
+  if isPrime(i + j)
+} yield (i, j)
+\end{lstlisting}
+and
+\begin{lstlisting}
+def scalarProduct(xs: List[Double], ys: List[Double]) : Double =
+  (for ((x, y) ,_ xs zip ys) yield x * y).sum
+\end{lstlisting}
+% video 8-3
 
 \end{document}
