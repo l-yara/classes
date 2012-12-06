@@ -61,25 +61,24 @@
 \begin{document}
 \part{Part I}
 \label{part:Intro}
-They promised the Part II with more geeky staff!
-Course info - wiki.quantsoftware.org
-Books: ``Active Portfolio Management''(for deeper look); ``All about Hedge Funds''.
+They promised the Part II with more geeky staff! Course info -
+wiki.quantsoftware.org Books: ``Active Portfolio Management''(for deeper look);
+``All about Hedge Funds''.
 
 % video 2-2
 \section{Portfolio Management Basics}
 \label{sec:Basics}
 \subsection{Portfolio Management at a Glance}
 \label{sec:PortfolioManagement}
-\term{ETF} - Electronically Traded Fund.
-There are (basically) two possible incentives for Portfolio Manager / Hedge
-Fund:
+\term{ETF} - Electronically Traded Fund. There are (basically) two possible
+incentives for Portfolio Manager / Hedge Fund:
 \begin{itemize}
 \item By \term{Expense ratio}
   \begin{itemize}
   \item Used mostly by mutual funds and ETFs
   \item The percentage is less then 1\% of all the funds managed
   \end{itemize}
-When managing such fund/ETF, the main goal becomes attracting investments.
+  When managing such fund/ETF, the main goal becomes attracting investments.
 \item ``Two and twenty'' - the standard structure for hedge fund. Includes 2\%
   of the total assets plus 20\% of profits.
 \end{itemize}
@@ -99,7 +98,7 @@ Know your audience:
 Attracting investors:
 \begin{itemize}
 \item Must have a track record
-\item Very compelling story and back test - provide a good simulation result 
+\item Very compelling story and back test - provide a good simulation result
 \item Fit in a ``pigeon hole''? (i.e. fit the expectation of investor on a
   particular type of assets)
 \end{itemize}
@@ -118,14 +117,13 @@ Common Metrics:
 \item Annual Return - in percent
 $$ metric = value[end] / value[start] - 1$$
 - can be yearly, daily etc.
-\item Risk: standard deviation of return (volatility)
-For particular day $i$:
+\item Risk: standard deviation of return (volatility) For particular day $i$:
 $$daily\_rets[i] = value[i]/value[i-1]-1$$
 $$std\_metric = stdev(daily\_rets)$$
 \item Risk: Draw down (D-down): ``when a market(benchmark index) goes down - how
-  much does our fund goes down?'' (proportion of the overall fund size)  
-- being calculated as ``Max Draw down'': 
-\item Reward / Risk: Sharpe Ratio:  
+  much does our fund goes down?'' (proportion of the overall fund size) - being
+  calculated as ``Max Draw down'':
+\item Reward / Risk: Sharpe Ratio:
 \item Reward / Risk: Sortino Ratio: only counts volatility when it is downward
 \item Jensen's Alpha
 \end{itemize}
@@ -142,7 +140,7 @@ $$daily_rets[i] = (value[i]/value[i-1]) - 1$$
 $$std\_metric = stdev(daily\_rets)$$
 Properties:
 \begin{itemize}
-\item most ``important'' measure of asset performance (the higher - the better) 
+\item most ``important'' measure of asset performance (the higher - the better)
 \item how well does the return of an asset compensate the investors for the risk
   taken?
 \item when comparing two assets with the same return, higher Sharper ratio gives
@@ -154,7 +152,7 @@ here:
 \begin{itemize}
 \item $E[R - R_f]$ - expected return:
   \begin{itemize}
-  \item  $R_f$ - a ``risk-free return'' (return for low-risk asset); quite often
+  \item $R_f$ - a ``risk-free return'' (return for low-risk asset); quite often
     it is ignored
   \item $R$ - return itself
   \end{itemize}
@@ -162,7 +160,7 @@ here:
   changes in return
 \end{itemize}
 a bit simplified version: $k *
-\frac{average\_daily\_return}{std(daily\_return)}$, or 
+\frac{average\_daily\_return}{std(daily\_return)}$, or
 $$ metric = k * mean(daily\_rets)/stdev(daily\_rets)$$
 where $k = \sqrt{250}$ for daily returns (250 - amount of working days in a
 trading year). For monthly returns, use $k = \sqrt{12}$
@@ -171,17 +169,17 @@ trading year). For monthly returns, use $k = \sqrt{12}$
 \subsubsection{Homework \& Demo with Excel}
 \label{sec:Excel}
 Getting data: yahoo finance, Stock ticker -> Historical Prices, ``Download as
-Spreadsheet''. 
-Columns: Open, High, Low, Close, Volume, Adj(Adjusted) Close. We work with {\bf
-  Adj Close}. Sort by Date ascending (it is generated in descending order).
+Spreadsheet''. Columns: Open, High, Low, Close, Volume, Adj(Adjusted) Close. We
+work with {\bf Adj Close}. Sort by Date ascending (it is generated in descending
+order).
 
 Then calculate:
 \begin{itemize}
 \item $Total\_return=final\_value/starting\_value$ (in \%)
-\item for the first day = 0;$Daily_returns[i] = return[i]/return[i-1] - 1$ 
+\item for the first day = 0;$Daily_returns[i] = return[i]/return[i-1] - 1$
 \item Sharpe ratio: first get $=AVERAGE(daily_return)$, then
   $=STDEV(daily_returns)$. Finally,
-  $Sharpe\_ratio=sqrt(250)*[avg\_daily\_ret]/[stdev\_daily\_ret]$ 
+  $Sharpe\_ratio=sqrt(250)*[avg\_daily\_ret]/[stdev\_daily\_ret]$
 \end{itemize}
 
 % video 2-6
@@ -195,7 +193,7 @@ Then calculate:
   \begin{itemize}
   \item Annual Return
   \item Average daily return
-  \item Cumulative return: $price[i]/starting\_price$ 
+  \item Cumulative return: $price[i]/starting\_price$
   \item Investment: $original\_investment * cumulative\_return$
   \item STDEV of daily return
   \item Sharpe Ration
@@ -207,8 +205,8 @@ Then calculate:
   \item Screen-shot of portfolio online
   \end{itemize}
 \end{itemize}
-(see trick with relative investment values at video 2-6, 07:10).
-The highest Sharpe ration comes up to 4 - try to beat it (ho-ho).
+(see trick with relative investment values at video 2-6, 07:10). The highest
+Sharpe ration comes up to 4 - try to beat it (ho-ho).
 
 % video 3-1
 \section{Mechanics of the Market}
@@ -232,8 +230,8 @@ players post their Limit orders where:
 \item \term{Bid} price - ``ready to buy by this price''
 \end{itemize}
 The gap between maximum Bid and minimum Ask prices is called \term{Spread}.
-Usually for very liquid (?) assets this is quite small.  
-The order book remains static until one of the event occurs:
+Usually for very liquid (?) assets this is quite small. The order book remains
+static until one of the event occurs:
 \begin{itemize}
 \item One of the buying parties goes ahead and order buying by the Asking price
   - so-called \term{Crossing the Spread}
@@ -257,7 +255,7 @@ being fulfilled withing the Broker. This can make them some coins:
 \end{itemize}
 
 Sometimes brokers pass orders not directly to \term{Stock Exchange(SE)} but to
-the \term{Market Makers(MM)}, and they fulfil them internally. 
+the \term{Market Makers(MM)}, and they fulfil them internally.
 
 The SE itself accepts only very basic orders - like Buy/Sell Market/Limit. There
 are a lot more complex types of orders which may occur, usually through the
@@ -278,14 +276,14 @@ Shorting the stock - when you believe it is going to go down:
   \item Asset: Cash
   \item Liability: Shares owed
   \end{itemize}
-\item Share price drops. Buy the shares at lower price (close the transaction). 
+\item Share price drops. Buy the shares at lower price (close the transaction).
 \item Return shares. Profit (C).
 \end{itemize}
 There is a theoretical limit of what you can make: if the price of a stock goes
 all the way to 0, you get the whole price of your sell. However, if the market
 price goes up, there is no limit for your loss.
 
-%video 3-3
+% video 3-3
 \subsection{Hedge finds and Arbitrage}
 \label{sec:HedgeFundsAndArbitrage}
 
@@ -304,10 +302,10 @@ transaction between these SE can make money on such differences.
 % video 3-4
 \subsection{Computational Components of a Hedge Fund}
 \label{sec:HFAnatomy}
-We're working on slides 3-4. 
+We're working on slides 3-4.
 \paragraph{Page 2 (Slower) Quant Shop.}
 Trading algorithm is connected to order book, Live Portfolio, Historical Price
-Data; is parametrised (at the moment of opening) with the Target Portfolio. 
+Data; is parametrised (at the moment of opening) with the Target Portfolio.
 Trading algorithm works to bring the Live Portfolio to the Target one. The trick
 is not to disturb market too much - so orders are issues slowly. (\term{Fat
   Finger} - a trader who worked with large amounts of equities so ``prices going
@@ -317,16 +315,16 @@ Step back: how do we get the Target Portfolio?
 \paragraph{Page 3 Quant Shop}
 The centre is the Portfolio Optimiser algorithm, fed by data from forecasts
 (sometimes insider), Current Portfolio, Historical Price Data, and Risk
-Constraints. 
+Constraints.
 
-Nice, but the forecast comes from (sometimes) people like ``Cramer on TV'', or 
+Nice, but the forecast comes from (sometimes) people like ``Cramer on TV'', or
 \paragraph{Page 4: Forecasting Algorithm}
 Often built of top of some Machine Learning systems, fed with some information
 feeds (like News) and Historical Price Data.
 
 Some news providers are providing the news optimised for forecasting: in a
 format ``Equity symbol, bad news/good news''. See TR (Thomas Reuters?) for
-detail. 
+detail.
 
 % video 3-5 (part 4-1)
 \subsection{Company Value}
@@ -334,23 +332,332 @@ detail.
 The ``traditional'' ways are:
 \begin{itemize}
 \item Market cap (shares * share price)
-\item Future dividends 
+\item Future dividends
 
-So, imagine the \term{Notional Company} which prints \$1/year each year,
-forever. The company worth is figured out by a Current Value of a the future
-\$1. 
-Assume that discount rate is 0.95 (it is lower then the banking rate, but we
-trust bank more). So the \$1 in next year costs 0.95 today. The \$1 in two years
-costs even less: $9.95^2$. Next year - $0.95^3$, etc. 
+  So, imagine the \term{Notional Company} which prints \$1/year each year,
+  forever. The company worth is figured out by a Current Value of a the future
+  \$1. Assume that discount rate is 0.95 (it is lower then the banking rate, but
+  we trust bank more). So the \$1 in next year costs 0.95 today. The \$1 in two
+  years costs even less: $9.95^2$. Next year - $0.95^3$, etc.
 
-So the present value will be $$\sum_{i=1}^\infty 0.95^i=\sum_{i=1}^\infty
-dividend * \gamma^i = dividend * \frac 1{(1-\gamma)} = \frac{\$1}{1-0.95}=\$20$$
+  So the present value will be $$\sum_{i=1}^\infty 0.95^i=\sum_{i=1}^\infty
+  dividend * \gamma^i = dividend * \frac 1{(1-\gamma)} =
+  \frac{\$1}{1-0.95}=\$20$$
 
-Various information (like CEO effectiveness, cost of raw materials) informs
-traders about company's capacity to make money in the future.
+  Various information (like CEO effectiveness, cost of raw materials) informs
+  traders about company's capacity to make money in the future.
 \item Book value
+
+  Essentially, a value of the pieces of the company, formally ``total assets
+  minus intangible assets and liabilities''. Examples of intangible: contracts
+  with companies which relate on the future revenue,
 \end{itemize}
 
 % video 3-6 (part 4-2)
+\subsubsection{News}
+\label{sec:News}
+News affect stock prices (``Information affects prices''): news inform traders
+about the company's capacity to make money in the future, i.e.
+\begin{itemize}
+\item CEO effectiveness
+\item Cost of raw materials
+\end{itemize}
+The changes are of Local and/or Global effect.
+
+% video 3-7 (part 4-3)
+\paragraph{What's Company Worth?}
+
+Fundamental analysis: value is sum of
+\begin{itemize}
+\item Book value
+\item Future returns, or ``intrinsic'' value: future income generated by the
+  asset, and discounting it to the present value
+\end{itemize}
+
+The market if an ``efficient processor of information'', it amends the company
+price according to the news coming (Efficient Market Hypothesis)
+
+$$value = \#shares\_outstanding * price $$
+- so-called \term{Market Capitalisation} of the company (the price of the
+company determined by the market).
+
+% video 4-10
+\section{Capital Assets Pricing Model (CAPM)}
+\label{sec:CAPM}
+Assumptions:
+\begin{itemize}
+\item Return on stocks has two components:
+  \begin{itemize}
+  \item Systematic (the market)
+  \item Residual (``individual'')
+  \end{itemize}
+$$\text{Systematic: } r_i = \beta_i r_m  + \alpha_i$$
+\begin{itemize}
+\item $r_i$ - stock return
+\item $r_m$ - market return
+\item $\beta_i$ - how reactive is the stock
+\item $\alpha_i$ - residual component
+\end{itemize}
+\item Expected value of residual = 0 (unable to forecast, essentially a random
+  number)
+\item Market return:
+  \begin{itemize}
+  \item Risk free rate of return +
+  \item Excess return
+  \end{itemize}
+\end{itemize}
+A ``market'' portfolio usually means an index:
+\begin{itemize}
+\item US: S\&P 500 (Dow Jones - DJ is built from 30 manually-picked stocks so it
+  does have some biases) where S\&P is built from 500 largest companies.
+\item UK: FTA
+\item Japan: TOPIX
+\end{itemize}
+% video 4-11
+\subsection{Definition of Beta}
+\label{sec:Beta}
+Assume:
+$$r_i(t) = \beta_i * t_m(t) + \alpha_i$$
+Then use linear regression (line fitting) to find beta and alpha.
+
+{\bf Beta and correlation are Different!} So, CAPM stated expected residual = 0
+(as it is random every day so they are summarising to 0): $r_i(t) = \beta_i *
+t_m(t) + \alpha_i$
+
+Active Portfolio Management states that $\alpha_i$ is not totally random it is
+possible to make a forecast about $\alpha$ (but $\beta_i * t_m(t)$ still makes a
+main influence on price).
+
+% video 4-12
+\subsection{Using CAPM}
+\label{sec:UsingCAPM}
+\begin{itemize}
+\item Expected excess returns are proportional to beta.
+\item Beta of portfolio = weighted sum of betas of components.
+$$r_p = \sum_j w_j r_j; \beta_p = \sum w_j \beta_j $$
+where $w_j$ - weight, $r_j$ - return for each of component $j$
+\end{itemize}
+Standard trick: take one equity for IBM, one for SPY. Suppose we expect the
+whole market will go down while IBM should go a bit up ($\alpha_{IBM}$ will
+increase while total price of IBM will go down with market - because of
+$\beta_{IBM} \to 1$). The we stay in short for SPY while go long for IBM. The
+return for this portfolio will be:
+
+$$r_{IBM} = 0.5 \beta_{IBM} + \alpha_{IBM}; r_{SPY} = - 0.5 \beta_{SPY} + \alpha_{SPY}$$
+- we have no info about $\alpha_{SPY}$, consider it 0, so:
+$$ r_{IBM} \approx 0.5 + 0.5 \alpha_{IBM};r_{SPY} = -0.5 + 0$$
+and summary $r = r_{IBM} + r_{SPY} = 0.5 \alpha_{IBM}$ - overall portfolio made
+some money regardless of which direction the market grown (if market goes down
+we'd lost money on IBM and gained on SPY, but gain on SPY was bigger then lost
+on IBM; if market goes up, we'd gain some on IBM and lost on SPY, but gain would
+be bigger then lose again). This trick is called \term{removing market risk}.
+
+Reading: Grinold \& Kahn, chapter 2.
+
+% video 5-4
+\section{Efficient Market Hypothesis}
+\label{sec:EfficientMarketHypothesis}
+\subsection{Information and Arbitrage}
+\label{sec:InformationAndArbitrage}
+The idea is that near whole Quantitative-based investment is based on some kind
+of arbitrage model - particularly, on arbitrage between price of the equity on
+the market and what we believe to be its true value. We expect that price should
+be close to the true value; if it significantly diverges - it makes an
+opportunity to make investment (either in long or short).
+
+There are two general approaches to determining equity value:
+\begin{itemize}
+\item Technical Analysis - looking at Price and Volume only
+\item Fundamental Analysis - based on Financial statements, P/E (price/earning)
+  ratios, cash on hand, dividends
+\end{itemize}
+Key sources of information:
+\begin{itemize}
+\item Directly from markets: price/volume
+\item SEC (Security Exchange Commission) files
+\item News: Exogenous sources
+\end{itemize}
+
+% video 5-5
+\subsection{Efficient Market Hypothesis}
+\label{sec:EfficientMarketHypothesis}
+Three key versions of Efficient Market Hypothesis (EMH) - see wiki for
+definition.
+
+\begin{itemize}
+\item Weak: states that prices reflect all past publicity available information.
+
+  This version prohibits profit from Technical Analysis
+\item Semi-Strong: Weak + prices instantly change to reflect new public
+  information
+
+  This prohibits profit from TA and Fundamental Analysis (FA).
+
+\item Strong: Semi-Strong + prices instantly reflect even hidden or ``insider''
+  information
+
+  Prohibits profit from insider information
+\end{itemize}
+
+There are some evidence that EMH is ``not true'' (see relations between P/E and
+annualised return). Plus so-called Behavioural Economics theory (stating that
+so-called cognitive biases - emotions - like overconfidence, overreaction,
+information bias etc) also exists.
+
+% video 5-6, 5-8
+\subsection{Event Studies}
+\label{sec:EventStudies}
+In QSTK we have a tool for events analysis See also QSTK/Examples/EventProfiler
+
+The task for HW2 is to iterate through the price matrix, look for signals in
+price, and put ``1'' flag into event matrix. The event to search for so-called
+``price events'', particularly when the actual close of the stock drops below 5
+dollars (at this points a lot of things happen).
+
+Use raw price values (not daily returns as in tutorial)! So the whole task:
+\begin{itemize}
+\item Create a version of the Event Profiler that scans all stocks in a given
+  list to discover events relating to actual\_close
+\item Examine period from 1 January 2008 to 31 December 2009
+\item Use two data sets: sp5002008.txt and sp5002012.txt
+\end{itemize}
+
+video 6-1
+\subsection{Portfolio Optimisation and the Efficient Frontier}
+\label{sec:EfficientFrontier}
+The idea of a portfolio optimisation is: when given a set of equities and target
+return, find allocation to each equity that minimises risk.
+
+The idea is to have ``risk'' expressed as \term{volatility}, or the
+\term{standard deviation of the daily returns}.
+
+% video 6-2
+\subsubsection{Mean Variance Optimisation}
+\label{sec:MeanVarianceOptimisation}
+{\bf Inputs} are:
+\begin{itemize}
+\item Expected return for each Equity
+\item Volatility (risk) for each equity
+\item Target returns 
+\item Covariance matrix
+\end{itemize}
+{\bf Output:} Portfolio weights that minimise risk for target return.
+
+% video 6-3
+\subsubsection{Correlation and Covariance Between Equities}
+\label{sec:CorrelationAndCovariance}
+The idea is that Correlation (ranges between -1 and 1, see Wiki for definition)
+allows to build a summary portfolio which allows 
+
+% video 6-4
+\subsubsection{The Efficient Frontier}
+\label{sec:EfficientFrontier}
+The \term{Efficient Frontier} is a line - set of points with lowest risk for any
+given return value (slide 114, page 4).
+
+There are three key points on the EF:
+\begin{itemize}
+\item Highest return (with highest risk) - actually, equals to ``100\% of
+  highest return equity''
+\item Lowest risk (the positive return is not guaranteed, BTW)
+\item Maximising Sharp ratio - optimum for given set of equities.
+\end{itemize}
+
+% video 6-5
+\subsection{How Optimisers Work}
+\label{sec:HowOptimisersWork}
+See QSTK Tutorial 8 for built-in optimiser in QSTK
+
+General algorithm:
+\begin{itemize}
+\item Define variables (Equity weights)
+\item Define constraints (minimum or maximum weights)
+\item Define optimisation criteria (function of weights)
+\item Optimiser algorithm:
+  \begin{itemize}
+  \item Tweak weights
+  \item Check constraints
+  \item OK?
+  \item Call function
+  \item Repeat
+  \end{itemize}
+\end{itemize}
+
+- See Convex optimisation (convex function, assuming there is no local optimums)
+for reference (page 5 for URL). QSTK uses open-source CVXOPT library.
+
+% video 6-6
+\subsection{Digging Into Data}
+\label{sec:DiggingIntoData}
+We're trying to read an event study.
+
+Example Event: is based on so-called Bollinger Bands indicator. Event is
+triggered when the particular price drops below -1.5 standard deviations of
+recent daily values while market itself is going up (SPY is above 0.25).
+
+Sanity check at the event moment: ``big drop''.
+
+After event, the price is slowly going up (nearly for seven days) and then drops
+again (page 4 of slides 121) while standard deviations are not very large. 
+
+To trade this, one can buy the equity expecting it to climb up, but it does not
+make sense to keep it longer then for 7 days.
+
+For \$5 events: compare data for 2008 and 2012 (page 5 of slides 121). in 20
+days the 2008 symbols went up much slower then in 2012 (about 3\% vs 5\%). The
+reason is that 2012 symbols are for companies that survived the big crash (the
+SPY index lost about 60 equities which are not traded after 2008).
+
+- so-called ``Survival Bias'' To clean up this we can:
+\begin{itemize}
+\item clean up the data (remove stocks that died/acquired in 2008-2012)
+\item create a number of random portfolios, get average results
+\end{itemize}
+
+% video 6-7
+\subsection{Actual vs Adjusted Price}
+\label{sec:ActualVsAdjustedPrive}
+\begin{itemize}
+\item Actual: the actual closing price recorded by the exchange on the specific
+  date in history
+\item Adjusted: a revised price that automatically accounts for ``how much you
+  would have made if you held this stock''
+\end{itemize}
+The reasons for difference could be: Splits, Dividends (see page 9 of slides 122
+for the stock price near the dividend payment time: the shareholder get \$1 of
+dividend at certain day), NaN (missing data because of breaks in trading,
+before/after stock exist etc) .
+
+For missing data we can go for (page 13 of 122): 
+\begin{itemize}
+\item Fill back - taking data from next days
+\item Fill forward - taking data from previous days
+\end{itemize}
+Usual combination - Forward then Back (page 14/122).
+
+% video 6-8
+\subsubsection{Data Sanity and Scrubbing}
+\label{sec:DataSanity}
+Examples:
+\begin{itemize}
+\item Failure to adjust for splits
+\item Orders of magnitude drops, followed by offsetting orders of magnitude
+  climbs
+\item Database updates missing significant chunks of data/symbols
+\end{itemize}
+Automated strategies may exploit bad data, then fail with real data
+
+So, sanity checks:
+\begin{itemize}
+\item Scan new data for $\approx 50\%$ drops or 200\% gains (probably a split).
+  Very rare for real data.
+\item NaNs in DOW (major) stocks (probably data feed bad)
+\item Recent adjusted prices less than 0.01
+\item NaNs > 20 trading days
+\end{itemize}
+
+Usually it is easier and more reliable to remove. Repairing is possible) but
+requires multiple sources. 
+
 
 \end{document}
