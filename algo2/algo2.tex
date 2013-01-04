@@ -1,0 +1,1155 @@
+\documentclass{scrartcl}
+
+\usepackage{amsmath,amssymb,amsfonts} % Typical maths resource packages
+\usepackage{graphics}                 % Packages to allow inclusion of graphics
+\usepackage{color}                    % For creating coloured text and background
+\usepackage{hyperref}                 % For creating hyperlinks in
+                                % cross references 
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+\usepackage{listings}
+\lstloadlanguages {[LaTeX]TeX, Octave}
+\lstset {language=[LaTeX]TeX,
+  extendedchars=true ,escapechar=|}
+
+\begin{document}
+\section {Applications}
+\label{sec:Section1}
+\begin{itemize}
+\item Internet Routing
+\item Sequence Alignment
+\end{itemize}
+
+\section{Review from Part I}
+\label{sec:Section2}
+\subsection{Generic Graph}
+\label{Graphs}
+General metrics: n - amount of vertexes, m - amount of edges.
+
+\subsubsection{Generic Algorithm}
+\label{sec:Genericlgorithm}
+Given: graph $G$, vertex $s$
+\begin{itemize}
+\item initially $s$ explored, all other vertexes nexplored
+\item while possible:
+  \begin{itemize}
+  \item choose an edge $(u, v)$ with $u$ explored and $v$ unexplored (if none,
+    halt)
+  \item mark $v$ explored
+  \end{itemize}
+\end{itemize}
+
+Claim: at the end of the algorithm, $v$ explored $\Leftrightarrow G$ has a path
+from $s$ to $v$ ($G$ directed or undirected).
+
+Prof: $(Rightarrow)$ easy induction on number of iterations. $(Leftarrow)$ - by
+contradiction. Suppose $G$ does have a path from $s$ to $v$ but $v$ is
+unexplored at the end of the algorithm. The $\exists$ edge $(u, w) \in P$ with
+$u$ explored and $w$ unexplored. In this case it is impossible: the algorithm
+does not terminate by definition while such edges exists. Contradiction - QED!
+
+Strategies:
+\begin{itemize}
+\item Breadth-First Search (BFS)
+  \begin{itemize}
+  \item explores nodes in layers:
+    \begin{itemize}
+    \item Layer 0 - starting point
+    \item Layer 1 - the neighbours of Layer 0
+    \item Layer 2 - the neighbours of Layer 1 which are not already in Layer 0
+    \item ...
+    \end{itemize}
+  \item can compute shortest path
+  \item can compute connected components of an undirected graph
+  \end{itemize}
+\item Depth-First Search (DFS)
+  \begin{itemize}
+  \item explore aggressively like a maze, backtrack only when necessary
+  \item can compute topological ordering of directed acyclic graph
+  \item compute connected components in directed graphs
+  \end{itemize}
+\end{itemize}
+
+\subsection{Dijkstra's Shortest-Path Algorithm}
+\label{sec:Dijkstra}
+Input directed graph $G = (V, E); m = |E|, n = |V|$; each edge has {\bf
+  non-negative} path $l_e$; source vertex $s$
+
+Output: for each $v \in V$, compute $L(v) :=$ length of shortest $s-v$ path in
+$G$.
+
+Assumptions:
+\begin{enumerate}
+\item $\forall v \in V, \exists s \rightarrow v$ path
+\item $l_e \ge 0 \forall e \in E$
+\end{enumerate}
+The algorithm itself is a variation of BSF:
+
+\subsection{Heap Operations and Applications}
+\label{sec:DataHeap}
+- a container for objects that have keys
+
+Operations:
+\begin{itemize}
+\item Insert. Expected running time $O(\log n)$
+\item Extract-MIN: remove an object in heap with a minimum key value. Expected
+  running time $O(\log n)$
+\end{itemize}
+Additional operations:
+\begin{itemize}
+\item Heapify (create a heap from batched insert of $n$ objects); $O(n)$
+\item Delete arbitrary element - $O(\log n)$
+\end{itemize}
+Use when program uses repeated min computations (like Selection Sort, which
+becomes HeapSort). More interesting - Event Manager, as ``priority queue'' is a
+synonym for a heap (sort events by expected time of occurring). Even more
+interesting - Median Maintenance.
+
+One of possible implementation - with tree. We'll use for speeding up Dijkstra.
+
+\section{Greedy Algorithms}
+\label{sec:Section3}
+This is just on of the algorithm design paradigms, like:
+\begin{itemize}
+\item divide and conquer (see Part I of the course): Merge Sort
+\item randomised algorithms (touched in Part I) - like in Quick Sort
+\item greedy algorithms - like Dijkstra shortest path
+\item dynamic programming
+\end{itemize}
+\subsection{Introduction}
+\label{sec:3-1}
+Informal description: interactively make ``myopic'' decisions (that is, a
+decision that ``looks good at the time'' and hope everything works out at the
+end. In contrast to divide-and-conquer, it is:
+\begin{itemize}
+\item easy to propose multiple greedy algorithms for many problems
+\item easy running time analysis (in contrast to Master Method etc)
+\item hard to establish correctness
+\end{itemize} {\bf Danger} most greedy algorithms are NOT correct; the whole
+process ``is more art that science'' But there are still some methods:
+\begin{enumerate}
+\item induction
+\item exchange argument
+\item whatever works!
+\end{enumerate}
+
+% video 3-2
+\subsection{Application: Optimal Caching}
+\label{sec:3-2}
+The problem: we have the big slow memory vs small fast one (the cache). We
+process a sequence of page requests; on a fault (that is, a cache miss) need to
+evict something form the cache to make room - but what?
+
+\paragraph{Theorem} [Belady, 1960s]: the ``furthest-in-future'' algorithm is
+{\bf optimal} (i.e. minimises the number of cache misses).
+
+\paragraph{Why useful?}:
+\begin{enumerate}
+\item serves as guideline for practical algorithms (i.e. Last Recently Used)
+\item serves as idealised benchmark for caching algorithms
+\end{enumerate}
+\paragraph{Prof:} tricky exchange argument (DIY).
+
+% video 4-1
+\section{A Scheduling Application}
+\label{sec:4-0} {\bf Setup:} one shared resource (e.g. processor); many jobs to
+do (e.g.
+processes).\\
+{\bf Question:} in what order should we sequence the jobs? {\bf Assume:} each
+job $j$ has a:
+\begin{itemize}
+\item weight $w_j$ - ``priority''
+\item length $l_j$
+\end{itemize} {\bf Definition:} the {\bf completion time $C_j$ of job $j$} is a
+sum
+of job lengths up to and including $j$.\\
+{\bf Goal:} minimise the weighted sum of the completion times:
+$$ \min \sum_{j=1}^n w_jC_j $$
+
+% video 4-2
+\subsection{Sheduling Application: Algorithm}
+\label{sec:4-2} {\bf Idea:} assign a ``score'' to jobs that are increasing in
+weight but
+decreasing in length. \\
+{\bf Guess 1:} score = $w_j - l_j$\\
+{\bf Guess 1:} score = $\frac{w_j}{l_j}$\\
+There will be one-and-only-one optimal algorithm, so we'll have only on correct
+scoring function {\bf at most}. \\
+To distinguish one we need to find example where the two different algorithms
+produce different outputs (at list one should be incorrect). After playing with
+such example (say, Job 1 is length 5, weight 3 and Job 2 in length 2, weight 1),
+we find that Algorithm 1 is not always correct. But, {\bf this does not make
+  obvious that algorithm 2 is always correct - need to prove this}
+% video 4-3
+
+\subsection{Correctness Prof}
+\label{sec:4-3} {\bf Claim: } Algorithm \#2 (order jobs according to decreasing
+ratios $w_j/l_j$ is always correct, i.e. for any possible input it creates a
+sequence of jobs
+which minimises $\sum \limits_{j=1}^n w_jC_j $ \\
+{\bf Prof: } by an {\bf Exchange Argument}
+{\bf Plan: } Fix arbitrary input of $n$ jobs; proceed with contradiction.\\
+Notations:\\
+$\sigma =$ greedy schedule; $\sigma^* = $ optimal schedule (with $\sigma^*$
+better than $\sigma$). Will produce schedule even better then $\sigma^*$,
+contradicting assumed.
+
+{\bf Assume: } all $w_j/l_j$ are distinct \\
+{\bf Assume: } (just by renaming jobs) that $\frac{w_1}{l_1} > \frac{w_2}{l_2} >
+\dots > \frac{w_n}{l_n}$ \\
+{\bf Thus: } greedy schedule $\sigma$ is just $1, 2, 3, \dots, n$ {\bf Thus: }
+if optimal schedule $\sigma^* \neq \sigma$ that there are consecutive jobs $i,
+j: i > j$ that are different in $\sigma^*$.
+% video 4-4
+The idea is that after swap of adjacent jobs, the jobs before and after this
+pair will keep their completion times, while $C_i$ will increase and $C_j$ will
+decrease. Total change will improve $\sigma^*$ - contradiction.
+% video 4-5
+\subsection{A scheduling Application: Handling Ties}
+\label{sec:4-5} {\bf Claim: }Algorithm \#2 (order jobs in non-increasing order
+of ration
+$w_j/j_j$ is always correct)\\
+{\bf New proof Plan: } fix arbitrary input of $n$ jobs. Let $\sigma=$ greedy
+schedule, $\sigma^*=$ any other schedule. Will show that $\sigma$ is at least as
+good as $\sigma^* \Rightarrow$ implies that greedy schedule is optimal.\\
+\paragraph{Correctness Proof} {\bf Assume } (just by renaming jobs) greedy
+schedule $\sigma$ is just $1, 2,
+\dots, n$ so $w_1/j_1 \geq w_2/l_2 \geq w_n/l_n$.\\
+Consider arbitrary schedule $\sigma^*$. If $\sigma^* = \sigma$, done. Else
+recall $\exists$ consecutive jobs $i, j \in \sigma^*: i > j$\\
+{\bf Note } $i>j \Rightarrow w_i/l_i \leq w_j/l_j \Rightarrow w_il_j \leq w_j
+l_i$\\
+Exchanging $i, j$ in $\sigma^*$ has net benefit of $w_j l_i - w_i l_j \geq 0$.
+
+After at most $n \choose n$ such exchanges (bubble sort, aha) we transform
+$\sigma^*$ into $\sigma \Rightarrow \sigma $ at least as good as $\sigma^*
+\Rightarrow $ greedy is optimal.
+
+% video 5-1
+\section{Prim's Minimum Spanning Tree Algorithm}
+\label{sec:5-0}
+\subsection{Problem definition}
+\label{sec:5-1} {\bf Internal Goal: } connect a bunch of points together as
+cheaply as
+possible.\\
+{\bf Applications: } clustering, networking \\
+% video 5-1: 01:45
+{\bf Realisations: }
+\begin{itemize}
+\item Prim's algorithm [1957; also Dijkstra 1959, Jarnik 1930]
+\item Kruskal's algorithm [1956]
+\end{itemize}
+- goes in almost linear time: $O(m \log n)$ (using suitable data structure).
+
+{\bf Input: } undirected graph $G = (V, E)$ (Vertexes and Edges) and a cost
+$C_e$ for each edge $e \in E$. Assume adjacency list representation, OK if edge
+costs are negative
+
+{\bf Output: } minimum cost tree $T \leq E$ that spans all vertexes, i.e.:
+\begin{enumerate}
+\item Tree $T$ has no cycles (loops)
+\item The sub-graph $(V, T)$ is connected (i.e. contains path between each pair
+  of vertices).
+\end{enumerate}
+Standing assumptions:
+\begin{itemize}
+\item input graph $G$ is itself connected (easy to check in pre-processing with
+  DFS); it is possible to create a version which produces the set of sub-trees
+  for sub-graphs
+\item edge costs are distinct (algorithms are still correct with ties, but
+  correctness proof is more annoying)
+\end{itemize}
+
+% video 5-2
+\subsection{Prim's MST Algorithm}
+\label{sec:5-2}
+Looks similar to Dijkstra's shortest-path.
+\begin{itemize}
+\item initialise $X = [s]$ where $s \in V$ - chosen arbitrary
+\item $T = \emptyset$ invariant: $X = $ vertices spanned by tree-so-far $T$
+\item while $X \neq V$:
+  \begin{itemize}
+  \item let $e = (u, v)$ be the cheapest edge of $G$ with $u \in X, v \notin X$
+  \item add $e$ to $T$
+  \item add $v$ to $X$
+  \end{itemize}
+  - i.e. increase \# of spanned vertices in cheapest way possible
+\end{itemize} {\bf Theorem: } Prim's algorithm always (i.e. regardless of input
+data specials)
+computes an MST. \\
+The prof will be of two parts:
+\subsubsection*{Part 1 } Prim's algorithm computes a spanning tree $T^*$\\
+(will use both properties of graph and spanning trees)
+% video 5-3
+{\bf Definition: } a {\bf cut} of a graph $G = (V, E)$ is a partition of $V$
+into 2 non-empty sets.\\
+\paragraph{Empty Cut Lemma} a graph is not connected $\Leftrightarrow \exists$
+cut $(A, B)$ with no crossing edges {\bf Prof: } $(\Leftarrow)$ assume the RHS
+(right-hand side). Pick any $u \in A$ and $v \in B$. Since no edges cross $(A,
+B)$, there is no $u-v$ path in $G
+\Rightarrow G$ not connected. \\
+$(\Rightarrow)$ Assume the LHS. Suppose $G$ has no $u-v$ path. Define $A =
+\{$vertices reachable from $u \in G\}$; $B = \{$ all other vertices $\}$ - i.e.
+all other connected components. So there are no edges crossing this cut (if
+there was one, by definition it's end would be included in $A$).
+
+\paragraph{Double-Crossing Lemma} Suppose the cycle $C \leq E$ has an edge
+crossing the cut $(A,B)$. Then $C$ has to cross it twice (or rather even amount
+of times). Then: \\
+{\bf Lonely Cut Corollary} if $e$ is the only edge crossing some at $(A, B)$
+than it is not in any cycle.
+
+So, the {\bf Part I} proof:\\
+\begin{enumerate}
+\item algorithm maintains invariant that $T$ spans $X$ (straightforward
+  induction).
+\item Can't stuck with $X \neq V$: otherwise the cut $(X, V - X)$ must be empty,
+  by {\bf empty cut lemma} input graph $G$ is disconnected.
+\item Ne cycles ever get created in $T$, because at any moment edges is added
+  there is no way to create a cycle. Consider some moment where $e$ gets added.
+  This edge is the first edge crossing $(X, V-X)$ that gets added to $T
+  \Rightarrow$ (at this moment all edges in $T$ have both their ends in $X$ so
+  no edge crosses the cut besides $e$) the $e$ is the only edge which crosses
+  the cut $\Rightarrow$ its addition can not create a cycle in $T$.
+\end{enumerate}
+% video 5-4
+\subsubsection*{Part 2: the Cut Property } $T^*$ is an MST - will use the ``cut
+property'' - in other words, ``the Prim's algorithm always outputs a minimum -
+cost spanning tree.\\
+{\bf Key Question: } when is it ``safe'' to include an edge in the tree-so-far?
+\paragraph{The Cut Property}
+
+Consider an edge $e$ of $G$. Suppose there is a cut $(A, B)$ such that $e$ is
+the cheapest edge of $G$ that crosses it.\\
+Then $e$ belongs to the MST of $G$.
+
+{\bf Claim: } Cut Property implies correctness: Cut Property $\Rightarrow$
+Prim's algorithm is correct\\
+{\bf Proof: } Prim's algorithm outputs a spanning tree $T^*$. \\
+{\bf Key point: } every edge $e \in T^*$ is explicitly justified by the Cut
+Property $\Rightarrow T^*$ is a subset of the MST $\Rightarrow$ since $T^*$ is
+already a spanning tree, it must be the MST.
+
+% video 5-5
+
+\subsection{Proof of Cut Property}
+\label{sec:5-5} {\bf Assumption: } distinct edge costs. {\bf cut property
+}states that: consider an edge $e \in G$. Suppose there is the cut $(A, B)$ such
+that $e$ is the cheapest edge of $G$ that crosses it. Then $e$ belongs to the
+MST of $G$.
+
+{\bf Proof: } by contradiction, using a exchange algorithm. Suppose there is an
+edge $e$ that is the cheapest one crossing at $(A, B)$, yet $e$ is not in the
+MST $T^*$.\\
+{\bf Idea: } exchange $e$ with another edge in $T^*$ to make it even cheaper
+(contradiction) \\
+{\bf Question: } which edge to exchange with?\\
+{\bf Note: } since $T^*$ is connected, must contain an edge $f$ crossing $(A,
+B)$.\\
+{\bf Idea: } exchange $e \leftrightarrow f$ to get a spanning tree cheaper than
+$T^*$ (contradiction).\\
+{\bf Hope: } can always find suitable edge $e'$ so that exchange yields bone
+fide spanning tree of $G$\\
+{\bf How? } Let $C =$ cycle created by adding $e$ to $T^*$. By the
+Double-Crossing lemma, some other edge $e'$ of $C$ with $e' \neq e$ and $e' \in
+T^*$ crosses$(A, B)$.\\
+Now check: $T = T^* \cup [e] - [e']$ is also a spanning tree. Since $l_e <
+l_{e'}, T$ cheaper than purposed MST $T*$ - contradiction.
+
+% video 5-6
+\subsection{Fast Implementation}
+\label{sec:5-6}
+\begin{itemize}
+\item initialise $X = [s]$ where $s \in V$ - chosen arbitrary
+\item $T = \emptyset$ invariant: $X = $ vertices spanned by tree-so-far $T$
+\item while $X \neq V$:
+  \begin{itemize}
+  \item let $e = (u, v)$ be the cheapest edge of $G$ with $u \in X, v \notin X$
+  \item add $e$ to $T$
+  \item add $v$ to $X$
+  \end{itemize}
+  - i.e. increase \# of spanned vertices in cheapest way possible
+\end{itemize}
+Running time of straightforward implementation: $O(n)$ iterations; looking
+through (potentially) $O(m)$ vertices each time $\Rightarrow O(mn)$.
+
+Can we do better?
+
+Aha, speed - up via heaps. Natural idea - use heap to store edges, with keys =
+edge costs (can exercise at home), will provide $O(m \log n)$ running time.\\
+Better idea would be to realise that we use heap not for finding a ``just''
+minimum edge, but for minimum edge which crosses the current cut.
+
+\subsubsection{Mad Skills}
+\label{sec:5-6-1}
+The better idea is to use heap for nodes (aha, geeks forever)\\
+{\bf Invariant 1: } elements in heap = vertices of $V - X$ (the graph not
+spanned yet).\\
+{\bf Invariant 2: } for $v \in V-X, key[v]$ = cheapest edge $(u, v)$ with $u
+\in X$.\\
+{\bf Check: } can initialise heap with $O(m + n \log n)= O(m \log n)$
+pre-processing: we go through $m$ vertices and fill our heap with elements: key
+-> cost of the edge between starting vertex $s$ and vertex in question
+(costs $m$) and then $n \log n$ for the inserts.\\
+{\bf Note: } given invariants, Extract-min yields next vertex $v \notin X$ and
+edge $(u, v)$ crossing $(X, V-X)$ to add to $X$ and $T$, respectively.
+% video 5-7
+{\bf Issue: } might need to recompute some keys to maintain Invariant \#2 after
+each Extract-min.\\
+{\bf Pseudocode: } when $v$ added to $X$:
+\begin{itemize}
+\item for each edge $(r, w) \in E$:
+  \begin{itemize}
+  \item if $w \in V-X$ (the only vertices whose key might have dropped), update
+    key if needed:
+    \begin{itemize}
+    \item Delete $w$ from heap (better to keep some index to remove item ``at
+      position'' from heap)
+    \item recompute $key[w] := min[key[w], C_{vw}]$
+    \item re-Insert $w$ into heap
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Running Time with Heaps}
+\label{sec:5-7-1}
+\begin{itemize}
+\item dominated by time required for heap operations
+\item $(n-1)$ inserts during preprocessing
+\item $(n-1)$ Extract-min (one per iteration of while loop)
+\item each edge $(v, w)$ triggers one delete/insert combo (when its first
+  endpoint gets sucked into $X$)\\
+\end{itemize}
+$\Rightarrow O(m)$ operations (as $m /geq n -1$  since $G$ connected)\\
+$\Rightarrow O(m \log n)$ time \\
+
+% video 6-1
+\subsection{Kruskal's MST Algorithm}
+\label{sec:6-1}
+\begin{itemize}
+\item sort edges in order of increasing cost (rename in a way that $c_1 < C_2 <
+  \dots < c_m$)
+\item $T = \emptyset$
+\item for $i = 1$ to $m$:
+  \begin{itemize}
+  \item if $T + c_i$ has no cycles - add $i$ to $T$
+  \end{itemize}
+\item return $T$
+\end{itemize}
+% video 6-2
+\subsubsection{Correctness}
+\label{sec:6-2}
+{\bf Theorem: } Kruskal's algorithm is correct \\
+{\bf Proof: } Let $T^* = $ output of Kruskal's algorithm on input graph $G$ \\
+\begin{enumerate}
+\item clearly $T^*$ has no cycles
+\item $T^*$ is connected
+  \begin{enumerate}
+  \item By Empty Cut Lemma, only need to show that $T^*$ crosses every cut:
+  \item Fix a cut $(A, B)$. Since $G$ is connected, at least one of the edges
+    crosses $(A, B)$. {\bf Key point: } Kruskal's will include first edge
+    crossing $(A, B)$ that it sees (by Lonely Cut Corollary, can't create a
+    cycle).
+  \end{enumerate}
+\item every edge of $T^*$ justified by the Cut Property. \\
+  {\bf Reason: }  \\
+  Consider iteration where edge $(u, v)$ added to current set $T$. Since $T +
+  (u, v)$ has no cycle, $T$ has no $u-v$ path. $\Rightarrow \exists$ empty cut
+  $(A, B)$ separating $u$ and $v$ \\
+  $\Rightarrow$ by 2b) no edges crossing $(A, B)$ were previously considered by
+  Kruskal's algorithm \\
+  $\Rightarrow (u, v)$ is the first (hence the cheapest) edge crossing $(A, B)$.
+  $\Rightarrow (u, v)$ justified by the Cut Property.
+\end{enumerate}
+% video 6-3
+\subsubsection{Implementing Kruskal's Algorithm via Union-Find}
+\label{sec:6-3} {\bf Straightforward implementation time:} $O(m \log n) : O(m
+\log n)$ preparation; $O(m)$ iterations of the main loop; checks are done in
+$O(n)$ (we
+can use DFS or BFS in the graph $T + v$). Total: $O(m \log n) + O(mn) = O(mn)$.\\
+{\bf Plan: } data structure for $O(1)$ - time cycle checks $\rightarrow O(m \log
+n)$ time.
+% video 6-3 06:00
+\paragraph{The Union-Find Data Structure}
+The idea is to maintain a partition of entire set of objects. Operations:\\
+\begin{itemize}
+\item $Find(x):$ return name of the group that $x$ belongs to
+\item $Union(c_i, c_j):$ fuse groups $c_i$ and $c_j$ into a single one
+\end{itemize}
+For the Kruskal's algorithm: objects = vertices; groups = connected with respect
+to currently chosen edges $T$. Adding new edge $(u, v)$ to $T \Leftrightarrow $
+finding connected components of $(u, v)$.
+
+\subparagraph{Basics}
+{\bf Idea 1: } maintain one linked structure per connected component of $(V,
+T)$; each component has an arbitrary {\bf leader } vertex. \\
+{\bf Important: } each vertex points to the leader of its component (``name'' of
+a component inherited from leader vertex).\\
+{\bf Key point: } given edge $(u, v)$, can check if $u$ and $v$ already in same
+component in O(1) time (if and only if leader pointers of $u, v$ match).
+
+\subparagraph{Maintaining the Invariant }
+{\bf Note: } when new edge $(u, v)$ added to $T$, connected components of $u$
+and $v$ merge. \\
+{\bf Idea 2: } when two components merge, have smaller one inherit the leader of
+the larger one.(easy to maintain a size field in each component to facilitate
+this). (Still $O(n)$ time on $Union$ operation) \\
+{\bf But: } how many times does a single vertex have its leader point update
+ over the course of Kruskal's algorithm? Answer is $O(\log n)$, because this
+ means that ``yours'' group was smaller than the one you're merging with
+ $\Rightarrow $ can only happen $\leq \log_2 n$ time.
+
+\subparagraph{Running Time of Fast Implementation}
+\begin{itemize}
+\item $O(n \log n)$ time for initial sorting 
+\item $O(m)$ time for cycle checks ($O(1)$ per iteration)
+\item $O(n \log n)$ time overall for leader point updates
+\end{itemize}
+Totals to $O(m \log n)$
+
+% video 6-5
+\subsection{MST Algorithms State-of-the-Art}
+\label{sec:6-5}
+{\bf Question: } can we do better than $O(m \log n)$ 
+
+There are something randomised algorithm which does $O(m)$: Karger-Klein-Tarjan,
+[JACM 1995].
+
+There is still an open question about linear-time deterministic algorithm; but
+we do have the deterministic one ``absurdly close'' to it: $O(m \alpha (n))$,
+where $\alpha$ - inverse Ackermann function 
+% video 6-5 05:00
+\paragraph{Open Questions on MST}
+Up to now, we have:
+\begin{itemize}
+\item An algorithm of Pettie and friends plus a proof that there is no faster
+  deterministic MST algorithm, but precise asymptotic running time is unknown
+  (it is somewhere between $O(1)$ and $O(m \alpha (n))$.
+\item the existing randomised $O(m)$-time algorithm for MST is too complex;
+  better to find a (relatively) simple one;
+\item to accomplish the previous task, one need to find an algorithm for MST
+  verification with $O(m)$ - time
+\item is there a deterministic $O(m)$ - algorithm?
+\end{itemize}
+% video 7-1
+\section{Huffman Codes}
+\label{sec:7-1}
+{\bf Binary Codes: } maps each character of an alphabet $\Sigma$ to a binary
+string. \\
+Example: $\Sigma = a - z + punctuation$ (size 32 overall). Obvious encoding is
+5-bit fixed-length code.\\
+
+A {\bf Prefix-free } codes makes sure that for every pair $i, j \in \Sigma$
+neither of the encoding $f(i), f(j)$ is a prefix of the other. Example: $\{0,
+10, 110, 111\}$ for 4-symbol alphabet.
+% video 7-2
+\subsection{Problem Definition}
+\label{sec:7-2}
+{\bf Goal: } best binary prefix-tree encoding for a give set of character
+frequencies. \\
+{\bf Useful facts: } binary codes $\leftrightarrow$ binary trees. In general,
+left child edges $\leftrightarrow$ ``0'', exactly one node labelled ``1''\\
+(see ``prefix-free Codes as Trees'' slide).
+{\bf To decode: }  repeatedly follow path from root until you hit the leaf.\\
+Encoding length of $i \in \Sigma$ = depth of $i$ in tree!\\
+
+{\bf Input: } probability $p_i$ for each character $i \in \Sigma$\\
+
+{\bf Notation: } if $T = $ tree with leaves $\leftrightarrow$ symbols of
+$\Sigma$, then average encoding length $L(T) = \sum \limits_{i \in \Sigma} p_i
+*$ [depth of $i$ in $T$]\\
+
+{\bf Output: } a binary tree $T$ minimising the average encoding length $L()$
+% video 7-3 
+\subsection{A Greedy Algorithm}
+\label{sec:7-3}
+
+{\bf Input: } probability $p_i$ for each character $i \in \Sigma$\\
+
+{\bf Output: } a binary tree $T$ minimising the average encoding length $L(T) =
+\sum \limits_{i \in \Sigma} p_i *$ [depth of $i$ in $T$]\\
+
+{\bf Huffman's (optimal) idea: } build the tree bottom-up using successive
+mergers. 
+
+\subsubsection{A Grredy Approach}
+\label{sec:7-3-1}
+
+{\bf Question: } which pair of symbols is ``safe'' to merge?
+
+{\bf Observation: } final encoding length of $i \in \Sigma = $ \# of mergers its
+sub-tree endures. 
+% video 7-3 10:25
+
+\subsubsection{How to Recurse?}
+\label{sec:7-3-2}
+
+{\bf Suppose: } 1st iteration of algorithm merges symbols $a$ and $b$. 
+
+{\bf Idea: } replace the symbols $a,b$ by a new ``meta-symbol'' $ab$. The
+frequency of this symbol will be $p_a + p_b$.
+
+\subsubsection{Huffman's Algorithm }
+\label{sec:7-3-3}
+
+\begin{itemize}
+\item If $|\Sigma| = 2$ return tree out of two nodes.
+\item Let $a, b \in \Sigma$ have the smallest frequencies
+\item Let $\Sigma' = \Sigma$ with $a, b$ replaced by new symbol $ab$
+\item define $p_{ab} = p_a + p_b$
+\item recursive compile $T'$ (for the alphabet $\Sigma'$)
+\item Extend $T'$ (with leaves $\leftrightarrow \Sigma'$) to a tree $T$ with
+  leaves $\leftrightarrow \Sigma$ by splitting leaf $ab$ into two leaves $a + b$
+\item return $T$
+\end{itemize}
+
+% video 7-4
+\subsection{Correctness Proof}
+\label{sec:7-4}
+{\bf Theorem: }[Huffman, 52] Huffman's algorithm computes a binary tree (with
+leaves $\leftrightarrow$ symbols of $\Sigma$) that minimises the average
+encoding length:
+$$ L(T) = \sum_{i \in \Sigma} p_i * [\text{depth of leaf i in T}]$$ 
+
+{\bf Proof: } By induction on $n = |\Sigma|$, can assume $n \geq 2$:
+\begin{itemize}
+\item {\bf Base case: } when $n = 2$, algorithm outputs the optimal tree (need 1
+  bit per symbol)
+\item {\bf Inductive step: } Fix input with size $n = |\Sigma| > 2$.
+\item {\bf By inductive hypothesis: } algorithm solves smaller sub-problem (for
+  $\Sigma '$) optimally.
+\end{itemize}
+% video 7-4 03:00
+
+\subsubsection{Inductive Step}
+\label{sec:7-4-1}
+Let $\Sigma' = \Sigma$ with $a, b$ replaced with meta-symbol $ab, p_{ab}=p_a +
+p_b$. There is exact correspondence between trees for $\Sigma'$ and [trees for
+$\Sigma$ that have $a, b$ as siblings] - tree $X_{ab}$.\\
+
+{\bf Important: } for every such pair $T'$ and $T$, $L(T)-L(T')$ is $p_a + p_b$
+(see video 7-4 08:30 for exact calculations).\\
+% video 7-5
+So, corresponding tree $\hat{T}$ minimises $L(T)$ for $\Sigma$ over all trees in
+$X_{ab}$ - i.e. where $a \xi b$ are siblings (notice that does not guarantee
+that such solution exists)\\
+
+{\bf Key lemma: } (completes proof of the theorem) there is an optimal tree (for
+$\Sigma$) in $X_{ab}$ - i.e., it is ``safe'' to merge.
+
+{\bf Intuition: } can make an optimal tree better by pushing $a \xi b$ as deep
+as possible (since $a \xi b$ have smallest frequencies).
+
+{\bf Proof of Key Lemma: } By exchange arguments. Let $T^*$ be any tree that
+minimises $L(T)$ for $\Sigma$. Let $x, y$ be siblings at the deepest level of
+$T^*$.\\
+{\bf The exchange: } obtain $\hat{T}$ from $T^*$ by swapping labels $a
+\leftrightarrow x, b \leftrightarrow y$\\
+{\bf Note: } $\hat{T} \in X_{ab}$ (by choice of $x, y$)\\
+{\bf To finish: } will show that $L(\hat{T}) \leq L(T^*)$ [as $\hat{T}$ also
+optimal, this completes proof].\\
+{\bf Reason: } see video 7-5 08:30
+
+\subsubsection{Notes on Running Time}
+\label{sec:7-4-2}
+{\bf Naive implementation: } $O(n^2)$ time where $n=|\Sigma|$\\
+{\bf Speed ups: } using a heap:
+\begin{itemize}
+\item keys = frequencies
+\item after extracting the two smallest-frequent symbols, re-insert the new
+  meta-symbol with key = sum of the 2 old ones
+\end{itemize}
+$\Rightarrow$ iterative, $O(n \log n)$ implementation
+
+{\bf Even faster: } (non-trivial): Sorting + $O(n)$ additional work: Hint:
+manage (meta-) symbols using two queues.
+
+%video 8-1
+\subsection{Application MST to Clustering}
+\label{sec:8-1}
+{\bf Informal goal: } given $n$ ``points'' classify into ``coherent groups''
+(like in AI unsupervised learning). \\
+{\bf Assumptions: } as input given a (dis)similarity measure - a distance $d(p,
+q)$ between each point pair (symmetric: $d(p,q) = d(q,p)$)\\
+
+{\bf Goal: } same cluster $\Leftrightarrow$ ``nearby''
+%video 8-1 04:00
+\subsubsection{Max-Spacing k-Clustering}
+\label{sec:8-1-1}
+{\bf Assume: } we know the $k := $ \# of the clusters desired (in practice, can
+experiment with a range of values).\\
+Call points $p \xi q$ {\bf separated } if they're assigned to different
+clusters. \\
+{\bf Definition: } the {\bf spacing } of $k$-clustering is $\min
+\limits_{\text{separated } p \xi q} d(p, q)$ - the bigger, the better.\\
+
+{\bf Problem statement: } given a distance measure $d$ and $k$, compute the
+k-clustering with maximum spacing.
+% video 8-1 06:30
+\subsubsection{A Greedy Algorithm}
+\label{sec:8-1-2}
+The idea is that, starting from ``one point - one cluster'', unite the closest
+clusters to increase a spacing metric.\\
+\begin{itemize}
+\item initially, each point is in a separate cluster
+\item repeat until only $k$ clusters:
+  \begin{itemize}
+  \item let $p, q = $ closes pair of separated points
+  \item merge the clusters containing $p \xi q$ into a single cluster
+  \end{itemize}
+{\bf Note: } similar to Kruskal's algorithm but stopped early
+\item points $\leftrightarrow$ vertices; distances $\leftrightarrow$ edge costs.
+\end{itemize}
+The whole idea is called {\bf a single - link clustering }.
+% video 8-2
+\subsubsection{Correctness Claim}
+\label{sec:8-2}
+{\bf Theorem: } single-link clustering finds the max - spacing k-clustering\\
+{\bf Proof: } Let $C_1, C_2, \dots, C_k = $ greedy clustering with spacing $S$.
+Let $\hat{C_1}, \hat{C_2}, \dots, \hat{C_k} = $ arbitrary other clustering.\\
+{\bf Need to show: } spacing of $\hat{C_1}, \hat{C_2}, \dots, \hat{C_k}$ is
+$\leq S$
+
+\paragraph{Correctness Proof}
+
+\subparagraph{Case 1:}
+$\hat{C_i}'s$ are the same as the $C_is$ (maybe after renaming) $\Rightarrow$
+has the same spacing $S$.
+
+\subparagraph{Case 2:}
+otherwise, can find a point pair $p, q$ such that:\\
+a) $p, q$ in the same greedy cluster $C_i$\\
+a) $p, q$ in different clusters $\hat{C_i}, \hat{C_j}$\\
+
+{\bf Property of greedy algorithm: } if two points $x, y$ ``directly merged'' at
+some point, the $d(x, y) \leq S$ (distance between merged point pairs only goes
+up). \\
+
+{\bf Easy case: } if $p,q$ directly merged at some point, $S \geq d(p,q) \geq$
+spacing of $\hat{C_1}, \hat{C_2}, \dots, \hat{C_k}$
+
+{\bf Tricky case: } $p,q$ ``indirectly merged'' through multiple direct
+merges.\\
+Let $p, a_1, a_2, \dots, q$ be the path of direct greedy mergers connecting $p
+\xi q$. {\bf Key point: } Since $p \in \hat{C_i}$ and $q \notin \hat{C_I}, \exists$
+consecutive pair $a_i, a_j: a_i \in \hat{C_i}, a_j \notin \hat{C_j} \Rightarrow$
+$S \geq d(a_j, a_{j+1})$ (since $a_j, a_{j+1}$ directly merged), and
+$d(a_j, a_{j+1}) \geq $ spacing of $\hat{C_1}, \hat{C_2}, \dots, \hat{C_k}$ 
+ (since $a_j, a_{j+1}$ separated).
+
+% video 8-1
+\section{Dynamic Programming}
+\label{sec:8-1}
+\subsection{Weighted Independent Set (WIS) in Path Graphs}
+\label{sec:8-1-1}
+% {\bf Input: } a path graph $G=(V, E)$ with non-negative weight on vertices.\\
+{\bf Desired Output: } subset of non-adjacent vertices - an {\bf independent set
+} - of maximum total weight.\\
+{\bf Note: } Iterate through our algorithm design principles:
+\begin{itemize}
+\item A Greedy Approach: iteratively choose the max-weight vertex not adjacent
+  to any previously chosen vertex - fails (see video 8-1, 04:50).
+\item A Divide \& Conquer Approach: recursive compute the max-weight IS of 1st
+  half, ditto for 2nd half, combine the solutions. Fails as there is no good
+  mean for the ``divide'' phase.
+\end{itemize}
+Summarising problem: what if recursive solutions conflict? $\Rightarrow $ not
+clear how to quickly fix.
+
+% video 8-2
+\subsubsection{Optimal Substructure}
+\label{sec:8-2}
+Reasoning about structure of the optimal solution narrows down the set of
+candidates for the optimal solution; can search through the small set using
+brute-force search.\\
+{\bf Notation: } Let $S \leq V$ be a maximum-weight independent set (IS), and
+$v_n = $ last vertex of path.
+\begin{itemize}
+\item Case 1. Suppose $v_n \notin S$. Let $G' = G$ with $v_n$ deducted.\\
+{\bf Note: } $S$ also an IS of $G'$; and $S$ must be a max-weight IS of $G'$ -
+if $S^*$ was better, it would also be better then $S$ in $G$ (contradiction)
+\item Case 2. Suppose $v_n \in S$. \\
+{\bf Note: } by definition of IS, previous vertex $V_{n-1} \notin S$. Let $G'' =
+G$ with $v_{n-1}, v_n$ deleted. Then $S - [v_n]$ is an IS of $G''$.\\
+{\bf Note: } $S - [v_n]$ must in fact be a max-weight IS of $G''$ - if $S^*$ is
+better then $S$ in $G''$, then $S* \cup [v_n]$ is better than $S$ in $G$
+(contradiction). 
+\end{itemize}
+So, to summarise:\\
+{\bf Upshot: } a max-weight IS must be either:\\
+(I) a max-weight IS of $G'$\\
+(II) $v_n + $ a max-weight IS of $G''$\\
+{\bf Corollary: } if we knew whether or not $v_n$ was in the max-weight IS, could
+recursively compute the max-weight IS of $G'$ or $G''$ and be done.\\
+{\bf Crazy(?) idea: } try both possibilities and retain the better solution. Can
+be a recursive approach to the brute-force, but we have some tricks to complete
+it in linear time(!).
+
+%video 8-3
+\subsubsection{A Linear-Time Algorithm}
+\label{sec:8-3}
+\begin{itemize}
+\item recursively compute $S_1 = $ max-wt IS of $G'$
+\item recursively compute $S_2 = $ max-wt IS of $G''$
+\item return $S_1$ of $S \cup [v_n]$, whichever is better
+\end{itemize}
+{\bf Good news: } Correct (guaranteed to build a max-weight IS)\\
+{\bf Bad news: }  Exponential time\\
+But! Despite the fact that we need to make an exponential amount of calls,
+actual amount of the {\bf distinct } sub-problems is $O(n)$ - only one for each
+``prefix'' of the graph.\\
+{\bf Obvious fix: } the first time you solve a sub-problem, code its solution in
+a global take for $O(1)$ - time look-up later on (memoization).\\
+{\bf Even better: } reformulate as a bottom-up iterative algorithm:\\
+Let $G_i = $ 1st $i$ vertices of $G$.\\
+{\bf Plan: } populate array $A$ left to right with $A[i] = $ IS of $G_i$\\
+{\bf Initialisation: } $A[0] = 0,A[1] = w_1$\\
+{\bf Main loop: } for $i = 2, 3, \dots, n: A[i] = max(A[i-1],A[i-2] + w_i)$\\
+{\bf Running time: } $O(n)$\\
+{\bf Correctness: } some as for recursive algorithm
+
+% video 8-4
+\subsubsection{A Reconstruction Algorithm}
+\label{sec:8-4}
+
+The problem is, we need an optimal Solution, not just optimal Value. The obvious
+way (store the Solution together with values) is not ideal: it takes too much of
+space.\\
+The better idea would be to re-construct (trace back) the solution through
+filled-in array. \\
+{\bf Key point: } we know that a vertex $vi$ belongs to a max-weight IS of $G_i
+\Leftrightarrow w_i \in $ max-weight IS of $G_{i-2} \geq $ max-weight IS of
+$G_{i-1}$. So, after forward loop:\\
+
+\begin{itemize}
+\item Let $A = $ filled-in array. Let $S = \emptyset$;
+\item while $i \geq 1$ (scan through array from right to left)
+  \begin{itemize}
+  \item if $A[i-1] \geq A[i-2] +w_i$ (i.e. Case 1 wins - current vertex is
+    excluded)
+    \begin{itemize}
+    \item decrease $i$ by 1
+    \end{itemize}
+  \item else (Case 2 wins - current vertex $\in$ max-weight IS
+    \begin{itemize}
+    \item add $v_i$ to $S$, decrease $i$ by 2
+    \end{itemize}
+  \end{itemize}
+\item return $S$
+\end{itemize}
+{\bf Claim: } final output is a maximum IS of $G$ (proof-by induction).\\
+{\bf Running time: } $O(n)$
+
+% video 8-5
+\subsection{Principles of Dynamic Programming}
+\label{sec:8-5}
+Key ingredients of the Dynamic Programming:
+\begin{itemize}
+\item identify a small number of sub-problems (e.g. compute the max-weight IS of
+  $G_i$, for $i=0, 1, \dots, n$
+\item can quickly and correctly solve ``larger'' sub-problems given the solutions
+  to ``smaller sub-problems'' (usually via a recurrence)
+\item after solving all sub-problems, can quickly compute the final solution
+  (usually it's just the answer to the biggest sub-problem).
+\end{itemize}
+- see Richard Bellman's autobiography for history behind the term.
+
+% video 9-1
+\subsection{The Knapsack Problem}
+\label{sec:9-1}
+{\bf Input: } $n$ items, each has a value $v_i$ (non-negative) and size $w_i$
+(non-negative and integral). The knapsack itself has a capacity $W$
+(non-negative, integer).\\
+{\bf Output: } a subset of items $S \leq \{1, 2, \dots, n\}$ that maximises
+$\sum \limits_{i \in S} v_i$; subject to $\sum \limits_{i \in S} w_i \leq W$\\
+- basically, almost any resource (budget) allocation problem is going to be
+similar to this. 
+
+\subsubsection{Developing a Dynamic Programming Algorithm (Step 1)}
+\label{sec:9-1-1}
+Let's formulate recurrence (optimal solution as function of solutions to
+  ``smaller'' sub-problems) based on structure of optimal solution.\\
+Let $S=$ a max-value solution to an instance of knapsack. Consider all items as
+a sort of ordered collection, then we have our good old two-case switch:
+\begin{itemize}
+\item Case 1: item $n \notin S \Rightarrow S$ must be optimal with the first
+  $(n-1)$ items (if $S^*$ where better than $S$ with respect to list $(n-1)$
+  items, then this equally true with respect all $n$ items - contradiction).
+\item Case 2: item $n \in S \Rightarrow S-[n]$ is an optimal solution with
+  respect to the 1st $(n-1)$ items and capacity $W-w_n$. {\bf Prof: } if $S^*$
+  has higher value than $S-\{n\} + $ total size $\leq W-w_n$, then $S^* \cup
+  \{n\}$ has size $\leq W$ and value more than $S$ (contradiction).
+\end{itemize}
+
+% video 9-2
+\subsubsection{An Algorithm for the Knapsack Problem}
+\label{sec:9-2}
+{\bf Notation: } let $V_{i, x} = $ value of the best solution on that:
+\begin{itemize}
+\item uses only the first $i$ items
+\item has total size $\leq x$
+\end{itemize}
+for $i \in \{1, 2, \dots, n\}$ and any $x: V_{i,x} = \max(\underbrace{V_{i-1,
+    x}}_{\mbox{Case 1}, i \notin S}, \overbrace{v_i + V_{i-1,x -
+    w_i}}^{\mbox{Case 2, item i included} }) $\\
+{\bf Edge case: } if $w_i > x$, we must use Case 1 and have $V_{i, x} = V_{i-1. x}$
+
+% video 9-2, 03:00
+\subsubsection{The Sub-problems (Step 2)}
+\label{sec:9-2-2}
+Identifying the sub-problems: 
+\begin{itemize}
+\item all possible prefixes of items $\{1, 2, \dots, i\}$
+\item all possible (integral) residual capacities $x \in {0, 1, 2, \dots, W}$
+\end{itemize}
+
+\paragraph{Step 3: use recurrence from Step 1 to systematically solve all sub-problems}
+Let $A = 2-D$ array; initialise $A[0, x] = 0$ for $x=0, 1, \dots, W$
+\begin{itemize}
+\item for $i = 1, 2, 3 \dot, n$:
+  \begin{itemize}
+  \item for $x = 0, 1, 2, \dots, W$:
+    \begin{itemize}
+    \item $A[i, x] := max(A[i-1, x], A[i-1, x-w_i] + v_i)$ (if $x-w_i < 0$,
+      ignore this case for $max$ call - use just $A[i-1, x]$)
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+Return $A[n, W]$\\
+The running time is $O(nW)$
+
+Notes:
+\begin{itemize}
+\item Correctness - straightforward induction: use Step 1 argument to justify
+  inductive step.
+\item It return the number, but not the actual solution; the solution can be
+  re-constructed just like WIS algorithm.
+\end{itemize}
+
+% video 11-1
+\section{Sequence Alignment}
+\label{sec:11-1}
+\subsection{Optimal Substructure}
+\label{sec:11-1-1}
+We use a Needleman-Wunsch score = similarity measure between strings. We
+calculate a total penalty for missing parts and miss-matches\\
+{\bf Input: } strings $X = x_1, \dots, x_m; Y = y_1, \dots, y_m$ over some
+alphabet $\Sigma$; penalty $\alpha_{gap} \geq 0$ for inserting a gap,
+$\alpha_{ab}$ for matching $a \xi b$ (presumably $\alpha_{ab} = 0$ if $a=b$)\\
+{\bf Feasible Solutions: } alignments - i.e., insert gaps to equalise lengths of
+the strings\\
+{\bf Goal: } minimal- penalty solution.\\
+
+Trying to derive an optimal solution by reasoning. {\bf Key step: } identify
+sub-problems. As usual, will look at structure of an optimal solution for clues. 
+
+{\bf Structure of the optimal solution: } consider an optimal alignment of $X,
+Y$. We have three cases for the last symbols of alignment:
+\begin{itemize}
+\item Case 1: $x_m, y_n$ matched (symbols from both $X$ and $Y$ are included in this part)
+\item Case 2: $X_m$ matched with a gap (symbol from $X$ and gap on $Y$)
+\item Case 3: $y_n$ matched with a gap (symbol from $Y$ and gap on $X$) 
+\end{itemize}
+So,\\
+{\bf Point: } narrow optimal solution down to 3 candidates.\\
+{\bf Optimal substructure: } Let $X' = X - x_m; Y' = Y - y_n$.\\
+If Case 1 holds, the induced alignment (i.e. alignment of ``previous'' case,
+before the last symbol) is the alignment of $X' \xi Y'$ is optimal.\\ 
+If Case 2 holds, then induced alignment of $X' \xi Y$ is optimal\\
+If Case 3 holds, then induced alignment of $X \xi Y'$ is optimal\\
+
+\subsubsection{Optimal Substructure (Proof)}
+\label{sec:11-1-2}
+For Case 1, other cases are similar: by contradiction.\\
+Suppose induced alignment of $X', Y'$ has penalty $P$ while some other one has
+penalty $P^* < P$. Then appending (matching) of $x_m$ to $y_n$ to the latter
+gives an alignment of $X$ and $Y$ with penalty $P^* + \alpha_{x_m y_n} < P +
+\alpha_{x_m y_n}$, which means that original alignment was not optimal -
+contradiction. 
+
+% video 11-2
+\subsection{Algorithm}
+\label{sec:11-1-2}
+{\bf Relevant sub-problems: } have the form $(X_i, Y_j)$ where
+\begin{itemize}
+\item $X_i = \text{list } i \text{ letters of } X$
+\item $Y_j = \text{list } j \text{ letters of } Y$
+\end{itemize}
+
+{\bf The Recurrence}\\
+{\bf Notation: } $P_{ij} = $ penalty of optimal alignment of $X_i \xi Y_J$,\\
+{\bf Recurrence: } for all $i = 1, 2, 3\dots, m$ and $j = 1, 2, \dots, n$: \\
+$P_{ij} = $
+\begin{itemize}
+\item Case 1: $\alpha_{x_iy_j} + P_{(i-1), (j-1)}$
+\item Case 2: $\alpha_{gap} + P_{(i-1), j}$
+\item Case 3: $\alpha_{gap} + P_{i, (j-1)}$
+\end{itemize}
+% video 11-2 04:45
+{\bf Correctness: } optimal solution is one of these 3 candidates, and
+recurrence selects the best of these.\\
+Values of $P_{i, 0}$ and $P_{0, i}$ are $i * \alpha_{gap}$!\\
+
+So, the algorithm:
+\begin{itemize}
+\item $A = 2-D$ array
+\item $\forall i \geq 0:A[i, 0] = A[0,t] = i * \alpha_{gap}$
+\item for $i = 1$ to $m$; for $j=1$ to $n$
+  \begin{itemize}
+  \item $A[i, j] = \min of: $
+    \begin{itemize}
+    \item $A[i-1, j-1] + \alpha_{x_iy_j}$
+    \item $A[i-1, j] + \alpha_{gap}$
+    \item $A[i, j-1] + \alpha_{gap}$
+    \end{itemize}
+  \end{itemize}
+\item return $A[m,n]$
+\end{itemize}
+
+{\bf Running Time: } $O(mn)$ ($O(1)$ work for each of $O(mn)$ sub-problems)\\
+
+{\bf Reconstructing a solution: } trace back through filled-in table $A$,
+starting at $A[m, n]$. So go the whole path back to $A[0,0]$, deciding on each
+sub-problem $A[i, j]$:
+\begin{itemize}
+\item if $A[i,j]$ filled using case 1, match $x_i \xi y_j$ and go to $A[i-1,
+  j-1]$
+\item if $A[i,j]$ filled using case 2, match $x_i$ with a gap and go to $A[i-1,
+  j]$
+\item if $A[i,j]$ filled using case 3, match $y_j$ with a gap and go to $A[i,
+  j-1]$ 
+\item if $i=0$ or $j=0$, match remaining sub-strings with gaps
+\end{itemize}
+(but better cache results).\\
+Reconstructing is much more efficient - at every step we get at least one of the
+indexes decreased to running time is only $O(m+n)$
+
+% video 12-1
+\section{Optimal Binary Search Trees}
+\label{sec:12-1}
+\subsection{Problem Definition}
+\label{sec:12-1-1}
+{\bf Note: } for a given set of keys, there are lists of valid search trees. The
+balanced one keeps the depth as small as possible, making the worst-case search
+(on the full tree height) as fast as possible. Example - a red-black tree with
+worst case search time $O(\log n)$
+
+The idea is that, having a statistic of future searches, we're going to build an
+unbalanced (!) search tree which will provide a better {\bf average } search
+time. One of examples - spell checker which look for words in the dictionary: we
+can have quite accurate prediction on the expected frequency of any given word.
+So:\\
+{\bf Input: } frequencies $p_1, p_2, \dots, p_n$ for items $1, 2, \dots, n$
+(assume items on sorted order, $1 < 2 < \dots < n$)\\
+{\bf Goal: } Compute a valid search tree that minimises the \underline{weighted
+  (average) search time}: $C(T) = \sum\limits_{\text{items} i} p_i *
+[\text{search time for i in T}]$ For example, for red-black tree, $C(T) = O(\log
+n)$ 
+
+The whole story looks like the Huffman Codes in terms of:
+\begin{itemize}
+\item Similarities:
+  \begin{itemize}
+  \item output - a binary tree
+  \item goal is (essentially) to minimise average depth with respect to given
+    probabilities.
+  \end{itemize}
+\item Differences:
+  \begin{itemize}
+  \item with Huffman codes, constraint was prefix-free (i.e. symbols only as
+    leaves) 
+  \item here, constraint = search tree property (sees harder to deal with)
+  \end{itemize}
+\end{itemize}
+
+% video 12-2
+\subsection{Optimal Substructure}
+\label{sec:12-2}
+Greedy doesn't work:
+\begin{itemize}
+\item bottom-up approach (populate lowest level with least frequently accessed
+  keys)
+\item top-down approach (put most frequently accessed items at root, re-curse) -
+  similar story 
+\end{itemize}
+There are other approaches but neither seems to work.\\
+{\bf Issue: } with the top-down approach, the choice of root has hard-to-predict
+repercussions further down the tree.
+
+So, it only we know the good root for a given sub-problems?
+
+{\bf Idea: } what if we know the cost (i.e. maybe can try all possibilities
+within a dynamic programming algorithm).
+
+{\bf Claim: } Suppose $T$ - optimal BST for keys $\{1, 2, \dots, n\}$ has root
+$r$, left subtree $T_1$, right subtree $T_2$. Then $T_1$ is optimal for the keys
+$\{1, 2, \dots, r-1\}$ and $T_2$ for the keys $\{r+1, r+2, \dots, n\}$. 
+
+% video 12-3
+{\bf Proof: } by contradiction (surprise! surprise!). \\
+Suppose $T_1$ is not optimal for $\{1, 2, \dots, r-1\}$ - i.e. there exists
+$T^*_1: C(T^*_1) < C(T_1)$. Then we can obtain $T^*$ by ``cutting + pasting''
+$T^*_1$ in for $T_1$. To complete contradiction we only need to show that
+$C(T^*) < C(T)$:\\
+{\bf A calculation: } $C(T) = \sum \limits_{i=1}^n p_i*[\text{search time for i
+  in T}]= ...$. Now brake this sum into components for two sub-trees: $\dots =
+p_r * 1 + \sum \limits_{i=1}^{r-1} p_i [\text{search time for i in }T]$ $+\sum
+\limits_{i=r + 1}^{n} p_i [\text{search time for i in }T]$.\\ 
+But $[\text{search time for i in }T] = 1 + [\text{search time for i in }T_1]$
+for $T_1$ subtree; and for $T_2$: $[\text{search time for i in }T] = 1 +
+[\text{search time for i in }T_2]$\\
+Then $\dots = p_r * 1 + \sum \limits_{i=1}^{r-1} p_i [\text{search time for i in }T_1]  +
+\sum \limits_{i=r + 1}^{n} p_i [\text{search time for i in }T_2] =
+\text{(constant)} + C(T_1) + C(T_2)$\\
+{\bf Similarly: } $C(T^*) = \sum \limits_{i=1}^n p_i + C(T^*_1) + C(T^*_2)$\\
+{\bf Upshot: } $C(T_1^*) < C(T_1)$ implies $C(T^*) < C(T)$ - contradicts
+``optimality'' of $T$.
+
+% video 12-4, 12-5
+\subsection{A Dynamic Programming Algorithm}
+\label{sec:12-4}
+{\bf Note: } items in a sub-problem are either a prefix or a suffix of the
+original problem.\\
+{\bf Notation: } for $1 \leq i \leq j \leq n$, let $C_{ij} = $ weighted search
+cost of an optimal BST for the items $[i, i+1, \dots, j-1, j]$ - with
+probabilities $p_i, p_{i+1}, \dots, p_j$\\
+{\bf Recurrence: } for every $1 \leq i \leq j \leq n$:
+\begin{itemize}
+\item $C_{ij} = \min \limits_{r-i}^j \{\sum\limits_{k=i}^j p_k + C_{i (r-1)} +
+  C_{r+1 j}  \} $ (recall formula $C(T) = \sum \limits_k p_k + C(T_1) +
+  C(T_2)$); interpret $C_{xy} = 0$ if $x > y$
+\end{itemize}
+{\bf Correctness: } optimal substructure narrows candidates down to $j -i + 1$
+possibilities, recurrence picks the best by brute force.\\
+{\bf Important:  } the smallest sub-problems (with fewest number $j-i+1$ of
+items) first.\\
+\begin{itemize}
+\item Let $A = 2-D$ array ($A[i,j]$ represents optimal SBT value for items $[i,
+  \dots, j]$
+\item for $s = 0$ to $(n-1)$ [$s$ represents $C_{j-i}$]
+  \begin{itemize}
+  \item for $i = 1$ to $n$ [so $i+s$ plays role of $j$]
+    $$A_{[i, i+s]} = \min_{r=i}^{i+s} \{\sum_{k=i}^{i+s}p_k + A_{[i, r-1]} +
+    A_{[r+1, i+s]}\}$$ 
+$A_{[x, y]}$ are calculated on previous iterations (available for $O(1)$ - time
+load); interpret them as $0$ if 1st index > 2nd index.
+  \end{itemize}
+\item Return $A_{[1, n]}$
+\end{itemize}
+- starting from video 12-5, 04:30, there is quite interesting graphical
+interpretation of algorithm.\\
+{\bf Running time: } $O(n^2)$ sub-problems $\times O(j-i)$ time to compute
+$A_{[i, j]}$, so $O(n^3)$ time overall.\\
+{\bf Fun fact: } [Knuth 74, ???' 80] optimal version of this DP algorithm
+correctly fills up entire table in only $O(n^2)$ time ($O(1)$ average per
+sub-problem). Idea: piggyback on work done in previous sub-problems to avoid
+trying all possible roots.
+
+
+TODO: TOC!!!,
+\end{document}
