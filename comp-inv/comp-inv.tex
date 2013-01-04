@@ -659,5 +659,155 @@ So, sanity checks:
 Usually it is easier and more reliable to remove. Repairing is possible) but
 requires multiple sources. 
 
+% video 7-1 : 7-3  - chats about the Homework 3
+% video 7-4
+\subsection{CAPM for Portfolios}
+\label{sec:7-4}
+Recommended book: Active Portfolio Management by Gringold \& Kahn, Chapter 5 \& 6\\
+The common idea: $r_i(t)  = \beta_i r_m(t) + \alpha_i$, where
+\begin{itemize}
+\item $\beta_i r_m(t)$ - ``market''
+\item $\alpha_i$ - ``skill''; really is considered to be $=\alpha(t) *
+  \epsilon(t)$ - random component
+\end{itemize}
+Extending to portfolios:
+$h_i = $\% holdings in $i$, then $r_p(t) = \sum \limits_i h_i r_i(t)$, as
+$r_i(t) = \beta_i r_m(t) + \alpha_i$
+
+% video 7-5
+\subsection{Using the CAPM to Reduce Market Risk}
+\label{sec:7-5}
+% video 7-5 04:00
+The Standard deviation (STDDEV) of $\beta_P r_m(T)$ is considered as the Market
+risk; the STDDEV of $\alpha_p(t)$ is a Residual risk. The idea is to find the
+weightings $h_i$ so that portfolio beta is zero  - thus eliminating the market
+risk:
+\begin{itemize}
+\item Can reduce market risk by zeroing out beta
+\item This is core concept for hedge funds
+\item Portfolio optimiser do this 
+\end{itemize}
+
+% video 8-1: 
+\subsection{Analysing an Event Study}
+\label{sec:8-1}
+
+We can test hypothesis like: if Bollinger value is high but Stock Bollinger is
+low - is it a ``buy signal''?\\
+Next step - from hypothesis to the strategy:
+\begin{itemize}
+\item Buy/Sell?
+\item How long to hold?
+\item How much to allocate to each bet?
+\end{itemize}
+
+The normal steps would be:
+\begin{itemize}
+\item Sanity Check
+\item Assess: Buy or Sell? Hold time? 
+\item Risk? How many opportunities? Sometimes it is better to hold a bit shorter
+  to avoid a big deviation period. 
+\end{itemize}
+% video 8-2 - Blah-blah on HW4. In ideal world, the orders should be not "buy
+% 100 shares" but "allocate so much money on long/short order"
+
+% video 9-2 (151 - ?)
+\section{The Fundamental Law}
+\label{sec:Module 2}
+The idea is to provide a framework to make a decisions like ``concentrate on making our forecast better'' vs ``concentrate on making more trading opportunities''. \\
+
+Motivating Quote will be he ``Wide diversification is only required when
+investors do not understand what they are doing.'' by Warren Buffet. That is
+nice, but diversification still works.
+
+\paragraph{Coin Flipping Experiments}
+\begin{itemize}
+\item Stock trade = Bet
+\item Coin flip = Bet
+\item Uncertainty = $\beta$
+\item Coin bias (i.e. 51\% heads) = $\alpha$
+\end{itemize}
+What if we make multiple bets in parallel - i.e. one bet of \$1000 vs 1000 bets
+of \$1:
+\begin{itemize}
+\item Singe bet case: Expected return $0.51 * 1000 - 0.49 * 1000 = \$20$
+\item Multi-bet case: Expected return $1000 * (0.51 * 1 - 0.49) = \$20$
+\end{itemize}
+Consider Reward/Risk: 
+\begin{itemize}
+\item possibility to lose everything: Single Bet case: 49\% chance of losing;
+  multi-bet case:$0.49^{1000}$
+\item standard deviation: single bet case: $STDEV(1000, 0, \dots, 0 = \$31.62$;
+  multi-bet case: $STDEV(1, -1, 1, -1, \dots, -1) = \$1.00$
+\end{itemize}
+So the Sharpe Ratio:\\
+$SR(multi) = SR(single) * \sqrt{1000}: 20 = 0.63 * \sqrt{1000} = 0.63*31.62 =
+20$\\
+
+More generally:\\
+$SR(multi) = C * \alpha * \sqrt{bets}$ - so we have the same expected return
+but:
+\begin{itemize}
+\item much lower risk to lose everything
+\item much lower standard deviation (risk)
+\item much higher reward/risk ratio (Sharpe ratio)
+\end{itemize}
+or (``take home'' lessons):
+\begin{itemize}
+\item Higher alpha = higher Sharpe Ratio
+\item More bets = higher Sharpe Ratio
+\item Sharpe Ratio grows as the SQRT of bets (brea - ?)
+\end{itemize}
+% video 9-2 (152)
+See also blog at http://augmentedtrader.wordpress.com \\
+Observation:
+\begin{itemize}
+\item Jim Simons (rentec) and Warren Buffet (BRK) offer about the same
+  performance
+\item Buffet's portfolio contains few equities: 54\% in just 3 stocks (2010)
+\item Simons trades actively (100Ks/day)
+\end{itemize}
+The ``Fundamental law of Active Portfolio Management''relates the performance of
+these two. Recall:
+$$r_p(t) = \beta_pr_m(t) + \alpha_p(t)$$
+- STDEV on first is a market risk, on second -a residual risk.
+
+\paragraph{Information Ratio (IR)}
+$$IR = \frac{mean(\alpha_p(t))}{stddev(\alpha_p(t))} =
+\frac{reward}{\text{residual risk}}$$
+- quite similar to the Sharpe Ratio: $\frac{mean(return)}{stddev(return)}$
+
+\paragraph{Information Coefficient (IC, Skill)}
+- correlation of forecast to actual return (like in biased coin).
+
+\paragraph{Breadth (BR)}
+- number of opportunities to execute (number of coin flip bets).
+
+So the fundamental law:
+$$IR = IC * \sqrt{BR}$$
+
+In other words, the performance ($IR$) depends on skill ($IC$) and opportunities
+- square root of Breadth ($BR$).\\
+
+% video 9-3 (153)
+{\bf Trololo:} ``we believe that according the name 'investors' to institutions that
+trade actively is like calling someone who repeatedly engages in one-night
+stands a 'romantic''' (W. Buffet). Nice, but the computational approach scales
+easily (in contrast with Buffet's individual approach). \\
+So, the solution for Buffet's Skill could be:
+\begin{itemize}
+\item Suppose Reward/Risk = 3.0
+\item $IR = IC * \sqrt{trades}$
+\item $3.0 = skill * \sqrt{123}$
+\item $skill = 0.27$
+\end{itemize}
+Now for RenTec - suppose they have $1/100^{th}$ the Skill:
+\begin{itemize}
+\item Skill = $0.27/100 = 0...27$. To achieve 3.0 Rewards/Risk:
+\item $IR = IC * \sqrt{trades}$
+\item $3.0 = 0.0027 * \sqrt{trades}$
+\item trades = 1,234,567, or 10,000 times more than Buffet
+\end{itemize}
+So basically we can achieve success through either Skill or Breadth. 
 
 \end{document}
