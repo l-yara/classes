@@ -1,0 +1,896 @@
+\documentclass{scrartcl}
+
+\usepackage{amsmath,amssymb,amsfonts} % Typical maths resource packages
+\usepackage{graphics}                 % Packages to allow inclusion of graphics
+\usepackage{color}                    % For creating coloured text and background
+\usepackage{hyperref}                 % For creating hyperlinks in
+                                % cross references 
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+\usepackage{listings}
+\lstloadlanguages {[LaTeX]TeX, Octave}
+\lstset {language=[LaTeX]TeX,
+  extendedchars=true ,escapechar=|}
+
+\begin{document}
+\section {Definitions}
+\label{sec:2-1}
+% video 2-1
+\begin{itemize}
+\item {\bf DNA } - hereditary material (composed of nucleotides A, C, G, T)
+\item {\bf Genes } - units of biological info, made of DNA
+\item {\bf Chromosomes } - organised package of DNA, bearing genes along its
+  length (``scaffolding for genes'')
+\item {\bf Genome } - entire set of DNA instructions in a cell
+\item {\bf Diploid } - having one gene copy from each of two parents
+\end{itemize}
+% video 2-3
+\subsection{Scales of Organisations}
+\label{sec:2-3}
+DNA is organised in chromosomes; sections with specific instructions are
+``genes''. There are three primary levels of genetic information:
+\begin{itemize}
+\item {\bf DNA } - replicates self, transmits to offspring
+\item {\bf RNA } - intermediate, some forms directly functional
+\item {\bf Protein } - structure and content affects phenotype.
+\end{itemize}
+The formation of messenger RNA from DNA is ``transcription'': RNA sequqnce in
+complement of DNA (A-U, C-G, G-C, T-A)\\
+Message RNA (mRNA) is being translated to string of amino acids; code for
+translation is 3 bases each (triplet code): specific triplets ({\bf Codons })
+are being translated in specific acids, like AUG -> Met, GAU->Asp etc. The chain
+is finished with ``stop codon'': UAA or other (we know three stop codons now).
+See standard genetic code table for details: $4^3 = 64$ entries.\\
+Some areas of the genome:
+% video 2-3 08:00
+\begin{itemize}
+\item {\bf Genes } - often have amino-acid-coding segments
+\item {\bf Introns } - areas within genes spliced out of mRNA (do not affect
+  amino acid sequence)
+\item {\bf Intergenic regions } - areas between genes, often functional:
+  regulate how much mRNA produced, and sometimes produce other RNAs.
+\end{itemize}
+% video 2-4
+\subsection{Mitosis, Meiosis and Ploidy}
+\label{sec:2-4} {\bf Ploidy } - a number of complete copies of genetic information itself. Most animals have two copies (diploid) in the cell.
+\begin{itemize}
+\item {\bf Mitosis } - produces two diploid daughter cells genetically identical to single parent diploid cell.\\
+  When mutation occurs during mitosis, you get a {\bf genetic mosaic }. Mutation in mitosis control genes often lead to cancer.
+\item {\bf Meiosis} - produces {\bf haploid (1N)} daughter cell with one copy of genes from a parent diploid cell.\\
+Fertilisation brings together gametes from the two parents. If got two copies of a chromosome from one parent (and a third copy from the other) - bad things happen, like Down syndrome (three copies of chromosome 21), Klinefelter syndrome etc.
+\end{itemize}
+% video 2-5
+\subsection{Basic Single-Gene Inheritance}
+\label{sec:2-5} {\bf Allele } - a single (one of) a number of alternative forms
+of the same gene or some genetic locus (a group of gene); located at a specific
+position on a
+specific chromosome.\\
+``Masking'' - dominance of the dominant gene over the recessive one. Organisms
+having both dominant and recessive genes are called {\bf heterozygous };
+
+\paragraph{Mendel's First Law: Three postulates}
+\begin{itemize}
+\item Unit factor in pairs (diploid): one allele from mom, one allele from dad.
+\item Dominance/ recessivity (sometimes $F_1$ is intermediate)
+\item Equal segregation in gametes: paired factors separate, and equally likely
+  to transmit either one to offspring.
+\end{itemize}
+% video 2-6
+\subsection{X-linked Inheritance and Independent Assortment}
+\label{sec:2-6}
+Inheritance sometimes is different based on sex of individual. Inferred from
+this, the principles of sex linkage (X-linkage):
+\begin{itemize}
+\item Some genes are not present on two copies in all organisms:
+  \begin{itemize}
+  \item often males XY, females XX
+  \item Not the same set of genes on the X and Y despite the pairing of these
+    chromosomes (often few functional genes on Y)
+  \end{itemize}
+\item Different patterns of inheritance depending on who is mom/dad and whether
+  kid is male or female.
+\end{itemize}
+X-linked inheritance can be studied in the same way - just insert ``Y'' instead
+of the second allele for dad. Girls will not get this (they get both XX), boys -
+do get. Working example - green colour blindness.
+
+Consider two traits controlled by genes on different chromosomes: Ss and Tt. T
+and S alleles are inherited independently in $F_2$: TS, Ts, tS, ts. Two ways to
+approach:
+\begin{itemize}
+\item Multiply probabilities: 1/4 TT, 1/2 Tt. 1/4 tt; 1/4 SS, 1/2 Ss, 1/4 ss
+\item Follow all gametes: TS can fertilise TS, Ts, tS, ts... - work out all 16
+  possibilities
+\end{itemize}
+After filling up tables: 9 for TS, 3 for tS; 3 for Ts, and 1 for ss.
+
+
+Rule:\\
+For two {\bf independent } events, multiply the two probabilities for the joint probability: assuming 1/4 TT, 1/2 Tt. 1/4 tt; 1/4 SS, 1/2 Ss, 1/4 ss can decide that TTSS will be at 1/16, TTSs - in 1/8, .... ttss - again 1/16
+
+% video 3-1
+\section{Recombination}
+\label{sec:3-1}
+A gamete with a combination of alleles that did not come from the parents is a
+{\bf recombinant } gamete. Means:
+\begin{itemize}
+\item Independent assortment
+\item Crossing over
+\end{itemize}
+Often homologous chromosomes ``trade'' pieces with each other during meiosis -
+{\bf crossing over }. This happens when c. doubled and can form mixed
+(``recombinant'') chromosomes in gametes.\\
+This is ``discovered by'' looking at alleles located near {\bf genetic markers}.
+
+Neighbouring alleles (gene variants) tend to stay associated; the whole story
+allows bigger diversity in offspring genes (pages 16, 18 on week3-1 slides).
+
+% video 3-2
+\subsection{Calculating recomination Distances between 2 genes}
+\label{sec:3-2}
+Chromosomes are linear, and neighbouring variants tend to stay associated
+(``parental'' combination more common than ``recombinant'' combination in
+gametes, ranging from full association [0\% recombination] to no association
+[50\% combination]).
+
+To distinguish separate alleles, so-called {\bf Genetic markers} are used. These
+are the reference points in the genome with 2+ alleles (don't necessarily know
+ahead of time where it is). Markers can be molecular of phenotype.
+
+% video 3-2 04:35
+\subsubsection{Use crosses (pedigree) and inferred genotypes to make map}
+\label{sec:3-2-1}
+\begin{itemize}
+\item Identify ``recombinants'' and ``parentals''
+\item If A and B are linked, what are fractions of all?
+\item If A and B are un-linked, what are fractions of all?
+\end{itemize}
+Video 3-2, 05:00 -12:30 is a long example on crossing.
+
+\paragraph{The fraction recombinant reflects the distance between the genes}
+
+\begin{itemize}
+\item \% recobinant is called ``map units'' (mu)
+  \begin{itemize}
+  \item in Drosophila, often called centiMorgans (cM)
+  \item recombinant fraction ranges for 0\% to 50\% (=0-50 cM)
+  \end{itemize}
+\item Gives and idea of distance between genes
+  \begin{itemize}
+  \item Developed before we had ``genome sequences'' and known physical
+    distances in base-pairs.
+  \item In humans, average 1.3cM ~ 1 million bases.
+  \end{itemize}
+\item Can determine linear order of genes.
+\end{itemize}
+
+% video 3-3
+\subsection{Generating a map using 3 or more genes}
+\label{sec:3-3}
+What if we have three genes?
+\begin{itemize}
+\item {\bf ABC/abc x abc/abc }
+\item Parental phase is ABC or abc, but what is the linear order (is A next to B
+  or A next to C)? (ABC, BAC or ACB?)
+  \begin{itemize}
+  \item ABC/abc - parental 479 Parental (AB)
+  \item abc/abc - parental 473 Parental (ab)
+  \item Abc/abc - recomb 15 Recombinant (Ab)
+  \item aBC/abc - recomb 13 Recombinant (aB)
+  \item ABc/abc - recomb 9 Parental-like (AB)
+  \item abC/abc - recomb 9 Parental-like (ab)
+  \item AbC/abc - recomb 1 Recombinant (Ab)
+  \item aBc/abc - recomb 1 Recombinant (aB)
+  \end{itemize}
+\end{itemize}
+Recombinations on A and B: 15 + 13 + 1 + 1 = 30 out of 1000 total, so
+recombination distance between A and B is 3\% (3 cM).\\
+For A and C: 15 + 13 + 9 + 9 = 46; 4.6 cM\\
+For B and C: 9 + 9 + 1 + 1 = 20; 2 \%
+
+So, final decision from these distances: A - B - C (A-C is the longest, and A-B
+plus B-C is roughly equal to AC)\\
+AB + BC do not add to AC because of ``double crossovers'' which counted as
+``parental'' for A-C.
+
+\paragraph{Tricks}
+
+If all loci are linked:
+\begin{itemize}
+\item Largest two will be original, non-recombinant parentals
+\item Smallest two will be ``double-crossover'' (and they are rarest class)
+
+  Can identify which marker is in the middle in rarest class because alleles at
+  two markers will be parental, while allele at third will be recombinant.
+\end{itemize}
+% video 3-3 09:45
+Do remember that calculations near 50\% are quite inaccurate! (really everything
+above 40\% should be treated rather as reference, not precise values).
+
+% video 3-4
+\subsection{Genetic Mapping}
+\label{sec:3-4} {\bf Genetic mapping } is using associations between alleles at
+multiple spots ({\bf loci}) in the genome to:
+\begin{itemize}
+\item determine if a gene is a relative to another genes
+\item localise a gene causing a phenotype (disease genes)
+\end{itemize}
+Look at Human Genome project (~ 20,000 human genes identified in 3 bn bases fo
+DNA).
+
+Genetic mapping is a first approach, very much like Drosophila exmples: identify
+location of ``disease mutation'' relative to other spots on the genome. To do
+this, we need {\bf reference points} in the genome (like ``genetic
+markers''): \\
+Several nucleotide sites found to be variable; can genotype blood or tissue for
+these {\bf SNP} (single nucleotide polymorphism) sites and use as
+genetic markers - ``snips''.\\
+Resources available:
+\begin{itemize}
+\item we now have the genome sequence mostly put together from end to end on
+  each chromosome
+\item we have computer predictions of what parts are likely ``genes'' encoding
+  for protein
+\item we also have data showing some bases that differ between a log of humans
+  (``HapMap'' project)
+\end{itemize}
+Ultimately the essence of all genetic mapping comes down to seeing an {\bf
+  association between genotype and phenotype}:
+\begin{itemize}
+\item Genotype at markers (AA vs Aa vs aa)
+\item Phenotype may be disease or other trait: healthy vs. diseased.
+\end{itemize}
+Video 3-4, 08:50 - example
+
+% video 3-5
+\subsection{Mapping a simple genetic trait relative to genetic markers in a
+  cross}
+\label{sec:3-5}
+We can use HapMap markers like Drosophila mutations to map simple diseases. \\
+Score offsprings of ABC/abc $\times$ abc/abc:
+\begin{itemize}
+\item ``A'' and ``B'' can be SNPs with known locations
+\item ``C'' is the disease gene (cc = diseased)
+\end{itemize}
+plus, determine whether C is between A and B, and approximately how far away -
+this tells relative location of disease gene. Video 3-5, starting from 03:00 -
+whole example of locating
+
+% video 3-6
+\subsection{Mapping a simple genetic trait relative to genetic markers in a
+  population}
+\label{sec:3-6}
+Using population data collected over time: historically human generation takes
+time about 20 years. \\
+When looking at very close genes, we saw low probability of exchange in ONE
+generation, but, over the thousands of years of history, there has been a lot of
+recombination: most neighbouring genes shuffled, and even areas within genes are
+sometimes shuffled.
+
+Recombination is not homogeneous when look at a very fine scale. They tend to
+occur in ``hotspots'', rest of genome have about 0 RF (recombination fractions).
+
+Shuffling occurs between the ``windows'' every few thousand BP (base pairs, or
+simply ``bases''); virtually no shuffling occurs within windows. This is said to
+be in LD (``linkage disequilibrium''). These features can be used to find
+disease genes: Snips (single nucleotide polymorphism sites - SNPs) are
+associates inside such windows but dissociated between them (slide 3-6 page 7;
+video 3-6 10:15).
+
+\paragraph{Prediction:}
+
+Disease gene mapping is associating a ``genotype'' (marker allele at one
+location) with a ``phenotype'' (disease). If a marker is very close to the
+disease -causing gene, individuals having one allele will be more likely to have
+the disease than individuals having the other allele - the marker is in LD with
+the disease gene.
+
+This does NOT mean the marker gene or SNP causes the disease!
+
+Simple calculations: human genome is about 3 bn bases with hotspots every
+~50,000 bp. So we'd have about 60,000 windows - if things were so simple. The
+problem is, these markers are not fully present in whole population - so we need
+to use about 1 million markers for studying.
+
+For reference: in single generation, the recombination rate is quite low: two
+sides of hotspot probably are < 0.01 cM apart.
+
+% video 4-1
+\section{Mutations as the Origin of Genetic Variation}
+\label{sec:04-1}
+``Changes in code'' are  ``a change to the DNA sequence''.
+{\bf Mutations are the ultimate source of all genetic variation on the planet}
+
+Any source of change in the genome:
+\begin{itemize}
+\item Error in replication/meiosis leading to a change in a base
+\item ???
+\end{itemize}
+
+Mutation is {\bf not:}
+\begin{itemize}
+\item mutation don't happen ``when we need them'': they are random 
+\item Many mutations are ``bad''
+\item Some mutations ``don't matter'' AAA -> AAG - actually, same protein will be produced
+\item Rarely (though it happens) a mutation is ``good''
+\end{itemize}
+
+{\bf SNP} single-nuclear polymorphic (see definition).\\
+After mutation, the new variant {\em may} spread in the population. 
+A lot of mutations don't have an effect on fertility or life span, but: may still affect a phenotype (for example, we have a lots of genetic variation in human height).
+
+%video 4-2
+\subsubsection{Shortcomings of the Single Gene Model}
+\label{sec:4-2}
+Why do we see so many variations? Many answers:
+\begin{itemize}
+\item The simple single gene/ 2 allele model is insufficient: almost every phenotype is controlled by more than one gene.
+For (fictional) example, alleles at 6 genes control height.
+We get a good old bell curve on distribution: despite Mendelian inheritance of each gene involved, as a result we get a continuous variation from many genes.
+
+Variation becomes apparent in F2 crosses (i.e. crosses between offspring of 2nd generation): pages 6 - 8 of slides ppt.
+
+\item Variable ``penetrance'': mutant forms may ``sometimes'' affect phenotype but not always do so: some individuals with the mutation have a normal or nearly-normal phenotype - say the mutation is ``not fully penetrant'' (usual story for cancer susceptibility).
+{\bf Example: } BRCA1 breast cancer susceptibility:
+\begin{itemize}
+\item In most population (BB or Bb), low (12\%) risk of breast cancer
+\item if have 2 mutant alleles (bb), 60\% risk of breast cancer
+\item therefore, BRCA1 breast cancer phenotype is {\bf not fully penetrant} - you CAN be ``bb'' and still have all non-cancerous cells is breast
+\end{itemize}
+\item Interactions among genes: ``epistals''\\
+Effect of genotype at one gene modifies effect of genotype at another gene
+% video 4-2 10:00
+Example: ``white-pink'' Pea Flower Colour: based on two genes (C and P), givespink colour if any of these is homozygous on any gene (so-called pathway with two genes). 
+Provides 9:7 phenotypic ratio (page 14 of slides 4-2) in contrast to Mendelian 1:4\\
+Another example: mouse coat colour (p 15 slide 4-2).
+Epistasis(?) happens:
+\begin{itemize}
+\item One possibility: 2 genes
+  \begin{itemize}
+  \item Gene 1 (B) is a ``switch'' that tunes on gene 2: On (B-) vs Off (bb)
+  \item Gene 2 (A) affects deposition of coat colour. 2 variants: one causes deposit of black, other brown
+  \end{itemize}
+\item AA vs aa cause deposition of black vs brown
+  \begin{itemize}
+  \item but, if bb, then no deposition at all:
+  \item Genotype at B modifies effect of genotype at A (and sometimes eliminates its effect)
+  \end{itemize}
+\end{itemize}
+\item There can be >2 alleles at a locus!\\
+Classic example: ABO blood types:
+\begin{itemize}
+\item Gene located on chromosome 9 of human
+\item three alleles: A, B are dominant over O. A and B create specific antigens, O does not.
+\item Blood phenotypes: A, B, AB, or O, genotypes AA, AO, BB, BO, AB, OO
+\item If get transfusion, reject if receive blood with foreign antigen: O blood is best to donate; AB best to receive blood transfusion
+\end{itemize}
+\item Environment, and interactions with it: environment can affect phenotypes (example: some people naturally tan easier than others)
+\end{itemize}
+% video 4-3
+\subsection{Mutation Rates}
+\label{sec:4-3}
+All genetic variations started as mew mutations. Mutation rate is measured per generation:
+\begin{itemize}
+\item Depends on type of mutation:
+  \begin{itemize}
+  \item Specific base to specific base: A -> G
+  \item Specific base to ``any different'' base: (A -> nonA (GTC)) - measured by
+    \begin{itemize}
+    \item Get sequences of whole genome after known number of generations (and taking average)
+    \item Comparing sequences from existing species and estimating number of generations
+    \end{itemize}
+- so we got $2.1 \times 10^{-8}$ mutations per base per generation in worms. Human genome size is $3.1 \times 10^9$ bases. 
+Applying: 65 new mutations! (confirmed by studies: 63 new mutations on average; strong effect of father's age: the elder is father, the bigger in a number of mutations)
+  \item Other types (inversions: part of chromosome reverts order, trans-locations, deletions)
+  \item anything in gene that yields a phenotype (ignores a ``neutral'' changes)
+  \end{itemize}
+\end{itemize}
+Once mutation arise:
+\begin{itemize}
+\item New mutations may spread or be lost (via natural selection or other forces)
+\item While present, new variations will have a ``frequency'' in the population:
+  \begin{itemize}
+  \item Allele frequencies of blood types: 24\% A; 10\% B; 66\% O in USA
+  \item Genotype frequencies of blood types: 6\% AA; 32\% AO; 5\% AB; 44\% OO etc.
+  \end{itemize}
+\end{itemize}
+``Deleterious'' mutations:
+\begin{itemize}
+\item If chromosomal anomalies, may have immediate effect on offspring, often result in miscarriage (abortion)
+\item A log of other bad mutations are either more subtle or are masked because recessive.
+Current estimates, $\approx 1-2$ per generation
+\end{itemize}
+% video 4-4
+\subsection{Mapping Complex Traits}
+\label{sec:4-4}
+Two general approaches:
+\begin{itemize}
+\item Mapping differences in crosses / pedigrees
+\item Mapping variations within population (e.g.GWAS - Genome Wide Association Study)
+\end{itemize}
+We often know the locations of the {\bf markers} being used ahead of time, but we {\bf don't} know the locations of the genes causing traits/diseases ahead of time.\\
+we map complex traits to {\bf QTL} - Quantitative Trait Locus (a locus with allelic variation that influences a phenotype).
+Its exact location is not known, but we infer its approximate location from association with marker genotypes.\\
+Often detect may QTLs affecting single traits.
+If there are many genes, and/or if the effect is ``complicated'', the association between markers near (``linked to'') gene(s) causing different phenotypes may not be very strong. 
+
+\paragraph{Recombination between marker and gene affecting phenotype.}
+\begin{itemize}
+\item If you have NO recombination between marker and trait gene, then marker genotype predicts trait phenotype very well (maybe perfectly)
+\item if you have A LITTLE recombination, marker genotype may still be ``associated'' with trait
+\item if LOTS of recombination, no association
+\end{itemize}
+Fine localisation requires examining associations of multiple linked markers with trait - ideally we need to identify ``stronger'' associations in some markers than others. \\
+Associations will be stronger when there's less recombination between a marker and a causative gene (``QTL''):
+\begin{itemize}
+\item if look at many linked markers, you should be able to pinpoint the location of a QTL by where the association is strongest (OR where you'd predict it to be strongest
+\item Can follow ``trajectory of association strength'' to infer location of the QTL
+\end{itemize}
+%video 4-5
+\subsection{Mapping complex trait in crosses}
+\label{sec:4-5}
+Association is depicted using ``LOD'' plot: use statistic to translate observed and expected associations and identify ``likely'' position of gene(s) affecting trait of interest.
+High number (>3) means likely effect.\\
+Big difference from simple traits is that now we have markers in multiple regions of genome associated with trait.
+
+\paragraph{We do not know what makes the QTL effect}
+\begin{itemize}
+\item May be multiple genes that are close together or a single gene
+\item {\bf Important:} QTL mapping (by cross/pedigree or by population association study) is not conclusive - it is an hypothesis of where one or more genes affecting the trait.
+\end{itemize}
+
+% video 4-6
+\subsection{Genome-wide association studies (GWAS)}
+\label{sec:4-6}
+Let's say you map a gene causing a diabetes in one family to 18p22 (strong effect next to a marker).
+You map in another family having diabetes and you see no effect of 18p22 region.\\
+So, another approach is to map in population by association studies (e.g.GWAS): similar story like the one for simple traits.
+(If a marker is very close to the disease-causing gene, individuals having one allele will be more likely to have the disease than individuals having the other allele).
+
+\paragraph{Testing many (thousands) markers}
+\begin{itemize}
+\item Some have an allele associated with disease:
+  \begin{itemize}
+  \item AA: prob disease: 10\%
+  \item aa: prob disease: 1\%
+  \item Chi-square or other statistic says unlikely difference by chance 
+  \end{itemize}
+\item Many have no association
+  \begin{itemize}
+  \item BB: prob disease 1.5 \%
+  \item bb: prob disease 1.6 \%
+  \end{itemize}
+\end{itemize}
+Problem: multiple comparisons. \\
+From lab, chi-square test gave probability of getting that association ``by chance'': when test 1000000 SNPs for association with disease of interest, it is very likely to get an association that looks strong by change but no real biology.
+As a result, instead of using 5\% probability as a cut-off, often use 0.00001\% probability.
+But this requires a VERY strong association - so we can reject a ``good'' association.
+
+\paragraph{Pedigree/cross vs Population}
+\begin{itemize}
+\item Pedigree/cross analyses find genetic factors causing differences {\bf in that family} - typically, high power for small number of genes\\
+- because you're limited to mapping genes with effects in that cross, BUT the alleles you're mapping are abundant (25\% for $Zz \times zz$)
+\item Population association studies try to find genetic factors causing variation {\bf across the population} - typically, lower power but can find more genes and localises more precisely.\\
+- you can theoretically map alleles at any gene causing effect, BUT you may have different very rare variants causing the same effect/disease
+\end{itemize}
+GWAS in populations work for mapping {\bf ``common disease variants''}, but:
+\begin{itemize}
+\item are most disease variants common?
+\item how often do different rare mutations cause the same disease?
+\end{itemize}
+Also, can see difference among ethnic groups for associations: sometimes see a marker allele associated with disease in one ethnic group but not another.
+
+% video 5-1
+\section{Heritability}
+\label{sec:05-0}
+\subsection{Contribution of Genes vs Environment}
+\label{sec:05-1}
+The ``Genes vs Environment'' is not a pure dichotomy, while one may contribute more then other:
+\begin{itemize}
+\item eye colour (excluding contacts)
+\item HIV status
+\end{itemize}
+The idea is to separate one from another:
+\subsubsection{Resemblance between relatives}
+\label{sec:5-1-0533}
+\begin{itemize}
+\item Constant environment, varying genetic relations\\
+Example: two types of twins:
+\begin{itemize}
+\item Monozygotic (``identical'') - genetically exactly the same (always same sex, for example); shared placenta
+\item Dizygotic(``fraternal'') - genetically like any brother/sister; separate placentas.
+\end{itemize}
+If there's genetic component to some trait, {\bf monozygotic} twins should be more similar than {\bf dizygotic} twins.\\
+Some correlations found:
+\begin{itemize}
+\item For IQ: monozygotic twins 0.85; dizygotic twins 0.42
+\item For Gastroesophageal re-flux disease: monozygotic twins 0.29; dizygotic twins: 0.13
+\end{itemize}
+This does not show the absence of Environment component (after all, twins usually share very similar environment), but does show the presence of genetic component
+\item Constant genetic relations, varying  environment\\
+Monozygotic twins reared together should have higher correlation in traits than monozygotic twins reared apart if there's environmental component
+% video 5-1, 11:30
+\begin{itemize}
+\item For BMI (Body Mass Index): Monozygotic together 0.74, apart 0.70\\ 
+- surprisingly small environmental impact
+\item For Verbal ability: Monozygotic together 0.76, apart 0.51\\
+- very strong environment impact\\ 
+Dizygotic together: 0.43 (genetic component is still strong)
+\end{itemize}
+\end{itemize}
+\subsubsection{``Common Garden'' Experiments}
+\label{sec:5-1-}
+- studies of {\em Potentilla} in 1930 by Clausen, Keck \& Hiesey: study plants of the same specie from different environments (low-, medium- and high- altitude: plants looked ``a bit'' differently).
+Grow plants obtained from different places in the same environment.
+Prediction:
+\begin{itemize}
+\item If form difference is all {\bf environmental}, plants would all look the same
+\item if part of the form difference is {\bf genetic}, plants would look different
+\end{itemize}
+- same concept as Mono- vs Dizygotic twin studies (constant environment, unrelated plants)\\
+Results:\\
+form different apparent even when grown in the same environment $\Rightarrow$ form difference {\bf has} a genetic component.\\
+It does NOT prove that there is no environment component!
+\subsubsection{"Reciprocal Transplant" Experiment}
+\label{sec:5-1-1}
+Grow plant forms obtained from a single environment (assuming the genetics is fairly constant) in several different environments\\
+Prediction:
+\begin{itemize}
+\item if part of the form difference is {\bf environmental}, plans would all look different
+\item if form difference is all genetic, plants would still look the same
+\end{itemize}
+- same concept as twins reared together vs apart: same genetic makeup, varying environment.\\
+Results:\\
+Form difference for same type grown in different environments $\Rightarrow$ form difference has an environmental component.
+
+% video 5-2
+\subsection{How Much do Each Contribute}
+\label{sec:5-2}
+The concept of {\bf Heritability} - based on stats.
+
+\paragraph{What causes the variance in traits like height?}
+(you see the variance in the {\bf phenotype}: some of the variance is genetic, some is environmental.\\
+Simple idea: $V_P = V_G + V_E$:
+\begin{itemize}
+\item $V_P$ - phenotypic variance
+\item $V_G$ - genetic variance
+\item $V_E$ - environmental variance
+\end{itemize}
+Example: genetic variation becomes apparent in $F_2$ of crosses: 6 genes for ``height'':
+\begin{itemize}
+\item start with AA BB CC DD EE FF (6' tall people) having kids with aa bb cc dd ee ff (5' tall people)
+\item offspring (F1) all heterozygous (5' 6'' tall): Aa Bb Cc Dd Ee Ff - we can find environmental variance ($V_E$), as no genetic variance is here (all ppl have the same genotype on these genes, despite heterozygous)
+\item in F2: Aa Bb Cc Dd Ee Ff $\times$ Aa Bb Cc Dd Ee Ff: if un-linked, MANY possibilities.
+We can find $V_P = V_G + V_E$
+\end{itemize}
+{\bf Heritability:} fraction of total phenotypic variance that's genetic: ($V_G/V_P$), or ($\frac{V_G}{(V_G + V_E)}$)\\
+- ranges from 0 (no genetic) to 1 (all genetic)\\
+% video 5-3
+This will not always work for people, so better (easier) to use 
+
+\paragraph{Parent-Offspring Correlation}
+If we assume all variation is genetic (and assume no dominance), then offspring should be exactly the average of his two parents.
+Slope of the dependency line ``height of offspring depending on average height of parents'' shows the strength of correlation - {\bf estimates heritability}.\\
+% video 5-2 04:00
+But story is not that simple:
+\begin{itemize}
+\item Environment is not ``constant'': estimates will be different in different places because $V_E$ different
+\item amounts of genetic variation also not constant in different families or populations
+\end{itemize}
+``It is not a reference, it is a starting point''
+
+% video 5-4
+\subsection{Breeders Equation}
+\label{sec:5-4}
+Heritability can be calculated by response to artificial selection:\\
+Start with 5 feet tall (corn)\\
+Select 7 feet tall plants, breed:
+\begin{itemize}
+\item if offspring average 5 feet, heritability = 0.0
+\item if offspring average 5.5 feet, heritability = 0.25
+\item if offspring average 6 feet, heritability = 0.5
+\item if offspring average 6.5 feet, heritability = 0.75
+\item if offspring average 7 feet, heritability = 1.0
+\end{itemize}
+Another way to think about it: Heritability = Response ($C_G$)/Selection($V_G + V_E$) - a fraction of phenotypic variation that is genetic.
+
+\paragraph{Artificial vs Natural Selection}
+Formulations:
+\begin{itemize}
+\item {\bf Artificial selection:} breeder chooses desirable traits and has organisms with the most extreme desirable traits breed
+\item {\bf Natural selection:} particular traits facilitate survival/reproduction, and organisms with the most extreme such traits have more offspring.
+\end{itemize}
+
+% video 5-5
+
+\subsection{Population Growth}
+\label{sec:5-5}
+Natural selection is noncontroversial (?) and inevitable. 
+Conditions:
+\begin{itemize}
+\item Phenotypic variance ($V_P$ is not zero)
+\item Inheritance of the variation (heritability is not zero)
+\item Variation affects survival or reproduction
+\end{itemize}
+Population can be modelled with a ``stable'' rate of increase:
+\begin{itemize}
+\item birth rate (\# births per thousand per year)
+\item death rate (\# deaths per thousand per year)
+\item birth rate - death rate = rate of increase ({\bf r})
+\item USA example: r = 14/1000 - 6/1000 = 0.008 (population grows naturally by 0.8\% per year)
+\end{itemize}
+Standard rate of population growth: $\frac{dN}{dt} = r \times N$ \\
+So, at time $t$: $N_t = N_0 e^{rt}$, and population doubling time is 
+$$\ln(2) = \ln(e^{rt}) \Rightarrow 0.693 = rt \Rightarrow t = \frac{0.693}r$$
+For USA: 86.6 years.
+% video 5-6 
+\subsection{Carrying Capacity}
+\label{sec:5-6}
+{\bf Carrying Capacity (K)} - the total number of individuals that can be supported within a population
+
+\section{Hardy-Weinberg Equilibrium}
+\label{sec:06-1}
+\subsection{Allele and Genotype Frequencies}
+\label{sec:06-1-1}
+Calculating allele frequencies: either directly (calculate every allele), or generalised: 
+\begin{itemize}
+\item freq(A) = freq(AA) + 1/2 freq(Aa)
+\item freq(a) = freq(aa) + 1/2 freq(Aa)
+\end{itemize}
+- everything adds up to 1.\\
+One can use ``joint probability'' multiplication to determine genotype frequencies in offspring. Example:
+\begin{itemize}
+\item Initial:
+  \begin{itemize}
+  \item 60\% sperm ``A''; 60\% of eggs ``A''
+  \item 40\% sperm ``a''; 40\% of eggs ``a''
+  \end{itemize}
+\item Probability of ``AA'' offspring: ``A'' sperm fertilises ``A'' egg: $0.6 \times 0.6 = 0.36 = 36\%$ 
+\item But. there is two ways to make ``Aa'' zygote:
+  \begin{itemize}
+  \item ``A'' sperm + ``a'' egg: $0.6 \times 0.4 = 0.24$
+  \item ``a'' sperm + ``A'' egg: $0.6 \times 0.4 = 0.24$
+  \end{itemize}
+- together 0.48
+\item for ``aa'' - nothing interesting: $0.4 \times 0.4 = 0.16$
+\end{itemize}
+- together, add up to 1.\\
+Now, calculate the allele frequencies:\\
+\begin{itemize}
+\item AA; 0.36 -> all A
+\item Aa: 0.48 -> half A
+\item freq(A) = $0.36 + \frac12(0.48) = 0.6$
+\item freq(a) = 0.4
+\end{itemize}
+- so the whole story self-perpetuates.
+
+% video 6-2
+\subsection{The Hardy Weinberg Equilibrium (HW)}
+\label{sec:06-2}
+Up to 1902, people thought the {\bf dominant} alleles would intrinsically increase in a population some assumed rare alleles would always be lost eventually.\\
+1908: Hardy \& Weinberg independently showed both assumption not true: allele and genotype frequencies stay stable {\em when some assumptions are made}\\
+Notation:
+\begin{itemize}
+\item Frequency of A = p
+\item Frequency of a = q; \\
+p + q = 1, and:
+\item Frequency of AA = $p^2$
+\item Frequency of Aa = $2pq$
+\item Frequency of aa = $q2$\\
+again: $p^2 + 2pq + q^2 = 1$
+\end{itemize}
+(see graph on p.6 of slides 06-02), if:
+\begin{itemize}
+\item you can ALWAYS know genotype frequencies from genotype counts
+\item you can ALWAYS know allele frequencies from genotype frequencies
+\item but you CANNOT always know genotype frequencies from allele frequencies 
+\end{itemize}
+So HW allows prediction of genotype frequencies from allele frequencies {\bf under certain conditions: }
+\begin{itemize}
+\item random mating (multiplying probabilities rule)
+\item No selection / migration /mutation at that locus
+\item infinite population size - no ``genetic drift''
+\end{itemize}
+- provides a good ``null hypothesis''; by seeing {\bf how } natural population deviate from the HW expected genotype frequencies we infer what evolutionary forces are operating.\\
+Example;
+\begin{itemize}
+\item AA 245
+\item Aa 210
+\item aa 45\\
+Now calculate:
+\item ``true'' genotype frequencies:
+  \begin{itemize}
+  \item total: 245 + 210 + 45 = 500
+  \item AA: 245/500 = 0.49
+  \item Aa: 210/500 = 0.42
+  \item aa: 45/500 = 0.09
+  \end{itemize}
+\item ``true'' allele frequencies:
+  \begin{itemize}
+  \item p(A) = $0.49 + \frac12 0.42 = 0.7$
+  \item p(a) = $0.09 + \frac12 0.42 = 0.3$
+  \end{itemize}
+\item HW ``expected'' genotype freq
+  \begin{itemize}
+  \item $p^2 = 0.7^2 = 0.49$ - corresponds to ``true''
+  \item $2pq = 2(0.7)(0.3) = 0.42$ - corresponds to ``true''
+  \item $q^2 = 0.3^2 = 0.09$ - corresponds to ``true''
+  \end{itemize} - so population is ``in'' HW
+\end{itemize}
+% video 6-3
+\subsection{Deviation from Hardy Weinberg Equilibrium: Wahlund Effect}
+\label{sec:6-3}
+Example: HW can be violated as a result of ``non-random mating'' - so-called {\bf Wahlund effect} (i.e. under-representation of heterozygotes relative to HW)\\
+So, the first step in genome-wide association studies (GWAS) of genetic diseases is usually to {\bf test for HW}. 
+(actually, GWAS assumes first that HW holds - otherwise we'll get errors - false links between SNPs and traits) - which happens quite often.
+
+% video 6-4
+\subsection{Differences Between Populations: Origins and Quantifying}
+\label{sec:06-4}
+Quantifying:
+\begin{itemize}
+\item Simplest - {\bf all individuals differ: }
+  \begin{itemize}
+  \item ``fixed difference'': Population 1: all AA; Population 2: all aa\\
+- happens but not very common within a species, and generally not true among modern human ethnic groups
+  \end{itemize}
+\item More common - {\bf frequency differences of alleles \& genotypes: }
+  \begin{itemize}
+  \item Population 1: p(A) = 0.7
+  \item Population 2: p(A) = 0.5
+  \end{itemize}
+\end{itemize}
+-so measure differences between {\bf populations }, NOT {\bf individuals } (can not be applied to individual)
+
+\paragraph{Deviation from HW allows you to quantify allele freq differences!}
+
+Assume two populations at HW:
+\begin{itemize}
+\item if sample {\em each by itself} - see HW
+\item if sample {\em both together} - see deviation from HW (like Wahlund effect - lack of heterozygous ppl).
+\end{itemize}
+{\bf How big the deviation is from HW } when sampling both together quantifies difference in allele frequencies:\\
+Measure: $F_{ST} = \frac{\text{HW predicted 2pq} - \text{\% observed hetx}}{\text{HW predicted 2pq}}$ (ranges from 0 to 1):
+\begin{itemize}
+\item 0: no allele frequency differences
+\item $0 < F_{ST} < 1$: allele frequencies differ somewhat
+\item 1: ``fixed'' difference between populations
+\end{itemize}
+In words: $F_{ST}$ is the \% heterozygous of randomly chosen alleles within populations (observed) relative to that expected in the entire species (2pq)\\
+\begin{itemize}
+\item measures {\bf difference in allele frequencies }
+  \begin{itemize}
+  \item if identical allele frequencies, $F_{ST} = 0$
+  \item if fixed for different alleles, $F_{ST} = 1$
+  \end{itemize}
+\end{itemize}
+In {\bf human } population, $F_{ST}$ is quite small, because some $F_{ST}$ assumptions violated in humans:
+\begin{itemize}
+\item supposed to be applied to genes experiencing little/no natural selection
+\item susceptible to differences (and historical changes) in populatio size among groups
+\end{itemize}
+But probably the biggest effect is caused by Gene flow
+
+% video 6-5
+\subsection{Differences Between Populations: Effects of Gene Flow}
+\label{sec:06-5}
+Gene flow (migration) makes populations' allele frequencies converge; prevents (and ``undoes'') divergence.\\
+Happens by:
+\begin{itemize}
+\item Organisms (or gametes) move to new location and reproduce there
+\item Math for it assumes it's ``random'' with respect to genotype: particular genotypes are not more/less likely to migrate
+\end{itemize}
+There are a number or models of gene flow:
+\begin{itemize}
+\item Content - island model
+  \begin{itemize}
+  \item huge effect of continent on island, but negligible effect of island on continent
+  \end{itemize}
+Example: Continent allele frequency p = 0.5; island allele frequency = 0.9; migration rate = 1\% (on each generation, 1 \% of island inhabitants migrates from the continent to island).\\
+In 500 generations, island frequency value converges to continent value.
+(Influence island -> continent is negligible)
+\item Island model
+  \begin{itemize}
+  \item Multiple populations affecting each others' allele frequencies
+  \item Stepping-stone model
+  \end{itemize}
+Example: 4 islands exchanging genes (same 1\% migration rate) with each other.
+Initial frequencies are like p=0.9, p=0.65, p=0.35, p=0.1
+In 500 generations, the frequency values converge on mean value.
+\end{itemize}
+
+\paragraph{Relevant Variables}
+- What affects the speed of convergence (or how fast the allele frequencies become similar):
+\begin{itemize}
+\item Migration rate (how many migrants move)
+\item How different the allele frequencies are
+\end{itemize}
+
+% video 6-6
+\subsection{Inbreeding}
+\label{sec:06-6}
+Inbreeding: breeding between closely related individuals.
+This is often caused by limited capacity for dispersal, and {\em changes distribution of genotypes}.\\
+
+\paragraph{An extreme form of inbreeding: self - fertilisation}
+- page 7 of slides 06-11.\\
+Every generation, heterozygote fraction goes down, and feeds alleles into homozygotes.\\
+- creates ``pure breeding'' lines.\\
+So quantifying is quite simple:\\
+- inbreeding (even if not self-fertilisation) reduces \% heterozygotes.
+So reduction in \% heterozygotes from HW expected quantifies inbreeding.\\
+So {\bf Wright's inbreeding coefficient } $F = \frac{\text{HW predicted 2pq} - \text{\% observed hetz}}{\text{HW predicted 2pq}}$:
+\begin{itemize}
+\item 0: at HW expectations for \% heterozygotes
+\item 0 < F < 1: somewhat fewer heterozygotes that predicted
+\item 1: no heterozygotes
+\end{itemize}
+
+\paragraph{Inbreeding F vs $F_{ST}$}
+\begin{itemize}
+\item {\bf Inbreeding F } looks at the individuals within one population
+\item {\bf $F_{ST}$ } quantifies difference between populations
+\end{itemize}
+By itself, inbreeding only changes the distribution of alleles among genotypes, does not make any alleles ``go away''\\
+So-called ``inbreeding depression'' requires {\bf natural selection } as well as inbreeding (if mate two relatives, they are likely to have same recessive mutation + moe likely to produce homozygous offspring.
+
+\section{Natural Selection}
+\label{sec:07}
+\subsection{Fundamentals}
+\label{sec:07-01}
+Requirements for evolution by natural selection:
+\begin{itemize}
+\item Variation in traits
+\item Heritability of traits
+\item Trait variants affect survival / reproduction
+\end{itemize}
+Two approaches to studying:
+\begin{itemize}
+\item {\bf Quantitative Traits} - in context of heritability: {\bf Heritability = Response / Selection} 
+  \begin{itemize}
+  \item Genetic component of variation dictates selection's response
+  \item Response often from change in allele frequencies at {\bf multiple loci}
+  \end{itemize}
+\item {\bf Single Locus / gene} 
+\end{itemize}
+
+%video 7-1, 05:13
+\subsection{Single Gene Selection}
+\label{sec:07-01-01}
+The single gene selection (alleles at individual loci):
+\begin{itemize}
+\item affects abundance of particular genotypes
+\item affects frequencies of alleles in population
+\item {\bf Dominance of alleles matters for population}
+\end{itemize}
+
+\subsubsection{Strong selection in humans: Single loci leads to:}
+\label{sec:07-01-02}
+\begin{itemize}
+\item Spontaneous bad mutations are {\em common}
+\item Half of pregnancies never detected because spontaneously abort very early
+\item Half of spontaneous abortions result from genetic problems - i.e 25 \% of all human fertilisation immediately eliminated by natural selection
+\end{itemize}
+
+\subsubsection{Weak(er) selection in humans: Single Loci}
+\label{sec:07-01-03}
+\begin{itemize}
+\item Historically, all human adult lactose intolerant. 
+\item Estimate ~ 5\% fewer kids if lactose intolerant
+\item New mutation arose - now most people ``lactose persistent'' (lactose tolerant) as adults.\\
+- effect of 5\% more kids - can simulate with AlleleA1 software:
+\begin{itemize}
+\item Fitness of ``AA'' (intolerant): 0.95
+\item Fitness of ``Aa'' and ``aa'' (tolerant) is 1.00
+\item Time: 5000 years\\
+- see graph at page 10 of slides 07-12-PopGen3-1
+\end{itemize}
+\end{itemize}
+
+
+\end{document}
