@@ -18,6 +18,7 @@
   extendedchars=true ,escapechar=|}
 
 \begin{document}
+\tableofcontents
 \section {Applications}
 \label{sec:Section1}
 \begin{itemize}
@@ -32,7 +33,7 @@
 General metrics: n - amount of vertexes, m - amount of edges.
 
 \subsubsection{Generic Algorithm}
-\label{sec:Genericlgorithm}
+\label{sec:Genericlgorithm} 
 Given: graph $G$, vertex $s$
 \begin{itemize}
 \item initially $s$ explored, all other vertexes nexplored
@@ -47,11 +48,12 @@ Given: graph $G$, vertex $s$
 Claim: at the end of the algorithm, $v$ explored $\Leftrightarrow G$ has a path
 from $s$ to $v$ ($G$ directed or undirected).
 
-Prof: $(Rightarrow)$ easy induction on number of iterations. $(Leftarrow)$ - by
-contradiction. Suppose $G$ does have a path from $s$ to $v$ but $v$ is
-unexplored at the end of the algorithm. The $\exists$ edge $(u, w) \in P$ with
-$u$ explored and $w$ unexplored. In this case it is impossible: the algorithm
-does not terminate by definition while such edges exists. Contradiction - QED!
+{\bf Prof:} $(\Rightarrow)$ easy induction on number of iterations.
+$(\Leftarrow)$ - by contradiction. Suppose $G$ does have a path from $s$ to $v$
+but $v$ is unexplored at the end of the algorithm. The $\exists$ edge $(u, w)
+\in P$ with $u$ explored and $w$ unexplored. In this case it is impossible: the
+algorithm does not terminate by definition while such edges exists.
+Contradiction - QED!
 
 Strategies:
 \begin{itemize}
@@ -86,7 +88,7 @@ $G$.
 Assumptions:
 \begin{enumerate}
 \item $\forall v \in V, \exists s \rightarrow v$ path
-\item $l_e \ge 0 \forall e \in E$
+\item $\forall e \in E, l_e \ge 0$
 \end{enumerate}
 The algorithm itself is a variation of BSF:
 
@@ -148,7 +150,7 @@ evict something form the cache to make room - but what?
 \paragraph{Theorem} [Belady, 1960s]: the ``furthest-in-future'' algorithm is
 {\bf optimal} (i.e. minimises the number of cache misses).
 
-\paragraph{Why useful?}:
+\paragraph{Why useful?}
 \begin{enumerate}
 \item serves as guideline for practical algorithms (i.e. Last Recently Used)
 \item serves as idealised benchmark for caching algorithms
@@ -172,13 +174,12 @@ of job lengths up to and including $j$.\\
 $$ \min \sum_{j=1}^n w_jC_j $$
 
 % video 4-2
-\subsection{Sheduling Application: Algorithm}
+\subsection{Scheduling Application: Algorithm}
 \label{sec:4-2} {\bf Idea:} assign a ``score'' to jobs that are increasing in
-weight but
-decreasing in length. \\
+weight but decreasing in length. \\
 {\bf Guess 1:} score = $w_j - l_j$\\
 {\bf Guess 1:} score = $\frac{w_j}{l_j}$\\
-There will be one-and-only-one optimal algorithm, so we'll have only on correct
+There will be one-and-only-one optimal algorithm, so we'll have only one correct
 scoring function {\bf at most}. \\
 To distinguish one we need to find example where the two different algorithms
 produce different outputs (at list one should be incorrect). After playing with
@@ -283,8 +284,8 @@ Looks similar to Dijkstra's shortest-path.
 data specials)
 computes an MST. \\
 The prof will be of two parts:
-\subsubsection*{Part 1 } Prim's algorithm computes a spanning tree $T^*$\\
-(will use both properties of graph and spanning trees)
+\subsubsection*{Part 1 } Prim's algorithm computes a spanning tree $T^*$
+(will use both properties of graph and spanning trees)\\
 % video 5-3
 {\bf Definition: } a {\bf cut} of a graph $G = (V, E)$ is a partition of $V$
 into 2 non-empty sets.\\
@@ -310,7 +311,7 @@ So, the {\bf Part I} proof:\\
   induction).
 \item Can't stuck with $X \neq V$: otherwise the cut $(X, V - X)$ must be empty,
   by {\bf empty cut lemma} input graph $G$ is disconnected.
-\item Ne cycles ever get created in $T$, because at any moment edges is added
+\item No cycles ever get created in $T$, because at any moment edges is added
   there is no way to create a cycle. Consider some moment where $e$ gets added.
   This edge is the first edge crossing $(X, V-X)$ that gets added to $T
   \Rightarrow$ (at this moment all edges in $T$ have both their ends in $X$ so
@@ -336,9 +337,8 @@ Property $\Rightarrow T^*$ is a subset of the MST $\Rightarrow$ since $T^*$ is
 already a spanning tree, it must be the MST.
 
 % video 5-5
-
-\subsection{Proof of Cut Property}
-\label{sec:5-5} {\bf Assumption: } distinct edge costs. {\bf cut property
+\paragraph{Proof of Cut Property}
+ {\bf Assumption: } distinct edge costs. {\bf cut property
 }states that: consider an edge $e \in G$. Suppose there is the cut $(A, B)$ such
 that $e$ is the cheapest edge of $G$ that crosses it. Then $e$ belongs to the
 MST of $G$.
@@ -425,17 +425,17 @@ each Extract-min.\\
 \item each edge $(v, w)$ triggers one delete/insert combo (when its first
   endpoint gets sucked into $X$)\\
 \end{itemize}
-$\Rightarrow O(m)$ operations (as $m /geq n -1$  since $G$ connected)\\
+$\Rightarrow O(m)$ operations (as $m \geq n -1$  since $G$ connected)\\
 $\Rightarrow O(m \log n)$ time \\
 
 % video 6-1
 \subsection{Kruskal's MST Algorithm}
 \label{sec:6-1}
 \begin{itemize}
-\item sort edges in order of increasing cost (rename in a way that $c_1 < C_2 <
-  \dots < c_m$)
+\item sort edges in order of increasing cost (rename in a way that $C_1 < C_2 <
+  \dots < C_m$)
 \item $T = \emptyset$
-\item for $i = 1$ to $m$:
+\item for $ci = 1$ to $m$:
   \begin{itemize}
   \item if $T + c_i$ has no cycles - add $i$ to $T$
   \end{itemize}
@@ -485,28 +485,28 @@ For the Kruskal's algorithm: objects = vertices; groups = connected with respect
 to currently chosen edges $T$. Adding new edge $(u, v)$ to $T \Leftrightarrow $
 finding connected components of $(u, v)$.
 
-\subparagraph{Basics}
-{\bf Idea 1: } maintain one linked structure per connected component of $(V,
+\subparagraph{Basics} {\bf Idea 1: } maintain one linked structure per connected
+component of $(V,
 T)$; each component has an arbitrary {\bf leader } vertex. \\
 {\bf Important: } each vertex points to the leader of its component (``name'' of
 a component inherited from leader vertex).\\
 {\bf Key point: } given edge $(u, v)$, can check if $u$ and $v$ already in same
 component in O(1) time (if and only if leader pointers of $u, v$ match).
 
-\subparagraph{Maintaining the Invariant }
-{\bf Note: } when new edge $(u, v)$ added to $T$, connected components of $u$
+\subparagraph{Maintaining the Invariant } {\bf Note: } when new edge $(u, v)$
+added to $T$, connected components of $u$
 and $v$ merge. \\
 {\bf Idea 2: } when two components merge, have smaller one inherit the leader of
 the larger one.(easy to maintain a size field in each component to facilitate
 this). (Still $O(n)$ time on $Union$ operation) \\
 {\bf But: } how many times does a single vertex have its leader point update
- over the course of Kruskal's algorithm? Answer is $O(\log n)$, because this
- means that ``yours'' group was smaller than the one you're merging with
- $\Rightarrow $ can only happen $\leq \log_2 n$ time.
+over the course of Kruskal's algorithm? Answer is $O(\log n)$, because this
+means that ``yours'' group was smaller than the one you're merging with
+$\Rightarrow $ can only happen $\leq \log_2 n$ time.
 
 \subparagraph{Running Time of Fast Implementation}
 \begin{itemize}
-\item $O(n \log n)$ time for initial sorting 
+\item $O(n \log n)$ time for initial sorting
 \item $O(m)$ time for cycle checks ($O(1)$ per iteration)
 \item $O(n \log n)$ time overall for leader point updates
 \end{itemize}
@@ -514,15 +514,14 @@ Totals to $O(m \log n)$
 
 % video 6-5
 \subsection{MST Algorithms State-of-the-Art}
-\label{sec:6-5}
-{\bf Question: } can we do better than $O(m \log n)$ 
+\label{sec:6-5} {\bf Question: } can we do better than $O(m \log n)$
 
 There are something randomised algorithm which does $O(m)$: Karger-Klein-Tarjan,
 [JACM 1995].
 
 There is still an open question about linear-time deterministic algorithm; but
 we do have the deterministic one ``absurdly close'' to it: $O(m \alpha (n))$,
-where $\alpha$ - inverse Ackermann function 
+where $\alpha$ - inverse Ackermann function
 % video 6-5 05:00
 \paragraph{Open Questions on MST}
 Up to now, we have:
@@ -538,8 +537,8 @@ Up to now, we have:
 \end{itemize}
 % video 7-1
 \section{Huffman Codes}
-\label{sec:7-1}
-{\bf Binary Codes: } maps each character of an alphabet $\Sigma$ to a binary
+\label{sec:7-1} {\bf Binary Codes: } maps each character of an alphabet $\Sigma$
+to a binary
 string. \\
 Example: $\Sigma = a - z + punctuation$ (size 32 overall). Obvious encoding is
 5-bit fixed-length code.\\
@@ -549,8 +548,8 @@ neither of the encoding $f(i), f(j)$ is a prefix of the other. Example: $\{0,
 10, 110, 111\}$ for 4-symbol alphabet.
 % video 7-2
 \subsection{Problem Definition}
-\label{sec:7-2}
-{\bf Goal: } best binary prefix-tree encoding for a give set of character
+\label{sec:7-2} {\bf Goal: } best binary prefix-tree encoding for a give set of
+character
 frequencies. \\
 {\bf Useful facts: } binary codes $\leftrightarrow$ binary trees. In general,
 left child edges $\leftrightarrow$ ``0'', exactly one node labelled ``1''\\
@@ -565,7 +564,7 @@ $\Sigma$, then average encoding length $L(T) = \sum \limits_{i \in \Sigma} p_i
 *$ [depth of $i$ in $T$]\\
 
 {\bf Output: } a binary tree $T$ minimising the average encoding length $L()$
-% video 7-3 
+% video 7-3
 \subsection{A Greedy Algorithm}
 \label{sec:7-3}
 
@@ -575,7 +574,7 @@ $\Sigma$, then average encoding length $L(T) = \sum \limits_{i \in \Sigma} p_i
 \sum \limits_{i \in \Sigma} p_i *$ [depth of $i$ in $T$]\\
 
 {\bf Huffman's (optimal) idea: } build the tree bottom-up using successive
-mergers. 
+mergers.
 
 \subsubsection{A Grredy Approach}
 \label{sec:7-3-1}
@@ -583,13 +582,13 @@ mergers.
 {\bf Question: } which pair of symbols is ``safe'' to merge?
 
 {\bf Observation: } final encoding length of $i \in \Sigma = $ \# of mergers its
-sub-tree endures. 
+sub-tree endures.
 % video 7-3 10:25
 
 \subsubsection{How to Recurse?}
 \label{sec:7-3-2}
 
-{\bf Suppose: } 1st iteration of algorithm merges symbols $a$ and $b$. 
+{\bf Suppose: } 1st iteration of algorithm merges symbols $a$ and $b$.
 
 {\bf Idea: } replace the symbols $a,b$ by a new ``meta-symbol'' $ab$. The
 frequency of this symbol will be $p_a + p_b$.
@@ -609,11 +608,10 @@ frequency of this symbol will be $p_a + p_b$.
 \end{itemize}
 
 % video 7-4
-\subsection{Correctness Proof}
-\label{sec:7-4}
-{\bf Theorem: }[Huffman, 52] Huffman's algorithm computes a binary tree (with
-leaves $\leftrightarrow$ symbols of $\Sigma$) that minimises the average
-encoding length:
+\subsubsection{Correctness Proof}
+\label{sec:7-4} {\bf Theorem: }[Huffman, 52] Huffman's algorithm computes a
+binary tree (with leaves $\leftrightarrow$ symbols of $\Sigma$) that minimises
+the average encoding length:
 $$ L(T) = \sum_{i \in \Sigma} p_i * [\text{depth of leaf i in T}]$$ 
 
 {\bf Proof: } By induction on $n = |\Sigma|$, can assume $n \geq 2$:
@@ -669,19 +667,19 @@ $\Rightarrow$ iterative, $O(n \log n)$ implementation
 {\bf Even faster: } (non-trivial): Sorting + $O(n)$ additional work: Hint:
 manage (meta-) symbols using two queues.
 
-%video 8-1
-\subsection{Application MST to Clustering}
-\label{sec:8-1}
-{\bf Informal goal: } given $n$ ``points'' classify into ``coherent groups''
+% video 8-1
+\section{Application MST to Clustering}
+\label{sec:8-1} {\bf Informal goal: } given $n$ ``points'' classify into
+``coherent groups''
 (like in AI unsupervised learning). \\
 {\bf Assumptions: } as input given a (dis)similarity measure - a distance $d(p,
 q)$ between each point pair (symmetric: $d(p,q) = d(q,p)$)\\
 
 {\bf Goal: } same cluster $\Leftrightarrow$ ``nearby''
-%video 8-1 04:00
-\subsubsection{Max-Spacing k-Clustering}
-\label{sec:8-1-1}
-{\bf Assume: } we know the $k := $ \# of the clusters desired (in practice, can
+% video 8-1 04:00
+\subsection{Max-Spacing k-Clustering}
+\label{sec:8-1-1} {\bf Assume: } we know the $k := $ \# of the clusters desired
+(in practice, can
 experiment with a range of values).\\
 Call points $p \xi q$ {\bf separated } if they're assigned to different
 clusters. \\
@@ -691,7 +689,7 @@ clusters. \\
 {\bf Problem statement: } given a distance measure $d$ and $k$, compute the
 k-clustering with maximum spacing.
 % video 8-1 06:30
-\subsubsection{A Greedy Algorithm}
+\subsection{A Greedy Algorithm}
 \label{sec:8-1-2}
 The idea is that, starting from ``one point - one cluster'', unite the closest
 clusters to increase a spacing metric.\\
@@ -701,8 +699,7 @@ clusters to increase a spacing metric.\\
   \begin{itemize}
   \item let $p, q = $ closes pair of separated points
   \item merge the clusters containing $p \xi q$ into a single cluster
-  \end{itemize}
-{\bf Note: } similar to Kruskal's algorithm but stopped early
+  \end{itemize} {\bf Note: } similar to Kruskal's algorithm but stopped early
 \item points $\leftrightarrow$ vertices; distances $\leftrightarrow$ edge costs.
 \end{itemize}
 The whole idea is called {\bf a single - link clustering }.
@@ -717,9 +714,8 @@ $\leq S$
 
 \paragraph{Correctness Proof}
 
-\subparagraph{Case 1:}
-$\hat{C_i}'s$ are the same as the $C_is$ (maybe after renaming) $\Rightarrow$
-has the same spacing $S$.
+\subparagraph{Case 1:} $\hat{C_i}'s$ are the same as the $C_is$ (maybe after
+renaming) $\Rightarrow$ has the same spacing $S$.
 
 \subparagraph{Case 2:}
 otherwise, can find a point pair $p, q$ such that:\\
@@ -736,18 +732,18 @@ spacing of $\hat{C_1}, \hat{C_2}, \dots, \hat{C_k}$
 {\bf Tricky case: } $p,q$ ``indirectly merged'' through multiple direct
 merges.\\
 Let $p, a_1, a_2, \dots, q$ be the path of direct greedy mergers connecting $p
-\xi q$. {\bf Key point: } Since $p \in \hat{C_i}$ and $q \notin \hat{C_I}, \exists$
-consecutive pair $a_i, a_j: a_i \in \hat{C_i}, a_j \notin \hat{C_j} \Rightarrow$
-$S \geq d(a_j, a_{j+1})$ (since $a_j, a_{j+1}$ directly merged), and
-$d(a_j, a_{j+1}) \geq $ spacing of $\hat{C_1}, \hat{C_2}, \dots, \hat{C_k}$ 
- (since $a_j, a_{j+1}$ separated).
+\xi q$. {\bf Key point: } Since $p \in \hat{C_i}$ and $q \notin \hat{C_I},
+\exists$ consecutive pair $a_i, a_j: a_i \in \hat{C_i}, a_j \notin \hat{C_j}
+\Rightarrow$ $S \geq d(a_j, a_{j+1})$ (since $a_j, a_{j+1}$ directly merged),
+and $d(a_j, a_{j+1}) \geq $ spacing of $\hat{C_1}, \hat{C_2}, \dots, \hat{C_k}$
+(since $a_j, a_{j+1}$ separated).
 
 % video 8-1
 \section{Dynamic Programming}
 \label{sec:8-1}
 \subsection{Weighted Independent Set (WIS) in Path Graphs}
 \label{sec:8-1-1}
-% {\bf Input: } a path graph $G=(V, E)$ with non-negative weight on vertices.\\
+{\bf Input: } a path graph $G=(V, E)$ with non-negative weight on vertices.\\
 {\bf Desired Output: } subset of non-adjacent vertices - an {\bf independent set
 } - of maximum total weight.\\
 {\bf Note: } Iterate through our algorithm design principles:
@@ -758,8 +754,7 @@ $d(a_j, a_{j+1}) \geq $ spacing of $\hat{C_1}, \hat{C_2}, \dots, \hat{C_k}$
   half, ditto for 2nd half, combine the solutions. Fails as there is no good
   mean for the ``divide'' phase.
 \end{itemize}
-Summarising problem: what if recursive solutions conflict? $\Rightarrow $ not
-clear how to quickly fix.
+Summarising problem: what if recursive solutions conflict? $\Rightarrow $ not clear how to quickly fix.
 
 % video 8-2
 \subsubsection{Optimal Substructure}
@@ -771,26 +766,24 @@ brute-force search.\\
 $v_n = $ last vertex of path.
 \begin{itemize}
 \item Case 1. Suppose $v_n \notin S$. Let $G' = G$ with $v_n$ deducted.\\
-{\bf Note: } $S$ also an IS of $G'$; and $S$ must be a max-weight IS of $G'$ -
-if $S^*$ was better, it would also be better then $S$ in $G$ (contradiction)
+  {\bf Note: } $S$ also an IS of $G'$; and $S$ must be a max-weight IS of $G'$ -
+  if $S^*$ was better, it would also be better then $S$ in $G$ (contradiction)
 \item Case 2. Suppose $v_n \in S$. \\
-{\bf Note: } by definition of IS, previous vertex $V_{n-1} \notin S$. Let $G'' =
-G$ with $v_{n-1}, v_n$ deleted. Then $S - [v_n]$ is an IS of $G''$.\\
-{\bf Note: } $S - [v_n]$ must in fact be a max-weight IS of $G''$ - if $S^*$ is
-better then $S$ in $G''$, then $S* \cup [v_n]$ is better than $S$ in $G$
-(contradiction). 
+  {\bf Note: } by definition of IS, previous vertex $V_{n-1} \notin S$. Let $G'' =  G$ with $v_{n-1}, v_n$ deleted. Then $S - [v_n]$ is an IS of $G''$.\\
+  {\bf Note: } $S - [v_n]$ must in fact be a max-weight IS of $G''$ - if $S^*$ is better then $S$ in $G''$, then $S* \cup [v_n]$ is better than $S$ in $G$ (contradiction).
 \end{itemize}
 So, to summarise:\\
 {\bf Upshot: } a max-weight IS must be either:\\
 (I) a max-weight IS of $G'$\\
 (II) $v_n + $ a max-weight IS of $G''$\\
-{\bf Corollary: } if we knew whether or not $v_n$ was in the max-weight IS, could
+{\bf Corollary: } if we knew whether or not $v_n$ was in the max-weight IS,
+could
 recursively compute the max-weight IS of $G'$ or $G''$ and be done.\\
 {\bf Crazy(?) idea: } try both possibilities and retain the better solution. Can
 be a recursive approach to the brute-force, but we have some tricks to complete
 it in linear time(!).
 
-%video 8-3
+% video 8-3
 \subsubsection{A Linear-Time Algorithm}
 \label{sec:8-3}
 \begin{itemize}
@@ -852,8 +845,8 @@ Key ingredients of the Dynamic Programming:
 \begin{itemize}
 \item identify a small number of sub-problems (e.g. compute the max-weight IS of
   $G_i$, for $i=0, 1, \dots, n$
-\item can quickly and correctly solve ``larger'' sub-problems given the solutions
-  to ``smaller sub-problems'' (usually via a recurrence)
+\item can quickly and correctly solve ``larger'' sub-problems given the
+  solutions to ``smaller sub-problems'' (usually via a recurrence)
 \item after solving all sub-problems, can quickly compute the final solution
   (usually it's just the answer to the biggest sub-problem).
 \end{itemize}
@@ -861,19 +854,19 @@ Key ingredients of the Dynamic Programming:
 
 % video 9-1
 \subsection{The Knapsack Problem}
-\label{sec:9-1}
-{\bf Input: } $n$ items, each has a value $v_i$ (non-negative) and size $w_i$
-(non-negative and integral). The knapsack itself has a capacity $W$
+\label{sec:9-1} {\bf Input: } $n$ items, each has a value $v_i$ (non-negative)
+and size $w_i$ (non-negative and integral). The knapsack itself has a capacity
+$W$
 (non-negative, integer).\\
 {\bf Output: } a subset of items $S \leq \{1, 2, \dots, n\}$ that maximises
 $\sum \limits_{i \in S} v_i$; subject to $\sum \limits_{i \in S} w_i \leq W$\\
 - basically, almost any resource (budget) allocation problem is going to be
-similar to this. 
+similar to this.
 
 \subsubsection{Developing a Dynamic Programming Algorithm (Step 1)}
 \label{sec:9-1-1}
 Let's formulate recurrence (optimal solution as function of solutions to
-  ``smaller'' sub-problems) based on structure of optimal solution.\\
+``smaller'' sub-problems) based on structure of optimal solution.\\
 Let $S=$ a max-value solution to an instance of knapsack. Consider all items as
 a sort of ordered collection, then we have our good old two-case switch:
 \begin{itemize}
@@ -888,8 +881,8 @@ a sort of ordered collection, then we have our good old two-case switch:
 
 % video 9-2
 \subsubsection{An Algorithm for the Knapsack Problem}
-\label{sec:9-2}
-{\bf Notation: } let $V_{i, x} = $ value of the best solution on that:
+\label{sec:9-2} {\bf Notation: } let $V_{i, x} = $ value of the best solution on
+that:
 \begin{itemize}
 \item uses only the first $i$ items
 \item has total size $\leq x$
@@ -897,12 +890,13 @@ a sort of ordered collection, then we have our good old two-case switch:
 for $i \in \{1, 2, \dots, n\}$ and any $x: V_{i,x} = \max(\underbrace{V_{i-1,
     x}}_{\mbox{Case 1}, i \notin S}, \overbrace{v_i + V_{i-1,x -
     w_i}}^{\mbox{Case 2, item i included} }) $\\
-{\bf Edge case: } if $w_i > x$, we must use Case 1 and have $V_{i, x} = V_{i-1. x}$
+{\bf Edge case: } if $w_i > x$, we must use Case 1 and have $V_{i, x} = V_{i-1.
+  x}$
 
 % video 9-2, 03:00
 \subsubsection{The Sub-problems (Step 2)}
 \label{sec:9-2-2}
-Identifying the sub-problems: 
+Identifying the sub-problems:
 \begin{itemize}
 \item all possible prefixes of items $\{1, 2, \dots, i\}$
 \item all possible (integral) residual capacities $x \in {0, 1, 2, \dots, W}$
@@ -938,28 +932,26 @@ Notes:
 \label{sec:11-1-1}
 We use a Needleman-Wunsch score = similarity measure between strings. We
 calculate a total penalty for missing parts and miss-matches\\
-{\bf Input: } strings $X = x_1, \dots, x_m; Y = y_1, \dots, y_m$ over some
-alphabet $\Sigma$; penalty $\alpha_{gap} \geq 0$ for inserting a gap,
+{\bf Input: } strings $X = x_1, \dots, x_m; Y = y_1, \dots, y_n$ over some alphabet $\Sigma$; penalty $\alpha_{gap} \geq 0$ for inserting a gap, 
 $\alpha_{ab}$ for matching $a \xi b$ (presumably $\alpha_{ab} = 0$ if $a=b$)\\
-{\bf Feasible Solutions: } alignments - i.e., insert gaps to equalise lengths of
-the strings\\
+{\bf Feasible Solutions: } alignments - i.e., insert gaps to equalise lengths of the strings\\
 {\bf Goal: } minimal- penalty solution.\\
 
-Trying to derive an optimal solution by reasoning. {\bf Key step: } identify
-sub-problems. As usual, will look at structure of an optimal solution for clues. 
+Trying to derive an optimal solution by reasoning. {\bf Key step: } identify sub-problems. As usual, will look at structure of an optimal solution for clues.
 
 {\bf Structure of the optimal solution: } consider an optimal alignment of $X,
 Y$. We have three cases for the last symbols of alignment:
 \begin{itemize}
-\item Case 1: $x_m, y_n$ matched (symbols from both $X$ and $Y$ are included in this part)
+\item Case 1: $x_m, y_n$ matched (symbols from both $X$ and $Y$ are included in
+  this part)
 \item Case 2: $X_m$ matched with a gap (symbol from $X$ and gap on $Y$)
-\item Case 3: $y_n$ matched with a gap (symbol from $Y$ and gap on $X$) 
+\item Case 3: $y_n$ matched with a gap (symbol from $Y$ and gap on $X$)
 \end{itemize}
 So,\\
 {\bf Point: } narrow optimal solution down to 3 candidates.\\
 {\bf Optimal substructure: } Let $X' = X - x_m; Y' = Y - y_n$.\\
 If Case 1 holds, the induced alignment (i.e. alignment of ``previous'' case,
-before the last symbol) is the alignment of $X' \xi Y'$ is optimal.\\ 
+before the last symbol) is the alignment of $X' \xi Y'$ is optimal.\\
 If Case 2 holds, then induced alignment of $X' \xi Y$ is optimal\\
 If Case 3 holds, then induced alignment of $X \xi Y'$ is optimal\\
 
@@ -970,12 +962,12 @@ Suppose induced alignment of $X', Y'$ has penalty $P$ while some other one has
 penalty $P^* < P$. Then appending (matching) of $x_m$ to $y_n$ to the latter
 gives an alignment of $X$ and $Y$ with penalty $P^* + \alpha_{x_m y_n} < P +
 \alpha_{x_m y_n}$, which means that original alignment was not optimal -
-contradiction. 
+contradiction.
 
 % video 11-2
 \subsection{Algorithm}
-\label{sec:11-1-2}
-{\bf Relevant sub-problems: } have the form $(X_i, Y_j)$ where
+\label{sec:11-1-2} {\bf Relevant sub-problems: } have the form $(X_i, Y_j)$
+where
 \begin{itemize}
 \item $X_i = \text{list } i \text{ letters of } X$
 \item $Y_j = \text{list } j \text{ letters of } Y$
@@ -1022,7 +1014,7 @@ sub-problem $A[i, j]$:
 \item if $A[i,j]$ filled using case 2, match $x_i$ with a gap and go to $A[i-1,
   j]$
 \item if $A[i,j]$ filled using case 3, match $y_j$ with a gap and go to $A[i,
-  j-1]$ 
+  j-1]$
 \item if $i=0$ or $j=0$, match remaining sub-strings with gaps
 \end{itemize}
 (but better cache results).\\
@@ -1033,11 +1025,10 @@ indexes decreased to running time is only $O(m+n)$
 \section{Optimal Binary Search Trees}
 \label{sec:12-1}
 \subsection{Problem Definition}
-\label{sec:12-1-1}
-{\bf Note: } for a given set of keys, there are lists of valid search trees. The
-balanced one keeps the depth as small as possible, making the worst-case search
-(on the full tree height) as fast as possible. Example - a red-black tree with
-worst case search time $O(\log n)$
+\label{sec:12-1-1} {\bf Note: } for a given set of keys, there are lists of
+valid search trees. The balanced one keeps the depth as small as possible,
+making the worst-case search (on the full tree height) as fast as possible.
+Example - a red-black tree with worst case search time $O(\log n)$
 
 The idea is that, having a statistic of future searches, we're going to build an
 unbalanced (!) search tree which will provide a better {\bf average } search
@@ -1049,7 +1040,7 @@ So:\\
 {\bf Goal: } Compute a valid search tree that minimises the \underline{weighted
   (average) search time}: $C(T) = \sum\limits_{\text{items} i} p_i *
 [\text{search time for i in T}]$ For example, for red-black tree, $C(T) = O(\log
-n)$ 
+n)$
 
 The whole story looks like the Huffman Codes in terms of:
 \begin{itemize}
@@ -1062,7 +1053,7 @@ The whole story looks like the Huffman Codes in terms of:
 \item Differences:
   \begin{itemize}
   \item with Huffman codes, constraint was prefix-free (i.e. symbols only as
-    leaves) 
+    leaves)
   \item here, constraint = search tree property (sees harder to deal with)
   \end{itemize}
 \end{itemize}
@@ -1075,7 +1066,7 @@ Greedy doesn't work:
 \item bottom-up approach (populate lowest level with least frequently accessed
   keys)
 \item top-down approach (put most frequently accessed items at root, re-curse) -
-  similar story 
+  similar story
 \end{itemize}
 There are other approaches but neither seems to work.\\
 {\bf Issue: } with the top-down approach, the choice of root has hard-to-predict
@@ -1088,7 +1079,7 @@ within a dynamic programming algorithm).
 
 {\bf Claim: } Suppose $T$ - optimal BST for keys $\{1, 2, \dots, n\}$ has root
 $r$, left subtree $T_1$, right subtree $T_2$. Then $T_1$ is optimal for the keys
-$\{1, 2, \dots, r-1\}$ and $T_2$ for the keys $\{r+1, r+2, \dots, n\}$. 
+$\{1, 2, \dots, r-1\}$ and $T_2$ for the keys $\{r+1, r+2, \dots, n\}$.
 
 % video 12-3
 {\bf Proof: } by contradiction (surprise! surprise!). \\
@@ -1099,12 +1090,12 @@ $C(T^*) < C(T)$:\\
 {\bf A calculation: } $C(T) = \sum \limits_{i=1}^n p_i*[\text{search time for i
   in T}]= ...$. Now brake this sum into components for two sub-trees: $\dots =
 p_r * 1 + \sum \limits_{i=1}^{r-1} p_i [\text{search time for i in }T]$ $+\sum
-\limits_{i=r + 1}^{n} p_i [\text{search time for i in }T]$.\\ 
+\limits_{i=r + 1}^{n} p_i [\text{search time for i in }T]$.\\
 But $[\text{search time for i in }T] = 1 + [\text{search time for i in }T_1]$
 for $T_1$ subtree; and for $T_2$: $[\text{search time for i in }T] = 1 +
 [\text{search time for i in }T_2]$\\
-Then $\dots = p_r * 1 + \sum \limits_{i=1}^{r-1} p_i [\text{search time for i in }T_1]  +
-\sum \limits_{i=r + 1}^{n} p_i [\text{search time for i in }T_2] =
+Then $\dots = p_r * 1 + \sum \limits_{i=1}^{r-1} p_i [\text{search time for i in
+}T_1] + \sum \limits_{i=r + 1}^{n} p_i [\text{search time for i in }T_2] =
 \text{(constant)} + C(T_1) + C(T_2)$\\
 {\bf Similarly: } $C(T^*) = \sum \limits_{i=1}^n p_i + C(T^*_1) + C(T^*_2)$\\
 {\bf Upshot: } $C(T_1^*) < C(T_1)$ implies $C(T^*) < C(T)$ - contradicts
@@ -1112,8 +1103,8 @@ Then $\dots = p_r * 1 + \sum \limits_{i=1}^{r-1} p_i [\text{search time for i in
 
 % video 12-4, 12-5
 \subsection{A Dynamic Programming Algorithm}
-\label{sec:12-4}
-{\bf Note: } items in a sub-problem are either a prefix or a suffix of the
+\label{sec:12-4} {\bf Note: } items in a sub-problem are either a prefix or a
+suffix of the
 original problem.\\
 {\bf Notation: } for $1 \leq i \leq j \leq n$, let $C_{ij} = $ weighted search
 cost of an optimal BST for the items $[i, i+1, \dots, j-1, j]$ - with
@@ -1121,12 +1112,12 @@ probabilities $p_i, p_{i+1}, \dots, p_j$\\
 {\bf Recurrence: } for every $1 \leq i \leq j \leq n$:
 \begin{itemize}
 \item $C_{ij} = \min \limits_{r-i}^j \{\sum\limits_{k=i}^j p_k + C_{i (r-1)} +
-  C_{r+1 j}  \} $ (recall formula $C(T) = \sum \limits_k p_k + C(T_1) +
-  C(T_2)$); interpret $C_{xy} = 0$ if $x > y$
-\end{itemize}
-{\bf Correctness: } optimal substructure narrows candidates down to $j -i + 1$
+  C_{r+1 j} \} $ (recall formula $C(T) = \sum \limits_k p_k + C(T_1) + C(T_2)$);
+  interpret $C_{xy} = 0$ if $x > y$
+\end{itemize} {\bf Correctness: } optimal substructure narrows candidates down
+to $j -i + 1$
 possibilities, recurrence picks the best by brute force.\\
-{\bf Important:  } the smallest sub-problems (with fewest number $j-i+1$ of
+{\bf Important: } the smallest sub-problems (with fewest number $j-i+1$ of
 items) first.\\
 \begin{itemize}
 \item Let $A = 2-D$ array ($A[i,j]$ represents optimal SBT value for items $[i,
@@ -1135,9 +1126,9 @@ items) first.\\
   \begin{itemize}
   \item for $i = 1$ to $n$ [so $i+s$ plays role of $j$]
     $$A_{[i, i+s]} = \min_{r=i}^{i+s} \{\sum_{k=i}^{i+s}p_k + A_{[i, r-1]} +
-    A_{[r+1, i+s]}\}$$ 
-$A_{[x, y]}$ are calculated on previous iterations (available for $O(1)$ - time
-load); interpret them as $0$ if 1st index > 2nd index.
+    A_{[r+1, i+s]}\}$$ $A_{[x, y]}$ are calculated on previous iterations
+    (available for $O(1)$ - time load); interpret them as $0$ if 1st index > 2nd
+    index.
   \end{itemize}
 \item Return $A_{[1, n]}$
 \end{itemize}
@@ -1150,6 +1141,1079 @@ correctly fills up entire table in only $O(n^2)$ time ($O(1)$ average per
 sub-problem). Idea: piggyback on work done in previous sub-problems to avoid
 trying all possible roots.
 
+\section{The Bellman-Ford Algorithm}
+\label{sec:14-1}
+Problems with Dijkstra's algorithm:
+\begin{itemize}
+\item not always correct with negative edge lengths\\
+  - formally, the presence of negative- length cycles makes whole story
+  non-sense: whatever path you select, it will be possible to make another path
+  even shorter
+  by making ``one more'' lap on this negative loop (page 4 of 14-1).\\
 
-TODO: TOC!!!,
+  {\bf Solution: } compute the shortest cycle-free path. The problem is, it is
+  an NP-hard problem (no polynomial algorithm unless $P=NP$).
+\item not very distributed (relevant for Internet routing)
+\end{itemize}
+For now, assume an input graph has no negative cycles.
+
+{\bf Input: } directed graph $G = (V, E)$; edge costs $C_e$ (possibly negative);
+$n$ = \# of vertices; $m$ = \# of edges\\
+Source vertex $s \in V$;\\
+{\bf Goal: } either
+\begin{itemize}
+\item for all destinations $v \in V$, compute the length of a shortest $s-v$
+  path
+\item output (signal) a negative cycle
+\end{itemize}
+
+% video 14-2
+\subsection{Optimal Substructure}
+\label{sec:14-2} {\bf Idea: } exploit sequential nature of paths. Sub-path of a
+shortest path should itself be shortest.\\
+{\bf Issue: } not clear how to define ``smaller'' and ``larger'' sub-problems.\\
+{\bf Key idea: } artificially restrict the number of edges in a path.\\
+
+{\bf Lemma: } Let $G = (V, E)$ be a directed graph with edge lengths $C_e$ and
+source vertex $s$ ($G$ might on might not have a negative cycle).\\
+For every $v \in V, i \in [1, 2, 3, \dots]$, let $P = $ shortest $s-v$ path {\it
+  with at most $i$ edges} (cycles are permitted - limited by the ``budget'' of
+edges). Then:
+\begin{itemize}
+\item Case 1: if $P$ has $\leq (i-1)$ edges, it is a shortest $s-v$ path with
+  $\leq (i-1)$ edges.
+\item Case 2: if $P$ has $i$ edges (from $s$ to ``somewhere'' $w$), then last
+  hop is $(w, v)$, then $P'$ is the shortest $s-w$ path with $\leq(i-1)$ edges
+  ($P' = P - (w,v)$).
+\end{itemize} {\bf Proof: }
+\begin{itemize}
+\item Case 1: by obvious contradiction
+\item Case 2: (cut-n-paste contradiction): if exists $Q$ shorter than $P'$,
+  going from $s$ to $w, \leq (i-1)$ edges, then with the final hop of $(w,v)$ it
+  becomes a path from $s$ to $v$ which is cheaper than $P$ with the budget of
+  $\leq i$: $Q+(w, v)$ is shorter than $P' + (w,v)$ - contradicts idea of
+  optimal $P$
+\end{itemize}
+
+% video 14-3
+\subsection{The Basic Algorithm}
+\label{sec:14-3} {\bf Notation: } Let $L_{i, v}$ - the optimal solution value
+for as $s-v$ path with $\leq i$ edges (defined as $+\infty$ if no $s-v$ path
+exists with $\leq i$
+edges). \\
+{\bf Recurrence: } for every $v \in V, i \in [1, 2, \dots]$:
+$$L_{i, v} = \min\left\{
+    \begin{smallmatrix}
+      \overbrace{L_{(i-1), v}}^{Case 1} \\
+      \underbrace{\min_{(w, v) \in E} \{L_{(i-1), w} + C_{w, v} \}}_{Case2}
+    \end{smallmatrix} \right.
+ $$
+ {\bf Correctness: } brute-force search from the only ($1 + in-deg(v)$)
+ candidates - by the optimal substructure lemma.
+
+ % video 14-3,03:10
+ \subsubsection{No Negative Cycles}
+ \label{sec:14-3-1}
+ Now suppose input graph $G$ has no negative cycles. Then shortest path do not
+ have cycles (removing cycles only decreases length) $\Rightarrow$ have $\leq
+ (n-1)$ edges.\\
+ {\bf Point: } in $G$ has no negative cycle, only need to solve sub-problems up
+ to $i=n-1$ (compute $L_{i, v}$ for all $i \in [0, 1, 2, \dots, n-1]$
+
+ % video 14-3, 06:00
+ \subsubsection{The Bellman-Ford Algorithm}
+ \label{sec:14-3-2}
+ Let $A = 2D$ array, indexed by $i$ and $v$\\
+ {\bf Base case: }
+ $A[0, s] = 0; A[0, v] = +\infty$ for all $v \neq s$\\
+ \begin{itemize}
+ \item For $i = 1, 2, 3, \dots, n-1$:
+   \begin{itemize}
+   \item For each $v \in V$:
+$$L_{i, v} = \min\left\{\begin{smallmatrix}
+    \overbrace{L_{(i-1), v}}^{Case 1} \\
+    \underbrace{\min_{(w, v) \in E} \{L_{(i-1), w} + C_{w, v} \}}_{Case2}
+  \end{smallmatrix} \right. $$
+\end{itemize}
+\end{itemize} {\bf As discussed: } if $G$ has no negative cycle, then algorithm
+is correct
+with final answer = $A[n-1, v]$.\\
+
+% video 14-4 - example running algorithm
+Running time: $O(nm)$: Total work is $O(n * \sum \limits_{v \in V} in-degree(v))$
+
+\subsubsection{Optimisation: Stopping Early}
+\label{sec:14-4-1}
+Suppose for some $j < n-1, A[j, v] = A[j-1, v]$ for all vertices $v \Rightarrow$
+for all $v$, all future $A[i,v]$'s will be the same (can safely halt).
+
+% video 14-5
+\subsection{Detecting Negative Cycles}
+\label{sec:14-5} {\bf Claim: } $G$ has no negative-cost cycle $\Leftrightarrow$
+in the (extended)
+Bellman-Ford algorithm $A[n-1, v] = A[n,v]$ for all $v \in V$.\\
+{\bf Consequence: } if Bellman-Ford algorithm is being run for ``one more''
+iteration and some sub-problem change its value, this works as a flag that the
+graph $G$ contains a negative cycle.\\
+{\bf Proof: } \\
+$(\Rightarrow)$ - already proved in correctness of Bellman-Ford\\
+$\Leftarrow$ - Assume $A[n-1, v] = A[n, v]$ for all $v \in V$ (assume also these
+are finite: $< +\infty$). Let $d(v)$ denote the value of $A[n-1, v]$ and $A[n,
+v]$.\\
+{\bf Recall algorithm: }\\
+$A_{n, v} = \min \left\{\begin{smallmatrix} A_{(n-1), v} \\ \min_{(w, v) \in E}
+    \{A_{(n-1), w} + C_{w, v} \} \end{smallmatrix} \right\} $ - where $A_{n, v}
+= d(v)$ and $A_{n-1, w} = d(w)$ \\
+{\bf Thus: } $d(w) \leq d(w) - C_{wv}$ (or $d(v) - d(w) \leq C_{wv}$ for all
+edges $(w, v) \in E$.\\
+{\bf Now: } consider an arbitrary cycle $C$. Here:$\sum \limits_{(w, v) \in C}
+\geq \sum \limits_{(w, v) \in C} (d(w) - d(v))$.\\
+But each vertex in the cycle is a head of edge (once) and a tail of edge (once)
+- which means that its $d(v)$ appears in the sum twice: once with $+$ and once
+with $-$. After ``massive cancellation'' we get 0 on this sum:
+$$\sum \limits_{(w, v) \in C} \geq \sum \limits_{(w, v) \in C} (d(w) - d(v)) = 0$$
+Done!
+
+% video 14-6
+\subsection{A Space Optimisation}
+\label{sec:14-6}
+Basic algorithm takes $Q(n^2)$ space (for 2D array of values).\\
+{\bf Note: } only need the $A[i-1, v]$'s to compute the $A[i, v]$'s
+$\Rightarrow$ only need $O(n)$ to remember the current and last rounds of
+sub-problems. Then: currently we return $n-1$ values (paths from $s$ to every
+vertex), so we
+get $O(1)$ per destination.\\
+
+Negative effect is that if we need the solution itself (not the actual path),
+you're out of luck: you can not reconstruct the path. Need special trick here:
+% video 14-6, 05:15
+{\bf Idea: } compute a second table $B: B[i, v] = $ 2nd-to-last vertex on a
+shortest $s \rightarrow v$ path with $\leq i$ edges (``predecessor points'').\\
+{\bf Reconstruction: } Assume the input graph $G$ has no negative cycles and we
+correctly compute the $B[i, v]$'s. \\
+{\bf Then: } tracing back predecessor pointers - the $B[n-1, v]$'s - from $v$ to
+$s$ - yields a shortest $c-v$ path.\\
+{\bf Base case: } $B[0, v] = null$ for all $v \in V$\\
+{\bf Recall: } $A_{i, v} = \min \left\{\begin{smallmatrix} A_{(i-1), v} \\
+    \min \limits_{(w, v) \in E} \{A_{(i-1), w} + C_{w, v} \} \end{smallmatrix}
+\right\}$
+\begin{itemize}
+\item Case 1: $B[i, v] = B[i-1, v]$
+\item Case 2: $B[i, v] = $ the vertex $w$ achieving the minimum (i.e. the new
+  last hop)
+\end{itemize} {\bf Correctness: } computation of $A[i, v]$ is brute-force search
+through the $(1 + in-deg(v))$ possible optimal solutions, $B[i, v]$ is just
+caching the last
+hop of the winner.\\
+{\bf To reconstruct a negative-cost cycle: } use depth-first search to check for
+a cycle of predecessor pointers after each round (must be a negative cost
+cycle).
+
+% video 14-7
+\subsection{Internet Routing}
+\label{sec:14-7} {\bf Note: } the Bellman-Ford algorithm is intuitively
+``distributed''. Toward a rational protocol:
+\begin{itemize}
+\item switch from source-driven to destination-driven - every vertex v stores
+  shortest-path distance from form $v$ to destination $t$ and the first hop of a
+  shortest path (for all relevant destination $t$). Implemented with ``distance
+  vector protocols'' - indexed by destination)
+\item can not assume all $A[i, v]$'s get computed before all $A[i-1, v]$'s (need
+  to handle asynchronous).\\
+  {\bf Fix: } switch from ``pull - based'' to ``push-based'': as soon as $v$ got
+  update about $A[i, v]] < A[i-1. v], v$ notifies all its neighbours.\\
+  Good news: algorithm guaranteed to converge eventually (assuming no negative
+  cycles) - because updates strictly decrease sum of shortest-path estimates.
+  % video 14-8
+\item {\bf Problem: } convergence guaranteed only for static networks (not true
+  in practice).\\
+  Naive implementation will fail to ``Counting to Infinity''. To fix it, we move
+  from distance-vector protocols to path-vector ones: each vertex maintains not
+  just the ``next hub'' to every possible destination but the {\bf entire
+    shortest
+    path} which is going to be used to reach every destination.\\
+  The problem is, we need much more space. But:
+  \begin{itemize}
+  \item more robust to failures
+  \item permits more sophisticated route selection (e.g. if care about
+    intermediate stops)
+  \end{itemize}
+\end{itemize}
+Current protocols are implemented according to RIP, RIP2 protocol specs; see
+``Request For Comment'' - RFC 1058 also.
+
+% video 15-1
+\section{All-Pairs Shortest Path (APSP)}
+\label{sec:15-1} {\bf Input: } directed graph $G = (V, E)$ with edge costs $C_e$
+for each $e \in
+E$ (no distinguish source vertex)\\
+{\bf Goal: } either:
+\begin{itemize}
+\item Compute length of a shortest $u \rightarrow v$ path for {\bf all } pairs
+  of vertices $u, v \in V$, or
+\item correctly report that $G$ contains a negative cycle
+\end{itemize}
+Having a single-source shortest-path subprogram we can solve it with $n$ calls
+to this program.\\
+{\bf Running time for non-negative edge case:} the best variant would be the $n$
+calls of Dijkstra's algorithm: $n * Dijkstra's = O(n m \log n)$:
+\begin{itemize}
+\item $O(n^2 \log n)$ if $m$ is close to $n$ (sparse graph) - possibly the best
+  option available for sparse graph;
+\item $O(n^3 \log n)$ if $m$ is close to $n^2$ (dense graph);
+\end{itemize}
+Up to present day, there is a questioned about the existence of an algorithm
+faster than $n^3 \log n$ for dense graph.\\
+{\bf Running time for general edge costs: } $n * Bellman-Ford = $, which will be
+$O(n^3)$ for dense graph and $O(n^4)$ for sparse one.
+
+% video 15-2
+\subsection{Optimal Sub-structure}
+\label{sec:15-2} {\bf Floyd - Warshall algorithm: } $O(n^3)$ algorithm for APSP.
+Works even with graphs with negative edge lengths.\\
+{\bf Thus: }
+\begin{itemize}
+\item at least as good as Bellman-Fords, better is sparse graphs
+\item in graphs with non-negative edge costs, competitive with $n$ Dijkstra's in
+  dense graph.
+\end{itemize}
+{\bf Important special case: } transitive closure of a binary relation.\\
+{\bf Open question: } solve APSP significantly faster than $O(n^3)$ in dense
+graphs.
+
+{\bf Recall: } can be tricky to define ordering on sub-problems in graph
+problems. \\
+{\bf Key idea: } order the vertices $V = [1, 2, \dots, n]$ arbitrary. Let
+$V^{(k)} = [1, 2, \dots, k]$ \\
+% video 15-2 07:00
+{\bf Lemma: } Suppose $G$ has no negative cycle. Fix source $i \in V$,
+destination $j \in V$, and $k \in [1, 2, \dots, k]$. Let $P = $ shortest
+cycle-free $i-j$ path with all internal nodes in $V^{(k)}$.\\
+Suppose $G$ has no negative cost cycle. Let $P$ be a shortest cycle-free $i-j$
+path with all internal nodes in $V^{(k)}$. Then:
+\begin{itemize}
+\item Case 1: if $k$ not internal to $P$, then $P$ is a shortest cycle-free
+  $i-j$ path with all internal vertices in $V^{(k-1)}$.
+\item Case 2: if $k$ is internal to $P$, then:
+  \begin{itemize}
+  \item $P_1 = $ shortest (cycle-free) $i-k$ path with all internal nodes in
+    $V^{(k-1)}$ and
+  \item $P_2 = $ shortest (cycle-free) $k-j$ path with all internal nodes in
+    $V^{(k-1)}$
+  \end{itemize}
+\end{itemize} {\bf Proof: } similar to Bellman-Ford opt sub-structure.
+
+% video 15-3
+\subsection{The Floyd-Warshall Algorithm}
+\label{sec:15-3}
+Let $A = 3D$ array indexed by $i, j, k$ {\bf Base cases: } for all $i, j \in V$:
+$$A[i, j, 0] = \left\{\begin{smallmatrix} 0 \text{ if } i = j \\ 
+    C_{ij} \text{ if } (i,j) \in E \\
+    +\infty \text{ if } i \neq j \text{ and } (i,j) \notin E \\
+  \end{smallmatrix} \right.$$
+\begin{itemize}
+\item for $k = 1$ to $n$
+  \begin{itemize} 
+  \item for $i = 1$ to $n$
+    \begin{itemize} 
+    \item for $j = 1$ to $n$
+$$A[i, j, k] = \min \left\{
+  \begin{smallmatrix}
+    A[i, j, k-1] \text{ - Case 1} \\
+    A[i, k, k-1] + A[k, j, k-1] \text{ - Case 2} \\
+  \end{smallmatrix}
+\right. $$
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+{\bf Correctness: } from optimal substructure + induction (surprise! surprise!)
+{\bf Running time: } $O(1)$ per sub-problem, $O(n^3)$ overall.
+
+% video 15-3, 05:10
+\subsection{Odds and Ends}
+\label{sec:15-3-1}
+\begin{itemize}
+\item for the graphs that {\bf do } have negative-cost cycles, the final array
+  will contain the negative number on its diagonal: $A[i, i, n] < 0$ for at
+  least one $i \in V$ at end of algorithm.\\
+{\bf Proof: } boring 
+\item {\bf reconstruction } To do this, keep $B[i, j] = max$ label of an
+  internal node on a shortest $i-j$ path for all $i, j \in V$(the last $k$
+  responsible for changing the shortest path $i-j$ on Case 2 of recurrence used
+  to compute $A[i, j, k]$). Then we can use the $B[i, j]$ to recursively
+  reconstruct shortest path.
+\end{itemize}
+
+% video 15-4
+\section{A Reweighting Techinque (Johnson's Algorithm)}
+\label{sec:15-4}
+{\bf Recall: } APSP reduces to $n$ invocations of SSSP (?)
+\begin{itemize}
+\item non-negative edge lengths: $O(mn \log n)$ via Dijkstra
+\item negative edge lengths: $O(mn^2)$ via Bellman - Ford
+\end{itemize}
+{\bf Johnson's algorithm: } reduces APSP to
+\begin{itemize}
+\item 1 invocation of Bellman-Ford ($O(mn)$)
+\item $n$ invocations of Dijkstra ($O(mn \log n)$)
+\end{itemize}
+{\bf Summary: } re-weighting using vertex weights \{$p_v$\} adds the same amount
+(namely, $p_s - p_v$) to every $s-v$ path.\\
+{\bf Consequences: } re-weighting always leaves the shortest path unchanged\\
+So, if $G$ has some negative edge lengths and after re-weighting by some \{$p_v$\}
+all edge lengths become non-negative
+
+% video 15-5
+\subsection{The Algorithm}
+\label{sec:15-5}
+{\bf Input: } Graph $G = (V, E)$ which may have or have not negative cycles. 
+\begin{itemize}
+\item Form $G'$ by adding a new vertex $s$ and a new edge ($s, v$) with length 0
+  for each $v \in G$
+\item Run Bellman-Ford on $G'$ with source vertex $s$. It will report the
+  negative cycle if there is one (bingo!) or...
+\item for each $v \in G$, define $p_v = $ length of a shortest path in $G'$. For
+  each edge $e = (u, v) \in G$, define $c'_e = c_e + p_u - p_v$
+\item for each vertex $u$ of $G$: Run Dijkstra's algorithm in $G$, with edge
+  length [$c'_e$], with source vertex $u$, to compute the shortest path distance
+  $d'(u, v)$ for each $v \in G$.
+\item for each pair $u, v \in G$, return the shortest-path distance $d(u,v) :=
+  d'(u,v) - p_u + p_v$
+\end{itemize} {\bf Running time: } Step 1: $O(n)$, Step 2: $O(mn)$ + Step3 (form
+$c'$): $O(m)$ + Step 4 (n times Dijkstra): $O(nm \log n)$ + Step5 ($O(1)$ work
+per $u, v$ pair): $O(n^2)$.\\
+{\bf Total: } $O(nm \log n)$\\
+{\bf Correctness: } assuming $C'_e \geq 0$ for all edges $e$:
+{\bf Claim: } for every edge $e = (u, v)$ of $G$, the re-weighted length $C'_e =
+Ce + p_u + p_v$ is non-negative.\\
+{\bf Proof: } fix an edge ($u, v$). By construction, 
+\begin{itemize}
+\item $p_u = $ length of a shortest $s-u$ path in $G'$
+\item $p_v = $ length of a shortest $s-v$ path in $G'$
+\end{itemize}
+Let $P = $ a shortest $s-u$ path in $G'$ (with length $p_u$). Then $P + (u, v) =
+$ an $s-v$ path with length $p_u + C_{u, v} \Rightarrow$ shortest $s-v$ path can
+only be shorter, so $p_v \leq  p_u + c_{u,v}$. Then: $C'_{u,v} = C_{u,v} + p_u-
+p_v \geq 0$.
+
+% video 16-1
+\section{NP-Completeness}
+\label{sec:16-0}
+\subsection{P: Polynomial-Time Solvable Problems}
+\label{sec:16-1}
+{\bf Sad fact: } many important problems seem impossible to solve efficiently.
+\subsubsection{Polynomial-Time Solvability}
+\label{sec:16-1-1}
+A problem is {\bf Polynomial-time solvable } if there is an algorithm that
+correctly solves it in $O(n^k)$ time for some constant $k$, where $n=$ input
+length (yes, $k=10000$ is sufficient for this definition).\\ 
+{\bf Comment: } will focus on deterministic algorithms, but to first order does
+not matter.\\
+So, the {\em Complexity Class P} is a set of all polynomial-time solvable
+problems.\\
+{\bf Examples: } sequence alignment, minimum cut etc., except:
+\begin{itemize}
+\item cycle-free shortest path in graphs with negative cycles
+\item knapsack problem: running time was $O(mn)$, but input length proportional
+  to $\log w$ - exponential growth, not polynomial.
+\end{itemize}
+{\bf Interpretation: } rough ``litmus'' test for ``computational tractability''. 
+
+\subsubsection{Traveling Salesman Problem}
+\label{sec:16-1-2}
+{\bf Input: } Complete undirected graph with non-negative edge costs.\\
+{\bf Output: } a min-cost tour that visits every vertex exactly once.
+
+{\bf Conjecture: } [Edmonds' 65: Paths, Trees and Flowers ] there is no
+polynomial-time algorithms for TSP - as we'll see this is equivalent to $P \neq NP$. 
+% video 16-2
+\subsection{Reductions and Completeness}
+\label{sec:16-2}
+{\bf Good idea: } amass evidence of intractability via relative difficulty: TSP
+``as hard as'' lots of other problems.\\
+(informal) {\bf Definition: } problem $\Pi_1$ {\bf reduces } to problem $\Pi_2$:
+given a polynomial-time subroutine for $\Pi_2$, can use it to solve $\Pi_1$ in
+polynomial time.\\ 
+% video 16-2 05:30
+\subsubsection{Completeness}
+\label{sec:16-2-1}
+Suppose $\Pi_1$ reduces to $\Pi_2$. \\
+{\bf Contra-positive: } if $\Pi_1$ is not in $P$, then {\it neither is a
+  $\Pi_2$}\\
+{\bf That is: } $\Pi_2$ is at least as hard as $\Pi_1$.\\
+{\bf Definition: } Let $C = $ a set of problems. The problem $\Pi$ is {\bf
+  C-complete } if:
+\begin{itemize}
+\item {\bf 1: }  $\Pi \in C$
+\item {\bf 2: } everything in $C$ reduces to $\Pi$
+\end{itemize}
+{\bf That is: } $\Pi$ is the hardest problem in all of $C$
+
+\paragraph{Choice of the Class C?}
+
+{\bf Idea: } show the TSP is $C$-complete for a really big set $C$\\
+- quite ambitious, how about {\it show this where C = All problems} - too
+desperate. Example:\\
+{\bf Halting Problem: } given a program and an input for it, will it eventually
+hard? \\
+{\bf Fact: } [Toring' 36] {\bf no } algorithm, however slow, solves the Halting
+Problem. In contrast, TSP definitely solvable in finite time (i.e. brute-force
+search). \\
+{\bf Better (refined) idea: } TSP as hard as all brute-force solvable problems. 
+
+% video 16-3
+\subsection{Definition and Interpretation of NP-Completeness}
+\label{sec:16-3}
+{\bf Definition: } a problem is in $NP$ if:
+\begin{itemize}
+\item solutions always have length polynomial in the input size
+\item proposed solution can be verified in polynomial time
+\end{itemize}
+{\bf Examples: }
+\begin{itemize}
+\item is there a TSP tour with length $\leq 1000$?
+\item Constraint satisfaction problems (e.g. 3SAT)
+\end{itemize}
+% video 16-3 06:00
+\subsubsection{Interpretation of NP-Completeness}
+\label{sec:16-3-1}
+{\bf Note: } every problem in $NP$ can be solved by brute-force search in
+exponential time (just check every candidate solution). 
+
+{\bf Fact: } vast majority of natural computational problems are in the $NP$
+(can recognise a solution).
+
+{\bf By definition of completeness: } a polynomial-time algorithm for one
+NP-complete problem solves {\bf every } problem in NP efficiently.
+
+That implies $P = NP$
+% video 16-4
+{\bf Interpretation: } an NP-complete problem encodes simultaneously all
+problems for which a solution can be effectively recognised (a ``universal
+problem''). 
+
+{\bf Question: } can such problems really exist? \\
+{\bf Fact 1: } [Cook ' 74, Levin ' 73] NP-complete problems exist.\\
+{\bf Fact 2: } [stated by Karp' 72] loads of natural and important problems are
+NP-complete (including TSP).
+% video 16-4 03:50
+\subsubsection{User Guide}
+\label{sec:16-4-1}
+The following recipe for proving a problem $\Pi$ is NP-complete:\\
+\begin{itemize}
+\item find a known NP - complete problem $\Pi '$ - ess e.g. Garey + Johnson list
+\item prove that $\Pi '$ reduces to $\Pi$ \\
+$\Rightarrow$ implies that $\Pi$ at least as hard as $\Pi '$\\
+$\Rightarrow \Pi$ is NP - complete as well (assuming $\Pi$ is an NP problem)
+\end{itemize}
+% video 16-5
+\subsection{P vs NP Question}
+\label{sec:16-5}
+Widely conjectured: $P \neq NP$, but there is no proof. Reasons to believe:
+\begin{itemize}
+\item {\bf Psychological } if $P=NP$, someone would have proved it by now
+\item {\bf Philosophical } if $P=NP$, then finding a proof always as easy as
+  verifying one
+\item {\bf Mathematical } ???
+\end{itemize}
+{\bf FAQ: } NP stands not for ``Not polynomial'' but for ``non-deterministic
+polynomial''. 
+
+% video 16-6 
+\subsection{Algorithmic Approaches to NP-Complete Problems}
+\label{sec:16-6}
+NP-Completeness is ``not a death sentence'', but needs appropriate expectations/strategy. Useful are:
+\begin{itemize}
+\item focus on computationally tractable special cases, like:
+  \begin{itemize}
+  \item  WIS (Weighted  Independent Sets) in general graph. In path, this is a linear-time dynamic  programming task (special case).  
+  \item Knapsack with polynomial size capacity (e.g. $w = O(n)$)
+  \item 2 SAT (P - problem) where 3SAT is listed as NPC
+  \item vertex cover problem
+  \end{itemize}
+\item heuristics: fast algorithms that are not always correct:
+\item solve in exponential time but faster than brute-force search
+  \begin{itemize}
+  \item knapsack ($O(nw)$ instead of $2^n$)
+  \item TSP ($\approx 2^n$ instead of $\approx n!$)
+  \item Vertex cover ($\approx 2^{OPT-?}$ instead of $n^{OPT-?}$)
+  \end{itemize}
+\end{itemize}
+
+\section{Exact Algorithms for NP-Complete Problems}
+\label{sec:17-0}
+% video 17-1
+\subsection{The Vertex Cover Problem}
+\label{sec:17-1}
+For many NP-complete problems it is possible to improve seriously above the
+naive brute-force search.\\
+{\bf Input: } an undirected graph $G=(V, E)$\\
+{\bf Goal: } composite a minimum-cardinality {\bf vertex cover } - a subset $S
+\leq V$ that contains at least one endpoint of each edge of $G$.\\
+In general, Vertex Cover is NP - Complete problem.
+% video 17-1 05:30
+\subsection{Strategies for NP-Complete Problems}
+\label{sec:17-1-1}
+\begin{itemize}
+\item Identify computationally tractable special cases
+  \begin{itemize}
+  \item trees [application of dynamic programming]
+  \item bipartite graphs [application of the maximum flow problem]
+  \item when the optimal solution is ``small'' ($\approx \log n$ or less)
+  \end{itemize}
+\item heuristics (a bit relax requirement and allow ``pretty good'' vs
+  ``strictly the best'' solution)
+\item ??? 
+\end{itemize}
+% video 17-2
+\subsection{Smarter Search for Vertex Cover}
+\label{sec:17-2}
+{\bf Suppose: } given a positive integer $k$ as input, we want to check whether
+or not there is a vertex cover with size $\leq k$ (think of $k$ as ``small'')
+{\bf Note: } could try all possibilities, would take $\approx \tbinom{n}k =
+O(n^k)$ time.\\
+Can we do better?
+% video 17-2 04:00
+\paragraph{A Sub-structure Lemma}
+Consider graph $G$, edge $(u, v) \in G$, integer $k \geq 1$. Let $G_u = G$ with
+$u$ and its incident edges deleted (similarly, $G_v$). Then ``$G$ has a vertex
+cover of size $k$'' $\Leftrightarrow$ ``$G_u$ or $G_v$ (or both) has a vertex
+cover of size $(k-1)$''. Proof:
+\begin{itemize}
+\item ($\Leftarrow$): Suppose $G_u$ (say) has a vertex cover $S$ of size $k-1$.
+ Let's label $E_u$ - edges from $G_u$ which were not connected to $u$ and $F_u$
+  - edges which are connected. Obviously $E = E_u \cup F_u$.\\
+Since $S$ has an end point of each edge of $E_u, S \cup u$ is a vertex cover of
+size $k$ of $G$.
+\item ($\Rightarrow$): let $S=$ a vertex cover of $G$ of size $k$. Since $(u,
+  v)$ an edge of $G$, at least one $u, v$ (say $u$) is in $S$. Since no edges of
+  $E_u$ incident on $u, S - u$ must be a vertex cover (of size $(k-1)$) of
+  $G_u$. 
+QED
+\end{itemize}
+
+% video 17-3
+\subsubsection{A Search Algorithm}
+\label{sec:17-3}
+[given undirected graph $G = (V, E)$, integer $k$]
+\begin{enumerate}
+\item Pick an arbitrary edge $(u, v) \in E$.
+\item Recursively search for a vertex cover of size $(k-1)$ in $G_u$. If found,
+  return $S \cup u$
+\item (if previous recursive call fails) recursively search for a vertex cover
+  of size $(k-1)$ in $G_v$. If found, return $S \cup v$
+\item I both recursive calls fail, report that the cover does not exist. 
+\end{enumerate}
+
+\paragraph{Analysis of Algorithm}
+
+Formally, by induction, based on Sub-structure lemma. \\
+{\bf Running time: } Total number of recursive calls is at most (by branching
+factor $\leq 2$, recursion depth $\leq k$; also $O(m)$ work per recursive call
+without recursive sub-calls) is $O(2^k m)$ - way better than $O(n^k)$.As long as
+$k = O(\log n)$ we still have a polynomial time; remaining feasible even when $k
+\approx 20$.
+
+% video 17-4
+\subsection{The Traveling Salesman Problem (TSP)}
+\label{sec:17-4}
+Despite it is NP-complete problem we still can do better then naive brute-force
+search.\\
+{\bf Input: }  a complete undirected graph with non-negative edge costs.\\
+{\bf Output: } a minimum - cost tour (i.e. a cycle that visits every vertex
+exactly once).\\
+Brute-force search will take $\approx n!$ time; dynamic programming will show
+$O(n^2 2^n)$ time - tractable for n close to 30.
+
+\paragraph{Optimal Substructure Lemma}
+{\bf Idea: } The closest task to TSP would be the Bellman-Ford algorithm for
+optimal search tree.\\
+{\bf Proposed sub-problems: } for every edge budget $i \in \{0, 1, 2 \dots,
+n\}$, destination $j \in \{1, 2, \dots, n\}$, let $L_{ij} = $ length of a
+shortest path from 1 to $j$ that uses {\bf exactly } $i$ edges and no repeated
+vertices.\\
+- does not work because the solution for a smaller sub-problem does not help
+much for the bigger one.
+
+{\bf Hope: } use the following recurrence: $L_{ij} =\min \limits_{k \neq 1, j}
+\{L_{i-1,k} + C_{kj}\}$ \\
+{\bf Problem: } what if $j$ already appears on the shortest $1 \rightarrow k$
+path with $(i-1)$ edges and no repeated vertices? $\Rightarrow$ concatenating
+$(k, j)$ yields a second visit to $j$ (not allowed).\\
+{\bf Upshot: } to enforce constraint that each vertex visited exactly once, need
+to remember the {\bf identities } of vertices visited by sub-problem.\\
+% video 17-5
+\subsection{A Dynamic Programming Algorithm for TSP}
+\label{sec:17-5}
+{\bf Sub-problems: } for every destination $j \in \{1, 2, \dots, n\}$, every
+subset $S \leq \{1, 2, \dots, n\}$ that contains 1 and $j$, let $L_{S_{ij}} = $
+minimum length of a path from 1 to $j$ that visits precisely the vertices of $S$
+(exactly once each).
+
+\paragraph{Optimal Sub-structure}
+{\bf Lemma: } Let $P$ be a shortest path from 1 to $j$ that visits the vertices
+$S$ (exactly once each). If last hop of $P$ is ($k,j)$, then $P'$ is a shortest
+path from 1 to $k$ that visits every vertex of $S - j$ exactly once.\\
+{\bf Corresponding Recurrence: } $L_{S,j} = \min \limits_{k \in S, k \leq j}
+\{ L_{S - j, k} + C_{kj} \}$; ``size'' of sub-problem $= |S|$
+
+\paragraph{Algorithm }
+Let $A = 2D$ array, indexed by subsets $S \leq \{1, 2,\dots, n\}$ that contain 1
+and destinations $j \in \{1, 2, \dots n\}$.\\
+{\bf Base case: } $A[S, 1] = \left\{\begin{smallmatrix} 0 \text{ if } S = \{1\} \\ 
+    +\infty \text{ otherwise } \end{smallmatrix} \right.$
+\begin{itemize}
+\item For $m = 2, 3, 4, \dots, n$: (m = sub-problem size)
+  \begin{itemize}
+  \item for each set $S \leq \{1, 2, \dots, n\}$ of size m that contains 1:
+    \begin{itemize}
+    \item For each $j \in S, j \neq 1$:
+$$A[S,j]=\underbrace{\min \limits_{k \in S, k \neq j} \{A[S-j, k] + C_{kj}
+  \}}_\text{same as recurrence} $$
+    \end{itemize}
+  \end{itemize}
+\item return $\min \limits_{j=2}^n \left\{ \underbrace{A[\{1, 2, 3, \dots, n\},
+      j]}_\text{min cost from 1 to j, visiting everybody only once} +
+    \underbrace{C_{j1}}_\text{cost of final hop of tour} \right\} $ 
+\end{itemize}
+{\bf Running time: } $O(n 2^n)$ sub-problems: n choices of $j$ times $2^n$
+choices of $S$. Then $O(n)$ work for every sub-problem.\\
+Total: $O(n^2 2^n)$.
+
+% video 18-1
+\section{Approximation Algorithms for NP-Complete Problems}
+\label{sec:18-0}
+The idea is to use algorithm which is quite fast but not guaranteed to be 100\%
+correct. 
+Standard strategies are (as above):
+\begin{enumerate}
+\item identify computationally tractable special cases\\
+{\bf example: } knapsack instances with small capacity [i.e. knapsack capacity
+$w = $ polynomial in number of items $n$]
+\item heuristics 
+  \begin{itemize}
+  \item pretty good greedy heuristic
+  \item excellent dynamic programming heuristic
+  \end{itemize}
+\item exponential time but better than brute-force search.
+{\bf example: } $O(nw)$ - type dynamic programming algorithm vs $O(2^n)$
+brute-force search.
+\end{enumerate}
+
+\subsection{A greedy Knapsack Heuristic}
+\label{sec:18-1}
+{\bf Ideally: } should provide a performance guarantee (i.e. ``almost correct'') for all (or at least many) instances.\\
+{\bf Input: } $n$ items each having a positive value $v_i$ and a size $w_i$.
+Also, knapsack capacity is $W$\\
+{\bf Output: } a subset $S \leq \{1, 2, 3, \dots, n \}$ that maximises $\sum
+\limits_{i \in S} v_i$ subject to $\sum \limits_{i \in S} w_i \leq W$.\\
+(really - almost any resource-planning problem)\\
+
+\paragraph{A Greedy Heuristic}
+
+
+{\bf Motivation: } ideal items have big value, small size. \\
+{\bf Step 1: } sort and re-index item so that 
+$$\frac{v_1}{w_1} \geq \frac{v_2}{w_2} \geq \frac{v_3}{w_3} \geq \dots \geq
+\frac{v_n}{w_n}$$ 
+{\bf Step 2:} pack items in this order until one doesn't fit, then halt\\
+{\bf Upshot: } greedy solution can be arbitrary bad relative to an optimal solution (see example at video 18-1, 11:00)\\
+{\bf Fix: } add:\\
+{\bf Step 3: } return either the Step-2 solution or the maximum value item, whichever is better.\\
+- this runs in $O(n \log n)$ time\\
+{\bf Theorem: } value of 3-step greedy solution is always $\geq 50\% \times$ value of an optimal solution. (so-called ``one-half approximation algorithm'')\\
+% video 18-2
+{\bf Thought experiment: } what if we were allowed to fill fully the knapsack using a suitable ``fraction'' (like 70\%) if item $(k+1)$ [the value of which is ``pro-rated'']? \\
+$\Rightarrow$ will call this ``the greedy fractional solution''\\
+{\bf Claim: } greedy fractional solution at least as good as every
+non-fractional feasible solution.\\
+{\bf Proof: } 
+\begin{enumerate}
+\item let $S=$ an arbitrary feasible solution
+\item suppose $l$ units of knapsack filled by $S$ with items not packed by the
+  greedy fraction solution.
+\item must be at least $l$ units of knapsack filled by greedy fractional
+  solution not packed by $S$
+\item by greedy criterion, items in (3) have larger bang-per-buck $\frac{v_i}{w_i}$ than those in (2) [i.e. more valuable use of space]
+\item total value of greedy fractional solution at least that of $S$
+\end{enumerate}
+% video 18-3
+\subsubsection{Analysis of Greedy Heuristic}
+\label{sec:18-3}
+In Step 2, suppose our greedy algorithm picks the 1st $k$ items (sorted by
+$v_i/w_i$). Such, the value of 3-step greedy algorithm $\geq$ total value of 1st
+$k$ items; also it is $\geq$ value of $(k+1)th$ item (by Step 3).\\
+Then, $2 \times $(value of 3-step greedy)$\geq$ total value of 1st $(k+1)$
+items and $\geq$ total value of greedy fractional solution.
+And this is $\geq$ than optimal knapsack solution.\\
+
+\subsubsection{A Refined Analysis}
+\label{sec:18-3-1}
+{\bf Suppose: } every item $i$ has size $w_i \leq 10\% \times $ knapsack
+capacity $W$.\\
+{\bf Consequence:} if greedy algorithm fails to pack all items in Step 2, then
+the knapsack is $\geq 90\% \Rightarrow$ value of 2-step greedy algorithm $\geq
+90\% \times$ value of greedy functional solution (further, it is $geq 90\%
+\times$ value of optimal solution).
+
+% video 18-4
+\subsection{A Dynamic Programming Heuristic for Knapsack}
+\label{sec:18-4}
+{\bf Goal: } for a user-specific parameter $\epsilon > 0$ guarantee a $(1 -
+\epsilon)$ approximation.\\
+{\bf Catch: } running time will increase as $\epsilon$ decreases (i.e. algorithm
+exports a running time vs accuracy trade-off)
+- which is ``as good as it gets'' for NP-Complete problems (so - called {\bf Arbitrary Close Approximation} - usually not a case for arbitrary NP-problem. 
+
+\paragraph{The Approach: Rounding Item Values}
+{\bf High-level idea: } exactly solve a slightly incorrect, but easier, knapsack
+instance. \\
+{\bf Recall: } if the $w_i$'s and $W$ are integers, can solve the knapsack
+problem via dynamic programming in $O(nW)$ time. \\
+{\bf Alternative: } if $v_i$'s are integers, can solve knapsack via dynamic
+programming in $O(n^2 v_{max})$ time where $v_{max} = \max \limits_iv_i$
+(different algorithm).
+{\bf Upshot: } if all $v_i$'s are small integers (polynomial in $n$), then we
+already know a poly-time algorithm.\\
+{\bf Plan: } throw out lower-order bits of the $v_i$'s!
+
+\subsubsection{A Dynamic Programming Heuristic}
+\label{sec:18-4-1}
+{\bf Step 1 algorithm }\\
+Round each $v_i$ down to the nearest multiple of m [where m depends on
+$\epsilon$, exact value to be determined later].
+(the larger m $\Rightarrow$ throw out more info $\Rightarrow$ less accuracy). 
+Divide the results by m to get $\hat{v}_i$'s (integers): $\hat{v}_i =
+[\frac{v_i}m]$ \\
+{\bf Step 2 algorithm }\\
+Use dynamic programming to solve the knapsack instance with values $\hat{v}_1,
+\hat{v}_2, \dots, \hat{v}_n$ sizes $w_1, \dots, w_n$, capacity $W$.\\
+Running time = $O(n^2 \times \max \limits_i \hat{v}_i)$\\
+{\bf Note: } computes a feasible solution for the original knapsack instance.\\ 
+% video 18-5
+\subsection{Knapsack via Dynamic Programming Revisited}
+\label{sec:18-5}
+\paragraph{Dynamic programming algorithm \#1: } 
+\begin{enumerate}
+\item Assume sizes $w_i$ and capacity $W$ are integers
+\item Running time = $O(nW)$
+\end{enumerate}
+\paragraph{Dynamic programming algorithm \#2: } 
+\begin{enumerate}
+\item Assume values $v_i$ are integers
+\item Running time = $O(n^2v_{max})$, where $v_{max}=\max \limits_i
+  \hat{v}_i)$\\
+\end{enumerate}
+Consider $W$ (size) as the upper bound for algorithm 1  and $n \times v_{max}$
+(value) as the upper bound for algorithm 2.
+
+\paragraph{The Sub-problems and Recurrence}
+index $i$ will specify which prefix of items we're permitted to use in a given
+sub-problem. \\
+{\bf Sub-problems: } for $i = 0, 1, 2, \dots , n$ and $x = 0, 1, 2 \dots, n
+\times v_{max}$\\
+Define $S_{i, x} =$ minimum total size needed to achieve value $\geq x$ while
+using only the first $i$ items.\\
+{\bf Recurrence: } ($i \geq 1$)\\
+$$S_{i, x} = \min \left\{ \begin{smallmatrix} \overbrace{S_{(i-1),
+        x}}^{\text{Case 1, item i not used in optimal solution}} \\
+\underbrace{w_i + S_{(i-1), (x-v_i)}}_{\text{Case 2, item i used in optimal    solution}} 
+\end{smallmatrix} \right.  $$
+In Case 2, interpret $ S_{(i-1), (x-v_i)}$ as 0 if $x \leq v_i$
+% video 18-5 05:15
+
+\paragraph{The Algorithm}
+Let A = 2-D array indexed by $i = 0, 1, \dots, n$ and $x = 0, 1, 2, \dots, n
+v_{max}$ {\bf Base case: } $A[0, x] = \left\{
+  \begin{smallmatrix} 0 \text{ if } x = 0 \\ +\infty \text{ otherwise}
+  \end{smallmatrix} \right\} $
+
+\begin{itemize}
+\item For $i = 1, 2, \dots, n$:
+  \begin{itemize}
+  \item for $x = 0, 1, 2, \dots, n \times v_{max}$:
+    \begin{itemize}
+    \item $A[i, x] = \min \{A[i-1, x], w_i + A[i-1, x-v_i]\}$ (interpret  $
+      S_{(i-1), (x-v_i)}$ as 0 if $x \leq v_i$) 
+    \end{itemize}
+  \end{itemize}
+Return the largest $x$ such that $A[n, x] \leq W$
+\end{itemize}
+{\bf Running time: } $n^2 V_{max}$ iterations in loop + final scan $O(n \times
+v_{max})$ - so $O(n^2 v_{max})$
+% video 18-6
+\subsection{Analysis on Dynamic Programming Heuristics for Knapsack}
+\label{sec:18-6}
+The whole idea was based on creating $\hat{v_i} = [ \frac{v_i}m]$ for every item
+$i$. The bigger $m$, the more information we'll loose $\Rightarrow$ less
+accuracy, but $\hat{v_i}$ will be smaller so whole process will be faster.\\
+{\bf Plan for analysis: }
+\begin{enumerate}
+\item figure out how big we can take $m$ subject to achieve a $(1-\epsilon)$ -
+  approximation. 
+\item plug in this value of $m$ to determine running time
+\end{enumerate}
+Since we rounded down to the nearest multiple of $m, m \times \hat{v_i} \in [v_i
+- m, v_i]$ for each item $i$.\\
+{\bf Thus}, (1) $v_i \geq m \times \hat{v_i}$; (2) $m \times \hat{v_i} \geq v_i
+- m$\\
+{\bf Also: } if $S^* =$ optimal solution to the original problem (with the
+original $v_i$'s), and $S = $ out heuristic solution, then (3) $\sum \limits_{i
+  \in S} \hat{v_i} \geq \sum \limits_{i \in S^*} \hat{v_i}$ - since $S$ is
+optimal for the $\hat{v_i}$'s.\\
+Then, based on (3): multiple both sides by $m : m \sum \limits_{i \in S} \hat{v_i}
+\geq m \sum \limits_{i \in S^*} \hat{v_i}$\\
+applying (1) and (2):$\sum \limits_{i \in S} v_i \geq m \sum \limits_{i \in S}
+\hat{v_i} \geq m \sum \limits_{i \in S^*} \hat{v_i} \geq \sum \limits_{i \in
+  S^*} (v_i-m)$\\
+{\bf Thus: } if $n$ is a maximum amount of items in $S^*$: 
+$$\sum \limits_{i \in S} v_i \geq (\sum \limits_{i \in S^*} v_i) - m \times n $$
+{\bf Constraint: } $\sum \limits_{i \in S} v_i \geq (1-\epsilon) \sum \limits_{i
+  \in S^*} v_i$; to achieve (3) - choose $m$ small enough that $mn \leq \epsilon
+\sum \limits_{i \in S^*} v_i$\\
+Well we do not know $n$ (actually this is something we want to calculate), so we
+can use a ``crude lower bound''of how small the actual solution could be: assume
+each item fits into knapsack, so it is at most of size $W$ (if not, it can be
+removed at the pre-processing step), but definitely $geq v_{max}$.\\
+{\bf Sufficient: } set $m$ so that $m \times n = \epsilon v_{max}$, and $m =
+\frac{\epsilon v_{max}}n$\\
+
+\paragraph{Running Time Analysis}
+
+{\bf Point: } setting $m = \frac{\epsilon v_{max}}n$ guarantees that value of
+our solution is $geq (1-\epsilon) \times $ value of optimal solution.\\
+{\bf Recall:} running time is $O(n^2 \hat{v_{max}})$\\
+{\bf Note:} for every item $i, \hat{v_i} \leq \frac{v_i}m \leq \frac {V_{max}}m
+= v_{max} \times \frac{n}{\epsilon v_{max}} = \frac n \epsilon $\\
+$\Rightarrow$ running time $= O(n^3/\epsilon)$\\
+Here we get a polynomial running time approximation.
+
+% video 19-1
+\section{Local Search Algorithms}
+\label{sec:19-0}
+\subsection{Maximum Cut Problem}
+\label{sec:19-1}
+{\bf Input: } an undirected graph $G = (V, E)$\\
+{\bf Goal: } a cut $(A, B)$ - a partition of $V$ into two non-empty sets that
+maximises the number of crossing edges.\\
+Unlike to the Minimum-Cut problem, this problem is {\bf NP-problem}
+(computational in-tractable).\\
+{\bf Computationally tractable special case: } bipartite graphs (i.e. where
+there is a cut such that all edges are crossing). \\
+{\bf Notation: } for a cut $(A, B)$ and a vertex $v$, define 
+\begin{itemize}
+\item $C_v(A, B) = \#$ of edges incident on $v$ that cross $(A, B)$
+\item $d_v(A, B) = \#$ of edges incident on $v$ that don't cross $(A, B)$
+\end{itemize}
+
+\paragraph{Local Search Algorithm}
+\begin{enumerate}
+\item Let $(A, B)$ be an arbitrary cut of $G$
+\item While there is a vertex $v$ with $d_v(A, B) > C_v(A, B)$:
+  \begin{itemize}
+  \item move $v$ to other side of the cut [key point: increases number of
+    crossing edges by $d_v(A, B) - C_v(A, B) > 0$
+  \end{itemize}
+\item return final cut $(A, B)$
+\end{enumerate}
+{\bf Note: } terminates within $\binom{n}2$ iterations (hence in polynomial
+time). 
+\paragraph{Performance Guarantees}
+% video 19-2
+{\bf Theorem: } this local search algorithm always outputs a cut in which the
+number of crossing edges is at least 50\% of the maximum possible (even $\geq
+50\%$ of $|E|$.\\
+{\bf Cautionary Point: } expected number of crossing edges of a random cut is
+already $\frac12 |E|$\\
+{\bf Proof: } Consider a random cut $(A, B)$ For edge $e \in E$, define $X_e =
+\left\{ \begin{smallmatrix} 1 \text{ if e crosses } (A, B)\\ 0 \text{ otherwise
+      }  \end{smallmatrix} \right.$. 
+Expectation: $E[X_e] = Pr[X_e = 1] = \frac12$. 
+So $E[\#\text{crossing edges}] = E[\sum \limits_e X_e] = \sum \limits_e E[X_e] =
+\frac{|E|}2$
+
+\subparagraph{Proof of Performance Guarantee}
+% % video 19-2, 05:00
+Let $(A, B)$ be a locally optimal cut (i.e. a cut optimised by the local
+search). Then, for every vertex $v, d_V(A, B) \leq C_V(A, B)$. 
+Summing over all $v \in V: \sum \limits_{v \in V} d_V(A, B) \leq \sum
+\limits_{v \in V} C_V (A, B)$
+The right part of this counts each edge crossing cut exactly twice; the left
+part - counts each non-crossing edge twice.
+{\bf So: } $2 \times $ [\# of non-crossing edges] $\leq 2 \times$ [ \# of
+crossing edges] \\
+$\Rightarrow 2 \times |E| \leq 4 \times$ [\# of crossing edges]\\
+$\Rightarrow \#\text{ of crossing edges} \geq \frac12 |E|$
+
+\paragraph{The Weighted Maximum Cut Problem}
+
+{\bf Generalisation: } each edge $e \in E$ has a non-negative weight $w_e$, want
+to maximise total weight of crossing edges.\\
+{\bf Notes: }
+\begin{enumerate}
+\item local search still well defined
+\item performance guarantee of 50\% still holds for locally optimal cuts 
+\item no longer guaranteed to converge in polynomial time [non-trivial exercise]  
+\end{enumerate}
+% video 19-3
+
+\subsection{Principles of Local Search}
+\label{sec:19-3}
+Let's consider an abstract computational problem (cut of a graph, TSP tours, CSP
+variable assignments etc.), and let $X = $ set of candidate solutions to a
+problem.\\  
+{\bf Key ingredient: } neighbourhoods. For each $x \in X$, specify which $y \in
+X$ are its ``neighbours''\\
+{\bf Example: }
+\begin{itemize}
+\item Minimum/maximum cuts: $x, y$ are neighbouring cuts $\Leftrightarrow$ differ by moving one vertex;
+\item CSP variable assignments: $x, y$ are neighbouring variable assignments
+  $\Leftrightarrow$ differ in the value of a single variable.
+\item TSP tours: $x, y$ are neighbouring TSP tours $\Leftrightarrow$ differ by 2
+  edges. 
+\end{itemize}
+
+\paragraph{A Generic Local Search Algorithm}
+\begin{enumerate}
+\item Let $x = $ some initial solution
+\item while the current solution $x$ has a superior neighbouring solution $y$:
+  set $x := y$
+\item return the final (locally optimal) solution $x$
+\end{enumerate}
+Usual problems:
+\begin{itemize}
+\item  {\bf Question: } how to pick initial solution $x$?
+  \begin{itemize}
+  \item use a random solution:
+    \begin{itemize}
+    \item run many independent trials of local search, return the best locally optimal solution found
+    \end{itemize} \item use the best heuristics (i.e. use local search as a post-processing step to make your solution ``even better'')
+  \end{itemize}
+% video 19-4
+\item if there are several superior neighbouring $y$, which to choose?
+  \begin{itemize}
+  \item choose $y$ at random
+  \item biggest improvement
+  \item more complex heuristics
+  \end{itemize}
+\item how to define the neighbours?\\
+Sometimes selecting two or more neighbour items instead of single one gives better performance (but makes selection process longer). - Need to find a ``sweet spot'' between solution quality and efficient search.
+\item is local search guaranteed to terminate (eventually)?
+  \begin{itemize}
+  \item if $X$ is finite and every local step improves some objective function, then yes.
+  \end{itemize}
+\item is local search guaranteed to converge quickly?
+  \begin{itemize}
+  \item Usually not (though it often does in practice).
+  \end{itemize}
+\item are locally optimal solutions generally good approximations to globally optimal ones?
+  \begin{itemize}
+  \item No (!). 
+  \item To mitigate, run randomised local searches - many times, remember the best.
+  \end{itemize}
+\end{itemize}
+% video 19-5
+
+\subsection{The 2-SAT Problem}
+\label{sec:19-5}
+This is a bit unusual - it is guaranteed to solve in polynomial time.\\
+{\bf Input:} 
+\begin{enumerate}
+\item $n$ boolean variables $x_1, x_2, \dots, x_n$ 
+\item $m$ clauses of 2 literals each; ``literal'' $= x_i$ or $\neg x_i$ \\
+Example: $(x_1 \vee x_2) \wedge (\neg x_1 \vee x_3) \wedge (x_3 \vee x_4) $ 
+\end{enumerate}
+{\bf Output:} ``yes'' if there is an assignment that simultaneously satisfies every clause, ``no'' otherwise.
+
+\paragraph{(In)Tractability of SAT-2}
+{\bf 2-SAT} can be solved in polynomial time:
+\begin{itemize}
+\item reduced to computing strongly connected components
+\item ``backtracking'' works in polynomial time\\
+- these two a non-trivial
+\item randomised local search: quite a rare case when we can guarantee performance.
+\end{itemize}
+{\bf 3-SAT} canonical NP-complete:
+\begin{itemize}
+\item brute-force search $\approx 2^n$ time
+\item can get time $\approx (\frac43)^n$ via randomised local search
+\end{itemize}
+
+\subsubsection{Papadimitriou's 2-SAT Algorithm}
+\label{sec:19-5-1}
+Repeat $\log_2 n$ times:
+\begin{itemize}
+\item choose random initial assignment
+\item repeat $2n^2$ times ($n$ = number of variables):
+  \begin{itemize}
+  \item if current assignments satisfies all clauses, halt and report this
+  \item else, pick arbitrary unsatisfied clause and flip the clause of one of its variables (choose between the two uniformly at random)
+  \end{itemize}
+\end{itemize}
+Report ``unjustifiable''\\
+{\bf Obvious good points:}
+\begin{itemize}
+\item runs in polynomial time
+\item always correct on unjustifiable instances
+\end{itemize}
+{\bf Key question:} if there's a satisfying assignment, will the algorithm find one?
+
+% video 19-6
+\subsubsection{Random Walks on a Line}
+\label{sec:19-6}
+(key point in understanding of the math in Papadimitriou's algorithm).\\
+{\bf Setup:} Initially (at time 0) we're at position 0; at each time step your position goes up or down (with probability 50\%, except if at position 0 where you move to position 1 with 100\% probability) by 1.\\
+{\bf Notation:} for an integer $n \geq 0$, let $T_n = $ number of steps until random walk reaches position $n; E[T_n] = n^2$
+\paragraph{ Idea behind the proof:} 
+Let $z_i = $ number of random walks steps to get from $i$ to $n$ (so $T_n = z_0$)\\
+{\bf Edge cases:}
+\begin{itemize}
+\item $E[z_n] = 0$
+\item $E[z_0] = 1 + E[z_1]$
+\end{itemize}
+{\bf For } $i \in \{1, 2, \dots, n-1\}$:
+\begin{itemize}
+\item $E[z_i] = $Pr[go left] * E[$z_i$ | go left] + Pr[go right] * E[$z_i$ | go right] = ...\\
+(assuming Pr[go left] = Pr[go right] = $\frac12$; and E[$z_i$ | go left] = E[$z_i$ | go right] = 1 + E[$z_{i-1}$]) \\
+So ... = $1 + \frac12E[z_{i+1}] + \frac12E[z_{i-1}]$\\
+Then: $E[z_i] - E[z_{i+1}] = E[z_{i-1}] - E[z_i] + 2$
+\end{itemize}
+
+\paragraph{Finishing the Proof:}
+So:
+\begin{itemize}
+\item  $E[z_0] - E[z_1] = 1$
+\item  $E[z_1] - E[z_2] = 3$
+\item  $E[z_2] - E[z_3] = 5$
+\item  ...
+\item  $E[z_{n-1}] - E[z_n] = 2n - 1$
+\end{itemize}
+So $E[z_0] = E[T_n] = n^2$(n/2 pairs of numbers; each sums to 2n)
+
+\paragraph{A Corollary} (a single case of Markov's inequality
+$Pr[T_n > 2n^2] \leq \frac12$\\
+{\bf Proof:} Let $p$ denote $Pr[T_n > 2n^2]$.
+By last claim we have $n^2 = E[T_n]$, which is $ =\underbrace{\sum \limits _{k=0}^{2n^2} k Pr[T_n = k]}_{\geq 0} + \sum \limits_{k=2n^2 + 1}^\infty \underbrace{k}_{\geq 2n^2} Pr[T_n = k]$, which is\\
+$\geq 2n^2 \times Pr[T_n > 2n^2] = 2n^2 p$, so $p \leq \frac12$
+
+% video 19-7
+\subsubsection{Understanding of Papadimitriou's Algorithm}
+\label{sec:19-7}
+{\bf Theorem:} for a satisfiable 2-SAT instance with $n$ variables, Papadimitriou's algorithm produces a satisfying assignment with probability $\geq 1 - \frac1n$\\
+{\bf Proof:}  first focus on a single iteration of the outer for loop. 
+Fix n arbitrary satisfying assignment $a^*$.
+Let $a_t = $ algorithm's assignment after inner iteration $t (t = 0, 1, 2, \dots, 2n^2)$ (a choice of random values).
+ Let $X_t = $ number of variables on which $a_t$ and $a^*$ agree.\\
+{\bf Note:} if $X_t = n$, algorithm halts with satisfying assignment.\\
+{\bf Key point:} Suppose $a_t$ not a satisfying assignment and algorithm picks unsatisfied clause with variables $x_i, x_j$.\\
+{\bf Note:} since $a^*$ is satisfying, it makes a different assignment than $x_i$ or $x_j$ (or both).\\
+Consequences of algorithm's random variable flip:
+\begin{enumerate}
+\item if $a^*$ and $a_t$ differ on both $x_i$ and $x_J$, then $X_{t+1} = X_t + 1$ (100\% probability)
+\item if $a^*$ and $a_t$ differ on exactly one of $x_i, x_J$, then $X_{t+1} = \left\{\begin{smallmatrix} X_t + 1 \text{(50\% probability)}\\ X_t - 1\text{(50\% probability)} \end{smallmatrix} \right. $ 
+\end{enumerate}
+{\bf Consequence:} probability that a single iteration of the outer for loop finds a satisfying assignment is $\geq Pr[T_n \leq 2n^2] \geq \frac12$\\
+{\bf Thus:} Pr[algorithm fails] $\leq Pr[\text{all } \log_2 n \text{independent trials fail}] \leq (\frac12)^{\log_2 n} = 1/n$
+\begin{flushright}  QED! (C)\end{flushright}
+
 \end{document}
