@@ -6,7 +6,7 @@
 \usepackage{graphics}                 % Packages to allow inclusion of graphics
 \usepackage{color}                    % For creating coloured text and background
 \usepackage{hyperref}                 % For creating hyperlinks in
-                                % cross references 
+                                % cross references
 
 \usepackage{algorithm}
 \usepackage{algorithmic}
@@ -36,7 +36,7 @@
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
-  
+
 % Default settings for code listings
 \lstset{frame=tb,
   language=scala,
@@ -135,7 +135,7 @@ Therefore, the ``right'' programming should:
 
 Console can be started by either honest
 \begin{lstlisting}[language=scala, caption=={Plugin function }]
->scala  
+>scala
 \end{lstlisting}
 
 (exit with \verb!:quit! command), or using \verb!sbt!
@@ -158,7 +158,7 @@ does is {\it reduce expression to a value}. It can be applied to all
 expressions, as long as they have no side effects. The substitution model is
 formalised in the $\lambda$-calculus, which gives a foundation for functional
 programming.
- 
+
 \paragraph{Termination} Not every expression evaluates to a value:
 counter-example is
 \begin{lstlisting}
@@ -276,7 +276,7 @@ object session {
       if (isGoodEnough(guess, x)) guess
       else sqrtIter(improve(guess, x), x)
 
-    def isGoodEnough(guess: Double, x: Double) = 
+    def isGoodEnough(guess: Double, x: Double) =
       abs(guess * guess - x) / x < 0.001
 
     def improve(guess: Double, x: Double)=
@@ -292,7 +292,7 @@ object session {
 
 A \term{block} is delimited by braces \lstinline|{ ... }|.
 \begin{lstlisting}
- { val x = f(3) 
+ { val x = f(3)
      x * x
 }
 \end{lstlisting}
@@ -320,7 +320,7 @@ object session {
       if (isGoodEnough(guess, x)) guess
       else sqrtIter(improve(guess, x), x)
 
-    def isGoodEnough(guess: Double) = 
+    def isGoodEnough(guess: Double) =
       abs(guess * guess - x) / x < 0.001
 
     def improve(guess: Double)=
@@ -363,7 +363,7 @@ someLongExpression +
 Consider \lstinline|gcd|, the function that computes the greatest common divisor
 of two numbers:
 \begin{lstlisting}
-def gcd(a: Int, b: Int): Int = 
+def gcd(a: Int, b: Int): Int =
   if (b == 0) a else gcd(b, a % b)
 \end{lstlisting}
 Evaluation for \lstinline|gcd( 14, 21)|:
@@ -434,7 +434,7 @@ Exercise: tail recursive on \lstinline|factorial|:
 \begin{lstlisting}
 object exercise {
   def factorial(n: Int): Int = {
-    def loop(acc: Int, n: Int): Int = 
+    def loop(acc: Int, n: Int): Int =
       if (n == 0) acc
       else loop(acc * n, n - 1)
     loop(1, n)
@@ -455,7 +455,7 @@ results are called \term{higher-order functions}.
 
 \example Take the sum of the integers between \lstinline|a| and \lstinline|b|:
 \begin{lstlisting}
-def sumInts(a: Int, b: Int): Int = 
+def sumInts(a: Int, b: Int): Int =
   if (a > b) 0 else a + sumInts(a + 1, b)
 \end{lstlisting}
 % video 3-2, 01:15
@@ -479,7 +479,7 @@ for different values of $f$.
 
 Let's define
 \begin{lstlisting}
-def sum(f: Int => int, a: Int, b: Int): Int = 
+def sum(f: Int => int, a: Int, b: Int): Int =
   if (a > b) 0
   else f(a) + sum(f, a + 1, b)
 \end{lstlisting}
@@ -512,7 +512,7 @@ Sometimes it is tedious to have to define (and name) these functions using
 \lstinline|def|. Instead of
 
 \begin{lstlisting}
-def str = "abc"; println(str) 
+def str = "abc"; println(str)
 \end{lstlisting}
 
 We can directly write \lstinline|println("abc")| because strings exist as
@@ -547,7 +547,7 @@ def sumCubes(a: Int, b: Int)  = sum(x => x * x * x, a, b)
 Re-write the \lstinline|sum| function as tail - recursive one:
 \begin{lstlisting}
 def sum(f: Int => Int)(a: Int, b: Int): Int = {
-  def loop(a: Int, acc: Int): Int = 
+  def loop(a: Int, acc: Int): Int =
     if (a > b) acc
     else loop(a + 1, acc + f(a))
   loop(a, 0)
@@ -572,7 +572,7 @@ Note that \lstinline|a| and \lstinline|b| get passed unchanged from
 Can we be even shorter by getting rid of these parameters?
 \begin{lstlisting}
 def sum(f: Int => Int): (Int, Int) => Int = {
-  def sumF(a: Int, b: Int): Int = 
+  def sumF(a: Int, b: Int): Int =
     if (a > b) 0
     else f(a) + sumF(a + 1, b)
   sumF
@@ -622,7 +622,7 @@ programming that there is a special syntax for it in Scald. For example, the
 following definition of \lstinline|sum| is equivalent to the one with the nested
 \lstinline|sumF| function, but shorter:
 \begin{lstlisting}
-def sum(f: Int => Int)(a: Int, b: Int): Int = 
+def sum(f: Int => Int)(a: Int, b: Int): Int =
   if (a > b) 0 else f(a) + sum(f)(a+1, b)
 \end{lstlisting}
 
@@ -727,9 +727,9 @@ Now define arithmetic functions. We can use
 \lstinline{Rational} as pure datatype, and define operations outside:
 
 \begin{lstlisting}
-def addRational(r: Rational, s: Rational): Rational = 
+def addRational(r: Rational, s: Rational): Rational =
   new Rational(
-    r.number * s denom + s.number * r.denom, 
+    r.number * s denom + s.number * r.denom,
     r.denom * s.denom)
 
 def makeString (r: Rational) = r.number + "/" + r.denom
@@ -741,9 +741,9 @@ the data abstraction itself - create \term{methods}:
 class Rational(x: Int, y: Int) {
   def number = x
   def denom = y
-  def add(that: Rational) = 
+  def add(that: Rational) =
     new Rational(
-      number * that denom + that.number * denom, 
+      number * that denom + that.number * denom,
       denom * that.denom)
 
   override def toString = numer + "/" + denom
@@ -1154,8 +1154,8 @@ An anonymous function like
 \end{lstlisting}
 is expanded to:
 \begin{lstlisting}
-class AnonFun extends Function1[Int, Int] { 
-  def apply(x: Int) = x * x } new AnonFun 
+class AnonFun extends Function1[Int, Int] {
+  def apply(x: Int) = x * x } new AnonFun
 }
 \end{lstlisting}
 or, shorter, using \term{anonymous class syntax}:
@@ -1725,10 +1725,10 @@ def msort(xs: List[Int]): List[Int] = {
 \end{lstlisting}
 and implementation of \lstinline|merge|:
 \begin{lstlisting}
-def merge(xs: List[Int]), ys: List[Int]) = 
+def merge(xs: List[Int]), ys: List[Int]) =
   xs match {
     case Nil => ys
-    case x :: xs1 => 
+    case x :: xs1 =>
       ys match {
         case Nil => xs
         case y :: ys1 =>
@@ -1749,7 +1749,7 @@ val pair = ("answer", 42)   //  pair: (String, Int) = (answer, 42)
 
 Pairs also can be used as patterns:
 \begin{lstlisting}
-val (label, value) = pair 
+val (label, value) = pair
 //label: String = answer, value : Int = 42
 \end{lstlisting}
 
@@ -1782,7 +1782,7 @@ matching is usually a bit better). So we can re-write a \lstinline|merge|
 function using a pattern matching (as the previous implementation does not
 reflect the inherent symmetry of the merge algorithm).
 \begin{lstlisting}
-def merge(xs: List[Int], ys: List[Int]): List[Int] = 
+def merge(xs: List[Int], ys: List[Int]): List[Int] =
   (xs, ys) match {
     case (Nil, ys) => ys
     case (xs, Nil) => xs
@@ -1905,7 +1905,7 @@ Variations:
 
 The pack function (idiotic setting, to be honest):
 \begin{lstlisting}
-// expect pack(List("a", "a", "a", "b", "c", "c", "a")) = 
+// expect pack(List("a", "a", "a", "b", "c", "c", "a")) =
 //             List(List(a, a, a), List(b), List(c, c), List(a))
 def pack[T](xs: List[T]): List[List[T]] = xs match {
   case Nil => Nil
@@ -1918,7 +1918,7 @@ def pack[T](xs: List[T]): List[List[T]] = xs match {
 More interesting - encoding from \lstinline|List(a, a, a, b, c, c, a)| to
 \lstinline|List(("a", 3),("b", 1),("c", 2),("a", 1))| Here we go:
 \begin{lstlisting}
-def encode[T](xs: List[T]): List[(T, Int)] = 
+def encode[T](xs: List[T]): List[(T, Int)] =
   pack(xs) map (ys => (ys.head, ys.length))
 \end{lstlisting}
 
@@ -2040,7 +2040,7 @@ Nil ++ ys = ys    //1st clause
 
   For the left-hand side we have:
 \begin{lstlisting}
-(Nil ++ ys) ++ zs 
+(Nil ++ ys) ++ zs
  = ys ++ zs  //by the 1st clause of ++
 \end{lstlisting}
   For the right - hand side we have
@@ -2164,7 +2164,7 @@ Both \lstinline|List| and \lstinline|Vector| (and \lstinline|String|, and
 \term{sequence} class. \lstinline|Seq| is he subclass of \lstinline|Iterable|,
 as well as \lstinline|Set| and \lstinline|Map| For diagram - see slides 6-1,
 page 4.
- 
+
 \subsubsection{Arrays and Strings}
 \label{sec:ArraysAndStrings}
 Arrays and Strings support the same operations as \lstinline|Seq| and can
@@ -2215,13 +2215,13 @@ bound, step value.
 \end{itemize}
 For instance, the scalar product of two vectors:
 \begin{lstlisting}
-def scalarProduct(xs: Vector[Double], ys: Vector[Double]): Double = 
+def scalarProduct(xs: Vector[Double], ys: Vector[Double]): Double =
   (xs zip ys).map(xy => xy._1 * xy._2).sum
 \end{lstlisting}
 or, using pattern matching:
 \begin{lstlisting}
-def scalarProduct(xs: Vector[Double], ys: Vector[Double]): Double = 
-  (xs zip ys).map{ case (x, y) => x * y }.sum 
+def scalarProduct(xs: Vector[Double], ys: Vector[Double]): Double =
+  (xs zip ys).map{ case (x, y) => x * y }.sum
 \end{lstlisting}
 (generally, the function value \lstinline|{ case p1 => e1 ... case pn => en }|
 is equivalent to \lstinline|x => x match { case p1 => e1 ... case pn => en }|
@@ -2268,12 +2268,12 @@ xs flatmap f = (xs map f).flatten
 \end{lstlisting}
 Hence, the above expression can be simplified to
 \begin{lstlisting}
-(1 until n) flatMap (i => 
+(1 until n) flatMap (i =>
   (1 until i) map (j => (i, j)))
 \end{lstlisting}
 finally:
 \begin{lstlisting}
-(1 until n) flatMap (i => 
+(1 until n) flatMap (i =>
   (1 until i) map (j => (i, j))) filter (pair =>
     isPrime(pair._1 + pair._2)
 \end{lstlisting}
@@ -2359,9 +2359,9 @@ queens, one must place the $k$th queen in a column where it's not ``in check''
 with any other queen on the board.
 \begin{lstlisting}
 def queens(n: Int): Set[List[Int]] = {
-  def placeQueens(K: Int): Set[List[Int]] = 
+  def placeQueens(K: Int): Set[List[Int]] =
     if (k == 0) Set(List())
-    else 
+    else
       for {
         queens <- placeQueens(k-1)
         col -< 0 until n
@@ -2388,7 +2388,7 @@ here \lstinline|col != c| checks for column;
 - looks OK, but it is better to have a visualisation module:
 \begin{lstlisting}
 def show(queens: List[Int]) = {
-  val lines = 
+  val lines =
     for (col <- queens.reverse)
     yield Vector.fill(queens.length)("* ").updated(col, "X ").mkString
   "\n" + (lines mkString "\n")
@@ -2397,7 +2397,7 @@ def show(queens: List[Int]) = {
 queens(4) map show
 \end{lstlisting}
 The \lstinline|mkString| takes collection and prints every element one by
-another. 
+another.
 
 Trick to show just the first 3 solutions:
 \begin{lstlisting}
@@ -2410,14 +2410,14 @@ Trick to show just the first 3 solutions:
 
 The \term{for} notation is essentially equivalent to the common operations of
 DB query languages.
-\example Suppose that we have a database books, represented as a list of books: 
+\example Suppose that we have a database books, represented as a list of books:
 \begin{lstlisting}
 case class Book(title: String, authors: List[String])
 \end{lstlisting}
 
 Some queries:
 \begin{lstlisting}
-for (b <- books; a <- b.authors if a startsWith "Bird,") 
+for (b <- books; a <- b.authors if a startsWith "Bird,")
 yield b.title
 
 for (b <- books if b.title indexOf "Program" >= 0)
@@ -2438,7 +2438,7 @@ for {
 \lstinline|distinct| at the end to remove duplication.
 
 The real DBs are rather sets then lists - so duplication is removed
-automatically. 
+automatically.
 
 % video 8-5
 
@@ -2455,7 +2455,7 @@ def mapFun[T, U](xs: List[T], f: T => U): List[U] =
 def flatmap[T, U](xs: List[T], f: T => Iterable[U]): List[U] =
   for (x <- xs, y <- f(x)) yield y
 
-def filter[T](xs: List[T], p: T => Boolean): List[T] = 
+def filter[T](xs: List[T], p: T => Boolean): List[T] =
   for (x <- xs if p(x)) yield x
 \end{lstlisting}
 
@@ -2466,7 +2466,7 @@ IN reality, the Scala compiler expresses for-expressions in terms of
 \begin{lstlisting}
 for (x <- e1) yield e2
 \end{lstlisting}
-is translated to 
+is translated to
 \begin{lstlisting}
 e1.map(x => e2)
 \end{lstlisting}
@@ -2475,7 +2475,7 @@ e1.map(x => e2)
 for (x <- e1 if f: s) yield e2
 \end{lstlisting}
   where f is a filter and \lstinline|s| is a (potentially empty) sequence of
-  generators and filters, is translated to 
+  generators and filters, is translated to
 \begin{lstlisting}
 for (x <- e1.withFilter(x => f); s) yield e2
 \end{lstlisting}
@@ -2489,7 +2489,7 @@ that does not produce intermediate list (is lazy), but instead filters the follo
 \begin{lstlisting}
 for (x <- e1; y <- e2; s) yield e3
 \end{lstlisting}
-where \lstinline|s| is a (potentially empty) sequence of generators and filters: 
+where \lstinline|s| is a (potentially empty) sequence of generators and filters:
 \begin{lstlisting}
 el.flatMap(x => for (y <- e2; s) yield e3)
 \end{lstlisting}
@@ -2554,7 +2554,7 @@ object None extends Option[Nothing]
 \end{lstlisting}
 
 Since options are defined as case classes, they can be decomposed using pattern
-matching: 
+matching:
 \begin{lstlisting}
 val capitalOfCountry = Map("US" -> "Washington", "Switzerland" -> "Bern")
 
@@ -2570,15 +2570,15 @@ Options also support quite a few operations of the other collections.
 Similar to SQL, \lstinline|orderBy| on a collection can be expressed by
 \lstinline|sortWith| (pass the comparison function, return collection sorted by
 given function) and \lstinline|sorted| (return collection sorted in natural
-order). 
+order).
 
 \lstinline|groupBy| is available on Scala collection. It partitions a collectino
 into a map of collections according to a \term{discriminator function} f:
 \begin{lstlisting}
 val fruit = List("apple","pear", "orange", "pineapple")
-fruit groupBy(_.head) //> Map(p -> List(pear, pineapple), 
+fruit groupBy(_.head) //> Map(p -> List(pear, pineapple),
                       //a -> List(apple),
-                      //o->list(orange) 
+                      //o->list(orange)
 \end{lstlisting}
 
 \example A polynomial can be seen as a map from exponents to coefficients. For
@@ -2589,9 +2589,9 @@ Map(0 -> 5, 1 -> -2, 3 -> 1)
 Then we can implement, for instance:
 \begin{lstlisting}
 class Poly(val terms: Map[Int, Double]) {
-  
-//the ++ operator will just override the left part of expression with 
-//the content of the right part while leaving the components unique to 
+
+//the ++ operator will just override the left part of expression with
+//the content of the right part while leaving the components unique to
 //the left part untouched
   def + (other: Poly) = new Poly(terms ++ (other.terms map adjust))
 
@@ -2599,19 +2599,19 @@ class Poly(val terms: Map[Int, Double]) {
   def adjust(term: (Int, Double)): (Int, Double) = {
     val (exp, coef) = term
     terms get exp match {
-      //if our "terms" does contain the given exponent - add our existing 
+      //if our "terms" does contain the given exponent - add our existing
       // coefficient to the one from term
       case Some(coeff1) => exp -> (coeff + coeff1)
       case None => exp -> coeff
     }
   }
 
-  override def toString = 
-    (for ((exp, coeff) <- terms.toList.sorted.reverse) 
+  override def toString =
+    (for ((exp, coeff) <- terms.toList.sorted.reverse)
         yield coeff + "^" + exp) mkString " + "
 }
 \end{lstlisting}
-Works, but looks a bit heavyweight. 
+Works, but looks a bit heavyweight.
 
 \subsubsection{Default Values}
 \label{sec:DefaultValues}
@@ -2637,8 +2637,8 @@ class Poly(val terms0: Map[Int, Double]) {
     exp -> (coeff + terms(exp))
   }
 
-  override def toString = 
-    (for ((exp, coeff) <- terms.toList.sorted.reverse) 
+  override def toString =
+    (for ((exp, coeff) <- terms.toList.sorted.reverse)
         yield coeff + "^" + exp) mkString " + "
 }
 \end{lstlisting}
@@ -2652,13 +2652,13 @@ called \term{repeated parameters}. Let's do as an auxiliary constructor:
 \begin{lstlisting}
 class Poly(val terms: Map[Int, Double]) {
   def this(bindings: (Int, Double)*) = this(bindings.toMap)
-.....  
+.....
 }
 \end{lstlisting}
 
 Similar addition operation with \lstinline|foldLeft|:
 \begin{lstlisting}
-def + (other: Poly) = 
+def + (other: Poly) =
   new Poly((other.terms foldLeft terms)(addTerm)
 
 def addTerm(terms: Map[Int, Double], term: (Int, Double)) = {
@@ -2669,12 +2669,12 @@ def addTerm(terms: Map[Int, Double], term: (Int, Double)) = {
 
 The \lstinline|foldLeft| - related version is more efficient, because it creates
 the answer collection directly, not through the creation of intermediate list
-and concatenating it with the source in 
+and concatenating it with the source in
 \begin{lstlisting}
 ... = new Polynom(terms ++ (other,terms map addTerm))
 \end{lstlisting}
 
-% video 8-7 
+% video 8-7
 \subsubsection{Large Example}
 \label{sec:ExampleFindingFixedPoint}
 Phone keys have mnemonics assigned to them:
@@ -2688,33 +2688,33 @@ Design a method \lstinline|translate| such that
 \begin{lstlisting}
 translate(phoneNumber))
 \end{lstlisting}
-produces all phrases of words that can serve as mnemonics for the phone number. 
+produces all phrases of words that can serve as mnemonics for the phone number.
 
 \begin{lstlisting}
 object x {
   // getting words list  from online source:
   val in = Source.fromURL("...")
   //to upper case, and filter out all words with dashes, colons etc. (non-letters)
-  val words = in.getLines.toList filter (word => word forall (chr => chr.isLetter)) 
+  val words = in.getLines.toList filter (word => word forall (chr => chr.isLetter))
 
   val mnem = .... //as defined before
 
   //invert the mnem map to give s msp from chrs 'A'...'Z' to '2"...'9'
-  val charCode: Map[Char, Char] = 
+  val charCode: Map[Char, Char] =
     for ((digit, str) <- mnem; ltr <- str) yield ltr -> digit
 
   //maps a word to a digit string it can represent, e.g. "Java" -> "5282"
-  def wordCode(word: String): String = 
+  def wordCode(word: String): String =
     //using the fact that maps are functions by themselves
     word.toUpperCase map charCode
 
   //a map from digit strings to the words that represent them. A missing
   //number should map to the empty set "111" -> List()
-  val wordsForNum: Map[String, Seq[String]] = 
+  val wordsForNum: Map[String, Seq[String]] =
     words groupBy wordCode withDefaultValue Seq()
 
   //return all ways to encode a number as a list of words
-  def encode(number: String): Set[List[String]] = 
+  def encode(number: String): Set[List[String]] =
     if (number.isEmpty) Set(List())
     else {
       for {
@@ -2725,7 +2725,7 @@ object x {
     }.toSet
 
   // now format the set to be returned as phrases:
-  def translate(number: String): Set[String] = 
+  def translate(number: String): Set[String] =
     encode(number) map (_ mkString " ")
 }
 \end{lstlisting}
@@ -2742,7 +2742,7 @@ To prove a property $P(t)$ for all trees $t$ of a certain type,
 \begin{itemize}
 \item show that $P(1)$ holds for all leaves $1$ of a tree
 \item for each type of internal node $t$ with sub-trees $s_1, \dots, s_n$ show
-  that 
+  that
 $$P(s_1) \wedge \dots \wedge P(s_n) \text{ implies }P(t)$$
 \end{itemize}
 \example IntSet
@@ -2759,12 +2759,12 @@ object Empty extends IntSet {
 }
 
 case class NonEmpty(elem: Int, left: IntSet, right: Intset) extends IntSet {
-  def contains(x: Int): Boolean = 
+  def contains(x: Int): Boolean =
     if (x < elem) left contains
     else if (x > elem) right contains x
     else true
 
-  def incl(x: Int): IntSet = 
+  def incl(x: Int): IntSet =
     if (x < elem) NonEmpty(elem, left incl x, right)
     else if (x > elem) NonEmpty(elem, left, right incl x)
     else this
@@ -2784,13 +2784,13 @@ For any set $s$, and elements $x$ and $y$:
 \item \lstinline|(s incl x) contains y = s contains y   if x != y|
 \end{itemize}
 (in fact, we can show that these laws completely characterise the desired data
-type). 
+type).
 
 \paragraph{Proving the laws of IntSet}
 
 \subparagraph{Proposition 1:} \lstinline|Empty contains x = false|
 \subparagraph{Proof:} According to the definition of \lstinline|contains| in
-\lstinline|Empty| 
+\lstinline|Empty|
 
 \subparagraph{Proposition 2:} \lstinline|(s incl x) contains x = true|
 \subparagraph{Proof:} by structural induction on \lstinline|s|
@@ -2829,7 +2829,7 @@ For the $y > x$ - analogous
 \end{itemize}
 \end{itemize}
 
-\subparagraph{Proposition 3:} if \lstinline|x!= y| then 
+\subparagraph{Proposition 3:} if \lstinline|x!= y| then
 \lstinline|(xs incl y) contains x = xs contains x|
 \subparagraph{Proof:} by structural induction on \lstinline|s|. Assume that $y <
 x$ (the dual case $x < y$ is analogous).
@@ -2868,14 +2868,14 @@ NonEmpty(x, l, r) incl y) contains x //to show: = NonEmpty(z, l, r) contains x
 NonEmpty(x, l, r) incl y) contains x //to show: = NonEmpty(z, l, r) contains x
 = NonEmpty(z, l incl y, r) contains x //by definition of NonEmpty.incl
 = r contains x //by definition of NonEmpty.contains
-= NonEmpty(z, l, r) contains x // by definition of NonEmpty.contains 
+= NonEmpty(z, l, r) contains x // by definition of NonEmpty.contains
 // DOEN (without even induction hypothesis)
 \end{lstlisting}
   \item $y < x < z$ - a complete dual of $z < y < x$:
 \begin{lstlisting}
 NonEmpty(x, l, r) incl y) contains x //to show: = NonEmpty(z, l, r) contains x
 = NonEmpty(z, l incl y, r) contains x //by definition of NonEmpty.incl
-= (l incl y) contains x 
+= (l incl y) contains x
 = l contains x // by the induction hypothesis
 = NonEmpty(z, l, r) contains x //by definition of NonEmpty.contains
 \end{lstlisting}
@@ -2931,13 +2931,13 @@ or using the \lstinline|toStream| method on a collection:
 
 function that return \lstinline|(lo until hi).toStream|:
 \begin{lstlisting}
-def streamRange(lo: Int, hi: Int): Stream[Int] = 
+def streamRange(lo: Int, hi: Int): Stream[Int] =
   if (lo >= hi) Stream.empty
   else Stream.cons(lo, streamRange(lo + 1, hi))
 \end{lstlisting}
 comparing to the same function that produces a list:
 \begin{lstlisting}
-def listRange(lo: Int, hi: Int): List[Int] = 
+def listRange(lo: Int, hi: Int): List[Int] =
   if (lo >= hi) Nil
   else lo :: listRange(lo + 1, hi)
 \end{lstlisting}
@@ -2947,9 +2947,9 @@ whole list in one go while \lstinline|streamRange| does not: the ``un-asked''
 Stream tail does not generate elements.
 
 \lstinline|Stream| support almost all elements of \lstinline|List|, but not ::,
-as \lstinline|::| always produces a list, never a stream. 
+as \lstinline|::| always produces a list, never a stream.
 
-To produce a stream use ``#::''
+To produce a stream use ``\#::''
 \begin{lstlisting}
 x #:: xs == Stream.cons(x, xs)
 \end{lstlisting}
@@ -2976,7 +2976,7 @@ class Stream[+T] {
   def filter(p: T=> Boolean): Stream[T] =
     if (isEmpty) this
     else if (p(head)) cons(head, tail.filter(p)) //if p(head) is true, the
-//returned stream is created by passing tail.filter(p) to cons _by name_ 
+//returned stream is created by passing tail.filter(p) to cons _by name_
 //- again, with delayed evaluation
     else tail.filter(p)
 }
@@ -2985,9 +2985,7 @@ class Stream[+T] {
 % video 9-3
 \subsection{Lazy Evaluation}
 \label{sec:LazyEvaluation}
-The idea is to evaluate expression when needed and _not_ evaluate it twice. In
-current implementation, if \lstinline|tail| is called several times, the
-corresponding stream will be recomputed each time.
+The idea is to evaluate expression when needed and {\bf not} evaluate it twice. In current implementation, if \lstinline|tail| is called several times, the corresponding stream will be recomputed each time.
 
 We can store the result of the first evaluation of \lstinline|tail| (in
 functional style, no side effects => expression produces the same result every
@@ -2995,7 +2993,7 @@ time it is evaluated).
 
 This schema is called \term{lazy evaluation} in contrast to \term{name
  evaluation} where everything is recompiled each time and \term{strict
- evaluation} for the ``normal'' parameters and \lstinline|val| definitions. 
+ evaluation} for the ``normal'' parameters and \lstinline|val| definitions.
 
 So by default in Scala the strict evaluation is used, but the \lstinline|lazy|
 keyword is added to spec. The lazy evaluation is not default because of it is
@@ -3043,7 +3041,7 @@ Classical algorithm: the sieve of Eratosthenes:
 \end{itemize}
 Implementation:
 \begin{lstlisting}
-def sieve(s: Stream[Int]): Stream[Int] = 
+def sieve(s: Stream[Int]): Stream[Int] =
   s.head #:: sieve(s.tail filter (_ % s.head != 0))
 
 def primes = sieve(from(2))
@@ -3066,7 +3064,7 @@ sqrtStream(4).take(10).toList  //=1.0, 2.5, 2.05...2.0, 2.0, 2.0)
 \end{lstlisting}
 Now add the check:
 \begin{lstlisting}
-def isGoodEnough(guess: Double, x: Double) = 
+def isGoodEnough(guess: Double, x: Double) =
   math.abs((guess * guess - x) / x) < 0.001
 
 sqrtStream(4) filter (isGoodEnough(_, 4))
@@ -3103,9 +3101,9 @@ class Pouring(capacity: Vector[Int]) {
 
   val glasses = 0 until capacity.length
 
-  val moves = 
-    (for (g <- glasses) yield Empty(g)) ++ 
-    (for (g <- glasses) yield Fill(g)) ++ 
+  val moves =
+    (for (g <- glasses) yield Empty(g)) ++
+    (for (g <- glasses) yield Fill(g)) ++
     (for (from <- glasses; to <- glasses if from != to) yield Pour(from, to))
 
 }
@@ -3127,7 +3125,7 @@ Now give some flesh to \lstinline|Move| trait:
     //do NOT destroy state - just generate a new one:
     def change(state: State): State = state update (glass, 0)
   }
-  
+
   case class Fill(glass: Int) extends Move {
     //do NOT destroy state - just generate a new one:
     def change(state: State): State = state update (glass, capacity(glass))
@@ -3150,7 +3148,7 @@ class Path(history: List[Move]) {
     case move :: xs1 => move change trackState(xs1)
 }
 \end{lstlisting}
-or, simpler: 
+or, simpler:
 \begin{lstlisting}
 ...
   def endState: State = (history foldRight initialState) (_ change _)
@@ -3165,7 +3163,7 @@ then:
 \begin{lstlisting}
 val initialPath = new Path(Nil)
 
-def from(paths: Set[Path]): Stream[Set[Path]] = 
+def from(paths: Set[Path]): Stream[Set[Path]] =
   if (paths.isEmpty) Stream.empty
   else {
     val more = for {
@@ -3177,7 +3175,7 @@ def from(paths: Set[Path]): Stream[Set[Path]] =
 
 val pathSets = from(Set(initialPath)) //can check with REPL start
 
-def solutions(target: Int): Stream[Path] = 
+def solutions(target: Int): Stream[Path] =
   for {
     pathSet <- pathSets
     path <- pathSet
@@ -3188,7 +3186,7 @@ def solutions(target: Int): Stream[Path] =
 states. The idea is to exclude a state which was visited before:
 \begin{lstlisting}
 ...
-def from(paths: Set[Path], explored: Set[State]): Stream[Set[Path]] = 
+def from(paths: Set[Path], explored: Set[State]): Stream[Set[Path]] =
   if (paths.isEmpty) Stream.empty
   else {
     val more = for {
@@ -3197,7 +3195,7 @@ def from(paths: Set[Path], explored: Set[State]): Stream[Set[Path]] =
       if !(explored contains next.endState)
     } yield next
     paths #:: from(more, explored ++ (more map (_.endState)))
-  } 
+  }
 
 val pathSet = from(Set(initialPath), Set(initialState))
 ...
