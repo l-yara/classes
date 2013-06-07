@@ -1,0 +1,277 @@
+%\documentclass{ncc}
+%\documentclass{article}
+\documentclass{scrartcl}
+
+\usepackage{amsmath,amssymb,amsfonts} % Typical maths resource packages
+\usepackage{graphics}                 % Packages to allow inclusion of graphics
+\usepackage{color}                    % For creating coloured text and background
+\usepackage{hyperref}                 % For creating hyperlinks in
+                                % cross references
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+\usepackage{listings}
+\lstdefinelanguage{scala}{
+  morekeywords={abstract,case,catch,class,def,%
+    do,else,extends,false,final,finally,%
+    for,if,implicit,import,match,mixin,%
+    new,null,object,override,package,%
+    private,protected,requires,return,sealed,%
+    super,this,throw,trait,true,try,%
+    type,val,var,while,with,yield},
+  otherkeywords={=>,<-,<\%,<:,>:,\#,@},
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[n]{/*}{*/},
+  morestring=[b]",
+  morestring=[b]',
+  morestring=[b]"""
+}
+%\lstset {language=scala}
+\usepackage{color}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+% Default settings for code listings
+\lstset{frame=tb,
+  language=scala,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  frame=single,
+  breaklines=true,
+  breakatwhitespace=true
+  tabsize=3
+}
+
+
+\newcommand{\example}{\subparagraph{Example:}} % Example
+\newcommand{\term}[1]{\verb~#1~} % Definition
+\newcommand{\video}[1]{} % Definition
+
+\begin{document}
+\section{ Ch 1}
+\label{sec:01-01}
+Processes: the three basic measures:
+\begin{itemize}
+\item {\bf Flow rate / throughput} number of flow units going through the process per unit of time {\em Flow Unit / time}
+\item {\bf Flow Time} time it takes a flow unit to go from the beginning to the end of the process
+\item {\bf Inventory} the number of flow units in the process at a given moment in time. Happens where supply mis-matches the demand (!).
+\item {\bf Flow Unit} Customer, Sandwich, Money, Cheese etc.
+\end{itemize}
+Process management is about the processes which are done repeatedly (in contrast to Project management) \\
+Vocabulary:
+\begin{itemize}
+\item {\bf Processing time} (Activity time): how long does worker spend on the task? in {\em time / unit}
+\item {\bf Capacity} = 1/processing time: how many units can the worker make per unit of time if there are $m$ workers at the activity: $Capacity = m / processing time$
+\item {\bf Bottleneck} process step with the {\em lowest capacity}
+\item {\bf Process Capacity} capacity of the bottleneck
+\item {\bf Flow Rate} $=min(Demand rate, Process Capacity)$
+\item {\bf Utilisation} $=Flow Rate / Capacity$
+\item {\bf Flow Time}: the amount of time it takes a flow to go through the process
+\item {\bf Inventory}: the number of flow units in the system
+\end{itemize}
+
+\section{Module 3: Variety}
+\label{sec:05}
+\subsection{Reasons for  Variety}
+\label{sec:05-01}
+\begin{itemize}
+\item {\bf Horizontal differentiation}: each customer has a utility (preference function) maximising, say, shirt size. The further you go away from that point, the lower is the utility.
+\item {\bf Vertical differentiation}: customer differ in their valuation of quality (performance): screen resolution, mpg, processor speed and / or their ability to pay.
+\item {\bf Taste based variety}: taste for food, music, artists. Rugged landscape, often vary over time.
+\end{itemize}
+
+\subsection{Capacity Calculations with Set-Ups}
+\label{sec:05-02}
+$$\mbox{Capacity given Batch Size} = \frac{\mbox{Batch Size}}{\mbox{Set-up time} + \mbox{Batch-size} * \mbox{Time per unit}}$$
+
+\subsection{Mixed Model Production}
+\label{sec:05-03}
+
+The downside of Large Batches:
+\begin{itemize}
+\item lead to more inventory in process
+\item needs to be balanced with the need for capacity
+\end{itemize}
+Smaller batches lead to smaller inventory - in extreme cases the batch size is 1. This is called {\bf Mixed model production}, or Heijunk (?) in Toyota system.
+\begin{itemize}
+\item Product A: demand is 100 units per hour
+\item Product B: demand is 75 units per hour
+\end{itemize}
+Production line can produce 300 units per hour; 30 minutes to switch. How to set the batch size?
+$$p = \frac1{300} \frac{h}{unit}; S = 0.5h$$
+The whole batch will have two set-ups and periods for producing A and producing B; so total switch time will be
+$$S_{total} = 1h$$
+Target flow is
+$$175 \frac{units}{h} = \frac{B}{S + B \times p} = \frac{B}{1 + B\times \frac1{300}}$$
+Solving equation: $B = 420$ (total units). Applying ratio:
+\begin{itemize}
+\item Product A: $B_A = 420 \times \frac{100}{100+75} = 240$
+\item Product B: $B_B = 420 \times \frac{75}{100+75} = 180$
+\end{itemize}
+
+\subsection{Choosing a Batch Size}
+\label{sec:05-04}
+The idea is to balance the batching flow with next bottleneck: wasting a bit of capacity to lower inventory is usually a good idea. But, if batching operator is a bottleneck, ``stopping for a set-up is stopping the whole line''.
+
+\subsection{Demand Fragmentation and Pooling}
+\label{sec:05-05}
+If our prediction for demand of Something Model 1 is $\mu_1, \sigma_1$than coefficient of variation is $CV_1 = \frac{\sigma_1}{\mu_1}$. Similar story for Model 2.\\
+
+If our concurrent can unite both models, and roughly $\mu_1 = \mu_2 = \mu; \sigma_1 = \sigma_2$, than:
+\begin{itemize}
+\item ``Combined'' $\mu_c = \mu_1 + \mu_2 = 2\mu$
+\item ``Combined'' $\sigma_c = \sqrt{ \sigma_2^1 + \sigma_2^2 + 2 cov(\sigma_1, \sigma_2)} = \sqrt{2 \sigma^2} = \sqrt 2 \sigma$
+\end{itemize}
+In this case $CV = \frac1{\sqrt{2}} \frac\sigma\mu$ - by combining demand we reduce variability (so-called {\bf demand pooling}).\\
+
+Opposite process - {\bf fragmenting demand}.
+
+\subsection{Flexibility}
+\label{sec:05-06}
+
+The idea behind {\bf SMED} (Single Minute Exchange of Diet(?))  is to shorten the setup time to increase flexibility. Every setup is divided in two types of activity:
+\begin{itemize}
+
+
+
+\item external
+\item internal
+\end{itemize}
+
+\subsection{Platforms and Modularity}
+\label{sec:05-07}
+Design for supply chain performance: to keep separation to as late moment as possible (video 5-7, 03:00) - so-called {\bf delayed differentiation}.
+
+\subsection{Limits to Customer Choice}
+\label{sec:05-08}
+
+See Apple's iShit: goes in various memory sizes (yeah, two), but same appearance. Overall, there are two reasons to limit the customer choice:
+\begin{itemize}
+\item customer is overwhelmed from a multiple choice
+\item ???
+\end{itemize}
+
+\section{Responsiveness}
+\label{sec:sec06}
+
+\subsection{Intro}
+\label{sec:sec06-01}
+
+``Waiting is another form of mismatch between supply and demand''. Usually a waiting means insufficient capacity, but ``variability does not averages itself out'' too - see graph at video 6-1, 08:00
+
+\subsection{The Waiting Time Formula}
+\label{sec:06-02}
+
+Waiting occur even if the average utilisation is below 100\%. The demand process is somewhat ``random''; one can introduce the ``inter-arrival time'' $IA_n$ with average \\
+Distribution is: $CV_a = \frac{St-Dev(inter-arrivalTimes)}{Average(inter-arrivalTimes)}$\\
+- often Poisson distributed
+\begin{itemize}
+\item $CV_a = 1$
+\item Constant hazard time (no memory)
+\item Exponential inter-arrivals
+\end{itemize}
+
+\paragraph{Processing}
+
+Also there is some variability in the processing time:\\
+$CV_p = \frac{Ct-Dev(processingTimes)}{Average(processingTimes)}$ \\
+this can have many distributions (depends strongly on standardisation - or rather shows the level of standardisation); often Beta of LogNormal.
+% video 6-2; 04:20
+
+\paragraph{The Waiting Time Formula}
+
+- see page 10 of Module 4 slides. Expected (average) time in queue
+$$\mbox{Time in queue} = \mbox{Activity Time} \times \frac{utilization}{1-utilization} \times \frac{CV_a^2 + CV_p^2}2 $$
+\begin{itemize}
+\item $\mbox{Activity Time}$ - service time factor (processing time)
+\item $\frac{utilization}{1-utilization}$ - utilization factor
+\item $\frac{CV_a^2 + CV_p^2}2$ - variability factor
+\end{itemize}
+
+\subsection{Waiting Time Models with Mulitple Servers}
+\label{sec:06-03}
+
+for $m$ parallel servers (page 14 of Module 4 slides):
+$$\mbox{Time in queue} = \frac{\mbox{Activity time}}m \times \frac{utilization ^{\sqrt{2(m+1)} - 1}}{1 -utilization} \times \frac{CV_a^2 + CV_p^2}2$$
+
+Utilisation:
+$$ u = \frac{1/a}{m * 1/p} = \frac{p}{am}$$
+
+Inventory (flow rate $1/a$):
+\begin{itemize}
+\item $I_q = \frac1a * T_q$: inventory in queue =  rate * time in the queue
+\item $I_p = u \times m$ - inventory ``in process'': utilisation * number of servers
+\item $I = I_p + I_q$ - total inventory
+\end{itemize}
+
+When we have seasonal data: slice the data by hour (day, season etc); assume demand in ``stationary'' within a slice
+
+\subsection{Pooling}
+\label{sec:06-04}
+
+Pooling by itself does not change the utilisation but reduces the (variability-based) waiting time. Limitations: see page 25 in Module 4 slides.
+
+\subsection{Sequencing}
+\label{sec:06-05}
+
+It is about deciding ''who should be served first'' - or re-shuffling the queue through some priority rules
+% video 6-5; 03:00
+Usual idea - SPT (Shortest Processing Time), but sometimes it is problematic to predict a ``true'' processing time
+
+\subsection{Process Design}
+\label{sec:06-06}
+
+
+\subsection{Loss Models}
+\label{sec:06-07}
+
+What happens if customer can not (unwilling) to wait?
+\begin{itemize}
+\item Waiting problem: Utilisation has to be less than 100\%. Impact of variability is on Flow Time
+\item Loss problem: Demand can be bigger than capacity. Impact of variability is on Flow Rate
+\end{itemize}
+
+So:
+\begin{itemize}
+\item $m$ - amount of resources (``bays'')
+\item $a$ - Arrival time; $CV_a$ is set
+\item $p$ - Processing time; $CV_p$ is set
+\end{itemize}
+
+The probability that all $m$ resources are utilised: $P_m$ - big math problem; can be simplified by using so-called Erlang Loss Table using $r=p / a$ and $m$ (page 41 of Module 4 slides).\\
+With this $P_m(r)$ one can find:
+\begin{itemize}
+\item time per day that system has to deny access ($24h * P_m(r)$)
+\item flow units lost = $1 / a * P_m(r)$
+\end{itemize}
+
+\section{Quality}
+\label{sec:07}
+
+\subsection{Q1}
+\label{sec:07-01}
+
+Two dimensions: {\bf performance} (to what extent the product or service is meeting customer's expectation) and {\bf conformance} (whether the process is carried out in the way we intend it to be carried). This module is concentrated on conformance quality, and the variability is our ``root of all evil'' again.\\
+
+If probability of the defect is $p$, than yield of the process or stage is $y = 1 - p$ - share of ``good''(produced according to specification) units prouced.
+
+\subsection{Q2}
+\label{sec:07-02}
+
+
+
+\end{document}
