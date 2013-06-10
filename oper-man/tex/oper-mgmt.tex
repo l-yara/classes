@@ -262,15 +262,78 @@ With this $P_m(r)$ one can find:
 \section{Quality}
 \label{sec:07}
 
-\subsection{Q1}
+\subsection{Reasons for Defects}
 \label{sec:07-01}
 
 Two dimensions: {\bf performance} (to what extent the product or service is meeting customer's expectation) and {\bf conformance} (whether the process is carried out in the way we intend it to be carried). This module is concentrated on conformance quality, and the variability is our ``root of all evil'' again.\\
 
-If probability of the defect is $p$, than yield of the process or stage is $y = 1 - p$ - share of ``good''(produced according to specification) units prouced.
+If probability of the defect is $p$, than yield of the process or stage is $y = 1 - p$ - share of ``good''(produced according to specification) units produced. Plus, defects increase variability in flow.
 
-\subsection{Q2}
+\subsection{Quality and Flow}
 \label{sec:07-02}
+Defects noticed before the bottleneck are driven by the input prices. Defects which are happening after bottleneck - driven by ``sell'' price (opportunity cost). => Tests are a good idea.\\
+
+\paragraph{Idea of Kanban System: Demand Pull}
+Kanban cards are also called ``demand cards''. Amount of WIP (W in production) is determined by number of cards. - Pull instead of buffers.
+
+\subsection{Six Sigma}
+\label{sec:07-03}
+
+parameters:
+\begin{itemize}
+\item LSL - lower specification level
+\item USL - upper specification level
+
+\item Capability: $= (USL-LSL) / (6 * \sigma)$, where $\sigma$ is a standard deviation. This shows the likelihood of the defect: the more forgiving is our $USL - LSL$ or lower $\sigma$ is, the higher probability is that our product will be according to spec,
+\end{itemize}
+
+PPM (Parts per million) - expected amount of defected parts out of one million produced,
+
+\subsection{Control Charts}
+\label{sec:07-04}
+
+Part of Statistical Process Control.\\
+
+{\bf Common Cause Variation } - a variation among the items in the same set (produced by the same process)\\
+{\bf Assignable Cause Variation} - a variation between the items produced by different process.\\
+
+\paragraph{Detecting Abnormal Variation in the Process}
+
+- identifying assignable causes {\em from the real (not spec) data}. Control limits (do not mix with {\bf specification} ones):
+\begin{itemize}
+\item lower: $LCL = Mean - 3 \sigma$
+\item lower: $UCL = Mean + 3 \sigma$
+\end{itemize}
+Distinguish between:
+\begin{itemize}
+\item common cause variation (within control limits)
+\item assignable cause variation (outside control limits)
+\end{itemize}
+Statistical Process control - see diagram at page 22 of Module 5 slides.
+
+\subsection{Jidoka}
+\label{sec:07-05}
+
+Big inventory grows up the ITAT (information turnaround time) => slow feedback and no learning. The time when defect is found (detected) is more interesting than the time when it was actually made (see before bottleneck/after bottleneck example).
+
+\paragraph{Detecting Abnormal Variation in the Process at Toyota}
+
+- Detect-Stop-Alert framework (page 26 of Module 5 slides).
+
+\subsection{Problem Solving}
+\label{sec:07-06}
+
+Ishikawa Diagram (also rule of 5 why's) - see page 31 (left half) for example.\\
+Pareto chart: marks out the assignable causes of a problem in the categories of the Ishikawa diagram; order root causes in decreasing order of frequency of occurrence. Than use 80-20 logic
+
+\subsection{Toyota Production System}
+\label{sec:07-07}
+
+\begin{itemize}
+\item Systematic elimination of waste
+\item Operating system built around serving demand
+\end{itemize}
+
 
 
 
